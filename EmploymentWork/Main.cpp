@@ -1,6 +1,9 @@
 #include "DxLib.h"
-#include "Game.h"
+#include "Util/Game.h"
 #include "Camera.h"
+#include "Input.h"
+#include "SceneManager.h"
+#include "SceneTitle.h"
 #include <memory>
 
 // プログラムは WinMain から始まります
@@ -27,6 +30,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
+
 	//カメラの生成
 	std::shared_ptr<Camera> m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init();
@@ -37,16 +42,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 画面のクリア
 		ClearDrawScreen();
 
+		//入力受付
+
+		SceneManager::GetInstance().Update();
+
 		m_pCamera->Update();
 
-		for (int x = -50; x <= 50; x += 10)
-		{
-			DrawLine3D(VGet(static_cast<float>(x), 0, -50), VGet(static_cast<float>(x), 0, 50), 0xffff00);
-		}
-		for (int z = -50; z <= 50; z += 10)
-		{
-			DrawLine3D(VGet(-50, 0, static_cast<float>(z)), VGet(50, 0, static_cast<float>(z)), 0xff0000);
-		}
+
+
+		SceneManager::GetInstance().Draw();
 
 		//裏画面を表画面を入れ替える
 		ScreenFlip();
@@ -59,6 +63,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 		}
 	}
+
+	//staticクラスの削除
+	SceneManager::GetInstance().Destroy();
+	Input::GetInstance().Destroy();
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
