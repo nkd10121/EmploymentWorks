@@ -62,6 +62,9 @@ void Input::Update()
 			break;
 		}
 	}
+
+	//ZR,ZL,スティックの入力を取得
+	GetJoypadXInputState(DX_INPUT_PAD1, m_inputState);
 }
 
 /// <summary>
@@ -90,4 +93,21 @@ bool Input::IsPushed(const char* command) const
 		return false;
 	}
 	return (m_inputData.at(command) && m_lastInputData.at(command));
+}
+
+std::pair<float, float> Input::GetInputStick(bool isRight) const
+{
+	if (isRight)
+	{
+		//このままの値で返すと-32768 ～ 32767とかいう値になってしまうため、-1000 ～ 1000に補正したい
+
+
+		//右スティックの入力情報を返す
+		return std::make_pair(static_cast<float>(m_inputState->ThumbRX), static_cast<float>(m_inputState->ThumbRY));
+	}
+	else
+	{
+		//左スティックの入力情報を返す
+		return std::make_pair(static_cast<float>(m_inputState->ThumbLX), static_cast<float>(m_inputState->ThumbLY));
+	}
 }
