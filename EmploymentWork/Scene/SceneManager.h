@@ -55,7 +55,7 @@ public:
 	/// </summary>
 	void Init();
 	/// <summary>
-	/// 持っているシーンの更新関数を呼び出す
+	/// 現在の先頭シーンの更新関数を呼び出す
 	/// </summary>
 	/// <returns>true : ゲーム終了, false : ゲーム続行</returns>
 	bool Update();
@@ -82,4 +82,3 @@ private:
 	std::list<std::shared_ptr<SceneBase>> m_pScene;		//現在のシーン
 	std::shared_ptr<SceneBase> m_pNextScene;			//遷移予定のシーン
 };
-

@@ -17,7 +17,14 @@
 class SceneBase
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	SceneBase();
+
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	virtual ~SceneBase() {}
 
 public:	/*派生クラスに継承する必要のある処理*/
@@ -25,16 +32,34 @@ public:	/*派生クラスに継承する必要のある処理*/
 	/// //リソースのロード開始
 	/// </summary>
 	virtual void StartLoad() = 0;
+
 	/// <summary>
 	/// リソースのロードが終了したかどうか
 	/// </summary>
 	/// <returns>true : 終了済み, false : 終了していない</returns>
 	virtual bool IsLoaded()const = 0;
 
-	virtual void Init() = 0;	// 初期化	リソースのロード完了後に呼ばれる
-	virtual void End() = 0;		// シーン終了時に呼ばれる	リソースの解放はここ
+	/// <summary>
+	/// 初期化
+	/// MEMO:リソースのロード完了後に呼ばれる
+	/// </summary>
+	virtual void Init() = 0;
 
-	virtual void Update() = 0;	// リソースのロード完了以降呼ばれる	フェード中も呼ばれる
+	/// <summary>
+	/// 終了
+	/// MEMO:リソースの解放はこの関数内で行う
+	/// </summary>
+	virtual void End() = 0;
+
+	/// <summary>
+	/// 更新
+	/// MEMO:フェード中も呼ばれる
+	/// </summary>
+	virtual void Update() = 0;
+
+	/// <summary>
+	/// 描画
+	/// </summary>
 	virtual void Draw() = 0;
 
 #ifdef _DEBUG
@@ -47,22 +72,46 @@ protected:
 	/// 現在のシーンを終了させる
 	/// </summary>
 	void EndThisScene();
-public:
-	// 継承を行わない処理	SceneManagerから呼び出すのはこっち
-	void InitAll();	// シーン個別のinit()の他共通で必要な初期化を行う	
-	// これはロード完了後の初回update()で呼ぶのでSceneManager()からは呼ばない
-	void EndAll();	// シーン個別のend()の他共通で必要な初期化を行う
 
-	void UpdateAll();	// シーン個別のupdate()の他共通で必要な初期化を行う
-	void DrawAll();		// シーン個別のdraw()の他共通で必要な初期化を行う
+public:	/*継承を行わない処理	SceneManagerから呼び出すのはこっち*/
 
-	bool IsSceneEnd();	// 現在のシーンを終了して次のシーンに遷移する
+	/// <summary>
+	/// 派生先の初期化とシーン共通で必要な初期化を行う
+	/// MEMO:これはロード完了後の初回update()で呼ぶのでSceneManager()からは呼ばない
+	/// </summary>
+	void InitAll();
+
+	/// <summary>
+	/// 派生先の更新とシーン共通で必要な更新を行う
+	/// </summary>
+	void UpdateAll();
+
+	/// <summary>
+	/// 派生先の描画とシーン共通で必要な描画を行う
+	/// </summary>
+	void DrawAll();
+
+	/// <summary>
+	/// 現在のシーンが完全に終了したかどうか
+	/// </summary>
+	/// <returns>true : 終了した, false : そもそも終了する予定がない or フェード中</returns>
+	bool IsSceneEnd();
 
 private:	/*フェード関係*/
+
+	/// <summary>
+	/// フェードの更新
+	/// </summary>
 	void UpdateFade();
+
+	/// <summary>
+	/// フェードの描画
+	/// </summary>
 	void DrawFade() const;
 
-	// ロード中表示
+	/// <summary>
+	/// ロード中描画
+	/// </summary>
 	void DrawLoading() const;
 
 	/// <summary>
@@ -76,40 +125,27 @@ private:	/*フェード関係*/
 
 protected:
 
-	//フェードインをスキップする
+	/// <summary>
+	/// フェードインをスキップする
+	/// </summary>
 	void SkipFadeIn();
-	//フェードアウトをスキップする
+
+	/// <summary>
+	/// フェードアウトをスキップする
+	/// </summary>
 	void SkipFadeOut();
 private:
-
-	int m_fadeMask;
-
-	// 初期化処理終了判定
-	bool m_isInit;
+	bool m_isInit;	//初期化処理終了判定
+	bool m_isEnd;	//次のシーンに遷移する
 
 	// フェード関連処理
-	int m_fadeBright;	// 0:フェードイン完了	=m_fadeTotalFrame:画面真っ暗
-	int m_fadeTotalFrame;
-	int m_fadeSpeed;
+	int m_fadeAlpha;	//フェードのアルファ値
+						//0:フェード中じゃない,0以上:フェード中
+	int m_fadeSpeed;	//フェード速度
+	unsigned int m_fadeColor;	//フェード時の色
 
-	// フェード演出
-	unsigned int m_fadeColor;
-	int m_fadePlayerKind;
-
-
-	// ロード中表示を行うか
-	bool m_isDispLoading;
-	// ロードフレーム数カウント
-	int m_loadFrame;
-
-	// カーソル表示
-	bool m_isDispCursor;
-
-	// シーン遷移
-	bool m_isEnd;
-
-	// 処理負荷計測
 #ifdef DISP_PROCESS
+	/*処理負荷計測*/
 	LONGLONG	m_updateTime;	// updateにかかった時間(ミリ秒)
 	LONGLONG	m_drawTime;		// drawにかかった時間(ミリ秒)
 #endif

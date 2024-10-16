@@ -5,7 +5,7 @@ namespace
 {
 	// フェードにかかるフレームデフォルト
 	constexpr int kFadeFrameDefault = 30;
-
+	// 1フレーム当たりのフェード速度
 	constexpr int kFadeSpeed = 255 / kFadeFrameDefault;
 
 	//明るさの最大
@@ -14,18 +14,13 @@ namespace
 	constexpr int kBrightMin = 0;
 }
 
+//コンストラクタ
 SceneBase::SceneBase() :
-	m_fadeMask(-1),
 	m_isInit(false),
-	m_fadeBright(kBrightMax),
-	m_fadeTotalFrame(kFadeFrameDefault),
+	m_isEnd(false),
+	m_fadeAlpha(kBrightMax),
 	m_fadeSpeed(0),
-	m_fadeColor(0x000000),
-	m_fadePlayerKind(0),
-	m_isDispLoading(false),
-	m_loadFrame(0),
-	m_isDispCursor(true),
-	m_isEnd(false)
+	m_fadeColor(0x000000)
 #ifdef DISP_PROCESS
 	, m_updateTime(0),
 	m_drawTime(0)
@@ -33,27 +28,30 @@ SceneBase::SceneBase() :
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 void SceneBase::EndThisScene()
 {
 	m_isEnd = true;
 	StartFadeOut();
 }
 
+/// <summary>
+/// 派生先の初期化とシーン共通で必要な初期化を行う
+/// </summary>
 void SceneBase::InitAll()
 {
 	// フェードアウト状態から開始
-	m_fadeBright = kBrightMax;
+	m_fadeAlpha = kBrightMax;
 	StartFadeIn();
 	// 継承先シーンの初期化処理
 	Init();
 }
 
-void SceneBase::EndAll()
-{
-	// 継承先シーンの終了処理
-	End();
-}
-
+/// <summary>
+/// 派生先の更新とシーン共通で必要な更新を行う
+/// </summary>
 void SceneBase::UpdateAll()
 {
 	//継承先のシーンのリソースのロードが終わっているか確認
@@ -76,6 +74,9 @@ void SceneBase::UpdateAll()
 	Update();
 }
 
+/// <summary>
+/// 派生先の描画とシーン共通で必要な描画を行う
+/// </summary>
 void SceneBase::DrawAll()
 {
 #ifdef DISP_PROCESS
@@ -118,16 +119,22 @@ void SceneBase::DrawAll()
 #endif
 }
 
+/// <summary>
+/// 現在のシーンが完全に終了したかどうか
+/// </summary>
 bool SceneBase::IsSceneEnd()
 {
 	// そもそも終わると言っていない
 	if (!m_isEnd)	return false;
 	// まだフェードアウト終わってない
-	if (m_fadeBright < kBrightMax)	return false;
+	if (m_fadeAlpha < kBrightMax)	return false;
 
 	return true;
 }
 
+/// <summary>
+/// フェードの更新
+/// </summary>
 void SceneBase::UpdateFade()
 {
 	// リソースのロードが完了していない
@@ -136,18 +143,18 @@ void SceneBase::UpdateFade()
 		return;	// ロード完了まではフェードイン処理を行わない
 	}
 
-	m_fadeBright += m_fadeSpeed;
-	if (m_fadeBright >= kBrightMax)
+	m_fadeAlpha += m_fadeSpeed;
+	if (m_fadeAlpha >= kBrightMax)
 	{
-		m_fadeBright = kBrightMax;
+		m_fadeAlpha = kBrightMax;
 		if (m_fadeSpeed > 0)
 		{
 			m_fadeSpeed = 0;
 		}
 	}
-	if (m_fadeBright <= kBrightMin)
+	if (m_fadeAlpha <= kBrightMin)
 	{
-		m_fadeBright = kBrightMin;
+		m_fadeAlpha = kBrightMin;
 		if (m_fadeSpeed < 0)
 		{
 			m_fadeSpeed = 0;
@@ -155,13 +162,19 @@ void SceneBase::UpdateFade()
 	}
 }
 
+/// <summary>
+/// フェードの描画
+/// </summary>
 void SceneBase::DrawFade() const
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeBright);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeAlpha);
 	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, m_fadeColor, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
+/// <summary>
+/// ロード中描画
+/// </summary>
 void SceneBase::DrawLoading() const
 {
 	if (!IsLoaded())
@@ -170,24 +183,36 @@ void SceneBase::DrawLoading() const
 	}
 }
 
+/// <summary>
+/// フェードイン開始
+/// </summary>
 void SceneBase::StartFadeIn()
 {
 	m_fadeSpeed = -kFadeSpeed;
 }
 
+/// <summary>
+/// フェードアウト開始
+/// </summary>
 void SceneBase::StartFadeOut()
 {
 	m_fadeSpeed = kFadeSpeed;
 }
 
+/// <summary>
+/// フェードインをスキップする
+/// </summary>
 void SceneBase::SkipFadeIn()
 {
-	m_fadeBright = kBrightMax;
+	m_fadeAlpha = kBrightMax;
 	m_fadeSpeed = kFadeSpeed;
 }
 
+/// <summary>
+/// フェードアウトをスキップする
+/// </summary>
 void SceneBase::SkipFadeOut()
 {
-	m_fadeBright = kBrightMin;
+	m_fadeAlpha = kBrightMin;
 	m_fadeSpeed = -kFadeSpeed;
 }

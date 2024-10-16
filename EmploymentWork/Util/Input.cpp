@@ -25,7 +25,9 @@ enum PadCheckMask : int
 	LEFT = 0x00000002,	//左ボタン
 };
 
-//コンストラクタ
+/// <summary>
+/// コンストラクタ
+/// </summary>
 Input::Input()
 {
 	m_commandTable["A"] = { PadCheckMask::A };
@@ -34,6 +36,9 @@ Input::Input()
 	m_commandTable["Y"] = { PadCheckMask::Y };
 }
 
+/// <summary>
+/// 入力情報を更新する
+/// </summary>
 void Input::Update()
 {
 	m_lastInputData = m_inputData;	//直前入力をコピーしておく(押した瞬間を取得する用)
@@ -59,6 +64,9 @@ void Input::Update()
 	}
 }
 
+/// <summary>
+/// 指定のコマンドが押された瞬間なのか
+/// </summary>
 bool Input::IsTriggered(const char* command) const
 {
 	auto it = m_inputData.find(command);
@@ -70,6 +78,9 @@ bool Input::IsTriggered(const char* command) const
 	return (m_inputData.at(command) && !m_lastInputData.at(command));
 }
 
+/// <summary>
+/// 指定のコマンドが押し続けられているかどうか
+/// </summary>
 bool Input::IsPushed(const char* command) const
 {
 	auto it = m_inputData.find(command);

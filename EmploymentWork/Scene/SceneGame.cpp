@@ -2,15 +2,24 @@
 #include "SceneTitle.h"
 #include "ScenePause.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 SceneGame::SceneGame():
 	temp_handle()
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SceneGame::~SceneGame()
 {
 }
 
+/// <summary>
+/// //リソースのロード開始
+/// </summary>
 void SceneGame::StartLoad()
 {
 	// 非同期読み込みを開始する
@@ -26,6 +35,9 @@ void SceneGame::StartLoad()
 	SetUseASyncLoadFlag(false);
 }
 
+/// <summary>
+/// リソースのロードが終了したかどうか
+/// </summary>
 bool SceneGame::IsLoaded() const
 {
 	//TODO:ここでリソースがロード中かどうかを判断する
@@ -37,11 +49,17 @@ bool SceneGame::IsLoaded() const
 	return true;
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void SceneGame::Init()
 {
 	//TODO:ここで実態の生成などをする
 }
 
+/// <summary>
+/// 終了
+/// </summary>
 void SceneGame::End()
 {
 	//TODO:ここでリソースのメモリ開放などをする
@@ -52,6 +70,9 @@ void SceneGame::End()
 	temp_handle.clear();
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void SceneGame::Update()
 {
 	if (Input::GetInstance().IsTriggered("X"))
@@ -68,6 +89,9 @@ void SceneGame::Update()
 	}
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void SceneGame::Draw()
 {
 	for (auto& h : temp_handle)

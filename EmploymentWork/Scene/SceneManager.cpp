@@ -3,20 +3,32 @@
 
 SceneManager* SceneManager::m_instance = nullptr;
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 SceneManager::SceneManager()
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SceneManager::~SceneManager()
 {
 
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void SceneManager::Init()
 {
 
 }
 
+/// <summary>
+/// 現在の先頭シーンの更新関数を呼び出す
+/// </summary>
 bool SceneManager::Update()
 {
 	Input::GetInstance().Update();
@@ -28,7 +40,7 @@ bool SceneManager::Update()
 	{
 		for (auto& s : m_pScene)
 		{
-			s->EndAll();
+			s->End();
 		}
 
 		//シーンをリセット
@@ -41,11 +53,13 @@ bool SceneManager::Update()
 		m_pScene.back()->StartLoad();
 	}
 
-
 	//基本終了しない
 	return false;
 }
 
+/// <summary>
+/// 持っているシーンの描画関数を呼び出す
+/// </summary>
 void SceneManager::Draw()
 {
 	//先頭から順に描画
@@ -56,6 +70,9 @@ void SceneManager::Draw()
 	}
 }
 
+/// <summary>
+/// 実行中のシーンを引数で指定したシーンに切り替える
+/// </summary>
 void SceneManager::ChangeScene(std::shared_ptr<SceneBase> nextScene)
 {
 	//リストが空っぽだったら入れ替えずに
@@ -75,11 +92,17 @@ void SceneManager::ChangeScene(std::shared_ptr<SceneBase> nextScene)
 	}
 }
 
+/// <summary>
+/// 現在先頭で実行中のシーンの上にシーンを乗っける
+/// </summary>
 void SceneManager::PushScene(std::shared_ptr<SceneBase> scene)
 {
 	m_pScene.push_back(scene);
 }
 
+/// <summary>
+/// 現在の先頭シーンを削除する
+/// </summary>
 void SceneManager::popScene()
 {
 	m_pScene.pop_back();

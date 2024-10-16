@@ -2,35 +2,56 @@
 #include "Game.h"
 #include "SceneTitle.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 ScenePause::ScenePause()
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 ScenePause::~ScenePause()
 {
 }
 
+/// <summary>
+/// //リソースのロード開始
+/// </summary>
 void ScenePause::StartLoad()
 {
 	//何もしない
 }
 
+/// <summary>
+/// リソースのロードが終了したかどうか
+/// </summary>
 bool ScenePause::IsLoaded() const
 {
 	//このシーンはロード関係をInitでする
 	return true;
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void ScenePause::Init()
 {
 	//フェードアウトをスキップする
 	SkipFadeOut();
 }
 
+/// <summary>
+/// 終了
+/// </summary>
 void ScenePause::End()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void ScenePause::Update()
 {
 	if(Input::GetInstance().IsTriggered("B"))
@@ -48,6 +69,9 @@ void ScenePause::Update()
 	}
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void ScenePause::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
