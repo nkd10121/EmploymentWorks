@@ -51,5 +51,7 @@ void SceneTitle::Update()
 
 void SceneTitle::Draw()
 {
+#ifdef _DEBUG
 	DrawString(0, 0, "TITLE", 0xffffff);
+#endif
 }

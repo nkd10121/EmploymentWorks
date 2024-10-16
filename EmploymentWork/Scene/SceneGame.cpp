@@ -1,5 +1,6 @@
 #include "SceneGame.h"
 #include "SceneTitle.h"
+#include "ScenePause.h"
 
 SceneGame::SceneGame():
 	temp_handle()
@@ -8,7 +9,6 @@ SceneGame::SceneGame():
 
 SceneGame::~SceneGame()
 {
-	End();
 }
 
 void SceneGame::StartLoad()
@@ -60,9 +60,22 @@ void SceneGame::Update()
 		EndThisScene();
 		return;
 	}
+
+	if (Input::GetInstance().IsTriggered("Y"))
+	{
+		SceneManager::GetInstance().PushScene(std::make_shared<ScenePause>());
+		return;
+	}
 }
 
 void SceneGame::Draw()
 {
+	for (auto& h : temp_handle)
+	{
+		MV1DrawModel(h);
+	}
+
+#ifdef _DEBUG
 	DrawString(0, 0, "GAME", 0xffffff);
+#endif
 }

@@ -74,6 +74,12 @@ private:	/*フェード関係*/
 	/// </summary>
 	void StartFadeOut();	
 
+protected:
+
+	//フェードインをスキップする
+	void SkipFadeIn();
+	//フェードアウトをスキップする
+	void SkipFadeOut();
 private:
 
 	int m_fadeMask;

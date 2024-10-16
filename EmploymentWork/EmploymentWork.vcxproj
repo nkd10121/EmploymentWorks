@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ScenePause.cpp" />
     <ClCompile Include="Util\Camera.cpp" />
     <ClCompile Include="Util\Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="Scene\SceneTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ScenePause.h" />
     <ClInclude Include="Util\Camera.h" />
     <ClInclude Include="Util\Game.h" />
     <ClInclude Include="Util\Input.h" />

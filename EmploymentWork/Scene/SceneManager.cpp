@@ -26,9 +26,15 @@ bool SceneManager::Update()
 
 	if (m_pScene.back()->IsSceneEnd())
 	{
-		m_pScene.back()->EndAll();
+		for (auto& s : m_pScene)
+		{
+			s->EndAll();
+		}
 
-		m_pScene.back() = m_pNextScene;
+		//シーンをリセット
+		m_pScene.clear();
+		//末尾に追加
+		m_pScene.push_back(m_pNextScene);
 		m_pNextScene.reset();
 		m_pNextScene = nullptr;
 
@@ -67,14 +73,6 @@ void SceneManager::ChangeScene(std::shared_ptr<SceneBase> nextScene)
 		//m_pScene.back() = nextScene;
 		//m_pScene.back()->StartLoad();
 	}
-}
-
-void SceneManager::ChangeAndClearScene(std::shared_ptr<SceneBase> nextScene)
-{
-	//シーンをリセット
-	m_pScene.clear();
-	//末尾に追加
-	m_pScene.push_back(nextScene);
 }
 
 void SceneManager::PushScene(std::shared_ptr<SceneBase> scene)

@@ -70,11 +70,6 @@ public:
 	/// <param name="nextScene">遷移先のシーン</param>
 	void ChangeScene(std::shared_ptr<SceneBase> nextScene);
 	/// <summary>
-	/// シーンをリセットして切り替える
-	/// </summary>
-	/// <param name="nextScene">遷移先のシーン</param>
-	void ChangeAndClearScene(std::shared_ptr<SceneBase> nextScene);
-	/// <summary>
 	/// 現在先頭で実行中のシーンの上にシーンを乗っける
 	/// </summary>
 	/// <param name="scene">遷移先のシーン</param>

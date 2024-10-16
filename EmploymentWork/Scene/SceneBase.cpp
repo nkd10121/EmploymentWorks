@@ -166,7 +166,7 @@ void SceneBase::DrawLoading() const
 {
 	if (!IsLoaded())
 	{
-		DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 16,0xffffff,"Loading...");
+		DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 32,0xffffff,"Loading...");
 	}
 }
 
@@ -178,4 +178,16 @@ void SceneBase::StartFadeIn()
 void SceneBase::StartFadeOut()
 {
 	m_fadeSpeed = kFadeSpeed;
+}
+
+void SceneBase::SkipFadeIn()
+{
+	m_fadeBright = kBrightMax;
+	m_fadeSpeed = kFadeSpeed;
+}
+
+void SceneBase::SkipFadeOut()
+{
+	m_fadeBright = kBrightMin;
+	m_fadeSpeed = -kFadeSpeed;
 }
