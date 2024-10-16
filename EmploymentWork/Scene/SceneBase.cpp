@@ -179,7 +179,7 @@ void SceneBase::DrawLoading() const
 {
 	if (!IsLoaded())
 	{
-		DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 32,0xffffff,"Loading...");
+		DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 16,0xffffff,"Loading...");
 	}
 }
 

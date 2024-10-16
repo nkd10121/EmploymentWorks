@@ -69,6 +69,12 @@ public:	/*派生クラスに継承する必要のある処理*/
 
 protected:
 	/// <summary>
+	/// 初期化が呼ばれたかどうか
+	/// </summary>
+	/// <returns>true : 初期化済み, false : 初期化未完了</returns>
+	bool IsInitialized() { return m_isInit; }
+	
+	/// <summary>
 	/// 現在のシーンを終了させる
 	/// </summary>
 	void EndThisScene();

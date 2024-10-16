@@ -94,6 +94,11 @@ void SceneGame::Update()
 /// </summary>
 void SceneGame::Draw()
 {
+	// リソースのロードが終わるまでは描画しないのがよさそう
+	// (どちらにしろフェード仕切っているので何も見えないはず)
+	if (!IsLoaded())	return;
+	if (!IsInitialized())	return;
+
 	for (auto& h : temp_handle)
 	{
 		MV1DrawModel(h);
