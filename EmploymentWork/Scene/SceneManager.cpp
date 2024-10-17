@@ -103,7 +103,7 @@ void SceneManager::PushScene(std::shared_ptr<SceneBase> scene)
 /// <summary>
 /// Œ»İ‚Ìæ“ªƒV[ƒ“‚ğíœ‚·‚é
 /// </summary>
-void SceneManager::popScene()
+void SceneManager::PopScene()
 {
 	m_pScene.pop_back();
 }

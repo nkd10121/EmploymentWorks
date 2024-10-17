@@ -1,5 +1,4 @@
 #include "Input.h"
-#include "DxLib.h"
 #include <cassert>
 
 Input* Input::m_instance = nullptr;

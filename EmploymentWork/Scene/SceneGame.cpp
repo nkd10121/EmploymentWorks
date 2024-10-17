@@ -26,9 +26,9 @@ void SceneGame::StartLoad()
 	SetUseASyncLoadFlag(true);
 
 	// TODO:この間でリソースをロードする
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 1; i++)
 	{
-		temp_handle.push_back(MV1LoadModel("data/model/player.mv1"));
+		temp_handle.push_back(MV1LoadModel("data/model/temp_stage1.mv1"));
 	}
 
 	// デフォルトに戻す
@@ -55,6 +55,10 @@ bool SceneGame::IsLoaded() const
 void SceneGame::Init()
 {
 	//TODO:ここで実態の生成などをする
+	for (auto& h : temp_handle)
+	{
+		MV1SetScale(h, VGet(0.01f, 0.01f, 0.01f));
+	}
 }
 
 /// <summary>
