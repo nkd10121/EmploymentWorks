@@ -19,7 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CharacterBase.cpp" />
+    <ClCompile Include="Collidable.cpp" />
+    <ClCompile Include="ColliderBase.cpp" />
+    <ClCompile Include="ColliderCupsule.cpp" />
+    <ClCompile Include="ColliderSphere.cpp" />
+    <ClCompile Include="LoadCSV.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="ScenePause.cpp" />
     <ClCompile Include="Util\Camera.cpp" />
     <ClCompile Include="Util\Input.cpp" />
@@ -31,7 +39,17 @@
     <ClCompile Include="Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CharacterBase.h" />
+    <ClInclude Include="Collidable.h" />
+    <ClInclude Include="ColliderBase.h" />
+    <ClInclude Include="ColliderCupsule.h" />
+    <ClInclude Include="ColliderSphere.h" />
+    <ClInclude Include="GameObjectTag.h" />
+    <ClInclude Include="LoadCSV.h" />
+    <ClInclude Include="MyLib.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="ScenePause.h" />
     <ClInclude Include="Util\Camera.h" />
     <ClInclude Include="Util\Game.h" />

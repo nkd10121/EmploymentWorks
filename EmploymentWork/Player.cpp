@@ -36,6 +36,7 @@ void Player::Update()
 
 void Player::Draw()
 {
+	//プレイヤー想定のカプセル
 	VECTOR low = VGet(m_pos.x, m_pos.y - kCupsuleSize, m_pos.z);
 	VECTOR high = VGet(m_pos.x, m_pos.y + kCupsuleSize, m_pos.z);
 	DrawCapsule3D(low, high, kCupsuleRadius, kCupsuleDivNum, 0xffffff, 0xffffff, false);
@@ -43,6 +44,6 @@ void Player::Draw()
 
 #ifdef _DEBUG	//デバッグ描画
 	//入力値の確認
-	DrawFormatString(0, 16, 0xff0000, "入力値FromPlayer : %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
+	DrawFormatString(0, 16, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
 #endif
 }
