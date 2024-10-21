@@ -3,6 +3,9 @@
 //テスト用
 #include <list>
 
+//プロトタイプ宣言
+class Player;	//プレイヤー
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -52,5 +55,7 @@ public:
 
 private:
 	std::list<int> temp_handle;	//テスト用　TODO:いらなくなったら消せ
+
+	std::shared_ptr<Player> m_pPlayer;
 };
 

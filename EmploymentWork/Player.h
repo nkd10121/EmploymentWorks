@@ -13,5 +13,6 @@ public:
 
 private:
 	MyLib::Vec3 m_pos;
+	MyLib::Vec3 temp_moveVec;
 };
 

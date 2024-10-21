@@ -87,7 +87,8 @@ private:
 	std::map < std::string, bool> m_inputData;		//現在の入力
 	std::map < std::string, bool> m_lastInputData;	//直前の入力
 
-	XINPUT_STATE* m_inputState;
+	//コントローラーの入力情報
+	DINPUT_JOYSTATE m_padState;
 
 };
 

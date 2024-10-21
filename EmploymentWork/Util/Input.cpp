@@ -3,6 +3,11 @@
 
 Input* Input::m_instance = nullptr;
 
+namespace
+{
+
+}
+
 enum PadCheckMask : int
 {
 	A = 0x00000010,	//Aボタン
@@ -27,7 +32,8 @@ enum PadCheckMask : int
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Input::Input()
+Input::Input():
+	m_padState()
 {
 	m_commandTable["A"] = { PadCheckMask::A };
 	m_commandTable["B"] = { PadCheckMask::B };
@@ -62,8 +68,8 @@ void Input::Update()
 		}
 	}
 
-	//ZR,ZL,スティックの入力を取得
-	GetJoypadXInputState(DX_INPUT_PAD1, m_inputState);
+	//ボタンの入力を取得
+	GetJoypadDirectInputState(DX_INPUT_PAD1, &m_padState);
 }
 
 /// <summary>
@@ -98,15 +104,12 @@ std::pair<float, float> Input::GetInputStick(bool isRight) const
 {
 	if (isRight)
 	{
-		//このままの値で返すと-32768 ～ 32767とかいう値になってしまうため、-1000 ～ 1000に補正したい
-
-
 		//右スティックの入力情報を返す
-		return std::make_pair(static_cast<float>(m_inputState->ThumbRX), static_cast<float>(m_inputState->ThumbRY));
+		return std::make_pair(static_cast<float>(m_padState.Rx), static_cast<float>(m_padState.Ry));
 	}
 	else
 	{
 		//左スティックの入力情報を返す
-		return std::make_pair(static_cast<float>(m_inputState->ThumbLX), static_cast<float>(m_inputState->ThumbLY));
+		return std::make_pair(static_cast<float>(m_padState.X), static_cast<float>(m_padState.Y));
 	}
 }

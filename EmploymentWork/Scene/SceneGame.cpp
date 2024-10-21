@@ -1,6 +1,7 @@
 #include "SceneGame.h"
 #include "SceneTitle.h"
 #include "ScenePause.h"
+#include "Player.h"
 
 /// <summary>
 /// コンストラクタ
@@ -8,6 +9,8 @@
 SceneGame::SceneGame():
 	temp_handle()
 {
+	m_pPlayer = std::make_shared<Player>();
+
 }
 
 /// <summary>
@@ -59,6 +62,9 @@ void SceneGame::Init()
 	{
 		MV1SetScale(h, VGet(0.01f, 0.01f, 0.01f));
 	}
+
+	m_pPlayer->Init();
+
 }
 
 /// <summary>
@@ -91,6 +97,8 @@ void SceneGame::Update()
 		SceneManager::GetInstance().PushScene(std::make_shared<ScenePause>());
 		return;
 	}
+
+	m_pPlayer->Update();
 }
 
 /// <summary>
@@ -107,6 +115,8 @@ void SceneGame::Draw()
 	{
 		MV1DrawModel(h);
 	}
+
+	m_pPlayer->Draw();
 
 #ifdef _DEBUG
 	DrawString(0, 0, "GAME", 0xffffff);

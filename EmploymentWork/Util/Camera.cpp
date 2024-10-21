@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "DxLib.h"
+#include "Input.h"
 #include <cmath>
 
 namespace
@@ -28,11 +29,11 @@ void Camera::Init()
 
 void Camera::Update()
 {
-	if ((GetJoypadInputState(DX_INPUT_KEY_PAD1) & PAD_INPUT_LEFT))
+	if (Input::GetInstance().GetInputStick(true).first > 0.0f)
 	{
 		m_cameraAngle += 0.05f;
 	}
-	if ((GetJoypadInputState(DX_INPUT_KEY_PAD1) & PAD_INPUT_RIGHT))
+	if (Input::GetInstance().GetInputStick(true).first < 0.0f)
 	{
 		m_cameraAngle -= 0.05f;
 	}
