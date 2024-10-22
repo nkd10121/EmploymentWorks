@@ -108,8 +108,10 @@ void SceneGame::Update()
 		return;
 	}
 
+	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
 	m_pCamera->Update();
 
+	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
 	m_pPlayer->Update();
 
 	// •¨—XV
