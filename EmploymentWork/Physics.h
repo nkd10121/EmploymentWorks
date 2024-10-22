@@ -49,7 +49,7 @@ private:
 
 public:
 	//コンストラクタ
-	Physics(int normalStageCollisionHandle, int enemyStageCollisionHandle);
+	Physics(/*int normalStageCollisionHandle, int enemyStageCollisionHandle*/);
 
 	//衝突物の登録・登録解除
 	void Entry(std::shared_ptr<Collidable> collidable);

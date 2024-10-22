@@ -7,7 +7,8 @@
 /// コンストラクタ
 /// </summary>
 SceneGame::SceneGame():
-	temp_handle()
+	temp_handle(),
+	m_pPhysics(nullptr)
 {
 	m_pPlayer = std::make_shared<Player>();
 
@@ -63,7 +64,12 @@ void SceneGame::Init()
 		MV1SetScale(h, VGet(0.01f, 0.01f, 0.01f));
 	}
 
-	m_pPlayer->Init();
+	m_pPhysics = std::make_shared<MyLib::Physics>();
+	m_pPlayer->Init(m_pPhysics);
+
+	m_pCamera = std::make_shared<Camera>();
+	m_pCamera->Init();
+
 
 }
 
@@ -85,6 +91,10 @@ void SceneGame::End()
 /// </summary>
 void SceneGame::Update()
 {
+#ifdef _DEBUG
+	MyLib::DebugDraw::Clear();
+#endif
+
 	if (Input::GetInstance().IsTriggered("X"))
 	{
 		SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
@@ -98,7 +108,12 @@ void SceneGame::Update()
 		return;
 	}
 
+	m_pCamera->Update();
+
 	m_pPlayer->Update();
+
+	// 物理更新
+	m_pPhysics->Update();
 }
 
 /// <summary>
@@ -119,6 +134,8 @@ void SceneGame::Draw()
 	m_pPlayer->Draw();
 
 #ifdef _DEBUG
+	MyLib::DebugDraw::Draw3D();
+
 	DrawString(0, 0, "GAME", 0xffffff);
 #endif
 }

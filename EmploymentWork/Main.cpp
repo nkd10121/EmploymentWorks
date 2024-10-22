@@ -32,9 +32,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
 
-	//カメラの生成
-	std::shared_ptr<Camera> m_pCamera = std::make_shared<Camera>();
-	m_pCamera->Init();
 
 	while (ProcessMessage() == 0)
 	{
@@ -42,14 +39,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 画面のクリア
 		ClearDrawScreen();
 
-		//入力受付
-
+		//シーンの更新
 		SceneManager::GetInstance().Update();
 
-		m_pCamera->Update();
-
-
-
+		//シーンの描画
 		SceneManager::GetInstance().Draw();
 
 		//裏画面を表画面を入れ替える

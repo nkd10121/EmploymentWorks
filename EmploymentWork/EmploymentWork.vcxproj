@@ -24,6 +24,7 @@
     <ClCompile Include="ColliderBase.cpp" />
     <ClCompile Include="ColliderCupsule.cpp" />
     <ClCompile Include="ColliderSphere.cpp" />
+    <ClCompile Include="DebugDraw.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="ColliderBase.h" />
     <ClInclude Include="ColliderCupsule.h" />
     <ClInclude Include="ColliderSphere.h" />
+    <ClInclude Include="DebugDraw.h" />
     <ClInclude Include="GameObjectTag.h" />
     <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="MyLib.h" />

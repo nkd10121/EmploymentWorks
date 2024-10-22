@@ -103,6 +103,10 @@ std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const Collid
 	{
 		add = std::make_shared<ColliderSphere>(isTrigger);
 	}
+	else if(kind == ColliderBase::Kind::Cupsule)
+	{
+		add = std::make_shared<ColliderCupsule>(isTrigger);
+	}
 	else
 	{
 		assert(0 && "Žw’è‚³‚ê‚½Ží—Þ‚Ì“–‚½‚è”»’è‚ð’Ç‰Á‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");

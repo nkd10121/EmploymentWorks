@@ -35,10 +35,10 @@ namespace
 /// </summary>
 /// <param name="normalStageCollisionHandle">プレイヤーなどのステージ当たり判定ハンドル</param>
 /// <param name="enemyStageCollisionHandle">敵のステージ当たり判定ハンドル</param>
-MyLib::Physics::Physics(int normalStageCollisionHandle,int enemyStageCollisionHandle)
+MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollisionHandle*/)
 {
-	m_stageCollisionHandle = normalStageCollisionHandle;
-	m_enemyCollisionHandle = enemyStageCollisionHandle;
+	//m_stageCollisionHandle = normalStageCollisionHandle;
+	//m_enemyCollisionHandle = enemyStageCollisionHandle;
 }
 
 /// <summary>
@@ -124,8 +124,16 @@ void MyLib::Physics::Update()
 			{
 				auto sphereData = dynamic_cast<MyLib::ColliderSphere*> (collider.get());
 				auto radius = sphereData->m_radius;
-				//MyLib::DebugDraw::AddDrawSphere(pos, radius, kBeforeFixInfoColor);
-				//MyLib::DebugDraw::AddDrawSphere(nextPos, radius, kAimInfoColor);
+				MyLib::DebugDraw::AddDrawSphere(pos, radius, kBeforeFixInfoColor);
+				MyLib::DebugDraw::AddDrawSphere(nextPos, radius, kAimInfoColor);
+			}
+			else if (kind == ColliderBase::Kind::Cupsule)
+			{
+				auto cupsuleDaata = dynamic_cast<MyLib::ColliderCupsule*> (collider.get());
+				auto size = cupsuleDaata->m_size;
+				auto radius = cupsuleDaata->m_radius;
+				MyLib::DebugDraw::AddDrawCupsule(pos, size, radius, kBeforeFixInfoColor);
+				MyLib::DebugDraw::AddDrawCupsule(nextPos, size, radius, kAimInfoColor);
 			}
 		}
 
@@ -137,43 +145,43 @@ void MyLib::Physics::Update()
 	// 当たり判定チェック（nextPos指定）
 	CheckColide();
 
-	for (auto& item : m_collidables)
-	{
-		if (item->GetTag() == GameObjectTag::Player || item->GetTag() == GameObjectTag::Enemy)
-		{
-			float rad = 0;
-			int modelHandle = -1;
+	//for (auto& item : m_collidables)
+	//{
+	//	if (item->GetTag() == GameObjectTag::Player || item->GetTag() == GameObjectTag::Enemy)
+	//	{
+	//		float rad = 0;
+	//		int modelHandle = -1;
 
-			for (auto& col : item->m_colliders)
-			{
-				rad = dynamic_cast<MyLib::ColliderSphere*> (col.get())->m_radius;
+	//		for (auto& col : item->m_colliders)
+	//		{
+	//			rad = dynamic_cast<MyLib::ColliderSphere*> (col.get())->m_radius;
 
-				if (item->GetTag() == GameObjectTag::Player)
-				{
-					modelHandle = m_stageCollisionHandle;
-				}
-				else
-				{
-					modelHandle = m_enemyCollisionHandle;
-				}
-			}
-			m_hitDim = MV1CollCheck_Sphere(modelHandle, -1, item->rigidbody.GetNextPosVECTOR(), rad);
-		}
-		else
-		{
-			continue;
-		}
+	//			if (item->GetTag() == GameObjectTag::Player)
+	//			{
+	//				modelHandle = m_stageCollisionHandle;
+	//			}
+	//			else
+	//			{
+	//				modelHandle = m_enemyCollisionHandle;
+	//			}
+	//		}
+	//		m_hitDim = MV1CollCheck_Sphere(modelHandle, -1, item->rigidbody.GetNextPosVECTOR(), rad);
+	//	}
+	//	else
+	//	{
+	//		continue;
+	//	}
 
-		//壁と床の当たり判定を行う
-		CheckWallAndFloor(item);
-		//壁との当たり判定処理
-		FixPositionWithWall(item);
-		//床との当たり判定処理
-		FixNowPositionWithFloor(item);
+	//	//壁と床の当たり判定を行う
+	//	CheckWallAndFloor(item);
+	//	//壁との当たり判定処理
+	//	FixPositionWithWall(item);
+	//	//床との当たり判定処理
+	//	FixNowPositionWithFloor(item);
 
-		// 検出したプレイヤーの周囲のポリゴン情報を開放する
-		MV1CollResultPolyDimTerminate(m_hitDim);
-	}
+	//	// 検出したプレイヤーの周囲のポリゴン情報を開放する
+	//	MV1CollResultPolyDimTerminate(m_hitDim);
+	//}
 
 	CheckSendOnCollideInfo(m_preCollideInfo, m_newCollideInfo, false);
 	CheckSendOnCollideInfo(m_preTirrigerInfo, m_newTirrigerInfo, true);

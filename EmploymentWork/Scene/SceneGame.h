@@ -1,5 +1,7 @@
 #pragma once
 #include "SceneBase.h"
+#include "Camera.h"
+#include "MyLib.h"
 //テスト用
 #include <list>
 
@@ -57,5 +59,11 @@ private:
 	std::list<int> temp_handle;	//テスト用　TODO:いらなくなったら消せ
 
 	std::shared_ptr<Player> m_pPlayer;
+
+	//カメラの生成
+	std::shared_ptr<Camera> m_pCamera;
+
+	// 物理
+	std::shared_ptr<MyLib::Physics> m_pPhysics;
 };
 
