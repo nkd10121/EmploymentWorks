@@ -95,11 +95,11 @@ void MyLib::Physics::Update()
 	for (auto& item : m_collidables)
 	{
 		// ポジションに移動力を足す
-		auto pos = item->rigidbody.GetPos();
-		auto m_velocity = item->rigidbody.GetVelocity();
+		auto pos = item->rigidbody->GetPos();
+		auto m_velocity = item->rigidbody->GetVelocity();
 
 		// 重力を利用する設定なら、重力を追加する
-		if (item->rigidbody.GetUseGravity())
+		if (item->rigidbody->GetUseGravity())
 		{
 			m_velocity = m_velocity + Vec3(0.0f, kGravity, 0.0f);
 
@@ -112,7 +112,7 @@ void MyLib::Physics::Update()
 
 		auto nextPos = pos + m_velocity;
 
-		item->rigidbody.SetVelocity(m_velocity);
+		item->rigidbody->SetVelocity(m_velocity);
 
 		// もともとの情報、予定情報をデバッグ表示
 #if _DEBUG
@@ -139,7 +139,7 @@ void MyLib::Physics::Update()
 
 #endif
 		// 予定ポジション設定
-		item->rigidbody.SetNextPos(nextPos);
+		item->rigidbody->SetNextPos(nextPos);
 	}
 
 	// 当たり判定チェック（nextPos指定）
@@ -165,7 +165,7 @@ void MyLib::Physics::Update()
 	//				modelHandle = m_enemyCollisionHandle;
 	//			}
 	//		}
-	//		m_hitDim = MV1CollCheck_Sphere(modelHandle, -1, item->rigidbody.GetNextPosVECTOR(), rad);
+	//		m_hitDim = MV1CollCheck_Sphere(modelHandle, -1, item->rigidbody->GetNextPosVECTOR(), rad);
 	//	}
 	//	else
 	//	{
@@ -309,7 +309,7 @@ void MyLib::Physics::CheckColide()
 /// <param name="colliderA">オブジェクトAの当たり判定データ</param>
 /// <param name="colliderB">オブジェクトBの当たり判定データ</param>
 /// <returns></returns>
-bool MyLib::Physics::IsCollide(const Rigidbody& rigidA, const Rigidbody& rigidB, ColliderBase* colliderA, ColliderBase* colliderB) const
+bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_ptr<Rigidbody> rigidB, ColliderBase* colliderA, ColliderBase* colliderB) const
 {
 	bool isCollide = false;
 
@@ -321,7 +321,7 @@ bool MyLib::Physics::IsCollide(const Rigidbody& rigidA, const Rigidbody& rigidB,
 		auto colA = dynamic_cast<MyLib::ColliderSphere*>(colliderA);
 		auto colB = dynamic_cast<MyLib::ColliderSphere*>(colliderB);
 
-		auto atob = rigidA.GetNextPos() - rigidB.GetNextPos();
+		auto atob = rigidA->GetNextPos() - rigidB->GetNextPos();
 		auto atobLength = atob.Size();
 
 		// お互いの距離が、それぞれの半径を足したものより小さければ当たる
@@ -335,11 +335,11 @@ bool MyLib::Physics::IsCollide(const Rigidbody& rigidA, const Rigidbody& rigidB,
 		auto colB = dynamic_cast<MyLib::ColliderCupsule*>(colliderB);
 
 		//二つのカプセルの直線部分同士の最近点間の距離が二つの判定を足した距離と比較する
-		auto colACenter = rigidA.GetNextPos();
+		auto colACenter = rigidA->GetNextPos();
 		auto colAPos1 = VGet(colACenter.x, colACenter.y + colA->m_size,colACenter.z);
 		auto colAPos2 = VGet(colACenter.x, colACenter.y - colA->m_size,colACenter.z);
 
-		auto colBCenter = rigidB.GetNextPos();
+		auto colBCenter = rigidB->GetNextPos();
 		auto colBPos1 = VGet(colBCenter.x, colBCenter.y + colB->m_size, colBCenter.z);
 		auto colBPos2 = VGet(colBCenter.x, colBCenter.y - colB->m_size, colBCenter.z);
 
@@ -389,7 +389,7 @@ void MyLib::Physics::AddNewCollideInfo(const std::shared_ptr<Collidable>& objA, 
 /// <param name="secondaryRigid">優先度低オブジェクトの物理データ</param>
 /// <param name="primaryCollider">優先度高オブジェクトの当たり判定データ</param>
 /// <param name="secondaryCollider">優先度低オブジェクトの当たり判定データ</param>
-void MyLib::Physics::FixNextPosition(const Rigidbody& primaryRigid, Rigidbody& secondaryRigid, ColliderBase* primaryCollider, ColliderBase* secondaryCollider) const
+void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, std::shared_ptr<Rigidbody> secondaryRigid, ColliderBase* primaryCollider, ColliderBase* secondaryCollider) const
 {
 	// 当たり判定の種別ごとに補正方法を変える
 	auto primaryKind = primaryCollider->GetKind();
@@ -397,16 +397,16 @@ void MyLib::Physics::FixNextPosition(const Rigidbody& primaryRigid, Rigidbody& s
 
 	if (primaryKind == MyLib::ColliderBase::Kind::Sphere && secondaryKind == MyLib::ColliderBase::Kind::Sphere)
 	{
-		auto primaryToSecondary = secondaryRigid.GetNextPos() - primaryRigid.GetNextPos();
+		auto primaryToSecondary = secondaryRigid->GetNextPos() - primaryRigid->GetNextPos();
 		auto primaryToSecondaryN = primaryToSecondary.Normalize();
 
 		auto primaryColliderBase = dynamic_cast<MyLib::ColliderSphere*>(primaryCollider);
 		auto secondaryColliderBase = dynamic_cast<MyLib::ColliderSphere*>(secondaryCollider);
 		auto awayDist = primaryColliderBase->m_radius + secondaryColliderBase->m_radius + 0.0001f;	// そのままだとちょうど当たる位置になるので少し余分に離す
 		auto primaryToNewSecondaryPos = primaryToSecondaryN * awayDist;
-		auto fixedPos = primaryRigid.GetNextPos() + primaryToNewSecondaryPos;
-		fixedPos.y = secondaryRigid.GetPos().y;
-		secondaryRigid.SetNextPos(fixedPos);
+		auto fixedPos = primaryRigid->GetNextPos() + primaryToNewSecondaryPos;
+		fixedPos.y = secondaryRigid->GetPos().y;
+		secondaryRigid->SetNextPos(fixedPos);
 	}
 
 	//カプセルとカプセルの補正
@@ -416,11 +416,11 @@ void MyLib::Physics::FixNextPosition(const Rigidbody& primaryRigid, Rigidbody& s
 		auto colB = dynamic_cast<MyLib::ColliderCupsule*>(secondaryCollider);
 
 		//二つのカプセルの直線部分同士の最近点間の距離が二つの半径を足した距離になるように修正する
-		auto colACenter = primaryRigid.GetNextPos();
+		auto colACenter = primaryRigid->GetNextPos();
 		auto colAPos1 = VGet(colACenter.x, colACenter.y + colA->m_size, colACenter.z);
 		auto colAPos2 = VGet(colACenter.x, colACenter.y - colA->m_size, colACenter.z);
 
-		auto colBCenter = secondaryRigid.GetNextPos();
+		auto colBCenter = secondaryRigid->GetNextPos();
 		auto colBPos1 = VGet(colBCenter.x, colBCenter.y + colB->m_size, colBCenter.z);
 		auto colBPos2 = VGet(colBCenter.x, colBCenter.y - colB->m_size, colBCenter.z);
 
@@ -541,7 +541,7 @@ void MyLib::Physics::FixPosition()
 	{
 #if _DEBUG
 		//// 補正後の位置をデバッグ表示
-		//DebugDraw::DrawLine(item->rigidbody.GetPos(), item->nextPos, AfterFixInfoColor);
+		//DebugDraw::DrawLine(item->rigidbody->GetPos(), item->nextPos, AfterFixInfoColor);
 
 		//if (item->ColliderBase->GetKind() == ColliderBase::Kind::Circle2D)
 		//{
@@ -550,11 +550,11 @@ void MyLib::Physics::FixPosition()
 		//}
 #endif
 		// Posを更新するので、velocityもそこに移動するvelocityに修正
-		Vec3 toFixedPos = item->rigidbody.GetNextPos() - item->rigidbody.GetPos();
-		item->rigidbody.SetVelocity(toFixedPos);
+		Vec3 toFixedPos = item->rigidbody->GetNextPos() - item->rigidbody->GetPos();
+		item->rigidbody->SetVelocity(toFixedPos);
 
 		// 位置確定
-		item->rigidbody.SetPos(item->rigidbody.GetNextPos());
+		item->rigidbody->SetPos(item->rigidbody->GetNextPos());
 	}
 }
 
@@ -602,9 +602,9 @@ void MyLib::Physics::CheckWallAndFloor(std::shared_ptr<Collidable>& col)
 		if (m_hitDim.Dim[i].Normal.y < kWallPolyBorder && m_hitDim.Dim[i].Normal.y > -kWallPolyBorder)
 		{
 			// 壁ポリゴンと判断された場合でも、プレイヤーのＹ座標より高いポリゴンのみ当たり判定を行う
-			if (m_hitDim.Dim[i].Position[0].y > col->rigidbody.GetPos().y + kWallPolyHeight ||
-				m_hitDim.Dim[i].Position[1].y > col->rigidbody.GetPos().y + kWallPolyHeight ||
-				m_hitDim.Dim[i].Position[2].y > col->rigidbody.GetPos().y + kWallPolyHeight)
+			if (m_hitDim.Dim[i].Position[0].y > col->rigidbody->GetPos().y + kWallPolyHeight ||
+				m_hitDim.Dim[i].Position[1].y > col->rigidbody->GetPos().y + kWallPolyHeight ||
+				m_hitDim.Dim[i].Position[2].y > col->rigidbody->GetPos().y + kWallPolyHeight)
 			{
 				// ポリゴンの数が限界数に達していなかったらポリゴンを配列に追加
 				if (m_wallNum < ColInfo::kMaxColHitPolyNum)
@@ -652,7 +652,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 	m_isHitFlag = false;
 
 	// 移動したかどうかで処理を分岐
-	if (col->rigidbody.GetDir().Size() != 0.0f)
+	if (col->rigidbody->GetDir().Size() != 0.0f)
 	{
 		// 壁ポリゴンの数だけ繰り返し
 		for (int i = 0; i < m_wallNum; i++)
@@ -661,7 +661,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 			m_pPoly = m_pWallPoly[i];
 
 			// ポリゴンとプレイヤーが当たっていなかったら次のカウントへ
-			if (!HitCheck_Sphere_Triangle(col->rigidbody.GetNextPosVECTOR(), radius,
+			if (!HitCheck_Sphere_Triangle(col->rigidbody->GetNextPosVECTOR(), radius,
 				m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2])) continue;
 
 			// ここにきたらポリゴンとプレイヤーが当たっているということなので、ポリゴンに当たったフラグを立てる
@@ -671,7 +671,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 			MyLib::Vec3 SlideVec;
 
 			VECTOR ret;
-			ret = VCross(col->rigidbody.GetVelocityVECTOR(), m_pPoly->Normal);
+			ret = VCross(col->rigidbody->GetVelocityVECTOR(), m_pPoly->Normal);
 			// 進行方向ベクトルと壁ポリゴンの法線ベクトルに垂直なベクトルを算出
 			SlideVec = MyLib::Vec3(ret.x, ret.y, ret.z);
 
@@ -681,10 +681,10 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 			SlideVec = MyLib::Vec3(ret.x, ret.y, ret.z);
 
 			// それを移動前の座標に足したものを新たな座標とする
-			col->rigidbody.SetNextPos(col->rigidbody.GetPos() + SlideVec);
+			col->rigidbody->SetNextPos(col->rigidbody->GetPos() + SlideVec);
 
 			//変更したため新たに取得
-			//tempNextPos = col->rigidbody.GetNextPos();
+			//tempNextPos = col->rigidbody->GetNextPos();
 			//nextPos = tempNextPos.ConvertToVECTOR();
 
 			// 新たな移動座標で壁ポリゴンと当たっていないかどうかを判定する
@@ -695,7 +695,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 				m_pPoly = m_pWallPoly[j];
 
 				// 当たっていたらループから抜ける
-				if (HitCheck_Sphere_Triangle(col->rigidbody.GetNextPosVECTOR(), radius,
+				if (HitCheck_Sphere_Triangle(col->rigidbody->GetNextPosVECTOR(), radius,
 					m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]))
 				{
 					//trueにする
@@ -724,7 +724,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 			m_pPoly = m_pWallPoly[i];
 
 			// ポリゴンに当たっていたら当たったフラグを立てた上でループから抜ける
-			if (HitCheck_Sphere_Triangle(col->rigidbody.GetNextPosVECTOR(), radius,
+			if (HitCheck_Sphere_Triangle(col->rigidbody->GetNextPosVECTOR(), radius,
 				m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]))
 			{
 				m_isHitFlag = true;
@@ -764,23 +764,23 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 			m_pPoly = m_pWallPoly[j];
 
 			// ポリゴンとプレイヤーが当たっていなかったら次のカウントへ
-			if (!HitCheck_Sphere_Triangle(col->rigidbody.GetNextPosVECTOR(), radius,
+			if (!HitCheck_Sphere_Triangle(col->rigidbody->GetNextPosVECTOR(), radius,
 				m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2])) continue;
 
-			auto ret = VAdd(col->rigidbody.GetNextPosVECTOR(), VScale(m_pPoly->Normal, kColHitSlideLength));
+			auto ret = VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(m_pPoly->Normal, kColHitSlideLength));
 
 			MyLib::Vec3 set;
 			set = MyLib::Vec3(ret.x, ret.y, ret.z);
 
 			// 当たっていたら規定距離分プレイヤーを壁の法線方向に移動させる
-			col->rigidbody.SetNextPos(set);
+			col->rigidbody->SetNextPos(set);
 
 			// 移動した上で壁ポリゴンと接触しているかどうかを判定
 			for (int k = 0; k < m_wallNum; k++)
 			{
 				// 当たっていたらループを抜ける
 				m_pPoly = m_pWallPoly[k];
-				if (HitCheck_Sphere_Triangle(col->rigidbody.GetNextPosVECTOR(), radius,
+				if (HitCheck_Sphere_Triangle(col->rigidbody->GetNextPosVECTOR(), radius,
 					m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]))
 				{
 					isHitWall = true;
@@ -872,7 +872,7 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		m_pPoly = m_pFloorPoly[i];
 
 		// ポリゴンとプレイヤーが当たっていなかったら次のカウントへ
-		if (!HitCheck_Sphere_Triangle(col->rigidbody.GetNextPosVECTOR(), radius,
+		if (!HitCheck_Sphere_Triangle(col->rigidbody->GetNextPosVECTOR(), radius,
 			m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2])) continue;
 
 		float mostHeightY = m_pPoly->Position[0].y;
@@ -901,9 +901,9 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 	if (m_isHitFlag)
 	{
 		// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
-		auto set = col->rigidbody.GetNextPos();
+		auto set = col->rigidbody->GetNextPos();
 		set.y = PolyMaxPosY + radius;
-		col->rigidbody.SetNextPos(set);
+		col->rigidbody->SetNextPos(set);
 
 		//m_nextPos.y = PolyMaxPosY;
 		//dynamic_cast<CharacterBase*>(this)->HitGroundUpdate();

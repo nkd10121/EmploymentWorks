@@ -68,7 +68,11 @@ public:
 	void DebugDrawState(int x,int y);
 #endif
 
-private:
+protected:
+	/// <summary>
+	/// 持ち主がプレイヤーかどうかを判断する
+	/// </summary>
+	void CheckPlayer();
 
 protected:
 	std::shared_ptr<CharacterBase> m_pOwn;	//所有者のポインタ

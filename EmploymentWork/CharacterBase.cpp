@@ -9,6 +9,7 @@ CharacterBase::CharacterBase(Priority priority, GameObjectTag tag) :
 	m_animSpeed(0.5f),
 	m_isAnimationFinish(false)
 {
+	rigidbody = std::make_shared<MyLib::Rigidbody>();
 }
 
 CharacterBase::~CharacterBase()

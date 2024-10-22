@@ -27,6 +27,8 @@ public:
 	// 衝突したとき
 	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider) = 0;
 
+	std::shared_ptr<MyLib::Rigidbody> GetRigidbody(){ return rigidbody; }
+
 protected:
 	//アニメーションの更新
 	bool UpdateAnim(int attachNo, float startTime = 0.0f);

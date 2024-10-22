@@ -1,5 +1,7 @@
 #include "StateBase.h"
+#include "CharacterBase.h"
 #include <string>
+#include <cassert>
 
 /// <summary>
 /// コンストラクタ
@@ -49,3 +51,14 @@ void StateBase::DebugDrawState(int x, int y)
 	DrawFormatString(x, y, 0xffffff, "%s", state.c_str());
 }
 #endif
+
+/// <summary>
+/// 持ち主がプレイヤーかどうかを判断する
+/// </summary>
+void StateBase::CheckPlayer()
+{
+	if (m_pOwn->GetTag() != GameObjectTag::Player)
+	{
+		assert(0 && "持ち主がプレイヤーではありません");
+	}
+}

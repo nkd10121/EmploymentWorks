@@ -62,11 +62,11 @@ private:
 	//当たり判定チェック
 	void CheckColide();
 	//二つのオブジェクトが接触しているかどうか
-	bool IsCollide(const Rigidbody& rigidA, const Rigidbody& rigidB, ColliderBase* colliderA, ColliderBase* colliderB) const;
+	bool IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_ptr<Rigidbody> rigidB, ColliderBase* colliderA, ColliderBase* colliderB) const;
 	//当たったオブジェクトのペアを登録する
 	void AddNewCollideInfo(const std::shared_ptr<Collidable>& objA, const std::shared_ptr<Collidable>& objB, SendCollideInfo& info);
 	//移動予定の座標を修正する
-	void FixNextPosition(const Rigidbody& primaryRigid, Rigidbody& secondaryRigid, ColliderBase* primaryCollider, ColliderBase* secondaryCollider) const;
+	void FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, std::shared_ptr<Rigidbody> secondaryRigid, ColliderBase* primaryCollider, ColliderBase* secondaryCollider) const;
 	//種類ごとに衝突通知を飛ばす配列に追加する
 	void CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCollideInfo& newSendInfo, bool isTrigger);
 	//衝突通知を飛ばす配列に追加する

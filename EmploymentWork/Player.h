@@ -13,8 +13,10 @@ public:
 	void Update();
 	void Draw();
 
-	const MyLib::Vec3 GetPos()const { return rigidbody.GetPos(); }
+	const MyLib::Vec3 GetPos()const { return rigidbody->GetPos(); }
 	void SetCameraAngle(MyLib::Vec3 m_dir) { m_cameraDirection = m_dir; }
+
+	const MyLib::Vec3 GetCameraDirecton()const { return m_cameraDirection; }
 
 	// Õ“Ë‚µ‚½‚Æ‚«
 	void OnCollideEnter(const std::shared_ptr<Collidable>& colider)override;
