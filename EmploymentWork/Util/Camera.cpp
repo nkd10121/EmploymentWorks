@@ -5,8 +5,8 @@
 
 namespace
 {
-	constexpr float kCameraDist = 96.0f;
-	constexpr float kCameraHeight = 32.0f;
+	constexpr float kCameraDist = 24.0f;
+	constexpr float kCameraHeight = 4.0f;
 
 	constexpr float kCameraNear = 1.0f;
 	constexpr float kCameraFar = 360.0f;
@@ -48,7 +48,7 @@ Camera::~Camera()
 void Camera::Init()
 {
 	m_cameraAngleX = 0.0f;
-	m_cameraAngleY = 12.0f;
+	m_cameraAngleY = 0.0f;
 }
 
 void Camera::Update()
