@@ -1,0 +1,77 @@
+#include "PlayerStateWalk.h"
+#include "Input.h"
+#include "PlayerStateIdle.h"
+
+PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
+	StateBase(own)
+{
+	m_nowState = StateKind::Walk;
+}
+
+void PlayerStateWalk::Init()
+{
+}
+
+void PlayerStateWalk::Update()
+{
+	//左スティックが入力されていたらStateをWalkにする
+	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
+		Input::GetInstance().GetInputStick(false).second == 0.0f)
+	{
+		m_nextState = std::make_shared<PlayerStateIdle>(m_pOwn);
+		auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_nextState);
+		state->Init();
+		return;
+	}
+
+//	//コントローラーの左スティックの入力を取得
+//	auto input = Input::GetInstance().GetInputStick(false);
+//	auto temp_moveVec = MyLib::Vec3(input.first,0.0f,-input.second);
+//	//移動方向を設定する
+//	auto temp_moveVec = MyLib::Vec3(input.first, 0.0f, -input.second);
+//	//移動ベクトルの長さを取得する
+//	float len = temp_moveVec.Size();
+//
+//	//ベクトルの長さを0.0～1.0の割合に変換する
+//	float rate = len / kAnalogInputMax;
+//
+//	//アナログスティック無効な範囲を除外する(デッドゾーン)
+//	rate = (rate - kAnalogRangeMin) / (kAnalogRangeMax - kAnalogRangeMin);
+//	rate = min(rate, 1.0f);
+//	rate = max(rate, 0.0f);
+//
+//	//速度が決定できるので移動ベクトルに反映する
+//	temp_moveVec = temp_moveVec.Normalize();
+//	float speed = /*m_status.speed*/1.0f * rate;
+//
+//	temp_moveVec = temp_moveVec * speed;
+//
+//	//プレイヤーの正面方向を計算して正面方向を基準に移動する
+////カメラの正面方向ベクトル
+//	MyLib::Vec3 front(m_cameraDirection.x, 0.0f, m_cameraDirection.z);
+//	//向きベクトル*移動量
+//	front = front * temp_moveVec.z;
+//	//カメラの右方向ベクトル
+//	MyLib::Vec3 right(-m_cameraDirection.z, 0.0f, m_cameraDirection.x);
+//	//向きベクトル*移動量
+//	right = right * (-temp_moveVec.x);
+//
+//	//移動ベクトルの生成
+//	temp_moveVec = front + right;
+//	temp_moveVec = temp_moveVec.Normalize() * speed;
+//	//移動処理
+//	//MV1SetPosition(m_modelHandle, m_collisionPos.ConvertToVECTOR());
+//
+//	//カメラの座標からプレイヤーを回転させる方向を計算する
+//	m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
+//	m_rot = MyLib::Vec3(0.0f, m_angle, 0.0f);
+//	
+//	MyLib::Vec3 prevVelocity = rigidbody.GetVelocity();
+//	MyLib::Vec3 newVelocity = MyLib::Vec3(temp_moveVec.x, prevVelocity.y, temp_moveVec.z);
+//	rigidbody.SetVelocity(newVelocity);
+}
+
+int PlayerStateWalk::OnDamage(std::shared_ptr<MyLib::Collidable> collider)
+{
+	return 0;
+}

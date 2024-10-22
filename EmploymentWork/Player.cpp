@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Input.h"
 #include "MyLib.h"
+#include "PlayerStateIdle.h"
 
 namespace
 {
@@ -39,6 +40,11 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 {
 	Collidable::Init(physics);
 
+	m_pState = std::make_shared<PlayerStateIdle>(std::dynamic_pointer_cast<Player>(shared_from_this()));
+	m_pState->SetNextState(m_pState);
+	auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_pState);
+	state->Init();
+
 	//プレイヤーの初期位置設定
 	rigidbody.Init(false);
 	rigidbody.SetPos(m_pos);
@@ -47,6 +53,14 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 
 void Player::Update()
 {
+	//前のフレームとStateを比較して違うStateだったら
+	if (m_pState->GetNextState()->GetKind() != m_pState->GetKind())
+	{
+		//Stateを変更する
+		m_pState = m_pState->GetNextState();
+		m_pState->SetNextState(m_pState);
+	}
+
 	//コントローラーの左スティックの入力を取得
 	auto input = Input::GetInstance().GetInputStick(false);
 	temp_moveVec = MyLib::Vec3(input.first,0.0f,-input.second);
@@ -92,6 +106,8 @@ void Player::Update()
 	MyLib::Vec3 prevVelocity = rigidbody.GetVelocity();
 	MyLib::Vec3 newVelocity = MyLib::Vec3(temp_moveVec.x, prevVelocity.y, temp_moveVec.z);
 	rigidbody.SetVelocity(newVelocity);
+
+	m_pState->Update();
 }
 
 void Player::Draw()
@@ -108,6 +124,8 @@ void Player::Draw()
 #ifdef _DEBUG	//デバッグ描画
 	//入力値の確認
 	DrawFormatString(0, 16, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
+	//プレイヤーのステートパターンの確認
+	m_pState->DebugDrawState(0,32);
 #endif
 }
 

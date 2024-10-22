@@ -5,7 +5,7 @@
 
 namespace
 {
-	constexpr float kCameraDist = 24.0f;
+	constexpr float kCameraDist = 26.0f;
 	constexpr float kCameraHeight = 4.0f;
 
 	constexpr float kCameraNear = 1.0f;
@@ -39,10 +39,12 @@ Camera::Camera() :
 	m_lightHandle(-1)
 {
 	SetCameraNearFar(kCameraNear, kCameraFar);
+	m_lightHandle = CreateDirLightHandle((m_aimPos - m_cameraPos).ConvertToVECTOR());
 }
 
 Camera::~Camera()
 {
+	DeleteLightHandle(m_lightHandle);
 }
 
 void Camera::Init()

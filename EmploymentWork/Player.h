@@ -1,6 +1,7 @@
 #pragma once
 #include "Vec3.h"
 #include "CharacterBase.h"
+#include "StateBase.h"
 
 class Player : public CharacterBase
 {
@@ -20,6 +21,9 @@ public:
 	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
 
 private:
+	void ChangeState(std::shared_ptr<StateBase> state) { m_pState = state; }
+
+private:
 	MyLib::Vec3 m_pos;				//プレイヤーの描画座標
 	MyLib::Vec3 temp_moveVec;		//入力情報を確認するためのデバッグ用
 	MyLib::Vec3 m_cameraDirection;	//カメラの向き
@@ -28,5 +32,7 @@ private:
 	float  m_cameraAngle;		//カメラの角度
 	float m_angle;				//プレイヤーが向いている方向
 
+	//Stateパターン
+	std::shared_ptr<StateBase> m_pState;
 };
 
