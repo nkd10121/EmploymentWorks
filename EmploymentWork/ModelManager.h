@@ -77,10 +77,10 @@ public:
 	void Clear();
 
 	/// <summary>
-	/// ロードされているすべてのモデルの複製前ハンドルを返す
+	/// ハンドルが読み込まれているかどうか確認
 	/// </summary>
-	/// <returns></returns>
-	const std::list<int> GetPrimitiveModelHandles()const;
+	/// <returns>false : 読み込み終えていない, true : 読み込み終了</returns>
+	bool IsLoaded();
 
 private:
 	//モデルハンドル

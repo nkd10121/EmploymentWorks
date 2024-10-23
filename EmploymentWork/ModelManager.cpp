@@ -85,25 +85,25 @@ void ModelManager::Clear()
 		if (!h.isEternal)
 		{
 			MV1DeleteModel(h.handle);
-			h.handle = 0;
 		}
 	}
 
 	//不要になったハンドルをここで削除処理する
 	auto it = remove_if(m_handles.begin(), m_handles.end(), [](auto& v) {
-		return v.handle == 0;
+		return v.isEternal == false;
 		});
 	m_handles.erase(it, m_handles.end());
 }
 
-const std::list<int> ModelManager::GetPrimitiveModelHandles() const
+/// <summary>
+/// ハンドルが読み込まれているかどうか確認
+/// </summary>
+bool ModelManager::IsLoaded()
 {
-	std::list<int> ret;
-
 	for (auto& h : m_handles)
 	{
-		ret.emplace_back(h.handle);
+		if (CheckHandleASyncLoad(h.handle))	return false;
 	}
 
-	return ret;
+	return true;
 }

@@ -63,6 +63,8 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 
 	//プレイヤーのステータス取得
 	m_status = LoadCSV::GetInstance().LoadStatus("Player");
+	//最大HPを設定しておく
+	m_hpMax = m_status.hp;
 }
 
 /// <summary>
@@ -152,18 +154,22 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 #ifdef _DEBUG
 		message += "ポーション";
 #endif
+		//HPが減っているときのみ回復処理を行う
 		//if (m_hpMax > m_status.hp)
 		{
+			//HPを満タンまで回復させる
 			m_status.hp = m_hpMax;
 
-			auto pos = rigidbody->GetPos();
-			//EffectManager::GetInstance().CreateEffect("Heal", pos);
-
+			//ポーションを削除する
 			HealPortion* col = dynamic_cast<HealPortion*>(colider.get());
 			col->End();
 
-			//SoundManager::GetInstance().PlaySE("heal");
+			//回復エフェクトを生成する
+			auto pos = rigidbody->GetPos();
+			//EffectManager::GetInstance().CreateEffect("Heal", pos);
 
+			//回復SEを流す
+			//SoundManager::GetInstance().PlaySE("heal");
 		}
 		break;
 	}

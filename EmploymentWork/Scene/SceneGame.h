@@ -61,7 +61,7 @@ private:
 	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
 	std::list<std::shared_ptr<HealPortion>> m_pPortions;	//回復ポーションポインタの配列
 
-	std::list<int> m_modelHandles;	//モデルハンドル(仮)
+	int m_stageModel;	//モデルハンドル(仮)
 
 };
 

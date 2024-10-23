@@ -8,7 +8,7 @@
 namespace
 {
 	//ステージパス
-	const std::string kStagePath = "data/model/temp_stage1.mv1";
+	const std::string kStagePath = "data/model/Player.mv1";
 	//ポーションモデルのパス
 	const std::string kPortionPath = "data/model/object/portion/bottle_red.mv1";
 }
@@ -20,7 +20,8 @@ SceneGame::SceneGame():
 	m_pPlayer(nullptr),
 	m_pCamera(nullptr),
 	m_pPhysics(nullptr),
-	m_modelHandles()
+	m_pPortions(),
+	m_stageModel(-1)
 {
 
 }
@@ -56,11 +57,7 @@ bool SceneGame::IsLoaded() const
 {
 	//TODO:ここでリソースがロード中かどうかを判断する
 
-	auto modelHandle = ModelManager::GetInstance().GetPrimitiveModelHandles();
-	for (auto& h : modelHandle)
-	{
-		if (CheckHandleASyncLoad(h))	return false;
-	}
+	if (!ModelManager::GetInstance().IsLoaded())	return false;
 
 	return true;
 }
@@ -71,21 +68,21 @@ bool SceneGame::IsLoaded() const
 void SceneGame::Init()
 {
 	//TODO:ここで実態の生成などをする
+	m_pPhysics = std::make_shared<MyLib::Physics>();
 
 	m_pPlayer = std::make_shared<Player>();
-
-	m_pPhysics = std::make_shared<MyLib::Physics>();
 	m_pPlayer->Init(m_pPhysics);
+
 
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init();
 
-	m_modelHandles.emplace_back(ModelManager::GetInstance().GetModelHandle(kStagePath));
-	MV1SetScale(m_modelHandles.back(), VGet(0.01f, 0.01f, 0.01f));
+	m_stageModel = ModelManager::GetInstance().GetModelHandle(kStagePath);
+	//MV1SetScale(m_modelHandles.back(), VGet(0.01f, 0.01f, 0.01f));
 
-	m_pPortions.emplace_back(std::make_shared<HealPortion>());
-	m_pPortions.back()->Init(m_pPhysics);
-	m_pPortions.back()->SetPosition(MyLib::Vec3(0.0f,0.0f,-10.0f));
+	//m_pPortions.emplace_back(std::make_shared<HealPortion>());
+	//m_pPortions.back()->Init(m_pPhysics);
+	//m_pPortions.back()->SetPosition(MyLib::Vec3(0.0f,0.0f,-10.0f));
 }
 
 /// <summary>
@@ -95,11 +92,10 @@ void SceneGame::End()
 {
 	//TODO:ここでリソースの開放をする
 
-	for (auto& h : m_modelHandles)
-	{
-		MV1DeleteModel(h);
-	}
-	m_modelHandles.clear();
+	MV1DeleteModel(m_stageModel);
+
+	m_pPortions.clear();
+
 }
 
 /// <summary>
@@ -123,6 +119,13 @@ void SceneGame::Update()
 	{
 		SceneManager::GetInstance().PushScene(std::make_shared<ScenePause>());
 		return;
+	}
+
+	if (Input::GetInstance().IsTriggered("A"))
+	{
+		m_pPortions.emplace_back(std::make_shared<HealPortion>());
+		m_pPortions.back()->Init(m_pPhysics);
+		m_pPortions.back()->SetPosition(MyLib::Vec3(0.0f, 0.0f, -10.0f));
 	}
 
 	//プレイヤーの更新
@@ -154,8 +157,6 @@ void SceneGame::Update()
 
 	//物理更新
 	m_pPhysics->Update();
-
-
 }
 
 /// <summary>
@@ -166,12 +167,7 @@ void SceneGame::Draw()
 	// リソースのロードが終わるまでは描画しないのがよさそう
 	// (どちらにしろフェード仕切っているので何も見えないはず)
 	if (!IsLoaded())	return;
-	if (!IsInitialized())	return;
-
-	for (auto& h : m_modelHandles)
-	{
-		MV1DrawModel(h);
-	}
+	if (!IsInitialized())	return
 
 	//プレイヤーの描画
 	m_pPlayer->Draw();
