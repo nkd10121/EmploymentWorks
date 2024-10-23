@@ -4,16 +4,21 @@
 
 namespace MyLib
 {
+	/// <summary>
+	/// カプセル型の当たり判定
+	/// </summary>
 	class ColliderCupsule : public ColliderBase
 	{
 	public:
-		//コンストラクタ
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="isTrigger">トリガーかどうか</param>
 		ColliderCupsule(bool isTrigger);
 
-		//大きさ
-		float m_size;
-		//半径
-		float m_radius;
+	public:
+		float m_size;	//大きさ
+		float m_radius;	//半径
 	};
 }
 

@@ -4,14 +4,18 @@
 
 namespace MyLib
 {
-	//三次元ベクトルを扱うクラス
+	/// <summary>
+	/// 三次元ベクトルを扱うクラス
+	/// </summary>
 	class Vec3
 	{
 	public:
-		float x, y, z;
+		float x, y, z;	//座標
 
 	public:
-		//引数なしコンストラクタ
+		/// <summary>
+		/// 引数なしコンストラクタ
+		/// </summary>
 		Vec3() :
 			x(0.0f),
 			y(0.0f),
@@ -20,7 +24,12 @@ namespace MyLib
 
 		}
 
-		//引数有りコンストラクタ
+		/// <summary>
+		/// 引数有りコンストラクタ
+		/// </summary>
+		/// <param name="x">X座標</param>
+		/// <param name="y">Y座標</param>
+		/// <param name="z">Z座標</param>
 		Vec3(const float x, const float y, const float z)
 		{
 			this->x = x;
@@ -28,7 +37,11 @@ namespace MyLib
 			this->z = z;
 		}
 
-		//足し算
+		/// <summary>
+		/// 足し算
+		/// </summary>
+		/// <param name="other">足すベクトル</param>
+		/// <returns>自身に引数のベクトルを足した結果ベクトル</returns>
 		Vec3 operator+(const Vec3& other)const
 		{
 			Vec3 ret;
@@ -38,7 +51,11 @@ namespace MyLib
 			return ret;
 		}
 
-		//足し算
+		/// <summary>
+		/// 足し算
+		/// </summary>
+		/// <param name="other">足すベクトル</param>
+		/// <returns>自身に引数のベクトルを足した結果ベクトル</returns>
 		Vec3 operator+=(const Vec3& other)
 		{
 			this->x += other.x;
@@ -47,7 +64,11 @@ namespace MyLib
 			return *this;
 		}
 
-		//引き算
+		/// <summary>
+		/// 引き算
+		/// </summary>
+		/// <param name="other">引くベクトル</param>
+		/// <returns>自身から引数のベクトルを引いた結果ベクトル</returns>
 		Vec3 operator-(const Vec3& other)const
 		{
 			Vec3 ret;
@@ -57,7 +78,11 @@ namespace MyLib
 			return ret;
 		}
 
-		//引き算
+		/// <summary>
+		/// 引き算
+		/// </summary>
+		/// <param name="other">引くベクトル</param>
+		/// <returns>自身から引数のベクトルを引いた結果ベクトル</returns>
 		Vec3 operator-=(const Vec3& other)
 		{
 			this->x -= other.x;
@@ -66,6 +91,11 @@ namespace MyLib
 			return *this;
 		}
 
+		/// <summary>
+		/// 掛け算
+		/// </summary>
+		/// <param name="scale">かける数</param>
+		/// <returns>自身のそれぞれにかける数を掛けた結果ベクトル</returns>
 		Vec3 operator*(const float scale)
 		{
 			Vec3 ret;
@@ -75,6 +105,11 @@ namespace MyLib
 			return ret;
 		}
 
+		/// <summary>
+		/// 代入
+		/// </summary>
+		/// <param name="vec">代入するベクトル</param>
+		/// <returns>代入結果ベクトル</returns>
 		Vec3 operator=(const VECTOR& vec)
 		{
 			Vec3 ret;
@@ -84,7 +119,11 @@ namespace MyLib
 			return ret;
 		}
 
-		//比較
+		/// <summary>
+		/// 比較
+		/// </summary>
+		/// <param name="other">比較対象ベクトル</param>
+		/// <returns>比較結果　false : 同一でない, true : 同一</returns>
 		bool operator==(const Vec3& other)const
 		{
 			bool ret;
@@ -92,7 +131,11 @@ namespace MyLib
 			return ret;
 		}
 
-		//比較
+		/// <summary>
+		/// 比較
+		/// </summary>
+		/// <param name="other">比較対象ベクトル</param>
+		/// <returns>比較結果　false : 同一, true : 同一でない</returns>
 		bool operator!=(const Vec3& other)const
 		{
 			bool ret;
@@ -100,7 +143,10 @@ namespace MyLib
 			return ret;
 		}
 
-		//ベクトルのサイズを取得する
+		/// <summary>
+		/// ベクトルのサイズを取得する
+		/// </summary>
+		/// <returns>ベクトルのサイズ</returns>
 		float Size()const
 		{
 			float ret;
@@ -108,7 +154,10 @@ namespace MyLib
 			return ret;
 		}
 
-		//ベクトルのサイズの２乗を取得する
+		/// <summary>
+		/// ベクトルのサイズの2乗を取得する
+		/// </summary>
+		/// <returns>ベクトルのサイズの2乗</returns>
 		float SquareSize()const
 		{
 			float ret;
@@ -116,7 +165,10 @@ namespace MyLib
 			return ret;
 		}
 
-		//正規化ベクトルを取得する
+		/// <summary>
+		/// 正規化ベクトルを取得する
+		/// </summary>
+		/// <returns>正規化ベクトル</returns>
 		Vec3 Normalize()const
 		{
 			Vec3 ret;
@@ -131,7 +183,11 @@ namespace MyLib
 			return ret;
 		}
 
-		//二つのベクトルの内積を取得する
+		/// <summary>
+		/// 二つのベクトルの内積を取得する
+		/// </summary>
+		/// <param name="other">乗ベクトル</param>
+		/// <returns>内積</returns>
 		float Dot(const Vec3& other)const
 		{
 			float ret;
@@ -139,7 +195,11 @@ namespace MyLib
 			return ret;
 		}
 
-		//二つのベクトルの外積を取得する
+		/// <summary>
+		/// 二つのベクトルの外積を取得する
+		/// </summary>
+		/// <param name="other">乗ベクトル</param>
+		/// <returns>外積</returns>
 		Vec3 Cross(const Vec3& other)const
 		{
 			Vec3 ret;
@@ -149,7 +209,10 @@ namespace MyLib
 			return ret;
 		}
 
-		//DxLibのVECTOR型に変換
+		/// <summary>
+		/// DxLibのVECTOR型に変換
+		/// </summary>
+		/// <returns>DxLib::VECTOR型ベクトル</returns>
 		DxLib::VECTOR ConvertToVECTOR()
 		{
 			DxLib::VECTOR ret = VGet(0.0f, 0.0f, 0.0f);

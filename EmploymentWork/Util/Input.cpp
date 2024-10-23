@@ -5,29 +5,27 @@ Input* Input::m_instance = nullptr;
 
 namespace
 {
+	enum PadCheckMask : int
+	{
+		A = 0x00000010,	//Aボタン
+		B = 0x00000020,	//Bボタン
+		X = 0x00000040,	//Xボタン
+		Y = 0x00000080,	//Yボタン
 
+		L = 0x00000100,	//Lボタン
+		R = 0x00000200,	//Rボタン
+
+		RStickPush = 0x00002000,	//Rスティック押し込み
+		test = 0x00008000,	//Rスティック押し込み
+
+		P = 0x00000800,	//ホームボタン(?)
+
+		UP = 0x00000008,	//上ボタン
+		RIGHT = 0x00000004,	//右ボタン
+		DOWN = 0x00000001,	//下ボタン
+		LEFT = 0x00000002,	//左ボタン
+	};
 }
-
-enum PadCheckMask : int
-{
-	A = 0x00000010,	//Aボタン
-	B = 0x00000020,	//Bボタン
-	X = 0x00000040,	//Xボタン
-	Y = 0x00000080,	//Yボタン
-
-	L = 0x00000100,	//Lボタン
-	R = 0x00000200,	//Rボタン
-
-	RStickPush = 0x00002000,	//Rスティック押し込み
-	test = 0x00008000,	//Rスティック押し込み
-
-	P = 0x00000800,	//ホームボタン(?)
-
-	UP = 0x00000008,	//上ボタン
-	RIGHT = 0x00000004,	//右ボタン
-	DOWN = 0x00000001,	//下ボタン
-	LEFT = 0x00000002,	//左ボタン
-};
 
 /// <summary>
 /// コンストラクタ
@@ -35,6 +33,8 @@ enum PadCheckMask : int
 Input::Input():
 	m_padState()
 {
+	//ここでコマンドテーブルにコマンドを追加する
+
 	m_commandTable["A"] = { PadCheckMask::A };
 	m_commandTable["B"] = { PadCheckMask::B };
 	m_commandTable["X"] = { PadCheckMask::X };
@@ -100,6 +100,9 @@ bool Input::IsPushed(const char* command) const
 	return (m_inputData.at(command) && m_lastInputData.at(command));
 }
 
+/// <summary>
+/// スティックの入力情報を取得
+/// </summary>
 std::pair<float, float> Input::GetInputStick(bool isRight) const
 {
 	if (isRight)

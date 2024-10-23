@@ -38,7 +38,7 @@ void ModelManager::LoadModel(std::string path, bool isEternal)
 
 	//ここに来たということはすでにロードされていなかった
 	//→新しくロードする必要がある
-	Handle add;
+	Model add;
 	add.handle = MV1LoadModel(path.c_str());
 	add.path = path;
 	add.isEternal = isEternal;

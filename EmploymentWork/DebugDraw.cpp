@@ -37,9 +37,6 @@ void MyLib::DebugDraw::Draw3D()
 /// <summary>
 /// 球体の描画リストに追加する
 /// </summary>
-/// <param name="center">中心座標</param>
-/// <param name="radius">半径</param>
-/// <param name="color">色</param>
 void MyLib::DebugDraw::AddDrawSphere(const Vec3& center, const float& radius, const unsigned int& color)
 {
 	//球体の描画リストに追加する
@@ -50,6 +47,9 @@ void MyLib::DebugDraw::AddDrawSphere(const Vec3& center, const float& radius, co
 	m_sphereInfo.emplace_back(addInfo);
 }
 
+/// <summary>
+/// カプセルの描画リストに追加する
+/// </summary>
 void MyLib::DebugDraw::AddDrawCupsule(const Vec3& center, const float& size, const float& radius, const unsigned int& color)
 {
 	CupsuleInfo addInfo;

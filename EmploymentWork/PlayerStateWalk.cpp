@@ -8,21 +8,30 @@ namespace
 {
 	/*アナログスティックによる移動関連*/
 	constexpr float kMaxSpeed = 0.2f;			//プレイヤーの最大速度
-	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定範囲
-	constexpr float kAnalogRangeMax = 0.8f;
+	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定最小範囲
+	constexpr float kAnalogRangeMax = 0.8f;		//アナログスティックの入力判定最大範囲
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 	StateBase(own)
 {
 	m_nowState = StateKind::Walk;
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void PlayerStateWalk::Init()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void PlayerStateWalk::Update()
 {
 	CheckPlayer();
@@ -82,7 +91,7 @@ void PlayerStateWalk::Update()
 	own->GetRigidbody()->SetVelocity(newVelocity);
 }
 
-int PlayerStateWalk::OnDamage(std::shared_ptr<MyLib::Collidable> collider)
-{
-	return 0;
-}
+//int PlayerStateWalk::OnDamage(std::shared_ptr<MyLib::Collidable> collider)
+//{
+//	return 0;
+//}

@@ -18,7 +18,6 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	SceneGame();
-
 	/// <summary>
 	/// デストラクタ
 	/// </summary>

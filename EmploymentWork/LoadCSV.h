@@ -1,4 +1,6 @@
 #pragma once
+#include "CharacterBase.h"
+
 class LoadCSV
 {
 private:
@@ -44,7 +46,9 @@ public:
 	}
 
 public:
-	//ステータス情報ロード
-	void StatusLoad(const char* characterName);
+	/// <summary>
+	/// ステータス情報を取得
+	/// </summary>
+	/// <param name="characterName">ステータスを取得したいキャラクター名</param>
+	CharacterBase::Status StatusLoad(const char* characterName);
 };
-

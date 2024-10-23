@@ -10,10 +10,8 @@
 class ModelManager
 {
 public:
-	/// <summary>
-	/// ハンドル
-	/// </summary>
-	struct Handle
+	//モデル構造体
+	struct Model
 	{
 		std::string path;	//モデルパス
 		int handle;			//モデルハンドル
@@ -86,7 +84,7 @@ public:
 
 private:
 	//モデルハンドル
-	std::list<Handle> m_handles;
+	std::list<Model> m_handles;
 
 };
 

@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "SceneManager.h"
 #include "ModelManager.h"
+#include "LoadCSV.h"
 #include "SceneTitle.h"
 #include <memory>
 
@@ -31,8 +32,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	//最初にタイトルシーンに遷移する
 	SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
-
 
 	while (ProcessMessage() == 0)
 	{
@@ -42,7 +43,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//シーンの更新
 		SceneManager::GetInstance().Update();
-
 		//シーンの描画
 		SceneManager::GetInstance().Draw();
 
@@ -62,6 +62,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager::GetInstance().Destroy();
 	Input::GetInstance().Destroy();
 	ModelManager::GetInstance().Destroy();
+	LoadCSV::GetInstance().Destroy();
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 

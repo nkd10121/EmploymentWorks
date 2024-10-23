@@ -29,6 +29,9 @@ namespace
 	constexpr float kCameraToPlayerLenghtMax = 175.0f;
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 Camera::Camera() :
 	m_cameraAngleX(0.0f),
 	m_cameraAngleY(0.0f),
@@ -42,17 +45,26 @@ Camera::Camera() :
 	m_lightHandle = CreateDirLightHandle((m_aimPos - m_cameraPos).ConvertToVECTOR());
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Camera::~Camera()
 {
 	DeleteLightHandle(m_lightHandle);
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void Camera::Init()
 {
 	m_cameraAngleX = 0.0f;
 	m_cameraAngleY = 0.0f;
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void Camera::Update()
 {
 	m_angleMoveScale = 2.0f;
@@ -89,7 +101,6 @@ void Camera::Update()
 		}
 	}
 
-
 	// カメラの位置はカメラの水平角度と垂直角度から算出
 	// 最初に垂直角度を反映した位置を算出
 	MyLib::Vec3 tempPos1;
@@ -117,6 +128,9 @@ void Camera::Update()
 	SetCameraPositionAndTarget_UpVecY(m_cameraPos.ConvertToVECTOR(), m_aimPos.ConvertToVECTOR());
 }
 
+/// <summary>
+/// カメラが向いている方向ベクトルを取得
+/// </summary>
 const MyLib::Vec3 Camera::GetDirection() const
 {
 	return (m_aimPos - m_cameraPos).Normalize();

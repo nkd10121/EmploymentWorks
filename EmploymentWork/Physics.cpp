@@ -33,8 +33,6 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="normalStageCollisionHandle">プレイヤーなどのステージ当たり判定ハンドル</param>
-/// <param name="enemyStageCollisionHandle">敵のステージ当たり判定ハンドル</param>
 MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollisionHandle*/)
 {
 	//m_stageCollisionHandle = normalStageCollisionHandle;
@@ -304,11 +302,6 @@ void MyLib::Physics::CheckColide()
 /// <summary>
 /// /二つのオブジェクトが接触しているかどうか
 /// </summary>
-/// <param name="rigidA">オブジェクトAの物理データ</param>
-/// <param name="rigidB">オブジェクトBの物理データ</param>
-/// <param name="colliderA">オブジェクトAの当たり判定データ</param>
-/// <param name="colliderB">オブジェクトBの当たり判定データ</param>
-/// <returns></returns>
 bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_ptr<Rigidbody> rigidB, ColliderBase* colliderA, ColliderBase* colliderB) const
 {
 	bool isCollide = false;
@@ -354,9 +347,6 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 /// <summary>
 /// 当たったオブジェクトのペアを登録する
 /// </summary>
-/// <param name="objA">オブジェクトA</param>
-/// <param name="objB">オブジェクトB</param>
-/// <param name="info">登録する配列</param>
 void MyLib::Physics::AddNewCollideInfo(const std::shared_ptr<Collidable>& objA, const std::shared_ptr<Collidable>& objB, SendCollideInfo& info)
 {
 	bool isParentA = info.find(objA) != info.end();
@@ -385,10 +375,6 @@ void MyLib::Physics::AddNewCollideInfo(const std::shared_ptr<Collidable>& objA, 
 /// <summary>
 /// 移動予定の座標を修正する
 /// </summary>
-/// <param name="primaryRigid">優先度高オブジェクトの物理データ</param>
-/// <param name="secondaryRigid">優先度低オブジェクトの物理データ</param>
-/// <param name="primaryCollider">優先度高オブジェクトの当たり判定データ</param>
-/// <param name="secondaryCollider">優先度低オブジェクトの当たり判定データ</param>
 void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, std::shared_ptr<Rigidbody> secondaryRigid, ColliderBase* primaryCollider, ColliderBase* secondaryCollider) const
 {
 	// 当たり判定の種別ごとに補正方法を変える
@@ -431,9 +417,6 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 /// <summary>
 /// 種類ごとに衝突通知を飛ばす配列に追加する
 /// </summary>
-/// <param name="preSendInfo">衝突したオブジェクトのリストのログ</param>
-/// <param name="newSendInfo">衝突したオブジェクトのリスト</param>
-/// <param name="isTrigger">無視するかどうか</param>
 void MyLib::Physics::CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCollideInfo& newSendInfo, bool isTrigger)
 {
 	for (auto& parent : newSendInfo)
@@ -520,9 +503,6 @@ void MyLib::Physics::CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCo
 /// <summary>
 /// 衝突通知を飛ばす配列に追加する
 /// </summary>
-/// <param name="own">自身</param>
-/// <param name="send">衝突した相手</param>
-/// <param name="kind">当たり判定の種類</param>
 void MyLib::Physics::AddOnCollideInfo(const std::shared_ptr<Collidable>& own, const std::shared_ptr<Collidable>& send, eOnCollideInfoKind kind)
 {
 	OnCollideInfoData addInfo;
@@ -588,7 +568,6 @@ void MyLib::Physics::FixPosition()
 /// <summary>
 /// チェックしたポリゴンが壁ポリゴンか床ポリゴンかを判断し保存する
 /// </summary>
-/// <param name="col">チェックするオブジェクト</param>
 void MyLib::Physics::CheckWallAndFloor(std::shared_ptr<Collidable>& col)
 {
 	// 壁ポリゴンと床ポリゴンの数を初期化する
@@ -635,7 +614,6 @@ void MyLib::Physics::CheckWallAndFloor(std::shared_ptr<Collidable>& col)
 /// <summary>
 /// 壁ポリゴンとの当たり判定をチェックし、移動させる
 /// </summary>
-/// <param name="col">チェックするオブジェクト</param>
 void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 {
 	float radius = 0.0f;
@@ -743,7 +721,6 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 /// <summary>
 /// 壁の中から押し出す
 /// </summary>
-/// <param name="col">チェックするオブジェクト</param>
 void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& col)
 {
 	float radius = 0.0f;
@@ -800,7 +777,6 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 /// <summary>
 /// 床ポリゴンとの当たり判定をチェックし、移動させる
 /// </summary>
-/// <param name="col">チェックするオブジェクト</param>
 void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 {
 	//床ポリゴンがない場合は何もしない

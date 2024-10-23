@@ -17,6 +17,9 @@ namespace
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 Player::Player():
 	CharacterBase(Collidable::Priority::Low, GameObjectTag::Player),
 	m_pos(MyLib::Vec3(0.0f, kCupsuleRadius+ kCupsuleSize,0.0f)),
@@ -32,10 +35,16 @@ Player::Player():
 	sphereCol->m_size = kCupsuleSize;
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Player::~Player()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 {
 	Collidable::Init(physics);
@@ -51,6 +60,9 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->SetNextPos(rigidbody->GetPos());
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void Player::Update()
 {
 	//前のフレームとStateを比較して違うStateだったら
@@ -65,6 +77,9 @@ void Player::Update()
 	m_pState->Update();
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void Player::Draw()
 {
 	//FIX:Drawのなかで座標を変更しているのはどうなの？
@@ -84,10 +99,16 @@ void Player::Draw()
 #endif
 }
 
+/// <summary>
+/// 押し出し処理を行うオブジェクトと衝突したとき
+/// </summary>
 void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 {
 }
 
+/// <summary>
+/// 押し出し処理を行わないオブジェクトと衝突したとき
+/// </summary>
 void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
 }

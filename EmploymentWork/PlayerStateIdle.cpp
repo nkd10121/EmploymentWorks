@@ -3,17 +3,25 @@
 #include "Player.h"
 #include "PlayerStateWalk.h"
 
-
+/// <summary>
+/// コンストラクタ
+/// </summary>
 PlayerStateIdle::PlayerStateIdle(std::shared_ptr<CharacterBase> own):
 	StateBase(own)
 {
 	m_nowState = StateKind::Idle;
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void PlayerStateIdle::Init()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void PlayerStateIdle::Update()
 {
 	CheckPlayer();
@@ -35,7 +43,7 @@ void PlayerStateIdle::Update()
 	own->GetRigidbody()->SetVelocity(MyLib::Vec3(0.0f, prevVel.y, 0.0f));
 }
 
-int PlayerStateIdle::OnDamage(std::shared_ptr<MyLib::Collidable> collider)
-{
-	return 0;
-}
+//int PlayerStateIdle::OnDamage(std::shared_ptr<MyLib::Collidable> collider)
+//{
+//	return 0;
+//}

@@ -4,7 +4,7 @@
 #include <memory>
 
 /// <summary>
-/// カメラ
+/// カメラクラス
 /// </summary>
 class Camera
 {
@@ -27,26 +27,25 @@ public:
 	/// </summary>
 	void Update();
 
-	//カメラが向いている方向ベクトルを取得
+	/// <summary>
+	/// カメラが向いている方向ベクトルを取得
+	/// </summary>
+	/// <returns>カメラが向いている方向ベクトル</returns>
 	const MyLib::Vec3 GetDirection()const;
 
-	//プレイヤーの座標を設定する
+	/// <summary>
+	/// プレイヤーの座標を設定する
+	/// </summary>
+	/// <param name="playerPos">プレイヤーの座標</param>
 	void SetPlayerPos(MyLib::Vec3 playerPos) { m_playerPos = playerPos; }
 
 private:
-	//水平角度
-	float m_cameraAngleX;
-	//垂直角度
-	float m_cameraAngleY;
-	//カメラの座標
-	MyLib::Vec3 m_cameraPos;
-	//注視点
-	MyLib::Vec3 m_aimPos;
-	//プレイヤーの座標
-	MyLib::Vec3 m_playerPos;
-	//視点移動速度
-	float m_angleMoveScale;
-	//ライトハンドル
-	int m_lightHandle;
+	float m_cameraAngleX;		//水平角度
+	float m_cameraAngleY;		//垂直角度
+	MyLib::Vec3 m_cameraPos;	//カメラの座標
+	MyLib::Vec3 m_aimPos;		//注視点
+	MyLib::Vec3 m_playerPos;	//プレイヤーの座標
+	float m_angleMoveScale;		//視点移動速度
+	int m_lightHandle;			//ライトハンドル
 };
 

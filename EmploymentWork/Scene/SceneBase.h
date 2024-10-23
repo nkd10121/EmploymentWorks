@@ -21,7 +21,6 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	SceneBase();
-
 	/// <summary>
 	/// デストラクタ
 	/// </summary>

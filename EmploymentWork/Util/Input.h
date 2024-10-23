@@ -13,6 +13,9 @@ enum class InputType
 //エイリアス宣言
 using InputTable_t = std::unordered_map<std::string, int>;
 
+/// <summary>
+/// 入力情報管理クラス
+/// </summary>
 class Input
 {
 private:
@@ -20,7 +23,6 @@ private:
 	/// コンストラクタ
 	/// </summary>
 	Input();
-
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -77,7 +79,11 @@ public:
 	/// <returns>true : 押し続けられている, false : 押されていないか、押された瞬間</returns>
 	bool IsPushed(const char* command)const;
 
-	//スティックの入力情報を取得
+	/// <summary>
+	/// スティックの入力情報を取得
+	/// </summary>
+	/// <param name="isRight">右スティックかどうか　false : 左スティック, true : 右スティック</param>
+	/// <returns></returns>
 	std::pair<float, float> GetInputStick(bool isRight)const;
 
 private:

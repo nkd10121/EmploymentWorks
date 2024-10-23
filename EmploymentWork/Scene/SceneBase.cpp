@@ -16,7 +16,9 @@ namespace
 	constexpr int kBrightMin = 0;
 }
 
-//コンストラクタ
+/// <summary>
+/// コンストラクタ
+/// </summary>
 SceneBase::SceneBase() :
 	m_isInit(false),
 	m_isEnd(false),

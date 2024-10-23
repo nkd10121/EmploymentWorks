@@ -128,9 +128,7 @@ void SceneGame::Update()
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
 	m_pCamera->Update();
 
-
-
-	// 物理更新
+	//物理更新
 	m_pPhysics->Update();
 }
 

@@ -10,14 +10,29 @@ namespace MyLib
 class DebugDraw
 {
 public:
-	//描画情報の削除
+	/// <summary>
+	/// 描画情報の削除
+	/// </summary>
 	static void Clear();
-	//描画
+	/// <summary>
+	/// 描画
+	/// </summary>
 	static void Draw3D();
 
-	//球体の描画リストに追加する
+	/// <summary>
+	/// 球体の描画リストに追加する
+	/// </summary>
+	/// <param name="center">中心座標</param>
+	/// <param name="radius">半径</param>
+	/// <param name="color">描画色</param>
 	static void AddDrawSphere(const Vec3& center,const float& radius,const unsigned int& color);
-
+	/// <summary>
+	/// カプセルの描画リストに追加する
+	/// </summary>
+	/// <param name="center">中心座標</param>
+	/// <param name="size">大きさ</param>
+	/// <param name="radius">半径</param>
+	/// <param name="color">描画色</param>
 	static void AddDrawCupsule(const Vec3& center,const float& size,const float& radius,const unsigned int& color);
 private:
 	//球体の描画情報
@@ -38,9 +53,7 @@ private:
 		unsigned int color;	//色
 	};
 
-	//球体の描画情報リスト
-	static std::list<SphereInfo> m_sphereInfo;
-	//カプセルの描画情報リスト
-	static std::list<CupsuleInfo> m_cupsuleInfo;
+	static std::list<SphereInfo> m_sphereInfo;		//球体の描画情報リスト
+	static std::list<CupsuleInfo> m_cupsuleInfo;	//カプセルの描画情報リスト
 };
 }
