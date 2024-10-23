@@ -1,6 +1,8 @@
 #include "SceneBase.h"
 #include "Game.h"
 
+#include "ModelManager.h"
+
 namespace
 {
 	// フェードにかかるフレームデフォルト
@@ -54,6 +56,9 @@ void SceneBase::InitAll()
 /// </summary>
 void SceneBase::UpdateAll()
 {
+#ifdef DISP_PROCESS
+	LONGLONG start = GetNowHiPerformanceCount();
+#endif
 	//継承先のシーンのリソースのロードが終わっているか確認
 	if (!IsLoaded())
 	{
@@ -72,6 +77,10 @@ void SceneBase::UpdateAll()
 	UpdateFade();
 	// 継承先のシーンの更新処理
 	Update();
+
+#ifdef DISP_PROCESS
+	m_updateTime = GetNowHiPerformanceCount() - start;
+#endif
 }
 
 /// <summary>
@@ -129,6 +138,8 @@ bool SceneBase::IsSceneEnd()
 	// まだフェードアウト終わってない
 	if (m_fadeAlpha < kBrightMax)	return false;
 
+
+	ModelManager::GetInstance().Clear();
 	return true;
 }
 

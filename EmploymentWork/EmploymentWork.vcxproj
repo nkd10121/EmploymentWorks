@@ -26,6 +26,7 @@
     <ClCompile Include="ColliderSphere.cpp" />
     <ClCompile Include="DebugDraw.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
+    <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStateIdle.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="DebugDraw.h" />
     <ClInclude Include="GameObjectTag.h" />
     <ClInclude Include="LoadCSV.h" />
+    <ClInclude Include="ModelManager.h" />
     <ClInclude Include="MyLib.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />

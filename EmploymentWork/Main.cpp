@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Input.h"
 #include "SceneManager.h"
+#include "ModelManager.h"
 #include "SceneTitle.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//staticクラスの削除
 	SceneManager::GetInstance().Destroy();
 	Input::GetInstance().Destroy();
+	ModelManager::GetInstance().Destroy();
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 

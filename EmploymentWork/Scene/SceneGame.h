@@ -56,14 +56,11 @@ public:
 	virtual void Draw() override;
 
 private:
-	std::list<int> temp_handle;	//テスト用　TODO:いらなくなったら消せ
+	std::shared_ptr<Player> m_pPlayer;			//プレイヤーポインタ
+	std::shared_ptr<Camera> m_pCamera;			//カメラポインタ
+	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
 
-	std::shared_ptr<Player> m_pPlayer;
+	std::list<int> m_modelHandles;	//モデルハンドル(仮)
 
-	//カメラの生成
-	std::shared_ptr<Camera> m_pCamera;
-
-	// 物理
-	std::shared_ptr<MyLib::Physics> m_pPhysics;
 };
 

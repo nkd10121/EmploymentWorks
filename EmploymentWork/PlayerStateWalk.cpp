@@ -76,9 +76,6 @@ void PlayerStateWalk::Update()
 	//移動処理
 	//MV1SetPosition(m_modelHandle, m_collisionPos.ConvertToVECTOR());
 
-	////カメラの座標からプレイヤーを回転させる方向を計算する
-	//m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
-	//m_rot = MyLib::Vec3(0.0f, m_angle, 0.0f);
 	
 	MyLib::Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
 	MyLib::Vec3 newVelocity = MyLib::Vec3(temp_moveVec.x, prevVelocity.y, temp_moveVec.z);
