@@ -341,6 +341,27 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 		isCollide = (minLength < colA->m_radius + colB->m_radius);
 	}
 
+	//カプセルと球の当たり判定
+	if (kindA == MyLib::ColliderBase::Kind::Cupsule && kindB == MyLib::ColliderBase::Kind::Sphere)
+	{
+		auto colA = dynamic_cast<MyLib::ColliderCupsule*>(colliderA);
+		auto colB = dynamic_cast<MyLib::ColliderSphere*>(colliderB);
+
+		//カプセルの情報を取得
+		auto cupsuleCenterPos = rigidA->GetNextPos();
+		auto cupsuleSize = colA->m_size;
+
+		auto cupsulePos1 = VGet(cupsuleCenterPos.x, cupsuleCenterPos.y + cupsuleSize, cupsuleCenterPos.z);
+		auto cupsulePos2 = VGet(cupsuleCenterPos.x, cupsuleCenterPos.y - cupsuleSize, cupsuleCenterPos.z);
+
+		//球の情報を取得
+		auto sphereCenterPos = rigidB->GetNextPos();
+		//カプセルの線分と球の中心座標の距離がカプセルの半径と球の半径を足した値より長いか短いかで判断する
+		auto length = Segment_Point_MinLength(cupsulePos1, cupsulePos2,sphereCenterPos.ConvertToVECTOR());
+
+		isCollide = length < colA->m_radius + colB->m_radius;
+	}
+
 	return isCollide;
 }
 

@@ -3,6 +3,7 @@
 #include "MyLib.h"
 #include "PlayerStateIdle.h"
 #include "LoadCSV.h"
+#include "HealPortion.h"
 
 namespace
 {
@@ -108,6 +109,27 @@ void Player::Draw()
 /// </summary>
 void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 {
+//#ifdef _DEBUG
+//	std::string message = "プレイヤーが";
+//#endif
+//	auto tag = colider->GetTag();
+//	switch (tag)
+//	{
+//	case GameObjectTag::Enemy:
+//#ifdef _DEBUG
+//		message += "敵";
+//#endif
+//		break;
+//	case GameObjectTag::Portion:
+//#ifdef _DEBUG
+//		message += "ポーション";
+//#endif
+//		break;
+//	}
+//#ifdef _DEBUG
+//	message += "と当たった！\n";
+//	printfDx(message.c_str());
+//#endif
 }
 
 /// <summary>
@@ -115,4 +137,38 @@ void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 /// </summary>
 void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
+#ifdef _DEBUG
+	std::string message = "プレイヤーが";
+#endif
+	auto tag = colider->GetTag();
+	switch (tag)
+	{
+	case GameObjectTag::Enemy:
+#ifdef _DEBUG
+		message += "敵";
+#endif
+		break;
+	case GameObjectTag::Portion:
+#ifdef _DEBUG
+		message += "ポーション";
+#endif
+		//if (m_hpMax > m_status.hp)
+		{
+			m_status.hp = m_hpMax;
+
+			auto pos = rigidbody->GetPos();
+			//EffectManager::GetInstance().CreateEffect("Heal", pos);
+
+			HealPortion* col = dynamic_cast<HealPortion*>(colider.get());
+			col->End();
+
+			//SoundManager::GetInstance().PlaySE("heal");
+
+		}
+		break;
+	}
+#ifdef _DEBUG
+	message += "と当たった！\n";
+	printfDx(message.c_str());
+#endif
 }

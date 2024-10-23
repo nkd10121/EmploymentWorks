@@ -6,6 +6,7 @@
 CharacterBase::CharacterBase(Priority priority, GameObjectTag tag) :
 	Collidable(priority, tag),
 	m_status(),
+	m_hpMax(0),
 	m_currentAnimNo(-1),
 	m_prevAnimNo(-1),
 	m_animBlendRate(1.0f),

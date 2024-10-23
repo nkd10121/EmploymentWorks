@@ -73,6 +73,7 @@ protected:
 	int m_modelHandle;	//モデルハンドル
 	
 	Status m_status;	//ステータス
+	int m_hpMax;
 
 	/*アニメーション関係*/
 	std::map<std::string, int> m_animIdx;
