@@ -41,7 +41,7 @@ namespace
 /// <summary>
 /// ステータス情報を取得
 /// </summary>
-CharacterBase::Status LoadCSV::StatusLoad(const char* characterName)
+CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 {
 	//返す情報
 	CharacterBase::Status retStatus;
@@ -56,7 +56,7 @@ CharacterBase::Status LoadCSV::StatusLoad(const char* characterName)
 	if (!ifs)
 	{
 		assert(false);
-		return;
+		return CharacterBase::Status();
 	}
 
 	//情報を取得できたかどうかのフラグ
@@ -86,6 +86,11 @@ CharacterBase::Status LoadCSV::StatusLoad(const char* characterName)
 			retStatus.def = std::stoi(strConmaBuf[LoadData::eStatusOrder::def]);
 			retStatus.speed = std::stof(strConmaBuf[LoadData::eStatusOrder::speed]);
 			retStatus.point = std::stoi(strConmaBuf[LoadData::eStatusOrder::point]);
+		}
+
+		if (isGet)
+		{
+			break;
 		}
 	}
 

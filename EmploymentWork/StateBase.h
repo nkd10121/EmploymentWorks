@@ -50,12 +50,12 @@ public:
 	/// <param name="state">遷移予定のState</param>
 	void SetNextState(std::shared_ptr<StateBase> state) { m_nextState = state; }
 
-	/// <summary>
-	/// ダメージを受けた時の処理を行う
-	/// </summary>
-	/// <param name="collider"></param>
-	/// <returns>ダメージ</returns>
-	virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) abstract;
+	///// <summary>
+	///// ダメージを受けた時の処理を行う
+	///// </summary>
+	///// <param name="collider"></param>
+	///// <returns>ダメージ</returns>
+	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) abstract;
 
 
 

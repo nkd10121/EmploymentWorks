@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "MyLib.h"
 #include "PlayerStateIdle.h"
+#include "LoadCSV.h"
 
 namespace
 {
@@ -58,6 +59,9 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->Init(false);
 	rigidbody->SetPos(m_pos);
 	rigidbody->SetNextPos(rigidbody->GetPos());
+
+	//プレイヤーのステータス取得
+	m_status = LoadCSV::GetInstance().LoadStatus("Player");
 }
 
 /// <summary>

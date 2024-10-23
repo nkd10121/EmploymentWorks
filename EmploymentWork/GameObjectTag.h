@@ -5,4 +5,5 @@ enum class GameObjectTag
 {
 	Player,			// プレイヤー
 	Enemy,			// 敵
+	Portion,		//回復ポーション
 };

@@ -25,8 +25,10 @@
     <ClCompile Include="ColliderCupsule.cpp" />
     <ClCompile Include="ColliderSphere.cpp" />
     <ClCompile Include="DebugDraw.cpp" />
+    <ClCompile Include="HealPortion.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="ModelManager.cpp" />
+    <ClCompile Include="ObjectBase.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStateIdle.cpp" />
@@ -51,9 +53,11 @@
     <ClInclude Include="ColliderSphere.h" />
     <ClInclude Include="DebugDraw.h" />
     <ClInclude Include="GameObjectTag.h" />
+    <ClInclude Include="HealPortion.h" />
     <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="MyLib.h" />
+    <ClInclude Include="ObjectBase.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStateIdle.h" />

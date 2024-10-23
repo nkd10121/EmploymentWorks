@@ -50,5 +50,5 @@ public:
 	/// ステータス情報を取得
 	/// </summary>
 	/// <param name="characterName">ステータスを取得したいキャラクター名</param>
-	CharacterBase::Status StatusLoad(const char* characterName);
+	CharacterBase::Status LoadStatus(const char* characterName);
 };

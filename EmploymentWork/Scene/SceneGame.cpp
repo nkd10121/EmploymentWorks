@@ -2,12 +2,15 @@
 #include "SceneTitle.h"
 #include "ScenePause.h"
 #include "Player.h"
+#include "HealPortion.h"
 #include "ModelManager.h"
 
 namespace
 {
 	//ステージパス
-	const std::string stagePath = "data/model/temp_stage1.mv1";
+	const std::string kStagePath = "data/model/temp_stage1.mv1";
+	//ポーションモデルのパス
+	const std::string kPortionPath = "data/model/object/portion/bottle_red.mv1";
 }
 
 /// <summary>
@@ -39,10 +42,8 @@ void SceneGame::StartLoad()
 
 	// TODO:この間でリソースをロードする
 
-	for (int i = 0; i < 1; i++)
-	{
-		ModelManager::GetInstance().LoadModel(stagePath);
-	}
+	ModelManager::GetInstance().LoadModel(kStagePath);
+	ModelManager::GetInstance().LoadModel(kPortionPath);
 
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);
@@ -79,8 +80,12 @@ void SceneGame::Init()
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init();
 
-	m_modelHandles.emplace_back(ModelManager::GetInstance().GetModelHandle(stagePath));
+	m_modelHandles.emplace_back(ModelManager::GetInstance().GetModelHandle(kStagePath));
 	MV1SetScale(m_modelHandles.back(), VGet(0.01f, 0.01f, 0.01f));
+
+	m_pPortions.emplace_back(std::make_shared<HealPortion>());
+	m_pPortions.back()->Init(m_pPhysics);
+	m_pPortions.back()->SetPosition(MyLib::Vec3(0.0f,0.0f,-10.0f));
 }
 
 /// <summary>
@@ -128,8 +133,29 @@ void SceneGame::Update()
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
 	m_pCamera->Update();
 
+	//ポーションの更新
+	for (auto& p : m_pPortions)
+	{
+		p->Update();
+
+		if (!p->GetIsExist())
+		{
+			p->Finalize(m_pPhysics);
+		}
+	}
+	//isExistがfalseのオブジェクトを削除
+	{
+		auto it = std::remove_if(m_pPortions.begin(), m_pPortions.end(), [](auto& v)
+			{
+				return v->GetIsExist() == false;
+			});
+		m_pPortions.erase(it, m_pPortions.end());
+	}
+
 	//物理更新
 	m_pPhysics->Update();
+
+
 }
 
 /// <summary>
@@ -147,7 +173,15 @@ void SceneGame::Draw()
 		MV1DrawModel(h);
 	}
 
+	//プレイヤーの描画
 	m_pPlayer->Draw();
+
+	//ポーションの描画
+	for (auto& p : m_pPortions)
+	{
+		p->Draw();
+	}
+
 
 #ifdef _DEBUG
 	MyLib::DebugDraw::Draw3D();

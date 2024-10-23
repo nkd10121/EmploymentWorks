@@ -7,6 +7,7 @@
 
 //プロトタイプ宣言
 class Player;	//プレイヤー
+class HealPortion;	//回復ポーション
 
 /// <summary>
 /// ゲームシーン
@@ -58,6 +59,7 @@ private:
 	std::shared_ptr<Player> m_pPlayer;			//プレイヤーポインタ
 	std::shared_ptr<Camera> m_pCamera;			//カメラポインタ
 	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
+	std::list<std::shared_ptr<HealPortion>> m_pPortions;	//回復ポーションポインタの配列
 
 	std::list<int> m_modelHandles;	//モデルハンドル(仮)
 
