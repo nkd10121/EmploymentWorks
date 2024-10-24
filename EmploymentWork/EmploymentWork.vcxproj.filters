@@ -37,6 +37,30 @@
     <Filter Include="ヘッダー ファイル\Object">
       <UniqueIdentifier>{2d00ee4c-f571-4e7e-afb0-28415d810091}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Character">
+      <UniqueIdentifier>{7eb17488-b92e-4558-b38a-c8c191cd87e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Character\Player">
+      <UniqueIdentifier>{8f11c3d7-f8e4-437e-99a9-5320223dc1cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Character\Player\State">
+      <UniqueIdentifier>{f67808dc-c87c-4bdb-a403-123266784fc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Common">
+      <UniqueIdentifier>{02102386-f21c-42cf-9964-44f46e93e7b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object\Character">
+      <UniqueIdentifier>{0566cad6-1376-4e15-ae3c-4803bc9d14bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object\Character\Player">
+      <UniqueIdentifier>{2d31d2ec-bbe7-4e2a-b499-322aa1c9fa56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object\Character\Player\State">
+      <UniqueIdentifier>{69c057be-8b6e-42cc-b6b8-de349bff24f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Common">
+      <UniqueIdentifier>{8ae727cf-2b56-41e8-b986-fe7fe0924a98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -54,68 +78,68 @@
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="ScenePause.cpp">
+    <ClCompile Include="Scene\ScenePause.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Util\Camera.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterBase.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Collidable.cpp">
+    <ClCompile Include="MyLib\Collidable.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="ColliderBase.cpp">
+    <ClCompile Include="MyLib\ColliderBase.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="ColliderCupsule.cpp">
+    <ClCompile Include="MyLib\ColliderCupsule.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="ColliderSphere.cpp">
+    <ClCompile Include="MyLib\ColliderSphere.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="DebugDraw.cpp">
+    <ClCompile Include="MyLib\DebugDraw.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="Physics.cpp">
+    <ClCompile Include="MyLib\Physics.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="Rigidbody.cpp">
+    <ClCompile Include="MyLib\Rigidbody.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="Vec3.cpp">
+    <ClCompile Include="MyLib\Vec3.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
     <ClCompile Include="Util\Input.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="LoadCSV.cpp">
-      <Filter>ソース ファイル\Util</Filter>
+    <ClCompile Include="Object\Character\CharacterBase.cpp">
+      <Filter>ソース ファイル\Object\Character</Filter>
     </ClCompile>
-    <ClCompile Include="StateBase.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Character\Player\Player.cpp">
+      <Filter>ソース ファイル\Object\Character\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateIdle.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Character\Player\State\PlayerStateIdle.cpp">
+      <Filter>ソース ファイル\Object\Character\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateWalk.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Character\Player\State\PlayerStateWalk.cpp">
+      <Filter>ソース ファイル\Object\Character\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="ModelManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Character\Player\State\StateBase.cpp">
+      <Filter>ソース ファイル\Object\Character</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectBase.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\HealPortion.cpp">
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="HealPortion.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\ObjectBase.cpp">
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="MapManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Common\MapManager.cpp">
+      <Filter>ソース ファイル\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ModelManager.cpp">
+      <Filter>ソース ファイル\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\LoadCSV.cpp">
+      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,7 +152,7 @@
     <ClInclude Include="Scene\SceneManager.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ScenePause.h">
+    <ClInclude Include="Scene\ScenePause.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SceneTitle.h">
@@ -140,68 +164,68 @@
     <ClInclude Include="Util\Game.h">
       <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Collidable.h">
+    <ClInclude Include="MyLib\Collidable.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="ColliderBase.h">
+    <ClInclude Include="MyLib\ColliderBase.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="ColliderCupsule.h">
+    <ClInclude Include="MyLib\ColliderCupsule.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="ColliderSphere.h">
+    <ClInclude Include="MyLib\ColliderSphere.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="DebugDraw.h">
+    <ClInclude Include="MyLib\DebugDraw.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectTag.h">
+    <ClInclude Include="MyLib\GameObjectTag.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="MyLib.h">
+    <ClInclude Include="MyLib\MyLib.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="Physics.h">
+    <ClInclude Include="MyLib\Physics.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="Rigidbody.h">
+    <ClInclude Include="MyLib\Rigidbody.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="Vec3.h">
+    <ClInclude Include="MyLib\Vec3.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="Util\Input.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterBase.h">
+    <ClInclude Include="Object\Character\Player\Player.h">
+      <Filter>ヘッダー ファイル\Object\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Character\CharacterBase.h">
+      <Filter>ヘッダー ファイル\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\HealPortion.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="Object\ObjectBase.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="LoadCSV.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
+    <ClInclude Include="Object\Character\Player\State\StateBase.h">
+      <Filter>ヘッダー ファイル\Object\Character</Filter>
     </ClInclude>
-    <ClInclude Include="StateBase.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Object\Character\Player\State\PlayerStateWalk.h">
+      <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStateIdle.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Object\Character\Player\State\PlayerStateIdle.h">
+      <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStateWalk.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Common\MapManager.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="ModelManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Common\ModelManager.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="HealPortion.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MapManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Common\LoadCSV.h">
+      <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

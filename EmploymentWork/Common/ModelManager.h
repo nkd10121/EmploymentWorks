@@ -2,8 +2,6 @@
 #include <string>
 #include <list>
 
-
-
 /// <summary>
 /// 3Dモデルのハンドルを管理するクラス
 /// </summary>
@@ -19,13 +17,16 @@ public:
 	};
 
 private:
-	//コンストラクタ
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	ModelManager() {};
-	//デストラクタ
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	virtual ~ModelManager();
-	//staticにすることで
-	//Singletonのポインタがプログラム起動時に一つ作られるようにする
-	static ModelManager* m_instance;
+
+	static ModelManager* m_instance;	//インスタンス
 
 public:
 	//コピーコンストラクタから実体の生成ができてしまうため
@@ -36,9 +37,10 @@ public:
 	ModelManager& operator= (const ModelManager&&) = delete;
 
 	/// <summary>
+	/// インスタンスを取得
 	/// ModelManagerはGetInstance()を通した参照からしか利用できない
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>インスタンス</returns>
 	static ModelManager& GetInstance()
 	{
 		if (!m_instance)
@@ -49,7 +51,10 @@ public:
 		return *m_instance;
 	}
 
-	//これをし忘れると普通にメモリリーク
+	/// <summary>
+	/// 削除
+	/// これをし忘れると普通にメモリリーク
+	/// </summary>
 	static void Destroy()
 	{
 		delete m_instance;
@@ -83,8 +88,7 @@ public:
 	bool IsLoaded();
 
 private:
-	//モデルハンドル
-	std::list<Model> m_handles;
+	std::list<Model> m_handles;	//モデルハンドル
 
 };
 

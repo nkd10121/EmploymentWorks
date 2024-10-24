@@ -4,12 +4,19 @@
 #include <vector>
 #include <unordered_map>
 
+/// <summary>
+/// マップを管理するクラス
+/// </summary>
 class MapManager
 {
 private:
-	// シングルトンパターンなのでコンストラクタはprivateに置く
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	MapManager();
-	//コンストラクタ
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	virtual ~MapManager();
 
 	//staticにすることで
@@ -43,6 +50,7 @@ public:
 	MapManager& operator= (const MapManager&&) = delete;
 
 	/// <summary>
+	/// インスタンスを取得
 	/// MapManagerはGetInstance()を通した参照からしか利用できない
 	/// </summary>
 	/// <returns></returns>
@@ -56,7 +64,10 @@ public:
 		return *m_instance;
 	}
 
-	//これをし忘れると普通にメモリリーク
+	/// <summary>
+	/// 削除
+	/// これをし忘れると普通にメモリリーク
+	/// </summary>
 	static void Destroy()
 	{
 		delete m_instance;
@@ -64,22 +75,32 @@ public:
 	}
 
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Init();
 
-	//ステージの生成に必要なモデルの読み込み
+	/// <summary>
+	/// ステージの生成に必要なモデルの読み込み
+	/// </summary>
 	void LoadModel();
-	//ステージの生成に必要なモデルの削除
+	/// <summary>
+	/// ステージの生成に必要なモデルの削除
+	/// </summary>
 	void DeleteModel();
 
-	//ステージ情報を読み込む
+	/// <summary>
+	/// ステージ情報を読み込む
+	/// </summary>
+	/// <param name="stageName">ステージ名</param>
 	void Load(const char* stageName);
-	//ステージを描画する
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
 
 private:
-	//マップ情報
-	std::vector<LocationData> m_data;
-	//モデルハンドル
-	std::unordered_map<std::string, int> m_handles;
+	std::vector<LocationData> m_data;	//マップ情報
+	std::unordered_map<std::string, int> m_handles;	//モデルハンドル
 };
 

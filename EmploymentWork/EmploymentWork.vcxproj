@@ -19,24 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CharacterBase.cpp" />
-    <ClCompile Include="Collidable.cpp" />
-    <ClCompile Include="ColliderBase.cpp" />
-    <ClCompile Include="ColliderCupsule.cpp" />
-    <ClCompile Include="ColliderSphere.cpp" />
-    <ClCompile Include="DebugDraw.cpp" />
-    <ClCompile Include="HealPortion.cpp" />
-    <ClCompile Include="LoadCSV.cpp" />
-    <ClCompile Include="MapManager.cpp" />
-    <ClCompile Include="ModelManager.cpp" />
-    <ClCompile Include="ObjectBase.cpp" />
-    <ClCompile Include="Physics.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerStateIdle.cpp" />
-    <ClCompile Include="PlayerStateWalk.cpp" />
-    <ClCompile Include="Rigidbody.cpp" />
-    <ClCompile Include="ScenePause.cpp" />
-    <ClCompile Include="StateBase.cpp" />
+    <ClCompile Include="Object\Character\CharacterBase.cpp" />
+    <ClCompile Include="MyLib\Collidable.cpp" />
+    <ClCompile Include="MyLib\ColliderBase.cpp" />
+    <ClCompile Include="MyLib\ColliderCupsule.cpp" />
+    <ClCompile Include="MyLib\ColliderSphere.cpp" />
+    <ClCompile Include="MyLib\DebugDraw.cpp" />
+    <ClCompile Include="Object\HealPortion.cpp" />
+    <ClCompile Include="Common\LoadCSV.cpp" />
+    <ClCompile Include="Common\MapManager.cpp" />
+    <ClCompile Include="Common\ModelManager.cpp" />
+    <ClCompile Include="Object\ObjectBase.cpp" />
+    <ClCompile Include="MyLib\Physics.cpp" />
+    <ClCompile Include="Object\Character\Player\Player.cpp" />
+    <ClCompile Include="Object\Character\Player\State\PlayerStateIdle.cpp" />
+    <ClCompile Include="Object\Character\Player\State\PlayerStateWalk.cpp" />
+    <ClCompile Include="MyLib\Rigidbody.cpp" />
+    <ClCompile Include="Scene\ScenePause.cpp" />
+    <ClCompile Include="Object\Character\Player\State\StateBase.cpp" />
     <ClCompile Include="Util\Camera.cpp" />
     <ClCompile Include="Util\Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -44,29 +44,29 @@
     <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\SceneTitle.cpp" />
-    <ClCompile Include="Vec3.cpp" />
+    <ClCompile Include="MyLib\Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CharacterBase.h" />
-    <ClInclude Include="Collidable.h" />
-    <ClInclude Include="ColliderBase.h" />
-    <ClInclude Include="ColliderCupsule.h" />
-    <ClInclude Include="ColliderSphere.h" />
-    <ClInclude Include="DebugDraw.h" />
-    <ClInclude Include="GameObjectTag.h" />
-    <ClInclude Include="HealPortion.h" />
-    <ClInclude Include="LoadCSV.h" />
-    <ClInclude Include="MapManager.h" />
-    <ClInclude Include="ModelManager.h" />
-    <ClInclude Include="MyLib.h" />
-    <ClInclude Include="ObjectBase.h" />
-    <ClInclude Include="Physics.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerStateIdle.h" />
-    <ClInclude Include="PlayerStateWalk.h" />
-    <ClInclude Include="Rigidbody.h" />
-    <ClInclude Include="ScenePause.h" />
-    <ClInclude Include="StateBase.h" />
+    <ClInclude Include="Object\Character\CharacterBase.h" />
+    <ClInclude Include="MyLib\Collidable.h" />
+    <ClInclude Include="MyLib\ColliderBase.h" />
+    <ClInclude Include="MyLib\ColliderCupsule.h" />
+    <ClInclude Include="MyLib\ColliderSphere.h" />
+    <ClInclude Include="MyLib\DebugDraw.h" />
+    <ClInclude Include="MyLib\GameObjectTag.h" />
+    <ClInclude Include="Object\HealPortion.h" />
+    <ClInclude Include="Common\LoadCSV.h" />
+    <ClInclude Include="Common\MapManager.h" />
+    <ClInclude Include="Common\ModelManager.h" />
+    <ClInclude Include="MyLib\MyLib.h" />
+    <ClInclude Include="Object\ObjectBase.h" />
+    <ClInclude Include="MyLib\Physics.h" />
+    <ClInclude Include="Object\Character\Player\Player.h" />
+    <ClInclude Include="Object\Character\Player\State\PlayerStateIdle.h" />
+    <ClInclude Include="Object\Character\Player\State\PlayerStateWalk.h" />
+    <ClInclude Include="MyLib\Rigidbody.h" />
+    <ClInclude Include="Scene\ScenePause.h" />
+    <ClInclude Include="Object\Character\Player\State\StateBase.h" />
     <ClInclude Include="Util\Camera.h" />
     <ClInclude Include="Util\Game.h" />
     <ClInclude Include="Util\Input.h" />
@@ -74,7 +74,7 @@
     <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\SceneTitle.h" />
-    <ClInclude Include="Vec3.h" />
+    <ClInclude Include="MyLib\Vec3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -168,14 +168,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Object\Character;$(ProjectDir)Object\Character\Player;$(ProjectDir)Object\Character\Player\State</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Object\Character;$(ProjectDir)Object\Character\Player;$(ProjectDir)Object\Character\Player\State</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -186,7 +186,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Object\Character;$(ProjectDir)Object\Character\Player;$(ProjectDir)Object\Character\Player\State</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -195,7 +195,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Object\Character;$(ProjectDir)Object\Character\Player;$(ProjectDir)Object\Character\Player\State</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

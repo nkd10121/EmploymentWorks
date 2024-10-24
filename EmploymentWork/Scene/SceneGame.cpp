@@ -20,8 +20,7 @@ SceneGame::SceneGame():
 	m_pPlayer(nullptr),
 	m_pCamera(nullptr),
 	m_pPhysics(nullptr),
-	m_pPortions(),
-	m_stageModel(-1)
+	m_pPortions()
 {
 
 }
@@ -71,20 +70,19 @@ void SceneGame::Init()
 	//TODO:ここで実態の生成などをする
 	m_pPhysics = std::make_shared<MyLib::Physics>();
 
+	//プレイヤーの生成
 	m_pPlayer = std::make_shared<Player>();
 	m_pPlayer->Init(m_pPhysics);
 
-
+	//カメラの生成
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init();
-
-	//m_stageModel = ModelManager::GetInstance().GetModelHandle(kStagePath);
-	//MV1SetScale(m_modelHandles.back(), VGet(0.01f, 0.01f, 0.01f));
 
 	//m_pPortions.emplace_back(std::make_shared<HealPortion>());
 	//m_pPortions.back()->Init(m_pPhysics);
 	//m_pPortions.back()->SetPosition(MyLib::Vec3(0.0f,0.0f,-10.0f));
 
+	//ステージ情報をロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("data");
 }
@@ -96,14 +94,12 @@ void SceneGame::End()
 {
 	//TODO:ここでリソースの開放をする
 
-	MV1DeleteModel(m_stageModel);
-
+	//ポーションの解放
 	for (auto& p : m_pPortions)
 	{
 		p->Finalize(m_pPhysics);
 	}
 	m_pPortions.clear();
-
 }
 
 /// <summary>
@@ -129,6 +125,7 @@ void SceneGame::Update()
 		return;
 	}
 
+	//DEBUG:Aボタンを押した時にポーションを生成するように
 	if (Input::GetInstance().IsTriggered("A"))
 	{
 		m_pPortions.emplace_back(std::make_shared<HealPortion>());
@@ -177,6 +174,7 @@ void SceneGame::Draw()
 	if (!IsLoaded())	return;
 	if (!IsInitialized())	return;
 
+	//ステージの描画
 	MapManager::GetInstance().Draw();
 
 	//プレイヤーの描画
@@ -187,7 +185,6 @@ void SceneGame::Draw()
 	{
 		p->Draw();
 	}
-
 
 #ifdef _DEBUG
 	MyLib::DebugDraw::Draw3D();

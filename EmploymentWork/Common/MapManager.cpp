@@ -20,14 +20,23 @@ namespace
 	const std::string kStageDataPathBack = ".loc";
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 MapManager::MapManager()
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 MapManager::~MapManager()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void MapManager::Init()
 {
 	//ロードが完了しているときにここが呼ばれるため、モデルマネージャーに頼んでおいたモデルを取得する
@@ -39,6 +48,9 @@ void MapManager::Init()
 	m_handles["Blocks"] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + "Blocks" + kModelPathBack));
 }
 
+/// <summary>
+/// ステージの生成に必要なモデルの読み込み
+/// </summary>
 void MapManager::LoadModel()
 {
 	ModelManager::GetInstance().LoadModel((kModelPathFront + "floor" + kModelPathBack));
@@ -49,6 +61,9 @@ void MapManager::LoadModel()
 	ModelManager::GetInstance().LoadModel((kModelPathFront + "Blocks" + kModelPathBack));
 }
 
+/// <summary>
+/// ステージの生成に必要なモデルの削除
+/// </summary>
 void MapManager::DeleteModel()
 {
 	//モデルの削除
@@ -66,6 +81,9 @@ void MapManager::DeleteModel()
 	m_data.clear();
 }
 
+/// <summary>
+/// ステージ情報を読み込む
+/// </summary>
 void MapManager::Load(const char* stageName)
 {
 	//モデルのロード
@@ -134,6 +152,9 @@ void MapManager::Load(const char* stageName)
 	}
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void MapManager::Draw()
 {
 	for (auto& loc : m_data)
