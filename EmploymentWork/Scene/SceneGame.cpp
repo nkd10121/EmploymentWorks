@@ -3,12 +3,12 @@
 #include "ScenePause.h"
 #include "Player.h"
 #include "HealPortion.h"
+
 #include "ModelManager.h"
+#include "MapManager.h"
 
 namespace
 {
-	//ステージパス
-	const std::string kStagePath = "data/model/Player.mv1";
 	//ポーションモデルのパス
 	const std::string kPortionPath = "data/model/object/portion/bottle_red.mv1";
 }
@@ -43,8 +43,9 @@ void SceneGame::StartLoad()
 
 	// TODO:この間でリソースをロードする
 
-	ModelManager::GetInstance().LoadModel(kStagePath);
 	ModelManager::GetInstance().LoadModel(kPortionPath);
+
+	MapManager::GetInstance().LoadModel();
 
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);
@@ -77,12 +78,15 @@ void SceneGame::Init()
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init();
 
-	m_stageModel = ModelManager::GetInstance().GetModelHandle(kStagePath);
+	//m_stageModel = ModelManager::GetInstance().GetModelHandle(kStagePath);
 	//MV1SetScale(m_modelHandles.back(), VGet(0.01f, 0.01f, 0.01f));
 
 	//m_pPortions.emplace_back(std::make_shared<HealPortion>());
 	//m_pPortions.back()->Init(m_pPhysics);
 	//m_pPortions.back()->SetPosition(MyLib::Vec3(0.0f,0.0f,-10.0f));
+
+	MapManager::GetInstance().Init();
+	MapManager::GetInstance().Load("data");
 }
 
 /// <summary>
@@ -94,6 +98,10 @@ void SceneGame::End()
 
 	MV1DeleteModel(m_stageModel);
 
+	for (auto& p : m_pPortions)
+	{
+		p->Finalize(m_pPhysics);
+	}
 	m_pPortions.clear();
 
 }
@@ -167,7 +175,9 @@ void SceneGame::Draw()
 	// リソースのロードが終わるまでは描画しないのがよさそう
 	// (どちらにしろフェード仕切っているので何も見えないはず)
 	if (!IsLoaded())	return;
-	if (!IsInitialized())	return
+	if (!IsInitialized())	return;
+
+	MapManager::GetInstance().Draw();
 
 	//プレイヤーの描画
 	m_pPlayer->Draw();

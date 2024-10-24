@@ -2,6 +2,7 @@
 #include "Game.h"
 
 #include "ModelManager.h"
+#include "MapManager.h"
 
 namespace
 {
@@ -142,6 +143,7 @@ bool SceneBase::IsSceneEnd()
 
 
 	ModelManager::GetInstance().Clear();
+	MapManager::GetInstance().DeleteModel();
 	return true;
 }
 

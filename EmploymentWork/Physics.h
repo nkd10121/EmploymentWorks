@@ -52,6 +52,10 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	Physics(/*int normalStageCollisionHandle, int enemyStageCollisionHandle*/);
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~Physics();
 
 	/// <summary>
 	/// 衝突物の登録

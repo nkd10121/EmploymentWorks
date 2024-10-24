@@ -40,6 +40,33 @@ MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollision
 }
 
 /// <summary>
+/// デストラクタ
+/// </summary>
+MyLib::Physics::~Physics()
+{
+	m_collidables.clear();
+	m_onCollideInfo.clear();
+
+	m_newCollideInfo.clear();
+	m_preCollideInfo.clear();
+	m_newTirrigerInfo.clear();
+	m_preTirrigerInfo.clear();
+
+	MV1CollResultPolyDimTerminate(m_hitDim);
+	for (auto& poly : m_pWallPoly)
+	{
+		poly = nullptr;
+	}	
+	
+	for (auto& poly : m_pFloorPoly)
+	{
+		poly = nullptr;
+	}
+
+	m_pPoly = nullptr;
+}
+
+/// <summary>
 /// 衝突物の登録
 /// </summary>
 /// <param name="collidable">追加する当たり判定</param>

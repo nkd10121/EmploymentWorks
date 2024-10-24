@@ -17,6 +17,9 @@ namespace
 	constexpr float kMoveRange = 0.01f;
 	//座標を設定するときのY座標のオフセット
 	constexpr float kOffsetPosY = 2.0f;
+
+	const std::string kPortionPath = "data/model/object/portion/bottle_red.mv1";
+
 }
 
 /// <summary>
@@ -55,7 +58,7 @@ void HealPortion::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->Init();
 
 	//モデルのハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("data/model/object/portion/bottle_red.mv1");
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle(kPortionPath);
 	//モデルのスケールを設定
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 

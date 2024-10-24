@@ -27,6 +27,7 @@
     <ClCompile Include="DebugDraw.cpp" />
     <ClCompile Include="HealPortion.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
+    <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="ObjectBase.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="GameObjectTag.h" />
     <ClInclude Include="HealPortion.h" />
     <ClInclude Include="LoadCSV.h" />
+    <ClInclude Include="MapManager.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="MyLib.h" />
     <ClInclude Include="ObjectBase.h" />
@@ -168,6 +170,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -185,6 +188,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
