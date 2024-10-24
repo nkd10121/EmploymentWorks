@@ -14,7 +14,7 @@ namespace
 	//ポーションが上下する速度
 	constexpr float kMoveSpeed = 0.04f;
 	//ポーションが上下する幅
-	constexpr float kMoveRange = 0.01f;
+	constexpr float kMoveRange = 0.6f;
 	//座標を設定するときのY座標のオフセット
 	constexpr float kOffsetPosY = 2.0f;
 
@@ -33,8 +33,9 @@ HealPortion::HealPortion() :
 	m_posOffsetY(0.0f)
 {
 	//当たり判定の生成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, false);
-	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
+	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
+	sphereCol->m_size = kCollisionRadius;
 	sphereCol->m_radius = kCollisionRadius;
 }
 

@@ -23,8 +23,6 @@ void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& cent
 {
 	// 相対ベクトル
 	Vec3 vec = centerB - centerA;
-	// 法線ベクトル
-	Vec3 norm = Cross(sizeA, sizeB);
 
 	float s, t;
 
@@ -36,5 +34,5 @@ void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& cent
 	t = std::min<float>(std::max<float>(t, -1.0f), 1.0f);
 
 	resultAPos = sizeA * s + centerA;
-	resultBPos = centerB * t + centerB;
+	resultBPos = sizeB * t + centerB;
 }

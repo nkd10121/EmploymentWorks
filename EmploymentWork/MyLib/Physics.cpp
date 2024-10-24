@@ -320,7 +320,7 @@ void MyLib::Physics::CheckColide()
 		if (doCheck && checkCount > 800)
 		{
 #if _DEBUG
-			printfDx("規定回数を超えました");
+			//printfDx("規定回数を超えました");
 #endif
 			break;
 		}
@@ -466,10 +466,23 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 		Vec3 nearPosOnALine, nearPosOnBLine;
 		GetNearestPtOnLine(colACenter,colATopVec,colBCenter,colBTopVec,nearPosOnALine,nearPosOnBLine);
 
-		//カプセルAのカプセルBとの最近接点からカプセルBのカプセルAとの最近接点
+		//カプセルAのカプセルBとの最近接点からカプセルBのカプセルAとの最近接点に向かうベクトルを取得
 		auto nearPosToNearPos = nearPosOnBLine - nearPosOnALine;
+		//正規化して方向ベクトルにする
+		nearPosToNearPos = nearPosToNearPos.Normalize();
+		//離す距離を計算(カプセルと級の半径を足した距離+余分)
+		auto awayDist = colA->m_radius + colB->m_radius + 0.00001f;
+		//最近接点の修正座標を計算
+		auto fixedNearPos = colACenter + nearPosToNearPos * awayDist;
 
+		//カプセルBの最近接点からカプセルBの中心座標に向かうベクトルを計算
+		auto nearPosToCenterB = colBCenter - nearPosOnBLine;
+		nearPosToCenterB = nearPosToCenterB.Normalize();
 
+		auto fixedPos = fixedNearPos + nearPosToCenterB * colB->m_size;
+		fixedPos.y = secondaryRigid->GetPos().y;
+		//修正座標を設定
+		secondaryRigid->SetNextPos(fixedPos);
 	}
 
 	//カプセルと球の補正
@@ -495,7 +508,7 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 		//長さを計算
 		auto awayDist = pCupsule->m_radius + pSphere->m_radius + 0.0001f;
 		//球の修正後の座標を計算
-		auto fixedPos = primaryRigid->GetNextPos() + nearPosToSphere * awayDist;
+		auto fixedPos = cupsuleCenter + nearPosToSphere * awayDist;
 		fixedPos.y = secondaryRigid->GetPos().y;
 		//修正座標を設定
 		secondaryRigid->SetNextPos(fixedPos);
