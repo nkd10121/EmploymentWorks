@@ -1,6 +1,7 @@
 ﻿#include <cassert>
 #include "MyLib.h"
 #include "DxLib.h"
+#include "MathHelp.h"
 
 //using namespace MyLib;
 
@@ -453,14 +454,22 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 
 		//二つのカプセルの直線部分同士の最近点間の距離が二つの半径を足した距離になるように修正する
 		auto colACenter = primaryRigid->GetNextPos();
-		auto colAPos1 = VGet(colACenter.x, colACenter.y + colA->m_size, colACenter.z);
-		auto colAPos2 = VGet(colACenter.x, colACenter.y - colA->m_size, colACenter.z);
+		auto colAPos1 = Vec3(colACenter.x, colACenter.y + colA->m_size, colACenter.z);
+		auto colATopVec = colAPos1 - colACenter;
 
 		auto colBCenter = secondaryRigid->GetNextPos();
-		auto colBPos1 = VGet(colBCenter.x, colBCenter.y + colB->m_size, colBCenter.z);
-		auto colBPos2 = VGet(colBCenter.x, colBCenter.y - colB->m_size, colBCenter.z);
+		auto colBPos1 = Vec3(colBCenter.x, colBCenter.y + colB->m_size, colBCenter.z);
+		auto colBTopVec = colBPos1 - colBCenter;
 
-		auto minLength = Segment_Segment_MinLength(colAPos1, colAPos2, colBPos1, colBPos2);
+		//それぞれのカプセルの線分上の最近接点を計算
+		//結果格納用変数
+		Vec3 nearPosOnALine, nearPosOnBLine;
+		GetNearestPtOnLine(colACenter,colATopVec,colBCenter,colBTopVec,nearPosOnALine,nearPosOnBLine);
+
+		//カプセルAのカプセルBとの最近接点からカプセルBのカプセルAとの最近接点
+		auto nearPosToNearPos = nearPosOnBLine - nearPosOnALine;
+
+
 	}
 
 	//カプセルと球の補正
@@ -471,16 +480,25 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 
 		//カプセルの直線上の球との最近接点と球の中心座標の距離がそれぞれの半径を足した距離になるように修正する
 		auto cupsuleCenter = primaryRigid->GetNextPos();
-		auto cupsulePos1 = VGet(cupsuleCenter.x, cupsuleCenter.y + pCupsule->m_size, cupsuleCenter.z);
-		auto cupsulePos2 = VGet(cupsuleCenter.x, cupsuleCenter.y - pCupsule->m_size, cupsuleCenter.z);
+		auto cupsulePos1 = Vec3(cupsuleCenter.x, cupsuleCenter.y - pCupsule->m_size, cupsuleCenter.z);
+		auto cupsulePos2 = Vec3(cupsuleCenter.x, cupsuleCenter.y + pCupsule->m_size, cupsuleCenter.z);
 
 		auto sphereCenter = secondaryRigid->GetNextPos();
 		
-		auto length = Segment_Point_MinLength(cupsulePos1,cupsulePos2,sphereCenter.ToVECTOR());
+		//カプセルの直線上の球との最近接点の座標を出す必要がある
+		auto nearresPosOnLine = GetNearestPtOnLine(cupsulePos1, cupsulePos2, sphereCenter);
 
-		//カプセル状の球との最近接点の座標を出す必要がある
-
-
+		//カプセルの直線上の球との最近接点から球の中心座標に向かうベクトル
+		auto nearPosToSphere = sphereCenter - nearresPosOnLine;
+		//上のベクトルを正規化
+		nearPosToSphere = nearPosToSphere.Normalize();
+		//長さを計算
+		auto awayDist = pCupsule->m_radius + pSphere->m_radius + 0.0001f;
+		//球の修正後の座標を計算
+		auto fixedPos = primaryRigid->GetNextPos() + nearPosToSphere * awayDist;
+		fixedPos.y = secondaryRigid->GetPos().y;
+		//修正座標を設定
+		secondaryRigid->SetNextPos(fixedPos);
 	}
 
 	//球とカプセルの補正

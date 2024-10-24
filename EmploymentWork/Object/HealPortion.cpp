@@ -33,7 +33,7 @@ HealPortion::HealPortion() :
 	m_posOffsetY(0.0f)
 {
 	//当たり判定の生成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, false);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
 }
@@ -81,6 +81,8 @@ void HealPortion::Update()
 {
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
+
+	rigidbody->SetVelocity(Vec3());
 
 	//一定時間ごとにエフェクトを出す
 	if (m_effectCreateFrame % kCreateEffectInterval == 0)
