@@ -145,9 +145,9 @@ void MapManager::Load(const char* stageName)
 		loc.rot.z = DegreeToRadian(loc.rot.z);
 
 		loc.handle = MV1DuplicateModel(m_handles[loc.tag]);
-		MV1SetPosition(loc.handle, loc.pos.ConvertToVECTOR());
-		MV1SetScale(loc.handle, loc.scale.ConvertToVECTOR());
-		MV1SetRotationXYZ(loc.handle, loc.rot.ConvertToVECTOR());
+		MV1SetPosition(loc.handle, loc.pos.ToVECTOR());
+		MV1SetScale(loc.handle, loc.scale.ToVECTOR());
+		MV1SetRotationXYZ(loc.handle, loc.rot.ToVECTOR());
 
 	}
 }

@@ -102,7 +102,7 @@ void HealPortion::Update()
 	pos.y += m_posOffsetY;
 
 	rigidbody->SetPos(pos);
-	MV1SetPosition(m_modelHandle, pos.ConvertToVECTOR());
+	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
 	MV1SetRotationXYZ(m_modelHandle, VGet(0.0f, m_angle / 2, 0.0f));
 }
 
@@ -121,7 +121,7 @@ void HealPortion::Draw()
 /// <summary>
 /// ç¿ïWÇê›íË
 /// </summary>
-void HealPortion::SetPosition(MyLib::Vec3 pos)
+void HealPortion::SetPosition(Vec3 pos)
 {
 	pos.y += kOffsetPosY;
 	rigidbody->SetPos(pos);

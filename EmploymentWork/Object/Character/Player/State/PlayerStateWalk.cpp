@@ -51,9 +51,9 @@ void PlayerStateWalk::Update()
 	//コントローラーの左スティックの入力を取得
 	auto input = Input::GetInstance().GetInputStick(false);
 	//移動方向を設定する
-	auto temp_moveVec = MyLib::Vec3(input.first,0.0f,-input.second);
+	auto temp_moveVec = Vec3(input.first,0.0f,-input.second);
 	//移動ベクトルの長さを取得する
-	float len = temp_moveVec.Size();
+	float len = temp_moveVec.Length();
 
 	//ベクトルの長さを0.0～1.0の割合に変換する
 	float rate = len / kAnalogInputMax;
@@ -71,11 +71,11 @@ void PlayerStateWalk::Update()
 
 	//プレイヤーの正面方向を計算して正面方向を基準に移動する
 	//カメラの正面方向ベクトル
-	MyLib::Vec3 front(own->GetCameraDirecton().x, 0.0f, own->GetCameraDirecton().z);
+	Vec3 front(own->GetCameraDirecton().x, 0.0f, own->GetCameraDirecton().z);
 	//向きベクトル*移動量
 	front = front * temp_moveVec.z;
 	//カメラの右方向ベクトル
-	MyLib::Vec3 right(-own->GetCameraDirecton().z, 0.0f, own->GetCameraDirecton().x);
+	Vec3 right(-own->GetCameraDirecton().z, 0.0f, own->GetCameraDirecton().x);
 	//向きベクトル*移動量
 	right = right * (-temp_moveVec.x);
 
@@ -83,11 +83,11 @@ void PlayerStateWalk::Update()
 	temp_moveVec = front + right;
 	temp_moveVec = temp_moveVec.Normalize() * speed;
 	//移動処理
-	//MV1SetPosition(m_modelHandle, m_collisionPos.ConvertToVECTOR());
+	//MV1SetPosition(m_modelHandle, m_collisionPos.ToVECTOR());
 
 	
-	MyLib::Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
-	MyLib::Vec3 newVelocity = MyLib::Vec3(temp_moveVec.x, prevVelocity.y, temp_moveVec.z);
+	Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
+	Vec3 newVelocity = Vec3(temp_moveVec.x, prevVelocity.y, temp_moveVec.z);
 	own->GetRigidbody()->SetVelocity(newVelocity);
 }
 

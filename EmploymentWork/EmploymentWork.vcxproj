@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MathHelp.cpp" />
     <ClCompile Include="Object\Character\CharacterBase.cpp" />
     <ClCompile Include="MyLib\Collidable.cpp" />
     <ClCompile Include="MyLib\ColliderBase.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="MyLib\Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MathHelp.h" />
     <ClInclude Include="Object\Character\CharacterBase.h" />
     <ClInclude Include="MyLib\Collidable.h" />
     <ClInclude Include="MyLib\ColliderBase.h" />

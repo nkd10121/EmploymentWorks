@@ -42,7 +42,7 @@ Camera::Camera() :
 	m_lightHandle(-1)
 {
 	SetCameraNearFar(kCameraNear, kCameraFar);
-	m_lightHandle = CreateDirLightHandle((m_aimPos - m_cameraPos).ConvertToVECTOR());
+	m_lightHandle = CreateDirLightHandle((m_aimPos - m_cameraPos).ToVECTOR());
 }
 
 /// <summary>
@@ -103,7 +103,7 @@ void Camera::Update()
 
 	// カメラの位置はカメラの水平角度と垂直角度から算出
 	// 最初に垂直角度を反映した位置を算出
-	MyLib::Vec3 tempPos1;
+	Vec3 tempPos1;
 	float sinParam = sinf(m_cameraAngleY / 180.0f * DX_PI_F);
 	float cosParam = cosf(m_cameraAngleY / 180.0f * DX_PI_F);
 	tempPos1.x = 0.0f;
@@ -111,27 +111,27 @@ void Camera::Update()
 	tempPos1.z = -cosParam * kCameraDist;
 
 	// 次に水平角度を反映した位置を算出
-	MyLib::Vec3 tempPos2;
+	Vec3 tempPos2;
 	sinParam = sinf(m_cameraAngleX / 180.0f * DX_PI_F);
 	cosParam = cosf(m_cameraAngleX / 180.0f * DX_PI_F);
 	tempPos2.x = cosParam * tempPos1.x - sinParam * tempPos1.z;
 	tempPos2.y = tempPos1.y;
 	tempPos2.z = sinParam * tempPos1.x + cosParam * tempPos1.z;
 
-	m_aimPos = MyLib::Vec3(m_playerPos.x, m_playerPos.y + 9.0f, m_playerPos.z);
+	m_aimPos = Vec3(m_playerPos.x, m_playerPos.y + 9.0f, m_playerPos.z);
 
 	// 算出した座標に注視点の位置を加算したものがカメラの位置になる
 	m_cameraPos = tempPos2 + m_aimPos;
 
-	SetLightDirectionHandle(m_lightHandle, (m_aimPos - m_cameraPos).ConvertToVECTOR());
+	SetLightDirectionHandle(m_lightHandle, (m_aimPos - m_cameraPos).ToVECTOR());
 
-	SetCameraPositionAndTarget_UpVecY(m_cameraPos.ConvertToVECTOR(), m_aimPos.ConvertToVECTOR());
+	SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_aimPos.ToVECTOR());
 }
 
 /// <summary>
 /// カメラが向いている方向ベクトルを取得
 /// </summary>
-const MyLib::Vec3 Camera::GetDirection() const
+const Vec3 Camera::GetDirection() const
 {
 	return (m_aimPos - m_cameraPos).Normalize();
 }

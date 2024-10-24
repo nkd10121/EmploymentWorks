@@ -38,7 +38,7 @@ void MyLib::Rigidbody::AddForce(const Vec3& force)
 void MyLib::Rigidbody::SetVelocity(Vec3 set, float mul)
 {
 	m_velocity = set * mul;
-	if (m_velocity.SquareSize() > 0)
+	if (m_velocity.SqLength() > 0)
 	{
 		m_dir = m_velocity.Normalize();
 	}

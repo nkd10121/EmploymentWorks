@@ -23,13 +23,13 @@ void MyLib::DebugDraw::Draw3D()
 	//球体の描画情報リストにある情報分描画する
 	for (auto& sphere : m_sphereInfo)
 	{
-		DrawSphere3D(sphere.center.ConvertToVECTOR(), sphere.radius, 8, sphere.color, sphere.color, false);
+		DrawSphere3D(sphere.center.ToVECTOR(), sphere.radius, 8, sphere.color, sphere.color, false);
 	}
 
 	//カプセルの描画情報リストにある情報分描画する
 	for (auto& cupsule : m_cupsuleInfo)
 	{
-		DrawCapsule3D(cupsule.pos1.ConvertToVECTOR(), cupsule.pos2.ConvertToVECTOR(), cupsule.radius, 4, cupsule.color, cupsule.color, false);
+		DrawCapsule3D(cupsule.pos1.ToVECTOR(), cupsule.pos2.ToVECTOR(), cupsule.radius, 4, cupsule.color, cupsule.color, false);
 	}
 #endif
 }

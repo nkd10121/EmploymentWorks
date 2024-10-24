@@ -40,7 +40,7 @@ void PlayerStateIdle::Update()
 
 	//プレイヤーの速度を0にする(重力の影響を受けながら)
 	auto prevVel = own->GetRigidbody()->GetVelocity();
-	own->GetRigidbody()->SetVelocity(MyLib::Vec3(0.0f, prevVel.y, 0.0f));
+	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 }
 
 //int PlayerStateIdle::OnDamage(std::shared_ptr<MyLib::Collidable> collider)

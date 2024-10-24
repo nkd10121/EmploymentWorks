@@ -80,7 +80,7 @@ void SceneGame::Init()
 
 	//m_pPortions.emplace_back(std::make_shared<HealPortion>());
 	//m_pPortions.back()->Init(m_pPhysics);
-	//m_pPortions.back()->SetPosition(MyLib::Vec3(0.0f,0.0f,-10.0f));
+	//m_pPortions.back()->SetPosition(Vec3(0.0f,0.0f,-10.0f));
 
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
@@ -130,7 +130,7 @@ void SceneGame::Update()
 	{
 		m_pPortions.emplace_back(std::make_shared<HealPortion>());
 		m_pPortions.back()->Init(m_pPhysics);
-		m_pPortions.back()->SetPosition(MyLib::Vec3(0.0f, 0.0f, -10.0f));
+		m_pPortions.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 	}
 
 	//プレイヤーの更新

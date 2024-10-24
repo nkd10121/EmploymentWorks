@@ -131,7 +131,7 @@ void MyLib::Physics::Update()
 			// 最大重力加速度より大きかったらクランプ
 			if (m_velocity.y < kMaxGravityAccel)
 			{
-				m_velocity = MyLib::Vec3(m_velocity.x, kMaxGravityAccel, m_velocity.z);
+				m_velocity = Vec3(m_velocity.x, kMaxGravityAccel, m_velocity.z);
 			}
 		}
 
@@ -342,7 +342,7 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 		auto colB = dynamic_cast<MyLib::ColliderSphere*>(colliderB);
 
 		auto atob = rigidA->GetNextPos() - rigidB->GetNextPos();
-		auto atobLength = atob.Size();
+		auto atobLength = atob.Length();
 
 		// お互いの距離が、それぞれの半径を足したものより小さければ当たる
 		isCollide = (atobLength < colA->m_radius + colB->m_radius);
@@ -384,7 +384,7 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 		//球の情報を取得
 		auto sphereCenterPos = rigidB->GetNextPos();
 		//カプセルの線分と球の中心座標の距離がカプセルの半径と球の半径を足した値より長いか短いかで判断する
-		auto length = Segment_Point_MinLength(cupsulePos1, cupsulePos2,sphereCenterPos.ConvertToVECTOR());
+		auto length = Segment_Point_MinLength(cupsulePos1, cupsulePos2,sphereCenterPos.ToVECTOR());
 
 		isCollide = length < colA->m_radius + colB->m_radius;
 	}
@@ -446,6 +446,8 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 	//カプセルとカプセルの補正
 	if (primaryKind == MyLib::ColliderBase::Kind::Cupsule && secondaryKind == MyLib::ColliderBase::Kind::Cupsule)
 	{
+		//TODO:カプセルの位置補正がめんどくさそうなので早めに考えろ
+
 		auto colA = dynamic_cast<MyLib::ColliderCupsule*>(primaryCollider);
 		auto colB = dynamic_cast<MyLib::ColliderCupsule*>(secondaryCollider);
 
@@ -460,6 +462,33 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 
 		auto minLength = Segment_Segment_MinLength(colAPos1, colAPos2, colBPos1, colBPos2);
 	}
+
+	//カプセルと球の補正
+	if (primaryKind == MyLib::ColliderBase::Kind::Cupsule && secondaryKind == MyLib::ColliderBase::Kind::Sphere)
+	{
+		auto pCupsule = dynamic_cast<MyLib::ColliderCupsule*>(primaryCollider);
+		auto pSphere = dynamic_cast<MyLib::ColliderSphere*>(secondaryCollider);
+
+		//カプセルの直線上の球との最近接点と球の中心座標の距離がそれぞれの半径を足した距離になるように修正する
+		auto cupsuleCenter = primaryRigid->GetNextPos();
+		auto cupsulePos1 = VGet(cupsuleCenter.x, cupsuleCenter.y + pCupsule->m_size, cupsuleCenter.z);
+		auto cupsulePos2 = VGet(cupsuleCenter.x, cupsuleCenter.y - pCupsule->m_size, cupsuleCenter.z);
+
+		auto sphereCenter = secondaryRigid->GetNextPos();
+		
+		auto length = Segment_Point_MinLength(cupsulePos1,cupsulePos2,sphereCenter.ToVECTOR());
+
+		//カプセル状の球との最近接点の座標を出す必要がある
+
+
+	}
+
+	//球とカプセルの補正
+	if (primaryKind == MyLib::ColliderBase::Kind::Sphere && secondaryKind == MyLib::ColliderBase::Kind::Cupsule)
+	{
+
+	}
+
 }
 
 /// <summary>
@@ -587,7 +616,7 @@ void MyLib::Physics::FixPosition()
 }
 
 
-//MyLib::Vec3 MyLib::Physics::GetClosestPtOnSegment(Vec3 pt, Vec3 start, Vec3 end)
+//Vec3 MyLib::Physics::GetClosestPtOnSegment(Vec3 pt, Vec3 start, Vec3 end)
 //{
 //	// 最近接点がstart側線分外領域の場合
 //	auto startToPt = pt - start;
@@ -678,7 +707,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 	m_isHitFlag = false;
 
 	// 移動したかどうかで処理を分岐
-	if (col->rigidbody->GetDir().Size() != 0.0f)
+	if (col->rigidbody->GetDir().Length() != 0.0f)
 	{
 		// 壁ポリゴンの数だけ繰り返し
 		for (int i = 0; i < m_wallNum; i++)
@@ -694,24 +723,24 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 			m_isHitFlag = true;
 
 			//壁を考慮した移動を外積を使って算出
-			MyLib::Vec3 SlideVec;
+			Vec3 SlideVec;
 
 			VECTOR ret;
 			ret = VCross(col->rigidbody->GetVelocityVECTOR(), m_pPoly->Normal);
 			// 進行方向ベクトルと壁ポリゴンの法線ベクトルに垂直なベクトルを算出
-			SlideVec = MyLib::Vec3(ret.x, ret.y, ret.z);
+			SlideVec = Vec3(ret.x, ret.y, ret.z);
 
 			// 算出したベクトルと壁ポリゴンの法線ベクトルに垂直なベクトルを算出、これが
 			// 元の移動成分から壁方向の移動成分を抜いたベクトル
-			ret = VCross(m_pPoly->Normal, SlideVec.ConvertToVECTOR());
-			SlideVec = MyLib::Vec3(ret.x, ret.y, ret.z);
+			ret = VCross(m_pPoly->Normal, SlideVec.ToVECTOR());
+			SlideVec = Vec3(ret.x, ret.y, ret.z);
 
 			// それを移動前の座標に足したものを新たな座標とする
 			col->rigidbody->SetNextPos(col->rigidbody->GetPos() + SlideVec);
 
 			//変更したため新たに取得
 			//tempNextPos = col->rigidbody->GetNextPos();
-			//nextPos = tempNextPos.ConvertToVECTOR();
+			//nextPos = tempNextPos.ToVECTOR();
 
 			// 新たな移動座標で壁ポリゴンと当たっていないかどうかを判定する
 			bool isHitWallPolygon = false;
@@ -794,8 +823,8 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 
 			auto ret = VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(m_pPoly->Normal, kColHitSlideLength));
 
-			MyLib::Vec3 set;
-			set = MyLib::Vec3(ret.x, ret.y, ret.z);
+			Vec3 set;
+			set = Vec3(ret.x, ret.y, ret.z);
 
 			// 当たっていたら規定距離分プレイヤーを壁の法線方向に移動させる
 			col->rigidbody->SetNextPos(set);

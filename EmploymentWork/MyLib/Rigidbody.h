@@ -52,22 +52,22 @@ public:
 	/// 現在座標を取得
 	/// </summary>
 	/// <returns>現在座標</returns>
-	const VECTOR GetPosVECTOR() { return m_pos.ConvertToVECTOR(); }
+	const VECTOR GetPosVECTOR() { return m_pos.ToVECTOR(); }
 	/// <summary>
 	/// 移動予定座標を取得
 	/// </summary>
 	/// <returns>移動予定座標</returns>
-	const VECTOR GetNextPosVECTOR() { return m_nextPos.ConvertToVECTOR(); }
+	const VECTOR GetNextPosVECTOR() { return m_nextPos.ToVECTOR(); }
 	/// <summary>
 	/// 向きを取得
 	/// </summary>
 	/// <returns>向き</returns>
-	const VECTOR GetDirVECTOR() { return m_dir.ConvertToVECTOR(); }
+	const VECTOR GetDirVECTOR() { return m_dir.ToVECTOR(); }
 	/// <summary>
 	/// 移動速度を取得
 	/// </summary>
 	/// <returns>移動速度</returns>
-	const VECTOR GetVelocityVECTOR(){ return m_velocity.ConvertToVECTOR(); }
+	const VECTOR GetVelocityVECTOR(){ return m_velocity.ToVECTOR(); }
 	/// <summary>
 	/// 重力を与えるかどうかを取得
 	/// </summary>

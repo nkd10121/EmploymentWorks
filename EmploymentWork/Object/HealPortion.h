@@ -41,7 +41,7 @@ public:
 	/// À•W‚ğİ’è
 	/// </summary>
 	/// <param name="pos">İ’èÀ•W</param>
-	void SetPosition(MyLib::Vec3 pos);
+	void SetPosition(Vec3 pos);
 	/// <summary>
 	/// I—¹‚³‚¹‚é
 	/// </summary>

@@ -36,18 +36,18 @@ public:
 	/// プレイヤーの現在座標を取得する
 	/// </summary>
 	/// <returns>プレイヤーの現在座標</returns>
-	const MyLib::Vec3 GetPos()const { return rigidbody->GetPos(); }
+	const Vec3 GetPos()const { return rigidbody->GetPos(); }
 	/// <summary>
 	/// カメラの方向ベクトルを設定する
 	/// </summary>
 	/// <param name="m_dir">カメラの方向ベクトル</param>
-	void SetCameraAngle(MyLib::Vec3 m_dir) { m_cameraDirection = m_dir; }
+	void SetCameraAngle(Vec3 m_dir) { m_cameraDirection = m_dir; }
 
 	/// <summary>
 	/// カメラの方向ベクトルを取得する
 	/// </summary>
 	/// <returns>カメラの方向ベクトル</returns>
-	const MyLib::Vec3 GetCameraDirecton()const { return m_cameraDirection; }
+	const Vec3 GetCameraDirecton()const { return m_cameraDirection; }
 
 	/// <summary>
 	/// 押し出し処理を行うオブジェクトと衝突したとき
@@ -61,10 +61,10 @@ public:
 	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
 
 private:
-	MyLib::Vec3 m_pos;				//プレイヤーの描画座標
-	MyLib::Vec3 temp_moveVec;		//入力情報を確認するためのデバッグ用
-	MyLib::Vec3 m_cameraDirection;	//カメラの方向ベクトル
-	MyLib::Vec3 m_rot;				//角度
+	Vec3 m_pos;				//プレイヤーの描画座標
+	Vec3 temp_moveVec;		//入力情報を確認するためのデバッグ用
+	Vec3 m_cameraDirection;	//カメラの方向ベクトル
+	Vec3 m_rot;				//角度
 
 	float m_cameraAngle;		//カメラの角度
 	float m_angle;				//プレイヤーが向いている方向

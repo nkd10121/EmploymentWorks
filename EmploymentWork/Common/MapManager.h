@@ -28,17 +28,17 @@ private:
 	{
 		std::string name;	//名前
 		std::string tag;	//タグ
-		MyLib::Vec3 pos;	//座標
-		MyLib::Vec3 rot;	//回転
-		MyLib::Vec3 scale;	//大きさ
+		Vec3 pos;	//座標
+		Vec3 rot;	//回転
+		Vec3 scale;	//大きさ
 		int handle;
 	};
 
 	struct EnemyRoute
 	{
-		std::vector<MyLib::Vec3> start;
-		std::vector<std::vector<MyLib::Vec3>> pos;
-		MyLib::Vec3 end;
+		std::vector<Vec3> start;
+		std::vector<std::vector<Vec3>> pos;
+		Vec3 end;
 	};
 
 public:
