@@ -105,7 +105,7 @@
     <ClCompile Include="MyLib\Rigidbody.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="MyLib\Vec3.cpp">
+    <ClCompile Include="Geometry\Vec3.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
     <ClCompile Include="Util\Input.cpp">
@@ -141,7 +141,10 @@
     <ClCompile Include="Common\LoadCSV.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="MathHelp.cpp">
+    <ClCompile Include="Geometry\MathHelp.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\SoundManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -194,7 +197,7 @@
     <ClInclude Include="MyLib\Rigidbody.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="MyLib\Vec3.h">
+    <ClInclude Include="Geometry\Vec3.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="Util\Input.h">
@@ -230,7 +233,10 @@
     <ClInclude Include="Common\LoadCSV.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="MathHelp.h">
+    <ClInclude Include="Geometry\MathHelp.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\SoundManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
