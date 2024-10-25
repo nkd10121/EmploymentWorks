@@ -4,6 +4,11 @@
 
 ModelManager* ModelManager::m_instance = nullptr;
 
+namespace
+{
+	const std::string kPathFront = "data/";
+}
+
 /// <summary>
 /// デストラクタ
 /// </summary>
@@ -23,10 +28,12 @@ ModelManager::~ModelManager()
 /// </summary>
 void ModelManager::LoadModel(std::string path, bool isEternal)
 {
+	auto loadPath = kPathFront + path;
+
 	//すでにロードされていたら何もしない
 	for (auto& h : m_handles)
 	{
-		if (h.path == path)
+		if (h.path == loadPath)
 		{
 #ifdef _DEBUG
 			//指定したパスのモデルがすでにロードされていたらエラーを吐くようにする
@@ -39,8 +46,8 @@ void ModelManager::LoadModel(std::string path, bool isEternal)
 	//ここに来たということはすでにロードされていなかった
 	//→新しくロードする必要がある
 	Model add;
-	add.handle = MV1LoadModel(path.c_str());
-	add.path = path;
+	add.handle = MV1LoadModel(loadPath.c_str());
+	add.path = loadPath;
 	add.isEternal = isEternal;
 
 	m_handles.emplace_back(add);

@@ -14,4 +14,6 @@ ObjectBase::ObjectBase(Priority priority, GameObjectTag tag):
 /// </summary>
 ObjectBase::~ObjectBase()
 {
+	//リソース開放
+	MV1DeleteModel(m_modelHandle);
 }

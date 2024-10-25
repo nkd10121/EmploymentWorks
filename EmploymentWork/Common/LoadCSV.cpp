@@ -55,7 +55,7 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 	std::ifstream ifs("data/csv/status.csv");
 	if (!ifs)
 	{
-		assert(false);
+		assert(0 && "ファイルにアクセスできませんでした。");
 		return CharacterBase::Status();
 	}
 
@@ -105,4 +105,45 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 	}
 #endif
 	return retStatus;
+}
+
+std::map<std::string, std::string> LoadCSV::GetLoadResourcePath(std::string stageId)
+{
+	//戻り値
+	std::map<std::string, std::string> ret;
+
+	// 一時保存用string
+	std::string strBuf;
+	// カンマ分け一時保存用string
+	std::vector<std::string> strConmaBuf;
+
+	// ファイル読み込み
+	std::ifstream ifs("data/csv/LoadPath.csv");
+	if (!ifs)
+	{
+		assert(0 && "ファイルにアクセスできませんでした。");
+		return ret;
+	}
+
+	//最初は対応表情報が入っているだけなので無視する
+	std::getline(ifs, strBuf);
+
+	while (getline(ifs, strBuf))
+	{
+		//取得した文字列をカンマ区切りの配列(情報群)にする
+		strConmaBuf = Split(strBuf, ',');
+
+		//[0] ID
+		//[1] パス
+		//[2] 拡張子
+
+		//指定したIDと一致していたら
+		if (stageId == strConmaBuf[0])
+		{
+			//戻り値の変数にデータを追加する
+			ret[strConmaBuf[1]] = strConmaBuf[2];
+		}
+	}
+
+	return ret;
 }

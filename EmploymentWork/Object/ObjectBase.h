@@ -21,18 +21,23 @@ public:
 	/// </summary>
 	virtual ~ObjectBase();
 
+	///// <summary>
+	///// 初期化
+	///// </summary>
+	//virtual void Init() {};
+	///// <summary>
+	///// 更新
+	///// </summary>
+	//virtual void Update() {};
+	///// <summary>
+	///// 描画
+	///// </summary>
+	//virtual void Draw() {};
+
 	/// <summary>
-	/// 初期化
+	/// モデルのロードを申請する
 	/// </summary>
-	virtual void Init() {};
-	/// <summary>
-	/// 更新
-	/// </summary>
-	virtual void Update() {};
-	/// <summary>
-	/// 描画
-	/// </summary>
-	virtual void Draw() {};
+	virtual void LoadModel() {};
 
 protected:
 	int m_modelHandle;	//モデルハンドル

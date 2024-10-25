@@ -18,6 +18,15 @@ namespace
 
 	const std::string kStageDataPathFront = "data/stageData/";
 	const std::string kStageDataPathBack = ".loc";
+
+	const std::string kPath[] = 
+	{
+		"floor",
+		"wall",
+		"doorFrame",
+		"crystal",
+		"crystalStand"
+	};
 }
 
 /// <summary>
@@ -40,12 +49,10 @@ MapManager::~MapManager()
 void MapManager::Init()
 {
 	//ロードが完了しているときにここが呼ばれるため、モデルマネージャーに頼んでおいたモデルを取得する
-	m_handles["floor"] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + "floor" + kModelPathBack));
-	m_handles["wall"] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + "wall" + kModelPathBack));
-	m_handles["doorFrame"] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + "doorFrame" + kModelPathBack));
-
-	m_handles["crystal"] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + "crystal" + kModelPathBack));
-	m_handles["Blocks"] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + "Blocks" + kModelPathBack));
+	for (auto& path : kPath)
+	{
+		m_handles[path] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + path + kModelPathBack));
+	}
 }
 
 /// <summary>
@@ -58,7 +65,7 @@ void MapManager::LoadModel()
 	ModelManager::GetInstance().LoadModel((kModelPathFront + "doorFrame" + kModelPathBack));
 
 	ModelManager::GetInstance().LoadModel((kModelPathFront + "crystal" + kModelPathBack));
-	ModelManager::GetInstance().LoadModel((kModelPathFront + "Blocks" + kModelPathBack));
+	ModelManager::GetInstance().LoadModel((kModelPathFront + "crystalStand" + kModelPathBack));
 }
 
 /// <summary>

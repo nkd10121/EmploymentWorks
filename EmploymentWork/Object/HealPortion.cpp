@@ -44,8 +44,7 @@ HealPortion::HealPortion() :
 /// </summary>
 HealPortion::~HealPortion()
 {
-	//リソース開放
-	MV1DeleteModel(m_modelHandle);
+
 }
 
 /// <summary>
@@ -119,6 +118,10 @@ void HealPortion::Draw()
 
 	//モデルの描画
 	MV1DrawModel(m_modelHandle);
+}
+
+void HealPortion::LoadModel()
+{
 }
 
 /// <summary>

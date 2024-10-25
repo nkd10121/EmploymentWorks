@@ -21,6 +21,7 @@ namespace
 /// コンストラクタ
 /// </summary>
 SceneBase::SceneBase() :
+	m_loadPath(),
 	m_isInit(false),
 	m_isEnd(false),
 	m_fadeAlpha(kBrightMax),

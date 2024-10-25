@@ -6,6 +6,7 @@
 
 #include "ModelManager.h"
 #include "MapManager.h"
+#include "LoadCSV.h"
 
 namespace
 {
@@ -22,7 +23,8 @@ SceneGame::SceneGame():
 	m_pPhysics(nullptr),
 	m_pPortions()
 {
-
+	//このシーンでロードするべきリソースのパスを取得
+	m_loadPath = LoadCSV::GetInstance().GetLoadResourcePath("SCENE_GAME");
 }
 
 /// <summary>
@@ -42,9 +44,18 @@ void SceneGame::StartLoad()
 
 	// TODO:この間でリソースをロードする
 
-	ModelManager::GetInstance().LoadModel(kPortionPath);
+	for (auto& path : m_loadPath)
+	{
+		//モデルデータなら
+		if (path.second == ".mv1")
+		{
+			auto p = path.first + path.second;
+			ModelManager::GetInstance().LoadModel(p);
+		}
+	}
 
-	MapManager::GetInstance().LoadModel();
+
+	//MapManager::GetInstance().LoadModel();
 
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);

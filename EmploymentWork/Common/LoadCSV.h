@@ -51,4 +51,11 @@ public:
 	/// </summary>
 	/// <param name="characterName">ステータスを取得したいキャラクター名</param>
 	CharacterBase::Status LoadStatus(const char* characterName);
+
+	/// <summary>
+	/// そのシーンでロードするリソース名を取得
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	std::map<std::string, std::string> GetLoadResourcePath(std::string stageId);
 };

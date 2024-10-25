@@ -39,6 +39,7 @@
     <ClCompile Include="MyLib\Rigidbody.cpp" />
     <ClCompile Include="Scene\ScenePause.cpp" />
     <ClCompile Include="Object\Character\Player\State\StateBase.cpp" />
+    <ClCompile Include="Shot.cpp" />
     <ClCompile Include="Util\Camera.cpp" />
     <ClCompile Include="Util\Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -71,6 +72,7 @@
     <ClInclude Include="MyLib\Rigidbody.h" />
     <ClInclude Include="Scene\ScenePause.h" />
     <ClInclude Include="Object\Character\Player\State\StateBase.h" />
+    <ClInclude Include="Shot.h" />
     <ClInclude Include="Util\Camera.h" />
     <ClInclude Include="Util\Game.h" />
     <ClInclude Include="Util\Input.h" />

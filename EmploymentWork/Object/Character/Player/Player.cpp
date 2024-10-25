@@ -82,6 +82,65 @@ void Player::Update()
 	
 	//ステートの更新
 	m_pState->Update();
+
+	//if (input->GetIsPushedTriggerButton(true) && m_nowSlotIdx == 0 && m_status.hp > 0)
+	//{
+	//	if (shotTime % kShotIntervalFrame == 0)
+	//	{
+	//		SoundManager::GetInstance().PlaySE("shot");
+
+	//		auto add = std::make_shared<Shot>();
+	//		add->Init(m_pPhysics);
+	//		MyLib::Vec3 offset = MyLib::Vec3(0.0f, kModelOffsetY * kModelSizeScale / 2, 0.0f);
+
+	//		auto shotVec = m_cameraDirection;
+	//		int offsetX = GetRand(100) - 50;
+	//		int offsetY = GetRand(100) - 50;
+	//		int offsetZ = GetRand(100) - 50;
+	//		MyLib::Vec3 offsetVec = MyLib::Vec3(static_cast<float>(offsetX), static_cast<float>(offsetY), static_cast<float>(offsetZ));
+	//		offsetVec = offsetVec.Normalize() * m_shotOffsetPower;
+	//		shotVec += offsetVec;
+
+	//		add->Set(m_collisionPos + offset, shotVec, m_status.atk);
+	//		m_pShots.emplace_back(add);
+
+	//		m_shotOffsetPower += 0.028f;
+
+	//		if (m_shotOffsetPower >= 0.1f)
+	//		{
+	//			m_shotOffsetPower = 0.1f;
+	//		}
+	//	}
+	//	shotTime++;
+	//}
+	//else
+	//{
+	//	shotTime = 0;
+	//}
+
+	//m_difAngle = static_cast<int>(m_shotOffsetPower * 100);
+	//if (m_difAngle < 2)
+	//{
+	//	m_difAngle = 2;
+	//}
+
+	//for (auto& shot : m_pShots)
+	//{
+	//	shot->Update();
+	//	if (!shot->GetIsExist())
+	//	{
+	//		//メモリを解放する
+	//		shot->Finalize(m_pPhysics);
+	//		shot.reset();
+	//		shot = nullptr;
+	//	}
+	//}
+
+	////不要になった敵をここで削除処理する
+	//auto lIt = remove_if(m_pShots.begin(), m_pShots.end(), [](auto& v) {
+	//	return v == nullptr;
+	//	});
+	//m_pShots.erase(lIt, m_pShots.end());
 }
 
 /// <summary>

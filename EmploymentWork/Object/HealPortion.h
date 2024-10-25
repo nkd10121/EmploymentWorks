@@ -33,6 +33,11 @@ public:
 	void Draw();
 
 	/// <summary>
+	/// モデルのロードを申請する
+	/// </summary>
+	void LoadModel()override;
+
+	/// <summary>
 	/// 存在しているかどうかを取得
 	/// </summary>
 	/// <returns></returns>
