@@ -1,51 +1,51 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 #include "Vec3.h"
 #include <memory>
 
 /// <summary>
-/// ƒJƒƒ‰ƒNƒ‰ƒX
+/// ã‚«ãƒ¡ãƒ©ã‚¯ãƒ©ã‚¹
 /// </summary>
 class Camera
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	Camera();
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	~Camera();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Init();
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ƒJƒƒ‰‚ªŒü‚¢‚Ä‚¢‚é•ûŒüƒxƒNƒgƒ‹‚ğæ“¾
+	/// ã‚«ãƒ¡ãƒ©ãŒå‘ã„ã¦ã„ã‚‹æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒJƒƒ‰‚ªŒü‚¢‚Ä‚¢‚é•ûŒüƒxƒNƒgƒ‹</returns>
+	/// <returns>ã‚«ãƒ¡ãƒ©ãŒå‘ã„ã¦ã„ã‚‹æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«</returns>
 	const Vec3 GetDirection()const;
 
 	/// <summary>
-	/// ƒvƒŒƒCƒ„[‚ÌÀ•W‚ğİ’è‚·‚é
+	/// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™ã‚’è¨­å®šã™ã‚‹
 	/// </summary>
-	/// <param name="playerPos">ƒvƒŒƒCƒ„[‚ÌÀ•W</param>
+	/// <param name="playerPos">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™</param>
 	void SetPlayerPos(Vec3 playerPos) { m_playerPos = playerPos; }
 
 private:
-	float m_cameraAngleX;		//…•½Šp“x
-	float m_cameraAngleY;		//‚’¼Šp“x
-	Vec3 m_cameraPos;	//ƒJƒƒ‰‚ÌÀ•W
-	Vec3 m_aimPos;		//’‹“_
-	Vec3 m_playerPos;	//ƒvƒŒƒCƒ„[‚ÌÀ•W
-	float m_angleMoveScale;		//‹“_ˆÚ“®‘¬“x
-	int m_lightHandle;			//ƒ‰ƒCƒgƒnƒ“ƒhƒ‹
+	float m_cameraAngleX;		//æ°´å¹³è§’åº¦
+	float m_cameraAngleY;		//å‚ç›´è§’åº¦
+	Vec3 m_cameraPos;	//ã‚«ãƒ¡ãƒ©ã®åº§æ¨™
+	Vec3 m_aimPos;		//æ³¨è¦–ç‚¹
+	Vec3 m_playerPos;	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™
+	float m_angleMoveScale;		//è¦–ç‚¹ç§»å‹•é€Ÿåº¦
+	int m_lightHandle;			//ãƒ©ã‚¤ãƒˆãƒãƒ³ãƒ‰ãƒ«
 };
 

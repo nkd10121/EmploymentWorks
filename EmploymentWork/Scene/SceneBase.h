@@ -1,142 +1,142 @@
-#pragma once
+ï»¿#pragma once
 
-//‚»‚ê‚¼‚ê‚ÌƒV[ƒ“‚Åinclude‚·‚é‚Ì‚ß‚ñ‚Ç‚¢‚©‚çˆê’U‚±‚±‚Åinclude
-//‚æ‚­‚È‚¢‚Á‚ÄŒ¾‚í‚ê‚½‚ç‚»‚ê‚¼‚ê‚ÌƒV[ƒ“‚ÉƒRƒsƒy‚·‚é
+//ãã‚Œãžã‚Œã®ã‚·ãƒ¼ãƒ³ã§includeã™ã‚‹ã®ã‚ã‚“ã©ã„ã‹ã‚‰ä¸€æ—¦ã“ã“ã§include
+//ã‚ˆããªã„ã£ã¦è¨€ã‚ã‚ŒãŸã‚‰ãã‚Œãžã‚Œã®ã‚·ãƒ¼ãƒ³ã«ã‚³ãƒ”ãƒšã™ã‚‹
 #include "SceneManager.h"
 #include "Input.h"
 #include "DxLib.h"
 
 #ifdef _DEBUG
-// ˆ—•‰‰×Œv‘ª
+// å‡¦ç†è² è·è¨ˆæ¸¬
 #define DISP_PROCESS
 #endif
 
 /// <summary>
-/// ƒV[ƒ“‚ÌŠî’êƒNƒ‰ƒX
+/// ã‚·ãƒ¼ãƒ³ã®åŸºåº•ã‚¯ãƒ©ã‚¹
 /// </summary>
 class SceneBase
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	SceneBase();
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~SceneBase() {}
 
-public:	/*”h¶ƒNƒ‰ƒX‚ÉŒp³‚·‚é•K—v‚Ì‚ ‚éˆ—*/
+public:	/*æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã«ç¶™æ‰¿ã™ã‚‹å¿…è¦ã®ã‚ã‚‹å‡¦ç†*/
 	/// <summary>
-	/// //ƒŠƒ\[ƒX‚Ìƒ[ƒhŠJŽn
+	/// //ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰é–‹å§‹
 	/// </summary>
 	virtual void StartLoad() = 0;
 
 	/// <summary>
-	/// ƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
+	/// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚äº†ã—ãŸã‹ã©ã†ã‹
 	/// </summary>
-	/// <returns>true : I—¹Ï‚Ý, false : I—¹‚µ‚Ä‚¢‚È‚¢</returns>
+	/// <returns>true : çµ‚äº†æ¸ˆã¿, false : çµ‚äº†ã—ã¦ã„ãªã„</returns>
 	virtual bool IsLoaded()const = 0;
 
 	/// <summary>
-	/// ‰Šú‰»
-	/// MEMO:ƒŠƒ\[ƒX‚Ìƒ[ƒhŠ®—¹Œã‚ÉŒÄ‚Î‚ê‚é
+	/// åˆæœŸåŒ–
+	/// MEMO:ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰å®Œäº†å¾Œã«å‘¼ã°ã‚Œã‚‹
 	/// </summary>
 	virtual void Init() = 0;
 
 	/// <summary>
-	/// I—¹
-	/// MEMO:ƒŠƒ\[ƒX‚Ì‰ð•ú‚Í‚±‚ÌŠÖ”“à‚Ås‚¤
+	/// çµ‚äº†
+	/// MEMO:ãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾ã¯ã“ã®é–¢æ•°å†…ã§è¡Œã†
 	/// </summary>
 	virtual void End() = 0;
 
 	/// <summary>
-	/// XV
-	/// MEMO:ƒtƒF[ƒh’†‚àŒÄ‚Î‚ê‚é
+	/// æ›´æ–°
+	/// MEMO:ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã‚‚å‘¼ã°ã‚Œã‚‹
 	/// </summary>
 	virtual void Update() = 0;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw() = 0;
 
 #ifdef _DEBUG
-	// ƒfƒoƒbƒO•\Ž¦(Å‘O–Ê•\Ž¦)
+	// ãƒ‡ãƒãƒƒã‚°è¡¨ç¤º(æœ€å‰é¢è¡¨ç¤º)
 	virtual void drawDebug() {}
 #endif
 
 protected:
 	/// <summary>
-	/// ‰Šú‰»‚ªŒÄ‚Î‚ê‚½‚©‚Ç‚¤‚©
+	/// åˆæœŸåŒ–ãŒå‘¼ã°ã‚ŒãŸã‹ã©ã†ã‹
 	/// </summary>
-	/// <returns>true : ‰Šú‰»Ï‚Ý, false : ‰Šú‰»–¢Š®—¹</returns>
+	/// <returns>true : åˆæœŸåŒ–æ¸ˆã¿, false : åˆæœŸåŒ–æœªå®Œäº†</returns>
 	bool IsInitialized() { return m_isInit; }
 	
 	/// <summary>
-	/// Œ»Ý‚ÌƒV[ƒ“‚ðI—¹‚³‚¹‚é
+	/// ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚’çµ‚äº†ã•ã›ã‚‹
 	/// </summary>
 	void EndThisScene();
 
-public:	/*Œp³‚ðs‚í‚È‚¢ˆ—	SceneManager‚©‚çŒÄ‚Ño‚·‚Ì‚Í‚±‚Á‚¿*/
+public:	/*ç¶™æ‰¿ã‚’è¡Œã‚ãªã„å‡¦ç†	SceneManagerã‹ã‚‰å‘¼ã³å‡ºã™ã®ã¯ã“ã£ã¡*/
 
 	/// <summary>
-	/// ”h¶æ‚Ì‰Šú‰»‚ÆƒV[ƒ“‹¤’Ê‚Å•K—v‚È‰Šú‰»‚ðs‚¤
-	/// MEMO:‚±‚ê‚Íƒ[ƒhŠ®—¹Œã‚Ì‰‰ñupdate()‚ÅŒÄ‚Ô‚Ì‚ÅSceneManager()‚©‚ç‚ÍŒÄ‚Î‚È‚¢
+	/// æ´¾ç”Ÿå…ˆã®åˆæœŸåŒ–ã¨ã‚·ãƒ¼ãƒ³å…±é€šã§å¿…è¦ãªåˆæœŸåŒ–ã‚’è¡Œã†
+	/// MEMO:ã“ã‚Œã¯ãƒ­ãƒ¼ãƒ‰å®Œäº†å¾Œã®åˆå›župdate()ã§å‘¼ã¶ã®ã§SceneManager()ã‹ã‚‰ã¯å‘¼ã°ãªã„
 	/// </summary>
 	void InitAll();
 
 	/// <summary>
-	/// ”h¶æ‚ÌXV‚ÆƒV[ƒ“‹¤’Ê‚Å•K—v‚ÈXV‚ðs‚¤
+	/// æ´¾ç”Ÿå…ˆã®æ›´æ–°ã¨ã‚·ãƒ¼ãƒ³å…±é€šã§å¿…è¦ãªæ›´æ–°ã‚’è¡Œã†
 	/// </summary>
 	void UpdateAll();
 
 	/// <summary>
-	/// ”h¶æ‚Ì•`‰æ‚ÆƒV[ƒ“‹¤’Ê‚Å•K—v‚È•`‰æ‚ðs‚¤
+	/// æ´¾ç”Ÿå…ˆã®æç”»ã¨ã‚·ãƒ¼ãƒ³å…±é€šã§å¿…è¦ãªæç”»ã‚’è¡Œã†
 	/// </summary>
 	void DrawAll();
 
 	/// <summary>
-	/// Œ»Ý‚ÌƒV[ƒ“‚ªŠ®‘S‚ÉI—¹‚µ‚½‚©‚Ç‚¤‚©
+	/// ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ãŒå®Œå…¨ã«çµ‚äº†ã—ãŸã‹ã©ã†ã‹
 	/// </summary>
-	/// <returns>true : I—¹‚µ‚½, false : ‚»‚à‚»‚àI—¹‚·‚é—\’è‚ª‚È‚¢ or ƒtƒF[ƒh’†</returns>
+	/// <returns>true : çµ‚äº†ã—ãŸ, false : ãã‚‚ãã‚‚çµ‚äº†ã™ã‚‹äºˆå®šãŒãªã„ or ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­</returns>
 	bool IsSceneEnd();
 
-private:	/*ƒtƒF[ƒhŠÖŒW*/
+private:	/*ãƒ•ã‚§ãƒ¼ãƒ‰é–¢ä¿‚*/
 
 	/// <summary>
-	/// ƒtƒF[ƒh‚ÌXV
+	/// ãƒ•ã‚§ãƒ¼ãƒ‰ã®æ›´æ–°
 	/// </summary>
 	void UpdateFade();
 
 	/// <summary>
-	/// ƒtƒF[ƒh‚Ì•`‰æ
+	/// ãƒ•ã‚§ãƒ¼ãƒ‰ã®æç”»
 	/// </summary>
 	void DrawFade() const;
 
 	/// <summary>
-	/// ƒ[ƒh’†•`‰æ
+	/// ãƒ­ãƒ¼ãƒ‰ä¸­æç”»
 	/// </summary>
 	void DrawLoading() const;
 
 	/// <summary>
-	/// ƒtƒF[ƒhƒCƒ“ŠJŽn
+	/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³é–‹å§‹
 	/// </summary>
 	void StartFadeIn();
 	/// <summary>
-	/// ƒtƒF[ƒhƒAƒEƒgŠJŽn
+	/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆé–‹å§‹
 	/// </summary>
 	void StartFadeOut();	
 
 protected:
 
 	/// <summary>
-	/// ƒtƒF[ƒhƒCƒ“‚ðƒXƒLƒbƒv‚·‚é
+	/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
 	/// </summary>
 	void SkipFadeIn();
 
 	/// <summary>
-	/// ƒtƒF[ƒhƒAƒEƒg‚ðƒXƒLƒbƒv‚·‚é
+	/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
 	/// </summary>
 	void SkipFadeOut();
 
@@ -145,19 +145,19 @@ protected:
 
 
 private:
-	bool m_isInit;	//‰Šú‰»ˆ—I—¹”»’è
-	bool m_isEnd;	//ŽŸ‚ÌƒV[ƒ“‚É‘JˆÚ‚·‚é
+	bool m_isInit;	//åˆæœŸåŒ–å‡¦ç†çµ‚äº†åˆ¤å®š
+	bool m_isEnd;	//æ¬¡ã®ã‚·ãƒ¼ãƒ³ã«é·ç§»ã™ã‚‹
 
-	// ƒtƒF[ƒhŠÖ˜Aˆ—
-	int m_fadeAlpha;	//ƒtƒF[ƒh‚ÌƒAƒ‹ƒtƒ@’l
-						//0:ƒtƒF[ƒh’†‚¶‚á‚È‚¢,0ˆÈã:ƒtƒF[ƒh’†
-	int m_fadeSpeed;	//ƒtƒF[ƒh‘¬“x
-	unsigned int m_fadeColor;	//ƒtƒF[ƒhŽž‚ÌF
+	// ãƒ•ã‚§ãƒ¼ãƒ‰é–¢é€£å‡¦ç†
+	int m_fadeAlpha;	//ãƒ•ã‚§ãƒ¼ãƒ‰ã®ã‚¢ãƒ«ãƒ•ã‚¡å€¤
+						//0:ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã˜ã‚ƒãªã„,0ä»¥ä¸Š:ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­
+	int m_fadeSpeed;	//ãƒ•ã‚§ãƒ¼ãƒ‰é€Ÿåº¦
+	unsigned int m_fadeColor;	//ãƒ•ã‚§ãƒ¼ãƒ‰æ™‚ã®è‰²
 
 #ifdef DISP_PROCESS
-	/*ˆ—•‰‰×Œv‘ª*/
-	LONGLONG	m_updateTime;	// update‚É‚©‚©‚Á‚½ŽžŠÔ(ƒ~ƒŠ•b)
-	LONGLONG	m_drawTime;		// draw‚É‚©‚©‚Á‚½ŽžŠÔ(ƒ~ƒŠ•b)
+	/*å‡¦ç†è² è·è¨ˆæ¸¬*/
+	LONGLONG	m_updateTime;	// updateã«ã‹ã‹ã£ãŸæ™‚é–“(ãƒŸãƒªç§’)
+	LONGLONG	m_drawTime;		// drawã«ã‹ã‹ã£ãŸæ™‚é–“(ãƒŸãƒªç§’)
 #endif
 };
 

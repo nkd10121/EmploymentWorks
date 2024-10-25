@@ -1,7 +1,7 @@
-#include "CharacterBase.h"
+ï»¿#include "CharacterBase.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 CharacterBase::CharacterBase(Priority priority, GameObjectTag tag) :
 	Collidable(priority, tag),
@@ -17,67 +17,67 @@ CharacterBase::CharacterBase(Priority priority, GameObjectTag tag) :
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 CharacterBase::~CharacterBase()
 {
 }
 
 /// <summary>
-/// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌXV
+/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ›´æ–°
 /// </summary>
 bool CharacterBase::UpdateAnim(int attachNo, float startTime)
 {
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ªİ’è‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚ç‘ŠúƒŠƒ^[ƒ“
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒè¨­å®šã•ã‚Œã¦ã„ãªã‹ã£ãŸã‚‰æ—©æœŸãƒªã‚¿ãƒ¼ãƒ³
 	if (attachNo == -1)	return false;
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğis‚³‚¹‚é
-	float nowFrame = MV1GetAttachAnimTime(m_modelHandle, attachNo);	//Œ»İ‚ÌÄ¶ƒJƒEƒ“ƒg‚ğæ“¾
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é€²è¡Œã•ã›ã‚‹
+	float nowFrame = MV1GetAttachAnimTime(m_modelHandle, attachNo);	//ç¾åœ¨ã®å†ç”Ÿã‚«ã‚¦ãƒ³ãƒˆã‚’å–å¾—
 	nowFrame += m_animSpeed;
 
-	//Œ»İÄ¶’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘ƒJƒEƒ“ƒg‚ğæ“¾‚·‚é
+	//ç¾åœ¨å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç·ã‚«ã‚¦ãƒ³ãƒˆã‚’å–å¾—ã™ã‚‹
 	float totalAnimframe = MV1GetAttachAnimTotalTime(m_modelHandle, attachNo);
 	bool isLoop = false;
 
-	//NOTE:‚à‚µ‚©‚µ‚½‚ç‘ƒtƒŒ[ƒ€•ªˆø‚¢‚Ä‚à‘ƒtƒŒ[ƒ€‚æ‚è‘å‚«‚¢‚©‚à‚µ‚ê‚È‚¢‚©‚çwhile‚Å‘å‚«‚¢ŠÔˆø‚«‘±‚¯‚é
+	//NOTE:ã‚‚ã—ã‹ã—ãŸã‚‰ç·ãƒ•ãƒ¬ãƒ¼ãƒ åˆ†å¼•ã„ã¦ã‚‚ç·ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ˆã‚Šå¤§ãã„ã‹ã‚‚ã—ã‚Œãªã„ã‹ã‚‰whileã§å¤§ãã„é–“å¼•ãç¶šã‘ã‚‹
 	while (totalAnimframe <= nowFrame)
 	{
-		//NOTE:nowFrame‚ğ0‚ÉƒŠƒZƒbƒg‚·‚é‚ÆƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€‚Ì”ò‚Ñ‚ª‚Å‚é‚©‚ç‘ƒtƒŒ[ƒ€•ªˆø‚­
+		//NOTE:nowFrameã‚’0ã«ãƒªã‚»ãƒƒãƒˆã™ã‚‹ã¨ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ãƒ¬ãƒ¼ãƒ ã®é£›ã³ãŒã§ã‚‹ã‹ã‚‰ç·ãƒ•ãƒ¬ãƒ¼ãƒ åˆ†å¼•ã
 		nowFrame -= totalAnimframe;
 		nowFrame += startTime;
 		isLoop = true;
 	}
 
-	//i‚ß‚½ŠÔ‚Éİ’è
+	//é€²ã‚ãŸæ™‚é–“ã«è¨­å®š
 	MV1SetAttachAnimTime(m_modelHandle, attachNo, nowFrame);
 
 	return isLoop;
 }
 
 /// <summary>
-///	ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì•ÏX
+///	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å¤‰æ›´
 /// </summary>
 void CharacterBase::ChangeAnim(int animIndex, float animSpeed)
 {
-	//‚³‚ç‚ÉŒÃ‚¢ƒAƒjƒ[ƒVƒ‡ƒ“‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éê‡‚Í‚±‚Ì“_‚ÅÁ‚µ‚Ä‚¨‚­
+	//ã•ã‚‰ã«å¤ã„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ã“ã®æ™‚ç‚¹ã§æ¶ˆã—ã¦ãŠã
 	if (m_prevAnimNo != -1)
 	{
 		MV1DetachAnim(m_modelHandle, m_prevAnimNo);
 	}
 
-	//Œ»İÄ¶’†‚Ì‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚Í•ÏX–Ú‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆµ‚¢‚É‚·‚é
+	//ç¾åœ¨å†ç”Ÿä¸­ã®å¾…æ©Ÿã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¯å¤‰æ›´ç›®ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ‰±ã„ã«ã™ã‚‹
 	m_prevAnimNo = m_currentAnimNo;
 
-	//•ÏXŒã‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Æ‚µ‚ÄUŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‰ü‚ß‚Äİ’è‚·‚é
+	//å¤‰æ›´å¾Œã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã—ã¦æ”»æ’ƒã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æ”¹ã‚ã¦è¨­å®šã™ã‚‹
 	m_currentAnimNo = MV1AttachAnim(m_modelHandle, animIndex);
 
-	//Ø‚è‘Ö‚¦‚ÌuŠÔ‚Í•ÏX‘O‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ªÄ¶‚³‚ê‚éó‘Ô‚É‚·‚é
+	//åˆ‡ã‚Šæ›¿ãˆã®ç¬é–“ã¯å¤‰æ›´å‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå†ç”Ÿã•ã‚Œã‚‹çŠ¶æ…‹ã«ã™ã‚‹
 	m_animBlendRate = 0.0f;
 
 	m_animSpeed = animSpeed;
 
-	//•ÏX‘O‚ÌƒAƒjƒ[ƒVƒ‡ƒ“100%
+	//å¤‰æ›´å‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³100%
 	MV1SetAttachAnimBlendRate(m_modelHandle, m_prevAnimNo, 1.0f - m_animBlendRate);
-	//•ÏXŒã‚ÌƒAƒjƒ[ƒVƒ‡ƒ“0%
+	//å¤‰æ›´å¾Œã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³0%
 	MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
 }

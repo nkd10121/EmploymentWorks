@@ -1,10 +1,10 @@
-#include "PlayerStateIdle.h"
+ï»¿#include "PlayerStateIdle.h"
 #include "Input.h"
 #include "Player.h"
 #include "PlayerStateWalk.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 PlayerStateIdle::PlayerStateIdle(std::shared_ptr<CharacterBase> own):
 	StateBase(own)
@@ -13,14 +13,14 @@ PlayerStateIdle::PlayerStateIdle(std::shared_ptr<CharacterBase> own):
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void PlayerStateIdle::Init()
 {
 }
 
 /// <summary>
-/// XV
+/// æ›´æ–°
 /// </summary>
 void PlayerStateIdle::Update()
 {
@@ -28,7 +28,7 @@ void PlayerStateIdle::Update()
 
 	auto own = dynamic_cast<Player*>(m_pOwn.get());
 
-	//¶ƒXƒeƒBƒbƒN‚ª“ü—Í‚³‚ê‚Ä‚¢‚½‚çState‚ğWalk‚É‚·‚é
+	//å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãŸã‚‰Stateã‚’Walkã«ã™ã‚‹
 	if (Input::GetInstance().GetInputStick(false).first != 0.0f ||
 		Input::GetInstance().GetInputStick(false).second != 0.0f)
 	{
@@ -38,7 +38,7 @@ void PlayerStateIdle::Update()
 		return;
 	}
 
-	//ƒvƒŒƒCƒ„[‚Ì‘¬“x‚ğ0‚É‚·‚é(d—Í‚Ì‰e‹¿‚ğó‚¯‚È‚ª‚ç)
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®é€Ÿåº¦ã‚’0ã«ã™ã‚‹(é‡åŠ›ã®å½±éŸ¿ã‚’å—ã‘ãªãŒã‚‰)
 	auto prevVel = own->GetRigidbody()->GetVelocity();
 	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 }

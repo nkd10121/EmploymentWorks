@@ -1,62 +1,57 @@
-#pragma once
+ï»¿#pragma once
 #include "ObjectBase.h"
 
 class HealPortion : public ObjectBase
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	HealPortion();
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~HealPortion();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="physics">•¨—ƒNƒ‰ƒX</param>
-	void Init(std::shared_ptr<MyLib::Physics> physics);
+	/// <param name="physics">ç‰©ç†ã‚¯ãƒ©ã‚¹</param>
+	void Init(std::shared_ptr<MyLib::Physics> physics)override;
 	/// <summary>
-	/// “–‚½‚è”»’è‚ğíœ
+	/// å½“ãŸã‚Šåˆ¤å®šã‚’å‰Šé™¤
 	/// </summary>
-	/// <param name="physics">•¨—ƒNƒ‰ƒX</param>
+	/// <param name="physics">ç‰©ç†ã‚¯ãƒ©ã‚¹</param>
 	void Finalize(std::shared_ptr<MyLib::Physics> physics) override;
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
-	void Update();
+	void Update()override;
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
-	void Draw();
+	void Draw()override;
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹‚Ìƒ[ƒh‚ğ\¿‚·‚é
+	/// ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ã‚’ç”³è«‹ã™ã‚‹
 	/// </summary>
 	void LoadModel()override;
 
 	/// <summary>
-	/// ‘¶İ‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğæ“¾
+	/// åº§æ¨™ã‚’è¨­å®š
 	/// </summary>
-	/// <returns></returns>
-	const bool GetIsExist()const { return m_isExist; }
+	/// <param name="pos">è¨­å®šåº§æ¨™</param>
+	void SetPosition(Vec3 pos)override;
+
 	/// <summary>
-	/// À•W‚ğİ’è
-	/// </summary>
-	/// <param name="pos">İ’èÀ•W</param>
-	void SetPosition(Vec3 pos);
-	/// <summary>
-	/// I—¹‚³‚¹‚é
+	/// çµ‚äº†ã•ã›ã‚‹
 	/// </summary>
 	void End();
 
 private:
-	bool m_isExist;	//‘¶İƒtƒ‰ƒO
-	int m_effectCreateFrame;	//ƒtƒŒ[ƒ€”
+	int m_effectCreateFrame;	//ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
 
-	float m_angle;	//Šp“x
-	float m_posOffsetY;	//“®‚«•
+	float m_angle;	//è§’åº¦
+	float m_posOffsetY;	//å‹•ãå¹…
 };
 

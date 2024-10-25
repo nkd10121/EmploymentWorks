@@ -1,17 +1,17 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 #include "SceneTitle.h"
 
 SceneManager* SceneManager::m_instance = nullptr;
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SceneManager::SceneManager()
 {
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SceneManager::~SceneManager()
 {
@@ -19,7 +19,7 @@ SceneManager::~SceneManager()
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void SceneManager::Init()
 {
@@ -27,13 +27,13 @@ void SceneManager::Init()
 }
 
 /// <summary>
-/// Œ»İ‚Ìæ“ªƒV[ƒ“‚ÌXVŠÖ”‚ğŒÄ‚Ño‚·
+/// ç¾åœ¨ã®å…ˆé ­ã‚·ãƒ¼ãƒ³ã®æ›´æ–°é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 /// </summary>
 bool SceneManager::Update()
 {
 	Input::GetInstance().Update();
 
-	//––”ö‚Ì‚İÀs
+	//æœ«å°¾ã®ã¿å®Ÿè¡Œ
 	m_pScene.back()->UpdateAll();
 
 	if (m_pScene.back()->IsSceneEnd())
@@ -43,9 +43,9 @@ bool SceneManager::Update()
 			s->End();
 		}
 
-		//ƒV[ƒ“‚ğƒŠƒZƒbƒg
+		//ã‚·ãƒ¼ãƒ³ã‚’ãƒªã‚»ãƒƒãƒˆ
 		m_pScene.clear();
-		//––”ö‚É’Ç‰Á
+		//æœ«å°¾ã«è¿½åŠ 
 		m_pScene.push_back(m_pNextScene);
 		m_pNextScene.reset();
 		m_pNextScene = nullptr;
@@ -53,17 +53,17 @@ bool SceneManager::Update()
 		m_pScene.back()->StartLoad();
 	}
 
-	//Šî–{I—¹‚µ‚È‚¢
+	//åŸºæœ¬çµ‚äº†ã—ãªã„
 	return false;
 }
 
 /// <summary>
-/// ‚Á‚Ä‚¢‚éƒV[ƒ“‚Ì•`‰æŠÖ”‚ğŒÄ‚Ño‚·
+/// æŒã£ã¦ã„ã‚‹ã‚·ãƒ¼ãƒ³ã®æç”»é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 /// </summary>
 void SceneManager::Draw()
 {
-	//æ“ª‚©‚ç‡‚É•`‰æ
-	//ÅŒã‚ÉÏ‚ñ‚¾‚à‚Ì‚ªÅŒã‚É•`‰æ‚³‚ê‚é
+	//å…ˆé ­ã‹ã‚‰é †ã«æç”»
+	//æœ€å¾Œã«ç©ã‚“ã ã‚‚ã®ãŒæœ€å¾Œã«æç”»ã•ã‚Œã‚‹
 	for (auto& m_pScene : m_pScene)
 	{
 		m_pScene->DrawAll();
@@ -71,21 +71,21 @@ void SceneManager::Draw()
 }
 
 /// <summary>
-/// Às’†‚ÌƒV[ƒ“‚ğˆø”‚Åw’è‚µ‚½ƒV[ƒ“‚ÉØ‚è‘Ö‚¦‚é
+/// å®Ÿè¡Œä¸­ã®ã‚·ãƒ¼ãƒ³ã‚’å¼•æ•°ã§æŒ‡å®šã—ãŸã‚·ãƒ¼ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
 /// </summary>
 void SceneManager::ChangeScene(std::shared_ptr<SceneBase> nextScene)
 {
-	//ƒŠƒXƒg‚ª‹ó‚Á‚Û‚¾‚Á‚½‚ç“ü‚ê‘Ö‚¦‚¸‚É
+	//ãƒªã‚¹ãƒˆãŒç©ºã£ã½ã ã£ãŸã‚‰å…¥ã‚Œæ›¿ãˆãšã«
 	if (m_pScene.empty())
 	{
-		//––”ö‚É’Ç‰Á
+		//æœ«å°¾ã«è¿½åŠ 
 		m_pScene.push_back(nextScene);
 	}
 	else
 	{
 		m_pNextScene = nextScene;
 
-		//Šù‚Éˆê‚ÂˆÈã‚ ‚ê‚Î––”ö‚ğ“ü‚ê‘Ö‚¦‚é
+		//æ—¢ã«ä¸€ã¤ä»¥ä¸Šã‚ã‚Œã°æœ«å°¾ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
 		//m_pScene.back()->EndAll();
 		//m_pScene.back() = nextScene;
 		//m_pScene.back()->StartLoad();
@@ -93,7 +93,7 @@ void SceneManager::ChangeScene(std::shared_ptr<SceneBase> nextScene)
 }
 
 /// <summary>
-/// Œ»İæ“ª‚ÅÀs’†‚ÌƒV[ƒ“‚Ìã‚ÉƒV[ƒ“‚ğæ‚Á‚¯‚é
+/// ç¾åœ¨å…ˆé ­ã§å®Ÿè¡Œä¸­ã®ã‚·ãƒ¼ãƒ³ã®ä¸Šã«ã‚·ãƒ¼ãƒ³ã‚’ä¹—ã£ã‘ã‚‹
 /// </summary>
 void SceneManager::PushScene(std::shared_ptr<SceneBase> scene)
 {
@@ -101,7 +101,7 @@ void SceneManager::PushScene(std::shared_ptr<SceneBase> scene)
 }
 
 /// <summary>
-/// Œ»İ‚Ìæ“ªƒV[ƒ“‚ğíœ‚·‚é
+/// ç¾åœ¨ã®å…ˆé ­ã‚·ãƒ¼ãƒ³ã‚’å‰Šé™¤ã™ã‚‹
 /// </summary>
 void SceneManager::PopScene()
 {

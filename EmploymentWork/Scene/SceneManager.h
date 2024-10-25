@@ -1,36 +1,36 @@
-#pragma once
+ï»¿#pragma once
 #include <list>
 #include <memory>
 
 class SceneBase;
 
 /// <summary>
-/// ƒV[ƒ“‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+/// ã‚·ãƒ¼ãƒ³ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 class SceneManager
 {
 private:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	SceneManager();
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	~SceneManager();
 
-	static SceneManager* m_instance;	//ƒCƒ“ƒXƒ^ƒ“ƒX
+	static SceneManager* m_instance;	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‹Ö~‚·‚é
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç¦æ­¢ã™ã‚‹
 	SceneManager(const SceneManager&) = delete;
 	SceneManager& operator=(const SceneManager&) = delete;
 	SceneManager(SceneManager&&) = delete;
 	SceneManager& operator= (const SceneManager&&) = delete;
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒCƒ“ƒXƒ^ƒ“ƒX</returns>
+	/// <returns>ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</returns>
 	static SceneManager& GetInstance()
 	{
 		if (!m_instance)
@@ -41,7 +41,7 @@ public:
 	}
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğíœ
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å‰Šé™¤
 	/// </summary>
 	static void Destroy()
 	{
@@ -51,34 +51,34 @@ public:
 
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Init();
 	/// <summary>
-	/// Œ»İ‚Ìæ“ªƒV[ƒ“‚ÌXVŠÖ”‚ğŒÄ‚Ño‚·
+	/// ç¾åœ¨ã®å…ˆé ­ã‚·ãƒ¼ãƒ³ã®æ›´æ–°é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 	/// </summary>
-	/// <returns>true : ƒQ[ƒ€I—¹, false : ƒQ[ƒ€‘±s</returns>
+	/// <returns>true : ã‚²ãƒ¼ãƒ çµ‚äº†, false : ã‚²ãƒ¼ãƒ ç¶šè¡Œ</returns>
 	bool Update();
 	/// <summary>
-	/// ‚Á‚Ä‚¢‚éƒV[ƒ“‚Ì•`‰æŠÖ”‚ğŒÄ‚Ño‚·
+	/// æŒã£ã¦ã„ã‚‹ã‚·ãƒ¼ãƒ³ã®æç”»é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// Às’†‚ÌƒV[ƒ“‚ğˆø”‚Åw’è‚µ‚½ƒV[ƒ“‚ÉØ‚è‘Ö‚¦‚é
+	/// å®Ÿè¡Œä¸­ã®ã‚·ãƒ¼ãƒ³ã‚’å¼•æ•°ã§æŒ‡å®šã—ãŸã‚·ãƒ¼ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
 	/// </summary>
-	/// <param name="nextScene">‘JˆÚæ‚ÌƒV[ƒ“</param>
+	/// <param name="nextScene">é·ç§»å…ˆã®ã‚·ãƒ¼ãƒ³</param>
 	void ChangeScene(std::shared_ptr<SceneBase> nextScene);
 	/// <summary>
-	/// Œ»İæ“ª‚ÅÀs’†‚ÌƒV[ƒ“‚Ìã‚ÉƒV[ƒ“‚ğæ‚Á‚¯‚é
+	/// ç¾åœ¨å…ˆé ­ã§å®Ÿè¡Œä¸­ã®ã‚·ãƒ¼ãƒ³ã®ä¸Šã«ã‚·ãƒ¼ãƒ³ã‚’ä¹—ã£ã‘ã‚‹
 	/// </summary>
-	/// <param name="scene">‘JˆÚæ‚ÌƒV[ƒ“</param>
+	/// <param name="scene">é·ç§»å…ˆã®ã‚·ãƒ¼ãƒ³</param>
 	void PushScene(std::shared_ptr<SceneBase> scene);
 	/// <summary>
-	/// Œ»İ‚Ìæ“ªƒV[ƒ“‚ğíœ‚·‚é
+	/// ç¾åœ¨ã®å…ˆé ­ã‚·ãƒ¼ãƒ³ã‚’å‰Šé™¤ã™ã‚‹
 	/// </summary>
 	void PopScene();
 private:
-	std::list<std::shared_ptr<SceneBase>> m_pScene;		//Œ»İ‚ÌƒV[ƒ“
-	std::shared_ptr<SceneBase> m_pNextScene;			//‘JˆÚ—\’è‚ÌƒV[ƒ“
+	std::list<std::shared_ptr<SceneBase>> m_pScene;		//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³
+	std::shared_ptr<SceneBase> m_pNextScene;			//é·ç§»äºˆå®šã®ã‚·ãƒ¼ãƒ³
 };

@@ -1,21 +1,21 @@
-#include "HealPortion.h"
+ï»¿#include "HealPortion.h"
 #include "DxLib.h"
 #include "ModelManager.h"
 
 namespace
 {
-	//“–‚½‚è”»’è‚Ì‰~‚Ì”¼Œa
+	//å½“ãŸã‚Šåˆ¤å®šã®å††ã®åŠå¾„
 	constexpr float kCollisionRadius = 2.4f;
 
-	//ƒ‚ƒfƒ‹ƒTƒCƒY
+	//ãƒ¢ãƒ‡ãƒ«ã‚µã‚¤ã‚º
 	constexpr float kModelScale = 0.08f;
-	//ƒGƒtƒFƒNƒg‚ğ¶¬‚·‚éŠÔŠu
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹é–“éš”
 	constexpr int kCreateEffectInterval = 120;
-	//ƒ|[ƒVƒ‡ƒ“‚ªã‰º‚·‚é‘¬“x
+	//ãƒãƒ¼ã‚·ãƒ§ãƒ³ãŒä¸Šä¸‹ã™ã‚‹é€Ÿåº¦
 	constexpr float kMoveSpeed = 0.04f;
-	//ƒ|[ƒVƒ‡ƒ“‚ªã‰º‚·‚é•
+	//ãƒãƒ¼ã‚·ãƒ§ãƒ³ãŒä¸Šä¸‹ã™ã‚‹å¹…
 	constexpr float kMoveRange = 0.6f;
-	//À•W‚ğİ’è‚·‚é‚Æ‚«‚ÌYÀ•W‚ÌƒIƒtƒZƒbƒg
+	//åº§æ¨™ã‚’è¨­å®šã™ã‚‹ã¨ãã®Yåº§æ¨™ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 	constexpr float kOffsetPosY = 2.0f;
 
 	const std::string kPortionPath = "data/model/object/portion/bottle_red.mv1";
@@ -23,16 +23,15 @@ namespace
 }
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 HealPortion::HealPortion() :
 	ObjectBase(Collidable::Priority::Low, GameObjectTag::Portion),
-	m_isExist(false),
 	m_effectCreateFrame(0),
 	m_angle(0.0f),
 	m_posOffsetY(0.0f)
 {
-	//“–‚½‚è”»’è‚Ì¶¬
+	//å½“ãŸã‚Šåˆ¤å®šã®ç”Ÿæˆ
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
 	sphereCol->m_size = kCollisionRadius;
@@ -40,7 +39,7 @@ HealPortion::HealPortion() :
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 HealPortion::~HealPortion()
 {
@@ -48,26 +47,26 @@ HealPortion::~HealPortion()
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void HealPortion::Init(std::shared_ptr<MyLib::Physics> physics)
 {
 	Collidable::Init(physics);
 
-	//•¨—‹““®‚Ì‰Šú‰»
+	//ç‰©ç†æŒ™å‹•ã®åˆæœŸåŒ–
 	rigidbody->Init();
 
-	//ƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//ãƒ¢ãƒ‡ãƒ«ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	m_modelHandle = ModelManager::GetInstance().GetModelHandle(kPortionPath);
-	//ƒ‚ƒfƒ‹‚ÌƒXƒP[ƒ‹‚ğİ’è
+	//ãƒ¢ãƒ‡ãƒ«ã®ã‚¹ã‚±ãƒ¼ãƒ«ã‚’è¨­å®š
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 
-	//‘¶İƒtƒ‰ƒO‚ğtrue‚É‚·‚é
+	//å­˜åœ¨ãƒ•ãƒ©ã‚°ã‚’trueã«ã™ã‚‹
 	m_isExist = true;
 }
 
 /// <summary>
-/// “–‚½‚è”»’è‚ğíœ
+/// å½“ãŸã‚Šåˆ¤å®šã‚’å‰Šé™¤
 /// </summary>
 void HealPortion::Finalize(std::shared_ptr<MyLib::Physics> physics)
 {
@@ -75,28 +74,28 @@ void HealPortion::Finalize(std::shared_ptr<MyLib::Physics> physics)
 }
 
 /// <summary>
-/// XV
+/// æ›´æ–°
 /// </summary>
 void HealPortion::Update()
 {
-	//‘¶İ‚µ‚Ä‚¢‚È‚¢ó‘Ô‚È‚ç‰½‚à‚³‚¹‚È‚¢
+	//å­˜åœ¨ã—ã¦ã„ãªã„çŠ¶æ…‹ãªã‚‰ä½•ã‚‚ã•ã›ãªã„
 	if (!m_isExist)return;
 
 	rigidbody->SetVelocity(Vec3());
 
-	//ˆê’èŠÔ‚²‚Æ‚ÉƒGƒtƒFƒNƒg‚ğo‚·
+	//ä¸€å®šæ™‚é–“ã”ã¨ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å‡ºã™
 	if (m_effectCreateFrame % kCreateEffectInterval == 0)
 	{
-		//ƒGƒtƒFƒNƒg‚Ì•\¦À•W‚ğæ“¾
+		//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®è¡¨ç¤ºåº§æ¨™ã‚’å–å¾—
 		auto pos = rigidbody->GetPos();
-		//ƒGƒtƒFƒNƒg‚ğ¶¬
+		//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 		//EffectManager::GetInstance().CreateEffect("Portion", pos, pos);
 	}
 
-	//ƒGƒtƒFƒNƒg¶¬ƒJƒEƒ“ƒg‚ğ‘‚â‚·
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆç”Ÿæˆã‚«ã‚¦ãƒ³ãƒˆã‚’å¢—ã‚„ã™
 	m_effectCreateFrame++;
 
-	/*ƒ|[ƒVƒ‡ƒ“‚ªY²ã‚ğsinƒJ[ƒu‚Åã‰º‚µ‚È‚ª‚çAY²‰ñ“]‚·‚é‚½‚ß‚Ìˆ—*/
+	/*ãƒãƒ¼ã‚·ãƒ§ãƒ³ãŒYè»¸ä¸Šã‚’sinã‚«ãƒ¼ãƒ–ã§ä¸Šä¸‹ã—ãªãŒã‚‰ã€Yè»¸å›è»¢ã™ã‚‹ãŸã‚ã®å‡¦ç†*/
 	m_angle += kMoveSpeed;
 	m_posOffsetY = sinf(m_angle) * kMoveRange;
 
@@ -109,14 +108,14 @@ void HealPortion::Update()
 }
 
 /// <summary>
-/// •`‰æ
+/// æç”»
 /// </summary>
 void HealPortion::Draw()
 {
-	//‘¶İ‚µ‚Ä‚¢‚È‚¢ó‘Ô‚È‚ç‰½‚à‚³‚¹‚È‚¢
+	//å­˜åœ¨ã—ã¦ã„ãªã„çŠ¶æ…‹ãªã‚‰ä½•ã‚‚ã•ã›ãªã„
 	if (!m_isExist)return;
 
-	//ƒ‚ƒfƒ‹‚Ì•`‰æ
+	//ãƒ¢ãƒ‡ãƒ«ã®æç”»
 	MV1DrawModel(m_modelHandle);
 }
 
@@ -125,7 +124,7 @@ void HealPortion::LoadModel()
 }
 
 /// <summary>
-/// À•W‚ğİ’è
+/// åº§æ¨™ã‚’è¨­å®š
 /// </summary>
 void HealPortion::SetPosition(Vec3 pos)
 {
@@ -136,7 +135,7 @@ void HealPortion::SetPosition(Vec3 pos)
 }
 
 /// <summary>
-/// I—¹‚³‚¹‚é
+/// çµ‚äº†ã•ã›ã‚‹
 /// </summary>
 void HealPortion::End()
 {

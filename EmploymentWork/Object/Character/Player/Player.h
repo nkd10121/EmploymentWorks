@@ -1,74 +1,76 @@
-#pragma once
+ï»¿#pragma once
 #include "Vec3.h"
 #include "CharacterBase.h"
 #include "StateBase.h"
 
+class SceneGame;
+
 /// <summary>
-/// ƒvƒŒƒCƒ„[ƒNƒ‰ƒX
+/// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹
 /// </summary>
 class Player : public CharacterBase
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	Player();
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~Player();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="physics">•¨—ƒNƒ‰ƒXƒ|ƒCƒ“ƒ^</param>
+	/// <param name="physics">ç‰©ç†ã‚¯ãƒ©ã‚¹ãƒã‚¤ãƒ³ã‚¿</param>
 	void Init(std::shared_ptr<MyLib::Physics> physics);
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
-	void Update();
+	void Update(SceneGame* pScene);
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ƒvƒŒƒCƒ„[‚ÌŒ»İÀ•W‚ğæ“¾‚·‚é
+	/// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç¾åœ¨åº§æ¨™ã‚’å–å¾—ã™ã‚‹
 	/// </summary>
-	/// <returns>ƒvƒŒƒCƒ„[‚ÌŒ»İÀ•W</returns>
+	/// <returns>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç¾åœ¨åº§æ¨™</returns>
 	const Vec3 GetPos()const { return rigidbody->GetPos(); }
 	/// <summary>
-	/// ƒJƒƒ‰‚Ì•ûŒüƒxƒNƒgƒ‹‚ğİ’è‚·‚é
+	/// ã‚«ãƒ¡ãƒ©ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨­å®šã™ã‚‹
 	/// </summary>
-	/// <param name="m_dir">ƒJƒƒ‰‚Ì•ûŒüƒxƒNƒgƒ‹</param>
+	/// <param name="m_dir">ã‚«ãƒ¡ãƒ©ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«</param>
 	void SetCameraAngle(Vec3 m_dir) { m_cameraDirection = m_dir; }
 
 	/// <summary>
-	/// ƒJƒƒ‰‚Ì•ûŒüƒxƒNƒgƒ‹‚ğæ“¾‚·‚é
+	/// ã‚«ãƒ¡ãƒ©ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã™ã‚‹
 	/// </summary>
-	/// <returns>ƒJƒƒ‰‚Ì•ûŒüƒxƒNƒgƒ‹</returns>
+	/// <returns>ã‚«ãƒ¡ãƒ©ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«</returns>
 	const Vec3 GetCameraDirecton()const { return m_cameraDirection; }
 
 	/// <summary>
-	/// ‰Ÿ‚µo‚µˆ—‚ğs‚¤ƒIƒuƒWƒFƒNƒg‚ÆÕ“Ë‚µ‚½‚Æ‚«
+	/// æŠ¼ã—å‡ºã—å‡¦ç†ã‚’è¡Œã†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨è¡çªã—ãŸã¨ã
 	/// </summary>
-	/// <param name="colider">Õ“Ë‚µ‚½ƒIƒuƒWƒFƒNƒg</param>
+	/// <param name="colider">è¡çªã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
 	void OnCollideEnter(const std::shared_ptr<Collidable>& colider)override;
 	/// <summary>
-	/// ‰Ÿ‚µo‚µˆ—‚ğs‚í‚È‚¢ƒIƒuƒWƒFƒNƒg‚ÆÕ“Ë‚µ‚½‚Æ‚«
+	/// æŠ¼ã—å‡ºã—å‡¦ç†ã‚’è¡Œã‚ãªã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨è¡çªã—ãŸã¨ã
 	/// </summary>
-	/// <param name="colider">Õ“Ë‚µ‚½ƒIƒuƒWƒFƒNƒg</param>
+	/// <param name="colider">è¡çªã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
 	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
 
 private:
-	Vec3 m_pos;				//ƒvƒŒƒCƒ„[‚Ì•`‰æÀ•W
-	Vec3 temp_moveVec;		//“ü—Íî•ñ‚ğŠm”F‚·‚é‚½‚ß‚ÌƒfƒoƒbƒO—p
-	Vec3 m_cameraDirection;	//ƒJƒƒ‰‚Ì•ûŒüƒxƒNƒgƒ‹
-	Vec3 m_rot;				//Šp“x
+	Vec3 m_pos;				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æç”»åº§æ¨™
+	Vec3 temp_moveVec;		//å…¥åŠ›æƒ…å ±ã‚’ç¢ºèªã™ã‚‹ãŸã‚ã®ãƒ‡ãƒãƒƒã‚°ç”¨
+	Vec3 m_cameraDirection;	//ã‚«ãƒ¡ãƒ©ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
+	Vec3 m_rot;				//è§’åº¦
 
-	float m_cameraAngle;		//ƒJƒƒ‰‚ÌŠp“x
-	float m_angle;				//ƒvƒŒƒCƒ„[‚ªŒü‚¢‚Ä‚¢‚é•ûŒü
+	float m_cameraAngle;		//ã‚«ãƒ¡ãƒ©ã®è§’åº¦
+	float m_angle;				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå‘ã„ã¦ã„ã‚‹æ–¹å‘
 
-	std::shared_ptr<StateBase> m_pState;	//Stateƒpƒ^[ƒ“
+	std::shared_ptr<StateBase> m_pState;	//Stateãƒ‘ã‚¿ãƒ¼ãƒ³
 };
 

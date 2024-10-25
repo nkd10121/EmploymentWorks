@@ -1,27 +1,27 @@
-#include "MathHelp.h"
+ï»¿#include "MathHelp.h"
 
 /// <summary>
-/// ü•ª‚Æ“_‚Ìü•ªã‚ÌÅ‹ßÚ“_‚ğæ“¾
+/// ç·šåˆ†ã¨ç‚¹ã®ç·šåˆ†ä¸Šã®æœ€è¿‘æ¥ç‚¹ã‚’å–å¾—
 /// </summary>
 Vec3 GetNearestPtOnLine(const Vec3& start, const Vec3& end, const Vec3& point)
 {
 	Vec3 startToEnd = end - start;
 	Vec3 startToPoint = point - start;
 
-	// üã‚Ì‚Ç‚Ì•Ó‚©
+	// ç·šä¸Šã®ã©ã®è¾ºã‹
 	float t = Dot(startToEnd, startToPoint) / startToEnd.SqLength();
-	// ”r‘¼ˆ—
+	// æ’ä»–å‡¦ç†
 	t = std::fmax(std::fmin(t, 1.0f), 0.0f);
 
 	return start + startToEnd * t;
 }
 
 /// <summary>
-/// ü•ª‚Æü•ª‚Ì‚»‚ê‚¼‚ê‚Ìü•ªã‚ÌÅ‹ßÚ“_‚ğæ“¾
+/// ç·šåˆ†ã¨ç·šåˆ†ã®ãã‚Œãã‚Œã®ç·šåˆ†ä¸Šã®æœ€è¿‘æ¥ç‚¹ã‚’å–å¾—
 /// </summary>
 void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& centerB, const Vec3& sizeB, Vec3& resultAPos, Vec3& resultBPos)
 {
-	// ‘Š‘ÎƒxƒNƒgƒ‹
+	// ç›¸å¯¾ãƒ™ã‚¯ãƒˆãƒ«
 	Vec3 vec = centerB - centerA;
 
 	float s, t;
@@ -29,7 +29,7 @@ void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& cent
 	s = Dot(sizeA, vec) / sizeA.SqLength();
 	t = Dot(sizeB, -vec) / sizeB.SqLength();
 
-	// ”ÍˆÍ‚Ì§ŒÀ
+	// ç¯„å›²ã®åˆ¶é™
 	s = std::min<float>(std::max<float>(s, -1.0f), 1.0f);
 	t = std::min<float>(std::max<float>(t, -1.0f), 1.0f);
 

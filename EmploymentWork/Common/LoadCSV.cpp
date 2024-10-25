@@ -1,4 +1,4 @@
-#include "LoadCSV.h"
+ï»¿#include "LoadCSV.h"
 #include <vector>
 #include <sstream>
 #include <fstream>
@@ -8,7 +8,7 @@ LoadCSV* LoadCSV::m_instance = nullptr;
 
 namespace
 {
-	// csvƒf[ƒ^‚Ì,‚Å•¶š—ñ‚ğ•ªŠ„‚·‚é
+	// csvãƒ‡ãƒ¼ã‚¿ã®,ã§æ–‡å­—åˆ—ã‚’åˆ†å‰²ã™ã‚‹
 	std::vector<std::string> Split(std::string& input, char delimiter)
 	{
 		std::istringstream stream(input);
@@ -25,59 +25,59 @@ namespace
 
 	namespace LoadData
 	{
-		//ƒXƒe[ƒ^ƒXî•ñ‚Ì•À‚Ñ—ñ‹“Œ^
+		//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æƒ…å ±ã®ä¸¦ã³åˆ—æŒ™å‹
 		enum eStatusOrder : int
 		{
-			name,	//ƒLƒƒƒ‰ƒNƒ^[–¼
-			hp,		//‘Ì—Í
-			atk,	//UŒ‚—Í
-			def,	//–hŒä—Í
-			speed,	//ˆÚ“®‘¬“x
-			point	//ƒhƒƒbƒv‚·‚éã©ƒ|ƒCƒ“ƒg
+			name,	//ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼å
+			hp,		//ä½“åŠ›
+			atk,	//æ”»æ’ƒåŠ›
+			def,	//é˜²å¾¡åŠ›
+			speed,	//ç§»å‹•é€Ÿåº¦
+			point	//ãƒ‰ãƒ­ãƒƒãƒ—ã™ã‚‹ç½ ãƒã‚¤ãƒ³ãƒˆ
 		};
 	}
 }
 
 /// <summary>
-/// ƒXƒe[ƒ^ƒXî•ñ‚ğæ“¾
+/// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æƒ…å ±ã‚’å–å¾—
 /// </summary>
 CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 {
-	//•Ô‚·î•ñ
+	//è¿”ã™æƒ…å ±
 	CharacterBase::Status retStatus;
 
-	// ˆê•Û‘¶—pstring
+	// ä¸€æ™‚ä¿å­˜ç”¨string
 	std::string strBuf;
-	// ƒJƒ“ƒ}•ª‚¯ˆê•Û‘¶—pstring
+	// ã‚«ãƒ³ãƒåˆ†ã‘ä¸€æ™‚ä¿å­˜ç”¨string
 	std::vector<std::string> strConmaBuf;
 
-	// ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	std::ifstream ifs("data/csv/status.csv");
 	if (!ifs)
 	{
-		assert(0 && "ƒtƒ@ƒCƒ‹‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B");
+		assert(0 && "ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚");
 		return CharacterBase::Status();
 	}
 
-	//î•ñ‚ğæ“¾‚Å‚«‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	//æƒ…å ±ã‚’å–å¾—ã§ããŸã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
 	bool isGet = false;
 
-	//Å‰‚Í‘Î‰•\î•ñ‚ª“ü‚Á‚Ä‚¢‚é‚¾‚¯‚È‚Ì‚Å–³‹‚·‚é
+	//æœ€åˆã¯å¯¾å¿œè¡¨æƒ…å ±ãŒå…¥ã£ã¦ã„ã‚‹ã ã‘ãªã®ã§ç„¡è¦–ã™ã‚‹
 	std::getline(ifs, strBuf);
 
 	while (getline(ifs, strBuf))
 	{
-		//æ“¾‚µ‚½•¶š—ñ‚ğƒJƒ“ƒ}‹æØ‚è‚Ì”z—ñ(î•ñŒQ)‚É‚·‚é
+		//å–å¾—ã—ãŸæ–‡å­—åˆ—ã‚’ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®é…åˆ—(æƒ…å ±ç¾¤)ã«ã™ã‚‹
 		strConmaBuf = Split(strBuf, ',');
 
-		//[0]:ƒLƒƒƒ‰ƒNƒ^[–¼
-		//[1]:‘Ì—Í
-		//[2]:UŒ‚—Í
-		//[3]:–hŒä—Í
-		//[4]:ˆÚ“®‘¬“x
-		//[5]:€–S‚Ìƒ|ƒCƒ“ƒg
+		//[0]:ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼å
+		//[1]:ä½“åŠ›
+		//[2]:æ”»æ’ƒåŠ›
+		//[3]:é˜²å¾¡åŠ›
+		//[4]:ç§»å‹•é€Ÿåº¦
+		//[5]:æ­»äº¡æ™‚ã®ãƒã‚¤ãƒ³ãƒˆ
 
-		//w’è‚µ‚½ƒLƒƒƒ‰ƒNƒ^[–¼‚Æˆê’v‚·‚éƒf[ƒ^‚ª‚ ‚ê‚Îî•ñ‚ğæ“¾‚·‚é
+		//æŒ‡å®šã—ãŸã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼åã¨ä¸€è‡´ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Œã°æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 		if (strConmaBuf[LoadData::eStatusOrder::name] == characterName)
 		{
 			isGet = true;
@@ -95,13 +95,13 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 	}
 
 #ifdef _DEBUG
-	//î•ñ‚ğæ“¾‚Å‚«‚È‚©‚Á‚½AƒGƒ‰[‚ğ“f‚­‚æ‚¤‚É‚·‚é
-	//æ“¾‚Å‚«‚È‚©‚Á‚½——R‘z’è
-	//‡@ƒLƒƒƒ‰ƒNƒ^[–¼‚ªƒXƒyƒ‹ƒ~ƒX‚â‘å•¶š¬•¶š‚Ìˆá‚¢‚ÅˆÙ‚È‚é
-	//‡Acsv‚Éî•ñ‚ğ’Ç‰Á‚µ–Y‚ê‚Ä‚¢‚é
+	//æƒ…å ±ã‚’å–å¾—ã§ããªã‹ã£ãŸæ™‚ã€ã‚¨ãƒ©ãƒ¼ã‚’åãã‚ˆã†ã«ã™ã‚‹
+	//å–å¾—ã§ããªã‹ã£ãŸç†ç”±æƒ³å®š
+	//â‘ ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼åãŒã‚¹ãƒšãƒ«ãƒŸã‚¹ã‚„å¤§æ–‡å­—å°æ–‡å­—ã®é•ã„ã§ç•°ãªã‚‹
+	//â‘¡csvã«æƒ…å ±ã‚’è¿½åŠ ã—å¿˜ã‚Œã¦ã„ã‚‹
 	if (!isGet)
 	{
-		assert(0 && "w’è‚µ‚½ƒLƒƒƒ‰ƒNƒ^[–¼‚Ìî•ñ‚ğæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+		assert(0 && "æŒ‡å®šã—ãŸã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼åã®æƒ…å ±ã‚’å–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
 	}
 #endif
 	return retStatus;
@@ -109,38 +109,38 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 
 std::map<std::string, std::string> LoadCSV::GetLoadResourcePath(std::string stageId)
 {
-	//–ß‚è’l
+	//æˆ»ã‚Šå€¤
 	std::map<std::string, std::string> ret;
 
-	// ˆê•Û‘¶—pstring
+	// ä¸€æ™‚ä¿å­˜ç”¨string
 	std::string strBuf;
-	// ƒJƒ“ƒ}•ª‚¯ˆê•Û‘¶—pstring
+	// ã‚«ãƒ³ãƒåˆ†ã‘ä¸€æ™‚ä¿å­˜ç”¨string
 	std::vector<std::string> strConmaBuf;
 
-	// ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	std::ifstream ifs("data/csv/LoadPath.csv");
 	if (!ifs)
 	{
-		assert(0 && "ƒtƒ@ƒCƒ‹‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B");
+		assert(0 && "ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚");
 		return ret;
 	}
 
-	//Å‰‚Í‘Î‰•\î•ñ‚ª“ü‚Á‚Ä‚¢‚é‚¾‚¯‚È‚Ì‚Å–³‹‚·‚é
+	//æœ€åˆã¯å¯¾å¿œè¡¨æƒ…å ±ãŒå…¥ã£ã¦ã„ã‚‹ã ã‘ãªã®ã§ç„¡è¦–ã™ã‚‹
 	std::getline(ifs, strBuf);
 
 	while (getline(ifs, strBuf))
 	{
-		//æ“¾‚µ‚½•¶š—ñ‚ğƒJƒ“ƒ}‹æØ‚è‚Ì”z—ñ(î•ñŒQ)‚É‚·‚é
+		//å–å¾—ã—ãŸæ–‡å­—åˆ—ã‚’ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®é…åˆ—(æƒ…å ±ç¾¤)ã«ã™ã‚‹
 		strConmaBuf = Split(strBuf, ',');
 
 		//[0] ID
-		//[1] ƒpƒX
-		//[2] Šg’£q
+		//[1] ãƒ‘ã‚¹
+		//[2] æ‹¡å¼µå­
 
-		//w’è‚µ‚½ID‚Æˆê’v‚µ‚Ä‚¢‚½‚ç
+		//æŒ‡å®šã—ãŸIDã¨ä¸€è‡´ã—ã¦ã„ãŸã‚‰
 		if (stageId == strConmaBuf[0])
 		{
-			//–ß‚è’l‚Ì•Ï”‚Éƒf[ƒ^‚ğ’Ç‰Á‚·‚é
+			//æˆ»ã‚Šå€¤ã®å¤‰æ•°ã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ ã™ã‚‹
 			ret[strConmaBuf[1]] = strConmaBuf[2];
 		}
 	}

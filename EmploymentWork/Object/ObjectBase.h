@@ -1,44 +1,58 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 #include "MyLib.h"
 #include "Vec3.h"
 #include <memory>
 
 /// <summary>
-/// ƒIƒuƒWƒFƒNƒg‚ÌŠî’êƒNƒ‰ƒX
+/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åŸºåº•ã‚¯ãƒ©ã‚¹
 /// </summary>
 class ObjectBase : public MyLib::Collidable
 {
 public:
 	/// <summary>
-	///	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	///	ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
-	/// <param name="priority">—Dæ“x</param>
-	/// <param name="tag">ƒ^ƒO</param>
+	/// <param name="priority">å„ªå…ˆåº¦</param>
+	/// <param name="tag">ã‚¿ã‚°</param>
 	ObjectBase(Priority priority, GameObjectTag tag);
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~ObjectBase();
 
-	///// <summary>
-	///// ‰Šú‰»
-	///// </summary>
-	//virtual void Init() {};
-	///// <summary>
-	///// XV
-	///// </summary>
-	//virtual void Update() {};
-	///// <summary>
-	///// •`‰æ
-	///// </summary>
-	//virtual void Draw() {};
+	/// <summary>
+	/// åˆæœŸåŒ–
+	/// </summary>
+	virtual void Init(std::shared_ptr<MyLib::Physics> physics) {};
+	/// <summary>
+	/// æ›´æ–°
+	/// </summary>
+	virtual void Update() {};
+	/// <summary>
+	/// æç”»
+	/// </summary>
+	virtual void Draw() {};
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹‚Ìƒ[ƒh‚ğ\¿‚·‚é
+	/// å­˜åœ¨ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsExist()const { return m_isExist; }
+
+	/// <summary>
+	/// ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ã‚’ç”³è«‹ã™ã‚‹
 	/// </summary>
 	virtual void LoadModel() {};
 
+	/// <summary>
+	/// åº§æ¨™ã‚’è¨­å®š
+	/// </summary>
+	/// <param name="pos">è¨­å®šåº§æ¨™</param>
+	virtual void SetPosition(Vec3 pos);
+
 protected:
-	int m_modelHandle;	//ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
+	int m_modelHandle;	//ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
+
+	bool m_isExist;	//å­˜åœ¨ãƒ•ãƒ©ã‚°
 };

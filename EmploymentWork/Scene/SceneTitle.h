@@ -1,50 +1,50 @@
-#pragma once
+ï»¿#pragma once
 #include "SceneBase.h"
 
 /// <summary>
-/// ƒ^ƒCƒgƒ‹ƒV[ƒ“
+/// ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³
 /// </summary>
 class SceneTitle : public SceneBase
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	SceneTitle();
 
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~SceneTitle();
 
 	/// <summary>
-	/// //ƒŠƒ\[ƒX‚Ìƒ[ƒhŠJn
+	/// //ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰é–‹å§‹
 	/// </summary>
 	virtual void StartLoad()override;
 
 	/// <summary>
-	/// ƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
+	/// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚äº†ã—ãŸã‹ã©ã†ã‹
 	/// </summary>
-	/// <returns>true : I—¹Ï‚İ, false : I—¹‚µ‚Ä‚¢‚È‚¢</returns>
+	/// <returns>true : çµ‚äº†æ¸ˆã¿, false : çµ‚äº†ã—ã¦ã„ãªã„</returns>
 	virtual bool IsLoaded() const override;
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	virtual void Init() override;
 
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	virtual void End() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw() override;
 };

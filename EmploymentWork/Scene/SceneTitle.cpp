@@ -1,8 +1,8 @@
-#include "SceneTitle.h"
+ï»¿#include "SceneTitle.h"
 #include "SceneGame.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SceneTitle::SceneTitle()
 {
@@ -10,55 +10,55 @@ SceneTitle::SceneTitle()
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SceneTitle::~SceneTitle()
 {
 }
 
 /// <summary>
-/// //ƒŠƒ\[ƒX‚Ìƒ[ƒhŠJn
+/// //ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰é–‹å§‹
 /// </summary>
 void SceneTitle::StartLoad()
 {
-	// ”ñ“¯Šú“Ç‚İ‚İ‚ğŠJn‚·‚é
+	// éåŒæœŸèª­ã¿è¾¼ã¿ã‚’é–‹å§‹ã™ã‚‹
 	SetUseASyncLoadFlag(true);
 
-	//TODO:‚±‚ÌŠÔ‚ÅƒŠƒ\[ƒX‚ğƒ[ƒh‚·‚é
+	//TODO:ã“ã®é–“ã§ãƒªã‚½ãƒ¼ã‚¹ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 
-	// ƒfƒtƒHƒ‹ƒg‚É–ß‚·
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 	SetUseASyncLoadFlag(false);
 }
 
 /// <summary>
-/// ƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
+/// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚äº†ã—ãŸã‹ã©ã†ã‹
 /// </summary>
 bool SceneTitle::IsLoaded() const
 {
-	//TODO:‚±‚±‚ÅƒŠƒ\[ƒX‚ªƒ[ƒh’†‚©‚Ç‚¤‚©‚ğ”»’f‚·‚é
+	//TODO:ã“ã“ã§ãƒªã‚½ãƒ¼ã‚¹ãŒãƒ­ãƒ¼ãƒ‰ä¸­ã‹ã©ã†ã‹ã‚’åˆ¤æ–­ã™ã‚‹
 	//if (CheckHandleASyncLoad(m_bgTile))	return false;
 
 	return true;
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void SceneTitle::Init()
 {
-	//TODO:‚±‚±‚ÅÀ‘Ô‚Ì¶¬‚È‚Ç‚ğ‚·‚é
+	//TODO:ã“ã“ã§å®Ÿæ…‹ã®ç”Ÿæˆãªã©ã‚’ã™ã‚‹
 }
 
 /// <summary>
-/// I—¹
+/// çµ‚äº†
 /// </summary>
 void SceneTitle::End()
 {
-	//TODO:‚±‚±‚ÅƒŠƒ\[ƒX‚Ìƒƒ‚ƒŠŠJ•ú‚È‚Ç‚ğ‚·‚é
+	//TODO:ã“ã“ã§ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ¡ãƒ¢ãƒªé–‹æ”¾ãªã©ã‚’ã™ã‚‹
 }
 
 /// <summary>
-/// XV
+/// æ›´æ–°
 /// </summary>
 void SceneTitle::Update()
 {
@@ -71,7 +71,7 @@ void SceneTitle::Update()
 }
 
 /// <summary>
-/// •`‰æ
+/// æç”»
 /// </summary>
 void SceneTitle::Draw()
 {

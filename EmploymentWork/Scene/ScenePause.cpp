@@ -1,56 +1,56 @@
-#include "ScenePause.h"
+ï»¿#include "ScenePause.h"
 #include "Game.h"
 #include "SceneTitle.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ScenePause::ScenePause()
 {
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ScenePause::~ScenePause()
 {
 }
 
 /// <summary>
-/// //ƒŠƒ\[ƒX‚Ìƒ[ƒhŠJn
+/// //ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰é–‹å§‹
 /// </summary>
 void ScenePause::StartLoad()
 {
-	//‰½‚à‚µ‚È‚¢
+	//ä½•ã‚‚ã—ãªã„
 }
 
 /// <summary>
-/// ƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
+/// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚äº†ã—ãŸã‹ã©ã†ã‹
 /// </summary>
 bool ScenePause::IsLoaded() const
 {
-	//‚±‚ÌƒV[ƒ“‚Íƒ[ƒhŠÖŒW‚ğInit‚Å‚·‚é
+	//ã“ã®ã‚·ãƒ¼ãƒ³ã¯ãƒ­ãƒ¼ãƒ‰é–¢ä¿‚ã‚’Initã§ã™ã‚‹
 	return true;
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void ScenePause::Init()
 {
-	//ƒtƒF[ƒhƒAƒEƒg‚ğƒXƒLƒbƒv‚·‚é
+	//ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
 	SkipFadeOut();
 }
 
 /// <summary>
-/// I—¹
+/// çµ‚äº†
 /// </summary>
 void ScenePause::End()
 {
 }
 
 /// <summary>
-/// XV
+/// æ›´æ–°
 /// </summary>
 void ScenePause::Update()
 {
@@ -70,7 +70,7 @@ void ScenePause::Update()
 }
 
 /// <summary>
-/// •`‰æ
+/// æç”»
 /// </summary>
 void ScenePause::Draw()
 {

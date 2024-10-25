@@ -1,25 +1,24 @@
-#include "Shot.h"
+ï»¿#include "Shot.h"
 
 #include "ModelManager.h"
 #include "MapManager.h"
 
 namespace
 {
-	//“–‚½‚è”»’è‚Ì”¼Œa
+	//å½“ãŸã‚Šåˆ¤å®šã®åŠå¾„
 	constexpr float kCollisionRadius = 1.0f;
 
-	//ƒpƒX
+	//ãƒ‘ã‚¹
 	const std::string kPath = "data/model/arrow.mv1";
 }
 
 Shot::Shot(GameObjectTag tag):
 	ObjectBase(Collidable::Priority::Low, tag),
 	m_moveDir(),
-	m_isExist(false),
 	m_frameCount(0),
 	m_atk(0)
 {
-	//“–‚½‚è”»’è‚Ì¶¬
+	//å½“ãŸã‚Šåˆ¤å®šã®ç”Ÿæˆ
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
@@ -32,20 +31,19 @@ Shot::~Shot()
 
 void Shot::Init(std::shared_ptr<MyLib::Physics> physics)
 {
-
-	//“–‚½‚è”»’è‚Ì‰Šú‰»
+	//å½“ãŸã‚Šåˆ¤å®šã®åˆæœŸåŒ–
 	Collidable::Init(physics);
-	//•¨—ƒNƒ‰ƒX‚Ì‰Šú‰»
+	//ç‰©ç†ã‚¯ãƒ©ã‚¹ã®åˆæœŸåŒ–
 	rigidbody->Init();
 
-	//ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ğæ“¾
+	//ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	m_modelHandle = ModelManager::GetInstance().GetModelHandle(kPath);
 	MV1SetScale(m_modelHandle, VECTOR(8.0f, 8.0f, 8.0f));
 
-	//ƒ}ƒbƒv‚Ì“–‚½‚è”»’èƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//ãƒãƒƒãƒ—ã®å½“ãŸã‚Šåˆ¤å®šãƒ¢ãƒ‡ãƒ«ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	//m_mapHandle = MapManager::GetInstance().GetStageCollisionHandle();
 
-	//‘¶İƒtƒ‰ƒO‚ğtrue‚É‚·‚é
+	//å­˜åœ¨ãƒ•ãƒ©ã‚°ã‚’trueã«ã™ã‚‹
 	m_isExist = true;
 }
 
@@ -60,7 +58,7 @@ void Shot::Set(const Vec3& pos, const Vec3& m_dir, const int& atk)
 	m_moveDir = m_dir;
 	m_atk = atk;
 
-	//‰ñ“]‚³‚¹‚é•ûŒü‚ğŒvZ‚·‚é
+	//å›è»¢ã•ã›ã‚‹æ–¹å‘ã‚’è¨ˆç®—ã™ã‚‹
 	m_angle = -atan2f(m_moveDir.z, m_moveDir.x) - DX_PI_F / 2;
 	m_rot = Vec3(0.0f, m_angle, 0.0f);
 
@@ -69,7 +67,7 @@ void Shot::Set(const Vec3& pos, const Vec3& m_dir, const int& atk)
 
 void Shot::Update()
 {
-	//‘¶İ‚µ‚Ä‚¢‚È‚¢ó‘Ô‚È‚ç‰½‚à‚³‚¹‚È‚¢
+	//å­˜åœ¨ã—ã¦ã„ãªã„çŠ¶æ…‹ãªã‚‰ä½•ã‚‚ã•ã›ãªã„
 	if (!m_isExist)return;
 
 	m_frameCount++;
@@ -79,12 +77,12 @@ void Shot::Update()
 
 	auto hitDim = MV1CollCheck_Sphere(m_mapHandle, -1, rigidbody->GetPosVECTOR(), kCollisionRadius);
 
-	// ŒŸo‚µ‚½üˆÍ‚Ìƒ|ƒŠƒSƒ“î•ñ‚ğŠJ•ú‚·‚é
+	// æ¤œå‡ºã—ãŸå‘¨å›²ã®ãƒãƒªã‚´ãƒ³æƒ…å ±ã‚’é–‹æ”¾ã™ã‚‹
 	MV1CollResultPolyDimTerminate(hitDim);
 
 	if (hitDim.HitNum != 0)
 	{
-		// ŒŸo‚µ‚½üˆÍ‚Ìƒ|ƒŠƒSƒ“î•ñ‚ğŠJ•ú‚·‚é
+		// æ¤œå‡ºã—ãŸå‘¨å›²ã®ãƒãƒªã‚´ãƒ³æƒ…å ±ã‚’é–‹æ”¾ã™ã‚‹
 		m_isExist = false;
 	}
 
@@ -96,7 +94,7 @@ void Shot::Update()
 
 void Shot::Draw()
 {
-	//‘¶İ‚µ‚Ä‚¢‚È‚¢ó‘Ô‚È‚ç‰½‚à‚³‚¹‚È‚¢
+	//å­˜åœ¨ã—ã¦ã„ãªã„çŠ¶æ…‹ãªã‚‰ä½•ã‚‚ã•ã›ãªã„
 	if (!m_isExist)return;
 
 	rigidbody->SetPos(rigidbody->GetNextPos());

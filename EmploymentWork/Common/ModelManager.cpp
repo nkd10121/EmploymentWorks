@@ -1,4 +1,4 @@
-#include "ModelManager.h"
+ï»¿#include "ModelManager.h"
 #include "DxLib.h"
 #include <cassert>
 
@@ -10,11 +10,11 @@ namespace
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ModelManager::~ModelManager()
 {
-	//‚Á‚Ä‚¢‚éƒnƒ“ƒhƒ‹‚ğ‘S•”Delete‚·‚é
+	//æŒã£ã¦ã„ã‚‹ãƒãƒ³ãƒ‰ãƒ«ã‚’å…¨éƒ¨Deleteã™ã‚‹
 	for (auto& h : m_handles)
 	{
 		MV1DeleteModel(h.handle);
@@ -24,27 +24,27 @@ ModelManager::~ModelManager()
 }
 
 /// <summary>
-/// w’è‚µ‚½ƒpƒX‚ğƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é
+/// æŒ‡å®šã—ãŸãƒ‘ã‚¹ã‚’ãƒ¢ãƒ‡ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 /// </summary>
 void ModelManager::LoadModel(std::string path, bool isEternal)
 {
 	auto loadPath = kPathFront + path;
 
-	//‚·‚Å‚Éƒ[ƒh‚³‚ê‚Ä‚¢‚½‚ç‰½‚à‚µ‚È‚¢
+	//ã™ã§ã«ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ãŸã‚‰ä½•ã‚‚ã—ãªã„
 	for (auto& h : m_handles)
 	{
 		if (h.path == loadPath)
 		{
 #ifdef _DEBUG
-			//w’è‚µ‚½ƒpƒX‚Ìƒ‚ƒfƒ‹‚ª‚·‚Å‚Éƒ[ƒh‚³‚ê‚Ä‚¢‚½‚çƒGƒ‰[‚ğ“f‚­‚æ‚¤‚É‚·‚é
-			assert(0 && "‚»‚Ìƒ‚ƒfƒ‹‚Í‚·‚Å‚Éƒ[ƒh‚³‚ê‚Ä‚¢‚Ü‚·");
+			//æŒ‡å®šã—ãŸãƒ‘ã‚¹ã®ãƒ¢ãƒ‡ãƒ«ãŒã™ã§ã«ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ãŸã‚‰ã‚¨ãƒ©ãƒ¼ã‚’åãã‚ˆã†ã«ã™ã‚‹
+			assert(0 && "ãã®ãƒ¢ãƒ‡ãƒ«ã¯ã™ã§ã«ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ã¾ã™");
 #endif
 			return;
 		}
 	}
 
-	//‚±‚±‚É—ˆ‚½‚Æ‚¢‚¤‚±‚Æ‚Í‚·‚Å‚Éƒ[ƒh‚³‚ê‚Ä‚¢‚È‚©‚Á‚½
-	//¨V‚µ‚­ƒ[ƒh‚·‚é•K—v‚ª‚ ‚é
+	//ã“ã“ã«æ¥ãŸã¨ã„ã†ã“ã¨ã¯ã™ã§ã«ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ãªã‹ã£ãŸ
+	//â†’æ–°ã—ããƒ­ãƒ¼ãƒ‰ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
 	Model add;
 	add.handle = MV1LoadModel(loadPath.c_str());
 	add.path = loadPath;
@@ -53,18 +53,18 @@ void ModelManager::LoadModel(std::string path, bool isEternal)
 	m_handles.emplace_back(add);
 
 #ifdef _DEBUG
-	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh‚É¸”s‚µ‚Ä‚¢‚½‚çƒGƒ‰[‚ğ“f‚­‚æ‚¤‚É‚·‚é
-	assert(add.handle != -1 && "ƒ‚ƒfƒ‹‚Ìƒ[ƒh‚É¸”s‚µ‚Ü‚µ‚½");
+	//ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¦ã„ãŸã‚‰ã‚¨ãƒ©ãƒ¼ã‚’åãã‚ˆã†ã«ã™ã‚‹
+	assert(add.handle != -1 && "ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸ");
 #endif
 	return;
 }
 
 /// <summary>
-/// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é
+/// ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹
 /// </summary>
 int ModelManager::GetModelHandle(std::string path)
 {
-	//ƒ[ƒh‚³‚ê‚Ä‚¢‚½‚ç•¡»ƒnƒ“ƒhƒ‹‚ğ•Ô‚·
+	//ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ãŸã‚‰è¤‡è£½ãƒãƒ³ãƒ‰ãƒ«ã‚’è¿”ã™
 	for (auto& h : m_handles)
 	{
 		if (h.path == path)
@@ -73,20 +73,20 @@ int ModelManager::GetModelHandle(std::string path)
 		}
 	}
 
-	//‚±‚±‚Ü‚Å—ˆ‚½‚Æ‚¢‚¤‚±‚Æ‚Íƒ[ƒh‚³‚ê‚Ä‚¢‚È‚©‚Á‚½
+	//ã“ã“ã¾ã§æ¥ãŸã¨ã„ã†ã“ã¨ã¯ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ãªã‹ã£ãŸ
 #ifdef _DEBUG
-	//”O‚Ì‚½‚ßassert‚ğd‚ñ‚Å‚¨‚­
-	assert(0 && "w’è‚µ‚½ƒpƒX‚Íƒ[ƒh‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+	//å¿µã®ãŸã‚assertã‚’ä»•è¾¼ã‚“ã§ãŠã
+	assert(0 && "æŒ‡å®šã—ãŸãƒ‘ã‚¹ã¯ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ã¾ã›ã‚“");
 #endif
 	return -1;
 }
 
 /// <summary>
-/// í’“ƒtƒ‰ƒO‚ªfalse‚Ìƒnƒ“ƒhƒ‹‚ğíœ‚·‚é
+/// å¸¸é§ãƒ•ãƒ©ã‚°ãŒfalseã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å‰Šé™¤ã™ã‚‹
 /// </summary>
 void ModelManager::Clear()
 {
-	//isEternal‚ªfalse‚Ìƒnƒ“ƒhƒ‹‚ğDelete‚·‚é
+	//isEternalãŒfalseã®ãƒãƒ³ãƒ‰ãƒ«ã‚’Deleteã™ã‚‹
 	for (auto& h : m_handles)
 	{
 		if (!h.isEternal)
@@ -95,7 +95,7 @@ void ModelManager::Clear()
 		}
 	}
 
-	//•s—v‚É‚È‚Á‚½ƒnƒ“ƒhƒ‹‚ğ‚±‚±‚Åíœˆ—‚·‚é
+	//ä¸è¦ã«ãªã£ãŸãƒãƒ³ãƒ‰ãƒ«ã‚’ã“ã“ã§å‰Šé™¤å‡¦ç†ã™ã‚‹
 	auto it = remove_if(m_handles.begin(), m_handles.end(), [](auto& v) {
 		return v.isEternal == false;
 		});
@@ -103,7 +103,7 @@ void ModelManager::Clear()
 }
 
 /// <summary>
-/// ƒnƒ“ƒhƒ‹‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©Šm”F
+/// ãƒãƒ³ãƒ‰ãƒ«ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ç¢ºèª
 /// </summary>
 bool ModelManager::IsLoaded()
 {

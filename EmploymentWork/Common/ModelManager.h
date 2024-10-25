@@ -1,46 +1,46 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <list>
 
 /// <summary>
-/// 3Dƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+/// 3Dãƒ¢ãƒ‡ãƒ«ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 class ModelManager
 {
 public:
-	//ƒ‚ƒfƒ‹\‘¢‘Ì
+	//ãƒ¢ãƒ‡ãƒ«æ§‹é€ ä½“
 	struct Model
 	{
-		std::string path;	//ƒ‚ƒfƒ‹ƒpƒX
-		int handle;			//ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
-		bool isEternal;		//í’“ƒtƒ‰ƒO
+		std::string path;	//ãƒ¢ãƒ‡ãƒ«ãƒ‘ã‚¹
+		int handle;			//ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
+		bool isEternal;		//å¸¸é§ãƒ•ãƒ©ã‚°
 	};
 
 private:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	ModelManager() {};
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~ModelManager();
 
-	static ModelManager* m_instance;	//ƒCƒ“ƒXƒ^ƒ“ƒX
+	static ModelManager* m_instance;	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚©‚çÀ‘Ì‚Ì¶¬‚ª‚Å‚«‚Ä‚µ‚Ü‚¤‚½‚ß
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‹Ö~‚·‚é
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‹ã‚‰å®Ÿä½“ã®ç”ŸæˆãŒã§ãã¦ã—ã¾ã†ãŸã‚
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç¦æ­¢ã™ã‚‹
 	ModelManager(const ModelManager&) = delete;
 	ModelManager& operator=(const ModelManager&) = delete;
 	ModelManager(ModelManager&&) = delete;
 	ModelManager& operator= (const ModelManager&&) = delete;
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
-	/// ModelManager‚ÍGetInstance()‚ğ’Ê‚µ‚½QÆ‚©‚ç‚µ‚©—˜—p‚Å‚«‚È‚¢
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
+	/// ModelManagerã¯GetInstance()ã‚’é€šã—ãŸå‚ç…§ã‹ã‚‰ã—ã‹åˆ©ç”¨ã§ããªã„
 	/// </summary>
-	/// <returns>ƒCƒ“ƒXƒ^ƒ“ƒX</returns>
+	/// <returns>ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</returns>
 	static ModelManager& GetInstance()
 	{
 		if (!m_instance)
@@ -52,8 +52,8 @@ public:
 	}
 
 	/// <summary>
-	/// íœ
-	/// ‚±‚ê‚ğ‚µ–Y‚ê‚é‚Æ•’Ê‚Éƒƒ‚ƒŠƒŠ[ƒN
+	/// å‰Šé™¤
+	/// ã“ã‚Œã‚’ã—å¿˜ã‚Œã‚‹ã¨æ™®é€šã«ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯
 	/// </summary>
 	static void Destroy()
 	{
@@ -63,32 +63,32 @@ public:
 
 public:
 	/// <summary>
-	/// w’è‚µ‚½ƒpƒX‚ğƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é
+	/// æŒ‡å®šã—ãŸãƒ‘ã‚¹ã‚’ãƒ¢ãƒ‡ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 	/// </summary>
-	/// <param name="path">ƒ‚ƒfƒ‹ƒpƒX</param>
-	/// <param name="isEternal">í’“ƒtƒ‰ƒO</param>
+	/// <param name="path">ãƒ¢ãƒ‡ãƒ«ãƒ‘ã‚¹</param>
+	/// <param name="isEternal">å¸¸é§ãƒ•ãƒ©ã‚°</param>
 	void LoadModel(std::string path, bool isEternal = false);
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é
+	/// ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹
 	/// </summary>
-	/// <param name="path">ƒ‚ƒfƒ‹ƒpƒX</param>
-	/// <returns>-1 : ƒGƒ‰[, -1ˆÈŠO : ƒ‚ƒfƒ‹‚Ì•¡»ƒnƒ“ƒhƒ‹</returns>
+	/// <param name="path">ãƒ¢ãƒ‡ãƒ«ãƒ‘ã‚¹</param>
+	/// <returns>-1 : ã‚¨ãƒ©ãƒ¼, -1ä»¥å¤– : ãƒ¢ãƒ‡ãƒ«ã®è¤‡è£½ãƒãƒ³ãƒ‰ãƒ«</returns>
 	int GetModelHandle(std::string path);
 
 	/// <summary>
-	/// í’“ƒtƒ‰ƒO‚ªfalse‚Ìƒnƒ“ƒhƒ‹‚ğ‘Síœ‚·‚é
+	/// å¸¸é§ãƒ•ãƒ©ã‚°ãŒfalseã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å…¨å‰Šé™¤ã™ã‚‹
 	/// </summary>
 	void Clear();
 
 	/// <summary>
-	/// ƒnƒ“ƒhƒ‹‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©Šm”F
+	/// ãƒãƒ³ãƒ‰ãƒ«ãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ç¢ºèª
 	/// </summary>
-	/// <returns>false : “Ç‚İ‚İI‚¦‚Ä‚¢‚È‚¢, true : “Ç‚İ‚İI—¹</returns>
+	/// <returns>false : èª­ã¿è¾¼ã¿çµ‚ãˆã¦ã„ãªã„, true : èª­ã¿è¾¼ã¿çµ‚äº†</returns>
 	bool IsLoaded();
 
 private:
-	std::list<Model> m_handles;	//ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
+	std::list<Model> m_handles;	//ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 
 };
 

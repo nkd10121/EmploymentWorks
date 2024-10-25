@@ -1,4 +1,4 @@
-#include "SceneGame.h"
+ï»¿#include "SceneGame.h"
 #include "SceneTitle.h"
 #include "ScenePause.h"
 #include "Player.h"
@@ -10,43 +10,43 @@
 
 namespace
 {
-	//ƒ|[ƒVƒ‡ƒ“ƒ‚ƒfƒ‹‚ÌƒpƒX
+	//ãƒãƒ¼ã‚·ãƒ§ãƒ³ãƒ¢ãƒ‡ãƒ«ã®ãƒ‘ã‚¹
 	const std::string kPortionPath = "data/model/object/portion/bottle_red.mv1";
 }
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SceneGame::SceneGame():
 	m_pPlayer(nullptr),
 	m_pCamera(nullptr),
 	m_pPhysics(nullptr),
-	m_pPortions()
+	m_pObjects()
 {
-	//‚±‚ÌƒV[ƒ“‚Åƒ[ƒh‚·‚é‚×‚«ƒŠƒ\[ƒX‚ÌƒpƒX‚ğæ“¾
+	//ã“ã®ã‚·ãƒ¼ãƒ³ã§ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã¹ããƒªã‚½ãƒ¼ã‚¹ã®ãƒ‘ã‚¹ã‚’å–å¾—
 	m_loadPath = LoadCSV::GetInstance().GetLoadResourcePath("SCENE_GAME");
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SceneGame::~SceneGame()
 {
 }
 
 /// <summary>
-/// //ƒŠƒ\[ƒX‚Ìƒ[ƒhŠJn
+/// //ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰é–‹å§‹
 /// </summary>
 void SceneGame::StartLoad()
 {
-	// ”ñ“¯Šú“Ç‚İ‚İ‚ğŠJn‚·‚é
+	// éåŒæœŸèª­ã¿è¾¼ã¿ã‚’é–‹å§‹ã™ã‚‹
 	SetUseASyncLoadFlag(true);
 
-	// TODO:‚±‚ÌŠÔ‚ÅƒŠƒ\[ƒX‚ğƒ[ƒh‚·‚é
+	// TODO:ã“ã®é–“ã§ãƒªã‚½ãƒ¼ã‚¹ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 
 	for (auto& path : m_loadPath)
 	{
-		//ƒ‚ƒfƒ‹ƒf[ƒ^‚È‚ç
+		//ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ãªã‚‰
 		if (path.second == ".mv1")
 		{
 			auto p = path.first + path.second;
@@ -57,16 +57,16 @@ void SceneGame::StartLoad()
 
 	//MapManager::GetInstance().LoadModel();
 
-	// ƒfƒtƒHƒ‹ƒg‚É–ß‚·
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 	SetUseASyncLoadFlag(false);
 }
 
 /// <summary>
-/// ƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
+/// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚äº†ã—ãŸã‹ã©ã†ã‹
 /// </summary>
 bool SceneGame::IsLoaded() const
 {
-	//TODO:‚±‚±‚ÅƒŠƒ\[ƒX‚ªƒ[ƒh’†‚©‚Ç‚¤‚©‚ğ”»’f‚·‚é
+	//TODO:ã“ã“ã§ãƒªã‚½ãƒ¼ã‚¹ãŒãƒ­ãƒ¼ãƒ‰ä¸­ã‹ã©ã†ã‹ã‚’åˆ¤æ–­ã™ã‚‹
 
 	if (!ModelManager::GetInstance().IsLoaded())	return false;
 
@@ -74,18 +74,18 @@ bool SceneGame::IsLoaded() const
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void SceneGame::Init()
 {
-	//TODO:‚±‚±‚ÅÀ‘Ô‚Ì¶¬‚È‚Ç‚ğ‚·‚é
+	//TODO:ã“ã“ã§å®Ÿæ…‹ã®ç”Ÿæˆãªã©ã‚’ã™ã‚‹
 	m_pPhysics = std::make_shared<MyLib::Physics>();
 
-	//ƒvƒŒƒCƒ„[‚Ì¶¬
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç”Ÿæˆ
 	m_pPlayer = std::make_shared<Player>();
 	m_pPlayer->Init(m_pPhysics);
 
-	//ƒJƒƒ‰‚Ì¶¬
+	//ã‚«ãƒ¡ãƒ©ã®ç”Ÿæˆ
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init();
 
@@ -93,35 +93,35 @@ void SceneGame::Init()
 	//m_pPortions.back()->Init(m_pPhysics);
 	//m_pPortions.back()->SetPosition(Vec3(0.0f,0.0f,-10.0f));
 
-	//ƒXƒe[ƒWî•ñ‚ğƒ[ƒh
+	//ã‚¹ãƒ†ãƒ¼ã‚¸æƒ…å ±ã‚’ãƒ­ãƒ¼ãƒ‰
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("data");
 }
 
 /// <summary>
-/// I—¹
+/// çµ‚äº†
 /// </summary>
 void SceneGame::End()
 {
-	//TODO:‚±‚±‚ÅƒŠƒ\[ƒX‚ÌŠJ•ú‚ğ‚·‚é
+	//TODO:ã“ã“ã§ãƒªã‚½ãƒ¼ã‚¹ã®é–‹æ”¾ã‚’ã™ã‚‹
 
-	//ƒ|[ƒVƒ‡ƒ“‚Ì‰ğ•ú
-	for (auto& p : m_pPortions)
+	//ãƒãƒ¼ã‚·ãƒ§ãƒ³ã®è§£æ”¾
+	for (auto& object : m_pObjects)
 	{
-		p->Finalize(m_pPhysics);
+		object->Finalize(m_pPhysics);
 	}
-	m_pPortions.clear();
+	m_pObjects.clear();
 }
 
 /// <summary>
-/// XV
+/// æ›´æ–°
 /// </summary>
 void SceneGame::Update()
 {
 #ifdef _DEBUG
 	MyLib::DebugDraw::Clear();
 #endif
-	//Xƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚çƒ^ƒCƒgƒ‹‰æ–Ê‚É–ß‚é‚æ‚¤‚É
+	//Xãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã‚‰ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã«æˆ»ã‚‹ã‚ˆã†ã«
 	if (Input::GetInstance().IsTriggered("X"))
 	{
 		SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
@@ -129,72 +129,72 @@ void SceneGame::Update()
 		return;
 	}
 
-	//Yƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚çƒ|[ƒY‰æ–Ê‚ğŠJ‚­‚æ‚¤‚É
+	//Yãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã‚‰ãƒãƒ¼ã‚ºç”»é¢ã‚’é–‹ãã‚ˆã†ã«
 	if (Input::GetInstance().IsTriggered("Y"))
 	{
 		SceneManager::GetInstance().PushScene(std::make_shared<ScenePause>());
 		return;
 	}
 
-	//DEBUG:Aƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Éƒ|[ƒVƒ‡ƒ“‚ğ¶¬‚·‚é‚æ‚¤‚É
+	//DEBUG:Aãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸæ™‚ã«ãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç”Ÿæˆã™ã‚‹ã‚ˆã†ã«
 	if (Input::GetInstance().IsTriggered("A"))
 	{
-		m_pPortions.emplace_back(std::make_shared<HealPortion>());
-		m_pPortions.back()->Init(m_pPhysics);
-		m_pPortions.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
+		m_pObjects.emplace_back(std::make_shared<HealPortion>());
+		m_pObjects.back()->Init(m_pPhysics);
+		m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 	}
 
-	//ƒvƒŒƒCƒ„[‚ÌXV
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ›´æ–°
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
-	m_pPlayer->Update();
+	m_pPlayer->Update(this);
 
-	//ƒJƒƒ‰‚ÌXV
+	//ã‚«ãƒ¡ãƒ©ã®æ›´æ–°
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
 	m_pCamera->Update();
 
-	//ƒ|[ƒVƒ‡ƒ“‚ÌXV
-	for (auto& p : m_pPortions)
+	//ãƒãƒ¼ã‚·ãƒ§ãƒ³ã®æ›´æ–°
+	for (auto& object : m_pObjects)
 	{
-		p->Update();
+		object->Update();
 
-		if (!p->GetIsExist())
+		if (!object->GetIsExist())
 		{
-			p->Finalize(m_pPhysics);
+			object->Finalize(m_pPhysics);
 		}
 	}
-	//isExist‚ªfalse‚ÌƒIƒuƒWƒFƒNƒg‚ğíœ
+	//isExistãŒfalseã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤
 	{
-		auto it = std::remove_if(m_pPortions.begin(), m_pPortions.end(), [](auto& v)
+		auto it = std::remove_if(m_pObjects.begin(), m_pObjects.end(), [](auto& v)
 			{
 				return v->GetIsExist() == false;
 			});
-		m_pPortions.erase(it, m_pPortions.end());
+		m_pObjects.erase(it, m_pObjects.end());
 	}
 
-	//•¨—XV
+	//ç‰©ç†æ›´æ–°
 	m_pPhysics->Update();
 }
 
 /// <summary>
-/// •`‰æ
+/// æç”»
 /// </summary>
 void SceneGame::Draw()
 {
-	// ƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªI‚í‚é‚Ü‚Å‚Í•`‰æ‚µ‚È‚¢‚Ì‚ª‚æ‚³‚»‚¤
-	// (‚Ç‚¿‚ç‚É‚µ‚ëƒtƒF[ƒhdØ‚Á‚Ä‚¢‚é‚Ì‚Å‰½‚àŒ©‚¦‚È‚¢‚Í‚¸)
+	// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã‚‹ã¾ã§ã¯æç”»ã—ãªã„ã®ãŒã‚ˆã•ãã†
+	// (ã©ã¡ã‚‰ã«ã—ã‚ãƒ•ã‚§ãƒ¼ãƒ‰ä»•åˆ‡ã£ã¦ã„ã‚‹ã®ã§ä½•ã‚‚è¦‹ãˆãªã„ã¯ãš)
 	if (!IsLoaded())	return;
 	if (!IsInitialized())	return;
 
-	//ƒXƒe[ƒW‚Ì•`‰æ
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã®æç”»
 	MapManager::GetInstance().Draw();
 
-	//ƒvƒŒƒCƒ„[‚Ì•`‰æ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æç”»
 	m_pPlayer->Draw();
 
-	//ƒ|[ƒVƒ‡ƒ“‚Ì•`‰æ
-	for (auto& p : m_pPortions)
+	//ãƒãƒ¼ã‚·ãƒ§ãƒ³ã®æç”»
+	for (auto& object : m_pObjects)
 	{
-		p->Draw();
+		object->Draw();
 	}
 
 #ifdef _DEBUG
@@ -202,4 +202,9 @@ void SceneGame::Draw()
 
 	DrawString(0, 0, "GAME", 0xffffff);
 #endif
+}
+
+void SceneGame::AddObject(std::shared_ptr<ObjectBase> pAddObject)
+{
+	m_pObjects.emplace_back(pAddObject);
 }

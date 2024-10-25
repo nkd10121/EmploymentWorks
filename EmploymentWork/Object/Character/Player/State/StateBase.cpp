@@ -1,10 +1,10 @@
-#include "StateBase.h"
+ï»¿#include "StateBase.h"
 #include "CharacterBase.h"
 #include <string>
 #include <cassert>
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 StateBase::StateBase(std::shared_ptr<CharacterBase> own):
 	m_pOwn(own),
@@ -14,7 +14,7 @@ StateBase::StateBase(std::shared_ptr<CharacterBase> own):
 
 #ifdef _DEBUG
 /// <summary>
-/// Œ»İ‚ÌƒXƒe[ƒg‚ÌƒfƒoƒbƒO•`‰æ
+/// ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒ‡ãƒãƒƒã‚°æç”»
 /// </summary>
 void StateBase::DebugDrawState(int x, int y)
 {
@@ -53,12 +53,12 @@ void StateBase::DebugDrawState(int x, int y)
 #endif
 
 /// <summary>
-/// ‚¿å‚ªƒvƒŒƒCƒ„[‚©‚Ç‚¤‚©‚ğ”»’f‚·‚é
+/// æŒã¡ä¸»ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã©ã†ã‹ã‚’åˆ¤æ–­ã™ã‚‹
 /// </summary>
 void StateBase::CheckPlayer()
 {
 	if (m_pOwn->GetTag() != GameObjectTag::Player)
 	{
-		assert(0 && "‚¿å‚ªƒvƒŒƒCƒ„[‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
+		assert(0 && "æŒã¡ä¸»ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã§ã¯ã‚ã‚Šã¾ã›ã‚“");
 	}
 }

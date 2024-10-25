@@ -1,36 +1,36 @@
-#pragma once
+ï»¿#pragma once
 #include "Vec3.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
 
 /// <summary>
-/// ƒ}ƒbƒv‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+/// ãƒãƒƒãƒ—ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 class MapManager
 {
 private:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	MapManager();
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~MapManager();
 
-	//static‚É‚·‚é‚±‚Æ‚Å
-	//Singleton‚Ìƒ|ƒCƒ“ƒ^‚ªƒvƒƒOƒ‰ƒ€‹N“®‚Éˆê‚Âì‚ç‚ê‚é‚æ‚¤‚É‚·‚é
+	//staticã«ã™ã‚‹ã“ã¨ã§
+	//Singletonã®ãƒã‚¤ãƒ³ã‚¿ãŒãƒ—ãƒ­ã‚°ãƒ©ãƒ èµ·å‹•æ™‚ã«ä¸€ã¤ä½œã‚‰ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹
 	static MapManager* m_instance;
 
-	//”z’uî•ñƒf[ƒ^
+	//é…ç½®æƒ…å ±ãƒ‡ãƒ¼ã‚¿
 	struct LocationData
 	{
-		std::string name;	//–¼‘O
-		std::string tag;	//ƒ^ƒO
-		Vec3 pos;	//À•W
-		Vec3 rot;	//‰ñ“]
-		Vec3 scale;	//‘å‚«‚³
+		std::string name;	//åå‰
+		std::string tag;	//ã‚¿ã‚°
+		Vec3 pos;	//åº§æ¨™
+		Vec3 rot;	//å›è»¢
+		Vec3 scale;	//å¤§ãã•
 		int handle;
 	};
 
@@ -42,16 +42,16 @@ private:
 	};
 
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚©‚çÀ‘Ì‚Ì¶¬‚ª‚Å‚«‚Ä‚µ‚Ü‚¤‚½‚ß
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‹Ö~‚·‚é
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‹ã‚‰å®Ÿä½“ã®ç”ŸæˆãŒã§ãã¦ã—ã¾ã†ãŸã‚
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç¦æ­¢ã™ã‚‹
 	MapManager(const MapManager&) = delete;
 	MapManager& operator=(const MapManager&) = delete;
 	MapManager(MapManager&&) = delete;
 	MapManager& operator= (const MapManager&&) = delete;
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
-	/// MapManager‚ÍGetInstance()‚ğ’Ê‚µ‚½QÆ‚©‚ç‚µ‚©—˜—p‚Å‚«‚È‚¢
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
+	/// MapManagerã¯GetInstance()ã‚’é€šã—ãŸå‚ç…§ã‹ã‚‰ã—ã‹åˆ©ç”¨ã§ããªã„
 	/// </summary>
 	/// <returns></returns>
 	static MapManager& GetInstance()
@@ -65,8 +65,8 @@ public:
 	}
 
 	/// <summary>
-	/// íœ
-	/// ‚±‚ê‚ğ‚µ–Y‚ê‚é‚Æ•’Ê‚Éƒƒ‚ƒŠƒŠ[ƒN
+	/// å‰Šé™¤
+	/// ã“ã‚Œã‚’ã—å¿˜ã‚Œã‚‹ã¨æ™®é€šã«ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯
 	/// </summary>
 	static void Destroy()
 	{
@@ -76,31 +76,31 @@ public:
 
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Init();
 
 	/// <summary>
-	/// ƒXƒe[ƒW‚Ì¶¬‚É•K—v‚Èƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
+	/// ã‚¹ãƒ†ãƒ¼ã‚¸ã®ç”Ÿæˆã«å¿…è¦ãªãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadModel();
 	/// <summary>
-	/// ƒXƒe[ƒW‚Ì¶¬‚É•K—v‚Èƒ‚ƒfƒ‹‚Ìíœ
+	/// ã‚¹ãƒ†ãƒ¼ã‚¸ã®ç”Ÿæˆã«å¿…è¦ãªãƒ¢ãƒ‡ãƒ«ã®å‰Šé™¤
 	/// </summary>
 	void DeleteModel();
 
 	/// <summary>
-	/// ƒXƒe[ƒWî•ñ‚ğ“Ç‚İ‚Ş
+	/// ã‚¹ãƒ†ãƒ¼ã‚¸æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€
 	/// </summary>
-	/// <param name="stageName">ƒXƒe[ƒW–¼</param>
+	/// <param name="stageName">ã‚¹ãƒ†ãƒ¼ã‚¸å</param>
 	void Load(const char* stageName);
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 private:
-	std::vector<LocationData> m_data;	//ƒ}ƒbƒvî•ñ
-	std::unordered_map<std::string, int> m_handles;	//ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
+	std::vector<LocationData> m_data;	//ãƒãƒƒãƒ—æƒ…å ±
+	std::unordered_map<std::string, int> m_handles;	//ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 };
 

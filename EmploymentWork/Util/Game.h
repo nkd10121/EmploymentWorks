@@ -1,18 +1,18 @@
-#pragma once
+ï»¿#pragma once
 
 /// <summary>
-/// ƒQ[ƒ€İ’è
+/// ã‚²ãƒ¼ãƒ è¨­å®š
 /// </summary>
 namespace Game
 {
-	//ƒEƒBƒ“ƒhƒE–¼
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å
 	constexpr const char* kWindowName = "SkeletonMustBreak!";
 
-	//ƒEƒBƒ“ƒhƒE‚Ì‰¡•
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æ¨ªå¹…
 	constexpr int kWindowWidth = 1280;
-	//ƒEƒBƒ“ƒhƒE‚Ìc•
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç¸¦å¹…
 	constexpr int kWindowHeight = 720;
 
-	//ˆê•b‚ ‚½‚è‚ÌƒtƒŒ[ƒ€”
+	//ä¸€ç§’ã‚ãŸã‚Šã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
 	constexpr int kFps = 60;
 }

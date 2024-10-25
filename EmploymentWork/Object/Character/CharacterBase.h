@@ -1,91 +1,93 @@
-#pragma once
+ï»¿#pragma once
 #include "MyLib.h"
 #include <map>
 #include <memory>
 #include <string>
 
 /// <summary>
-/// ƒQ[ƒ€“à‚ÌƒLƒƒƒ‰ƒNƒ^[‚ÌŠî’êƒNƒ‰ƒX
+/// ã‚²ãƒ¼ãƒ å†…ã®ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®åŸºåº•ã‚¯ãƒ©ã‚¹
 /// </summary>
 class CharacterBase : public MyLib::Collidable
 {
 public:
-	//ƒXƒe[ƒ^ƒX\‘¢‘Ì
+	//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ§‹é€ ä½“
 	struct Status
 	{
-		int hp;			//‘Ì—Í
-		int atk;		//UŒ‚—Í
-		int def;		//–hŒä—Í
-		float speed;	//ˆÚ“®‘¬“x
-		int point;		//€–S‚Ìƒ|ƒCƒ“ƒg
+		int hp;			//ä½“åŠ›
+		int atk;		//æ”»æ’ƒåŠ›
+		int def;		//é˜²å¾¡åŠ›
+		float speed;	//ç§»å‹•é€Ÿåº¦
+		int point;		//æ­»äº¡æ™‚ã®ãƒã‚¤ãƒ³ãƒˆ
 	};
 
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
-	/// <param name="priority">—Dæ“x</param>
-	/// <param name="tag">ƒ^ƒO</param>
+	/// <param name="priority">å„ªå…ˆåº¦</param>
+	/// <param name="tag">ã‚¿ã‚°</param>
 	CharacterBase(Priority priority, GameObjectTag tag);
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~CharacterBase();
 
 	/// <summary>
-	/// ‚Ù‚©‚ÌƒIƒuƒWƒFƒNƒg‚ÆÕ“Ë‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚é
+	/// ã»ã‹ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨è¡çªã—ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹
 	/// </summary>
-	/// <param name="colider">“–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg</param>
+	/// <param name="colider">å½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
 	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider) = 0;
 
 
 	/// <summary>
-	/// ©g‚ÌŒ»İ‚ÌHP‚ğ•Ô‚·
+	/// è‡ªèº«ã®ç¾åœ¨ã®HPã‚’è¿”ã™
 	/// </summary>
-	/// <returns>Œ»İ‚ÌHP</returns>
+	/// <returns>ç¾åœ¨ã®HP</returns>
 	const int GetHp()const { return m_status.hp; }
 	///// <summary>
-	///// ©g‚ÌÅ‘åHP‚ğ•Ô‚·
+	///// è‡ªèº«ã®æœ€å¤§HPã‚’è¿”ã™
 	///// </summary>
-	///// <returns>Å‘åHP</returns>
+	///// <returns>æœ€å¤§HP</returns>
 	//const int GetMaxHp()const { return m_maxHp; }
 	/// <summary>
-	/// •¨—ƒf[ƒ^‚ğ•Ô‚·
+	/// ç‰©ç†ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
 	/// </summary>
-	/// <returns>•¨—ƒf[ƒ^</returns>
+	/// <returns>ç‰©ç†ãƒ‡ãƒ¼ã‚¿</returns>
 	std::shared_ptr<MyLib::Rigidbody> GetRigidbody(){ return rigidbody; }
 
 protected:
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌXV
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ›´æ–°
 	/// </summary>
-	/// <param name="attachNo">is‚³‚¹‚½‚¢ƒAƒjƒ[ƒVƒ‡ƒ“”Ô†</param>
-	/// <returns>ƒ‹[ƒv‚µ‚½‚©‚Ç‚¤‚©</returns>
+	/// <param name="attachNo">é€²è¡Œã•ã›ãŸã„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·</param>
+	/// <returns>ãƒ«ãƒ¼ãƒ—ã—ãŸã‹ã©ã†ã‹</returns>
 	bool UpdateAnim(int attachNo, float startTime = 0.0f);
 	/// <summary>
-	///	ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì•ÏX
+	///	ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å¤‰æ›´
 	/// </summary>
-	/// <param name="animIndex">•ÏXŒã‚ÌƒAƒjƒ[ƒVƒ‡ƒ“”Ô†</param>
+	/// <param name="animIndex">å¤‰æ›´å¾Œã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·</param>
 	void ChangeAnim(int animIndex, float animSpeed = 0.5f);
 
 
 protected:
-	int m_modelHandle;	//ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
+	int m_modelHandle;	//ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 	
-	Status m_status;	//ƒXƒe[ƒ^ƒX
+	Status m_status;	//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	int m_hpMax;
 
-	/*ƒAƒjƒ[ƒVƒ‡ƒ“ŠÖŒW*/
+	std::shared_ptr<MyLib::Physics> m_pPhysics;	
+
+	/*ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–¢ä¿‚*/
 	std::map<std::string, int> m_animIdx;
 	int m_nowAnimIdx;
-	int m_equipAnimNo;			//1‚Â‘O‚Ì‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
-	int m_currentAnimNo;		//Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
-	int m_prevAnimNo;			//•ÏX‘O‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
-	float m_animBlendRate;		//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‡¬Š„‡
-	//0.0f:prev‚ªÄ¶
-	//1.0f:currnt‚ªÄ¶
+	int m_equipAnimNo;			//1ã¤å‰ã®ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	int m_currentAnimNo;		//ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	int m_prevAnimNo;			//å¤‰æ›´å‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	float m_animBlendRate;		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆæˆå‰²åˆ
+	//0.0f:prevãŒå†ç”Ÿ
+	//1.0f:currntãŒå†ç”Ÿ
 
-	float m_animSpeed;			//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶‘¬“x
-	bool m_isAnimationFinish;	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ªI‚í‚Á‚½‚©‚Ç‚¤‚©
+	float m_animSpeed;			//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿé€Ÿåº¦
+	bool m_isAnimationFinish;	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚ã‚ã£ãŸã‹ã©ã†ã‹
 };
 

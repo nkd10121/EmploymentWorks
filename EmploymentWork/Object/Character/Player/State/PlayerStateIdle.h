@@ -1,29 +1,29 @@
-#pragma once
+ï»¿#pragma once
 #include "StateBase.h"
 
 /// <summary>
-/// ƒvƒŒƒCƒ„[‚Ì‘Ò‹@ó‘Ô
+/// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¾…æ©ŸçŠ¶æ…‹
 /// </summary>
 class PlayerStateIdle : public StateBase
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
-	/// <param name="own">‚¿å‚Ìƒ|ƒCƒ“ƒ^</param>
+	/// <param name="own">æŒã¡ä¸»ã®ãƒã‚¤ãƒ³ã‚¿</param>
 	PlayerStateIdle(std::shared_ptr<CharacterBase> own);
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Init();
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update() override;
 	///// <summary>
-	///// ”íƒ_ƒ[ƒW
+	///// è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸
 	///// </summary>
-	///// <param name="collider">“–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg</param>
-	///// <returns>ƒ_ƒ[ƒW”?</returns>
+	///// <param name="collider">å½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+	///// <returns>ãƒ€ãƒ¡ãƒ¼ã‚¸æ•°?</returns>
 	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) override;
 };

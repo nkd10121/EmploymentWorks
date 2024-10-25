@@ -1,83 +1,83 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 #include "MyLib.h"
 
 class CharacterBase;
 
 /// <summary>
-/// ƒXƒe[ƒgƒpƒ^[ƒ“‚ÌŠî’êƒNƒ‰ƒX
+/// ã‚¹ãƒ†ãƒ¼ãƒˆãƒ‘ã‚¿ãƒ¼ãƒ³ã®åŸºåº•ã‚¯ãƒ©ã‚¹
 /// </summary>
 class StateBase : public std::enable_shared_from_this<StateBase>
 {
 public:
-	//ƒXƒe[ƒg
+	//ã‚¹ãƒ†ãƒ¼ãƒˆ
 	enum class StateKind
 	{
 		Null,
-		Idle,		//‘Ò‹@
-		Walk,		//ˆÚ“®
-		Dash,		//ƒ_ƒbƒVƒ…
-		Jump,		//ƒWƒƒƒ“ƒv
-		Attack,		//UŒ‚
-		OnHit,		//”íƒ_ƒ[ƒW
-		Death,		//€–S
+		Idle,		//å¾…æ©Ÿ
+		Walk,		//ç§»å‹•
+		Dash,		//ãƒ€ãƒƒã‚·ãƒ¥
+		Jump,		//ã‚¸ãƒ£ãƒ³ãƒ—
+		Attack,		//æ”»æ’ƒ
+		OnHit,		//è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸
+		Death,		//æ­»äº¡
 	};
 
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
-	/// <param name="own">Š—LÒ</param>
+	/// <param name="own">æ‰€æœ‰è€…</param>
 	StateBase(std::shared_ptr<CharacterBase> own);
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update() abstract;
 
 	/// <summary>
-	/// Œ»İ‚ÌState‚ğ•Ô‚·
+	/// ç¾åœ¨ã®Stateã‚’è¿”ã™
 	/// </summary>
-	/// <returns>Œ»İ‚ÌState</returns>
+	/// <returns>ç¾åœ¨ã®State</returns>
 	StateKind GetKind() { return m_nowState; }
 	/// <summary>
-	/// ‘JˆÚ—\’è‚ÌState‚ğ•Ô‚·
+	/// é·ç§»äºˆå®šã®Stateã‚’è¿”ã™
 	/// </summary>
-	/// <returns>‘JˆÚ—\’è‚ÌState</returns>
+	/// <returns>é·ç§»äºˆå®šã®State</returns>
 	const std::shared_ptr<StateBase> GetNextState()const { return m_nextState; }
 
 	/// <summary>
-	/// ‘JˆÚ—\’è‚ÌState‚ğİ’è‚·‚é
+	/// é·ç§»äºˆå®šã®Stateã‚’è¨­å®šã™ã‚‹
 	/// </summary>
-	/// <param name="state">‘JˆÚ—\’è‚ÌState</param>
+	/// <param name="state">é·ç§»äºˆå®šã®State</param>
 	void SetNextState(std::shared_ptr<StateBase> state) { m_nextState = state; }
 
 	///// <summary>
-	///// ƒ_ƒ[ƒW‚ğó‚¯‚½‚Ìˆ—‚ğs‚¤
+	///// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸæ™‚ã®å‡¦ç†ã‚’è¡Œã†
 	///// </summary>
 	///// <param name="collider"></param>
-	///// <returns>ƒ_ƒ[ƒW</returns>
+	///// <returns>ãƒ€ãƒ¡ãƒ¼ã‚¸</returns>
 	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) abstract;
 
 
 
 #ifdef _DEBUG
 	/// <summary>
-	/// Œ»İ‚ÌƒXƒe[ƒg‚ÌƒfƒoƒbƒO•`‰æ
+	/// ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒ‡ãƒãƒƒã‚°æç”»
 	/// </summary>
-	/// <param name="x">xÀ•W</param>
-	/// <param name="y">yÀ•W</param>
+	/// <param name="x">xåº§æ¨™</param>
+	/// <param name="y">yåº§æ¨™</param>
 	void DebugDrawState(int x,int y);
 #endif
 
 protected:
 	/// <summary>
-	/// ‚¿å‚ªƒvƒŒƒCƒ„[‚©‚Ç‚¤‚©‚ğ”»’f‚·‚é
+	/// æŒã¡ä¸»ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã©ã†ã‹ã‚’åˆ¤æ–­ã™ã‚‹
 	/// </summary>
 	void CheckPlayer();
 
 protected:
-	std::shared_ptr<CharacterBase> m_pOwn;	//Š—LÒ‚Ìƒ|ƒCƒ“ƒ^
-	std::shared_ptr<StateBase> m_nextState;	//‘JˆÚæ‚ÌState‚ğ•Û‘¶‚·‚é
+	std::shared_ptr<CharacterBase> m_pOwn;	//æ‰€æœ‰è€…ã®ãƒã‚¤ãƒ³ã‚¿
+	std::shared_ptr<StateBase> m_nextState;	//é·ç§»å…ˆã®Stateã‚’ä¿å­˜ã™ã‚‹
 
-	StateKind m_nowState;					//Œ»İ‚ÌƒXƒe[ƒg
+	StateKind m_nowState;					//ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆ
 };
 

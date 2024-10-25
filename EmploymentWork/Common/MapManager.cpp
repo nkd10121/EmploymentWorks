@@ -1,4 +1,4 @@
-#include "MapManager.h"
+ï»¿#include "MapManager.h"
 #include <fstream>
 #include <sstream>
 
@@ -30,25 +30,25 @@ namespace
 }
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 MapManager::MapManager()
 {
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 MapManager::~MapManager()
 {
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void MapManager::Init()
 {
-	//ƒ[ƒh‚ªŠ®—¹‚µ‚Ä‚¢‚é‚Æ‚«‚É‚±‚±‚ªŒÄ‚Î‚ê‚é‚½‚ßAƒ‚ƒfƒ‹ƒ}ƒl[ƒWƒƒ[‚É—Š‚ñ‚Å‚¨‚¢‚½ƒ‚ƒfƒ‹‚ğæ“¾‚·‚é
+	//ãƒ­ãƒ¼ãƒ‰ãŒå®Œäº†ã—ã¦ã„ã‚‹ã¨ãã«ã“ã“ãŒå‘¼ã°ã‚Œã‚‹ãŸã‚ã€ãƒ¢ãƒ‡ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«é ¼ã‚“ã§ãŠã„ãŸãƒ¢ãƒ‡ãƒ«ã‚’å–å¾—ã™ã‚‹
 	for (auto& path : kPath)
 	{
 		m_handles[path] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + path + kModelPathBack));
@@ -56,7 +56,7 @@ void MapManager::Init()
 }
 
 /// <summary>
-/// ƒXƒe[ƒW‚Ì¶¬‚É•K—v‚Èƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ã®ç”Ÿæˆã«å¿…è¦ãªãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿
 /// </summary>
 void MapManager::LoadModel()
 {
@@ -69,18 +69,18 @@ void MapManager::LoadModel()
 }
 
 /// <summary>
-/// ƒXƒe[ƒW‚Ì¶¬‚É•K—v‚Èƒ‚ƒfƒ‹‚Ìíœ
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ã®ç”Ÿæˆã«å¿…è¦ãªãƒ¢ãƒ‡ãƒ«ã®å‰Šé™¤
 /// </summary>
 void MapManager::DeleteModel()
 {
-	//ƒ‚ƒfƒ‹‚Ìíœ
+	//ãƒ¢ãƒ‡ãƒ«ã®å‰Šé™¤
 	for (auto& model : m_handles)
 	{
 		MV1DeleteModel(model.second);
 	}
 	m_handles.clear();
 
-	//ƒ‚ƒfƒ‹‚Æƒf[ƒ^‚Ìíœ
+	//ãƒ¢ãƒ‡ãƒ«ã¨ãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤
 	for (auto& data : m_data)
 	{
 		MV1DeleteModel(data.handle);
@@ -89,46 +89,46 @@ void MapManager::DeleteModel()
 }
 
 /// <summary>
-/// ƒXƒe[ƒWî•ñ‚ğ“Ç‚İ‚Ş
+/// ã‚¹ãƒ†ãƒ¼ã‚¸æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€
 /// </summary>
 void MapManager::Load(const char* stageName)
 {
-	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
+	//ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰
 	//MapManager::LoadModel();
 
-	//ŠJ‚­ƒtƒ@ƒCƒ‹‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//é–‹ããƒ•ã‚¡ã‚¤ãƒ«ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	int handle = FileRead_open((kStageDataPathFront + stageName + kStageDataPathBack).c_str());
 
-	//“Ç‚İ‚ŞƒIƒuƒWƒFƒNƒg”‚ª‰½ŒÂ‚ ‚é‚©æ“¾
+	//èª­ã¿è¾¼ã‚€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ•°ãŒä½•å€‹ã‚ã‚‹ã‹å–å¾—
 	int dataCnt = 0;
 	FileRead_read(&dataCnt, sizeof(dataCnt), handle);
-	//“Ç‚İ‚ŞƒIƒuƒWƒFƒNƒg”•ª‚Ì”z—ñ‚É•ÏX‚·‚é
+	//èª­ã¿è¾¼ã‚€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ•°åˆ†ã®é…åˆ—ã«å¤‰æ›´ã™ã‚‹
 	m_data.resize(dataCnt);
 
-	//”z—ñ‚Ì”•ª‰ñ‚·
+	//é…åˆ—ã®æ•°åˆ†å›ã™
 	for (auto& loc : m_data)
 	{
-		//–¼‘O‚ÌƒoƒCƒg”‚ğæ“¾‚·‚é
+		//åå‰ã®ãƒã‚¤ãƒˆæ•°ã‚’å–å¾—ã™ã‚‹
 		byte nameCnt = 0;
 		FileRead_read(&nameCnt, sizeof(nameCnt), handle);
-		//–¼‘O‚ÌƒTƒCƒY‚ğ•ÏX‚·‚é
+		//åå‰ã®ã‚µã‚¤ã‚ºã‚’å¤‰æ›´ã™ã‚‹
 		loc.name.resize(nameCnt);
-		//–¼‘O‚ğæ“¾‚·‚é
+		//åå‰ã‚’å–å¾—ã™ã‚‹
 		FileRead_read(loc.name.data(), sizeof(char) * static_cast<int>(loc.name.size()), handle);
 
-		//ƒ^ƒO‚ÌƒoƒCƒg”‚ğæ“¾‚·‚é
+		//ã‚¿ã‚°ã®ãƒã‚¤ãƒˆæ•°ã‚’å–å¾—ã™ã‚‹
 		byte tagCnt = 0;
 		FileRead_read(&tagCnt, sizeof(tagCnt), handle);
-		//ƒ^ƒO‚ÌƒTƒCƒY‚ğ•ÏX‚·‚é
+		//ã‚¿ã‚°ã®ã‚µã‚¤ã‚ºã‚’å¤‰æ›´ã™ã‚‹
 		loc.tag.resize(tagCnt);
-		//ƒ^ƒO‚ğæ“¾‚·‚é
+		//ã‚¿ã‚°ã‚’å–å¾—ã™ã‚‹
 		FileRead_read(loc.tag.data(), sizeof(char) * static_cast<int>(loc.tag.size()), handle);
 
-		//À•W‚ğæ“¾‚·‚é
+		//åº§æ¨™ã‚’å–å¾—ã™ã‚‹
 		FileRead_read(&loc.pos, sizeof(loc.pos), handle);
-		//‰ñ“]‚ğæ“¾‚·‚é
+		//å›è»¢ã‚’å–å¾—ã™ã‚‹
 		FileRead_read(&loc.rot, sizeof(loc.rot), handle);
-		//‘å‚«‚³‚ğæ“¾‚·‚é
+		//å¤§ãã•ã‚’å–å¾—ã™ã‚‹
 		FileRead_read(&loc.scale, sizeof(loc.scale), handle);
 
 		//if (loc.tag == "trapPos")
@@ -160,7 +160,7 @@ void MapManager::Load(const char* stageName)
 }
 
 /// <summary>
-/// •`‰æ
+/// æç”»
 /// </summary>
 void MapManager::Draw()
 {

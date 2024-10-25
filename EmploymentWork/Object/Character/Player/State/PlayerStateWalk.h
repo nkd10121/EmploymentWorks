@@ -1,23 +1,23 @@
-#pragma once
+ï»¿#pragma once
 #include "StateBase.h"
 
 /// <summary>
-/// ƒvƒŒƒCƒ„[‚Ì•à‚«ó‘Ô
+/// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ­©ãçŠ¶æ…‹
 /// </summary>
 class PlayerStateWalk : public StateBase
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	/// <param name="own"></param>
 	PlayerStateWalk(std::shared_ptr<CharacterBase> own);
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Init();
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update() override;
 

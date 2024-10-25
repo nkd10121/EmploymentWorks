@@ -1,26 +1,29 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "Input.h"
 #include "MyLib.h"
 #include "PlayerStateIdle.h"
 #include "LoadCSV.h"
 #include "HealPortion.h"
 
+#include "Shot.h"
+#include "SceneGame.h"
+
 namespace
 {
-	//ƒfƒoƒbƒO—p‚ÌƒJƒvƒZƒ‹ŠÖŒW
+	//ãƒ‡ãƒãƒƒã‚°ç”¨ã®ã‚«ãƒ—ã‚»ãƒ«é–¢ä¿‚
 	constexpr float kCupsuleSize = 2.0f;
 	constexpr float kCupsuleRadius = 2.0f;
 	constexpr int kCupsuleDivNum = 10;
 
-	/*ƒAƒiƒƒOƒXƒeƒBƒbƒN‚É‚æ‚éˆÚ“®ŠÖ˜A*/
-	constexpr float kMaxSpeed = 0.2f;			//ƒvƒŒƒCƒ„[‚ÌÅ‘å‘¬“x
-	constexpr float kAnalogRangeMin = 0.1f;		//ƒAƒiƒƒOƒXƒeƒBƒbƒN‚Ì“ü—Í”»’è”ÍˆÍ
+	/*ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã«ã‚ˆã‚‹ç§»å‹•é–¢é€£*/
+	constexpr float kMaxSpeed = 0.2f;			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æœ€å¤§é€Ÿåº¦
+	constexpr float kAnalogRangeMin = 0.1f;		//ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›åˆ¤å®šç¯„å›²
 	constexpr float kAnalogRangeMax = 0.8f;
-	constexpr float kAnalogInputMax = 1000.0f;	//ƒAƒiƒƒOƒXƒeƒBƒbƒN‚©‚ç“ü—Í‚³‚ê‚éƒxƒNƒgƒ‹‚ÌÅ‘å
+	constexpr float kAnalogInputMax = 1000.0f;	//ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‹ã‚‰å…¥åŠ›ã•ã‚Œã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã®æœ€å¤§
 }
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 Player::Player():
 	CharacterBase(Collidable::Priority::Low, GameObjectTag::Player),
@@ -38,17 +41,19 @@ Player::Player():
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 Player::~Player()
 {
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 {
+	m_pPhysics = physics;
+
 	Collidable::Init(physics);
 
 	m_pState = std::make_shared<PlayerStateIdle>(std::dynamic_pointer_cast<Player>(shared_from_this()));
@@ -56,32 +61,41 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_pState);
 	state->Init();
 
-	//ƒvƒŒƒCƒ„[‚Ì‰ŠúˆÊ’uİ’è
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åˆæœŸä½ç½®è¨­å®š
 	rigidbody->Init(false);
 	rigidbody->SetPos(m_pos);
 	rigidbody->SetNextPos(rigidbody->GetPos());
 
-	//ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXæ“¾
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å–å¾—
 	m_status = LoadCSV::GetInstance().LoadStatus("Player");
-	//Å‘åHP‚ğİ’è‚µ‚Ä‚¨‚­
+	//æœ€å¤§HPã‚’è¨­å®šã—ã¦ãŠã
 	m_hpMax = m_status.hp;
 }
 
 /// <summary>
-/// XV
+/// æ›´æ–°
 /// </summary>
-void Player::Update()
+void Player::Update(SceneGame* pScene)
 {
-	//‘O‚ÌƒtƒŒ[ƒ€‚ÆState‚ğ”äŠr‚µ‚Äˆá‚¤State‚¾‚Á‚½‚ç
+	//å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¨Stateã‚’æ¯”è¼ƒã—ã¦é•ã†Stateã ã£ãŸã‚‰
 	if (m_pState->GetNextState()->GetKind() != m_pState->GetKind())
 	{
-		//State‚ğ•ÏX‚·‚é
+		//Stateã‚’å¤‰æ›´ã™ã‚‹
 		m_pState = m_pState->GetNextState();
 		m_pState->SetNextState(m_pState);
 	}
 	
-	//ƒXƒe[ƒg‚ÌXV
+	//ã‚¹ãƒ†ãƒ¼ãƒˆã®æ›´æ–°
 	m_pState->Update();
+
+	if (Input::GetInstance().IsTriggered("B"))
+	{
+		std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
+		shot->Init(m_pPhysics);
+		shot->Set(m_pos, m_cameraDirection, m_status.atk);
+
+		pScene->AddObject(shot);
+	}
 
 	//if (input->GetIsPushedTriggerButton(true) && m_nowSlotIdx == 0 && m_status.hp > 0)
 	//{
@@ -129,14 +143,14 @@ void Player::Update()
 	//	shot->Update();
 	//	if (!shot->GetIsExist())
 	//	{
-	//		//ƒƒ‚ƒŠ‚ğ‰ğ•ú‚·‚é
+	//		//ãƒ¡ãƒ¢ãƒªã‚’è§£æ”¾ã™ã‚‹
 	//		shot->Finalize(m_pPhysics);
 	//		shot.reset();
 	//		shot = nullptr;
 	//	}
 	//}
 
-	////•s—v‚É‚È‚Á‚½“G‚ğ‚±‚±‚Åíœˆ—‚·‚é
+	////ä¸è¦ã«ãªã£ãŸæ•µã‚’ã“ã“ã§å‰Šé™¤å‡¦ç†ã™ã‚‹
 	//auto lIt = remove_if(m_pShots.begin(), m_pShots.end(), [](auto& v) {
 	//	return v == nullptr;
 	//	});
@@ -144,96 +158,96 @@ void Player::Update()
 }
 
 /// <summary>
-/// •`‰æ
+/// æç”»
 /// </summary>
 void Player::Draw()
 {
-	//FIX:Draw‚Ì‚È‚©‚ÅÀ•W‚ğ•ÏX‚µ‚Ä‚¢‚é‚Ì‚Í‚Ç‚¤‚È‚ÌH
+	//FIX:Drawã®ãªã‹ã§åº§æ¨™ã‚’å¤‰æ›´ã—ã¦ã„ã‚‹ã®ã¯ã©ã†ãªã®ï¼Ÿ
 	rigidbody->SetPos(rigidbody->GetNextPos());
 	m_pos = rigidbody->GetPos();
 
-	//ƒvƒŒƒCƒ„[‘z’è‚ÌƒJƒvƒZƒ‹
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æƒ³å®šã®ã‚«ãƒ—ã‚»ãƒ«
 	VECTOR low = VGet(m_pos.x, m_pos.y - kCupsuleSize, m_pos.z);
 	VECTOR high = VGet(m_pos.x, m_pos.y + kCupsuleSize, m_pos.z);
 	DrawCapsule3D(low, high, kCupsuleRadius, kCupsuleDivNum, 0xffffff, 0xffffff, false);
 
-#ifdef _DEBUG	//ƒfƒoƒbƒO•`‰æ
-	//“ü—Í’l‚ÌŠm”F
-	DrawFormatString(0, 16, 0xff0000, "“ü—Í’l@: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
-	//ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒgƒpƒ^[ƒ“‚ÌŠm”F
+#ifdef _DEBUG	//ãƒ‡ãƒãƒƒã‚°æç”»
+	//å…¥åŠ›å€¤ã®ç¢ºèª
+	DrawFormatString(0, 16, 0xff0000, "å…¥åŠ›å€¤ã€€: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ãƒ†ãƒ¼ãƒˆãƒ‘ã‚¿ãƒ¼ãƒ³ã®ç¢ºèª
 	m_pState->DebugDrawState(0,32);
 #endif
 }
 
 /// <summary>
-/// ‰Ÿ‚µo‚µˆ—‚ğs‚¤ƒIƒuƒWƒFƒNƒg‚ÆÕ“Ë‚µ‚½‚Æ‚«
+/// æŠ¼ã—å‡ºã—å‡¦ç†ã‚’è¡Œã†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨è¡çªã—ãŸã¨ã
 /// </summary>
 void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 {
 //#ifdef _DEBUG
-//	std::string message = "ƒvƒŒƒCƒ„[‚ª";
+//	std::string message = "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒ";
 //#endif
 //	auto tag = colider->GetTag();
 //	switch (tag)
 //	{
 //	case GameObjectTag::Enemy:
 //#ifdef _DEBUG
-//		message += "“G";
+//		message += "æ•µ";
 //#endif
 //		break;
 //	case GameObjectTag::Portion:
 //#ifdef _DEBUG
-//		message += "ƒ|[ƒVƒ‡ƒ“";
+//		message += "ãƒãƒ¼ã‚·ãƒ§ãƒ³";
 //#endif
 //		break;
 //	}
 //#ifdef _DEBUG
-//	message += "‚Æ“–‚½‚Á‚½I\n";
+//	message += "ã¨å½“ãŸã£ãŸï¼\n";
 //	printfDx(message.c_str());
 //#endif
 }
 
 /// <summary>
-/// ‰Ÿ‚µo‚µˆ—‚ğs‚í‚È‚¢ƒIƒuƒWƒFƒNƒg‚ÆÕ“Ë‚µ‚½‚Æ‚«
+/// æŠ¼ã—å‡ºã—å‡¦ç†ã‚’è¡Œã‚ãªã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨è¡çªã—ãŸã¨ã
 /// </summary>
 void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
 #ifdef _DEBUG
-	std::string message = "ƒvƒŒƒCƒ„[‚ª";
+	std::string message = "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒ";
 #endif
 	auto tag = colider->GetTag();
 	switch (tag)
 	{
 	case GameObjectTag::Enemy:
 #ifdef _DEBUG
-		message += "“G";
+		message += "æ•µ";
 #endif
 		break;
 	case GameObjectTag::Portion:
 #ifdef _DEBUG
-		message += "ƒ|[ƒVƒ‡ƒ“";
+		message += "ãƒãƒ¼ã‚·ãƒ§ãƒ³";
 #endif
-		//HP‚ªŒ¸‚Á‚Ä‚¢‚é‚Æ‚«‚Ì‚İ‰ñ•œˆ—‚ğs‚¤
+		//HPãŒæ¸›ã£ã¦ã„ã‚‹ã¨ãã®ã¿å›å¾©å‡¦ç†ã‚’è¡Œã†
 		//if (m_hpMax > m_status.hp)
 		{
-			//HP‚ğ–ƒ^ƒ“‚Ü‚Å‰ñ•œ‚³‚¹‚é
+			//HPã‚’æº€ã‚¿ãƒ³ã¾ã§å›å¾©ã•ã›ã‚‹
 			m_status.hp = m_hpMax;
 
-			//ƒ|[ƒVƒ‡ƒ“‚ğíœ‚·‚é
+			//ãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚’å‰Šé™¤ã™ã‚‹
 			HealPortion* col = dynamic_cast<HealPortion*>(colider.get());
 			col->End();
 
-			//‰ñ•œƒGƒtƒFƒNƒg‚ğ¶¬‚·‚é
+			//å›å¾©ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 			auto pos = rigidbody->GetPos();
 			//EffectManager::GetInstance().CreateEffect("Heal", pos);
 
-			//‰ñ•œSE‚ğ—¬‚·
+			//å›å¾©SEã‚’æµã™
 			//SoundManager::GetInstance().PlaySE("heal");
 		}
 		break;
 	}
 #ifdef _DEBUG
-	message += "‚Æ“–‚½‚Á‚½I\n";
+	message += "ã¨å½“ãŸã£ãŸï¼\n";
 	printfDx(message.c_str());
 #endif
 }

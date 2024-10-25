@@ -1,67 +1,73 @@
-#pragma once
+ï»¿#pragma once
 #include "SceneBase.h"
 #include "Camera.h"
 #include "MyLib.h"
-//ƒeƒXƒg—p
+//ãƒ†ã‚¹ãƒˆç”¨
 #include <list>
 
-//ƒvƒƒgƒ^ƒCƒvéŒ¾
-class Player;	//ƒvƒŒƒCƒ„[
-class HealPortion;	//‰ñ•œƒ|[ƒVƒ‡ƒ“
+//ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
+class Player;	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+class ObjectBase;	//å›å¾©ãƒãƒ¼ã‚·ãƒ§ãƒ³
 
 /// <summary>
-/// ƒQ[ƒ€ƒV[ƒ“
+/// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³
 /// </summary>
 class SceneGame : public SceneBase
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	SceneGame();
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~SceneGame();
 
 	/// <summary>
-	/// //ƒŠƒ\[ƒX‚Ìƒ[ƒhŠJn
+	/// //ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰é–‹å§‹
 	/// </summary>
 	virtual void StartLoad() override;
 
 	/// <summary>
-	/// ƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
+	/// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚äº†ã—ãŸã‹ã©ã†ã‹
 	/// </summary>
-	/// <returns>true : I—¹Ï‚İ, false : I—¹‚µ‚Ä‚¢‚È‚¢</returns>
+	/// <returns>true : çµ‚äº†æ¸ˆã¿, false : çµ‚äº†ã—ã¦ã„ãªã„</returns>
 	virtual bool IsLoaded() const override;
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	virtual void Init() override;
 
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	virtual void End() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw() override;
 
-private:
-	std::shared_ptr<Player> m_pPlayer;			//ƒvƒŒƒCƒ„[ƒ|ƒCƒ“ƒ^
-	std::shared_ptr<Camera> m_pCamera;			//ƒJƒƒ‰ƒ|ƒCƒ“ƒ^
-	std::shared_ptr<MyLib::Physics> m_pPhysics;	//•¨—ƒNƒ‰ƒXƒ|ƒCƒ“ƒ^
-	std::list<std::shared_ptr<HealPortion>> m_pPortions;	//‰ñ•œƒ|[ƒVƒ‡ƒ“ƒ|ƒCƒ“ƒ^‚Ì”z—ñ
+	/// <summary>
+	/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¿½åŠ ã™ã‚‹
+	/// </summary>
+	/// <param name="pAddObject"></param>
+	void AddObject(std::shared_ptr<ObjectBase> pAddObject);
 
-	int m_stageModel;	//ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹(‰¼)
+private:
+	std::shared_ptr<Player> m_pPlayer;			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒã‚¤ãƒ³ã‚¿
+	std::shared_ptr<Camera> m_pCamera;			//ã‚«ãƒ¡ãƒ©ãƒã‚¤ãƒ³ã‚¿
+	std::shared_ptr<MyLib::Physics> m_pPhysics;	//ç‰©ç†ã‚¯ãƒ©ã‚¹ãƒã‚¤ãƒ³ã‚¿
+	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒã‚¤ãƒ³ã‚¿ã®é…åˆ—
+
+	int m_stageModel;	//ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«(ä»®)
 
 };
 

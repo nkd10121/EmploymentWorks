@@ -1,23 +1,23 @@
-#pragma once
+﻿#pragma once
 #include "Vec3.h"
 
 
 /// <summary>
-/// �����Ɠ_�̒�����̍ŋߐړ_���擾
+/// 線分と点の直線上の最近接点を取得
 /// </summary>
-/// <param name="start">�����̎n�_</param>
-/// <param name="end">�����̏I�_</param>
-/// <param name="point">�_�̍��W</param>
-/// <returns>������̍ŋߐړ_</returns>
+/// <param name="start">線分の始点</param>
+/// <param name="end">線分の終点</param>
+/// <param name="point">点の座標</param>
+/// <returns>線分上の最近接点</returns>
 Vec3 GetNearestPtOnLine(const Vec3& start, const Vec3& end, const Vec3& point);
 
 /// <summary>
-/// �����Ɛ����̂��ꂼ��̐�����̍ŋߐړ_���擾
+/// 線分と線分のそれぞれの線分上の最近接点を取得
 /// </summary>
-/// <param name="centerA">����A�̒��S���W</param>
-/// <param name="sizeA">����A�̒����̔���</param>
-/// <param name="centerB">����B�̒��S���W</param>
-/// <param name="sizeB">����B�̒����̔���</param>
-/// <param name="resultAPos">����A��̐���B�Ƃ̍ŋߐړ_���W</param>
-/// <param name="resultBPos">����B��̐���A�Ƃ̍ŋߐړ_���W</param>
+/// <param name="centerA">線分Aの中心座標</param>
+/// <param name="sizeA">線分Aの長さの半分</param>
+/// <param name="centerB">線分Bの中心座標</param>
+/// <param name="sizeB">線分Bの長さの半分</param>
+/// <param name="resultAPos">線分A上の線分Bとの最近接点座標</param>
+/// <param name="resultBPos">線分B上の線分Aとの最近接点座標</param>
 void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& centerB, const Vec3& sizeB,Vec3& resultAPos,Vec3& resultBPos);

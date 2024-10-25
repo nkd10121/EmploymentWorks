@@ -1,9 +1,9 @@
-#include <cassert> 
+ï»¿#include <cassert> 
 #include "DxLib.h"
 #include "MyLib.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 MyLib::Collidable::Collidable(Priority priority, GameObjectTag tag) :
 	priority(priority),
@@ -12,36 +12,36 @@ MyLib::Collidable::Collidable(Priority priority, GameObjectTag tag) :
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 MyLib::Collidable::~Collidable()
 {
 }
 
 /// <summary>
-/// ‰Šú‰»(©g‚É“–‚½‚è”»’è‚ğ’Ç‰Á)
+/// åˆæœŸåŒ–(è‡ªèº«ã«å½“ãŸã‚Šåˆ¤å®šã‚’è¿½åŠ )
 /// </summary>
 void MyLib::Collidable::Init(std::shared_ptr<MyLib::Physics> physics)
 {
-	physics->Entry(shared_from_this());	// •¨—î•ñ‚É©g‚ğ“o˜^
+	physics->Entry(shared_from_this());	// ç‰©ç†æƒ…å ±ã«è‡ªèº«ã‚’ç™»éŒ²
 }
 
 /// <summary>
-/// I—¹(©g‚Ì“–‚½‚è”»’è‚ğíœ)
+/// çµ‚äº†(è‡ªèº«ã®å½“ãŸã‚Šåˆ¤å®šã‚’å‰Šé™¤)
 /// </summary>
 void MyLib::Collidable::Finalize(std::shared_ptr<MyLib::Physics> physics)
 {
-	physics->Exit(shared_from_this());	// •¨—î•ñ“o˜^‰ğœ
+	physics->Exit(shared_from_this());	// ç‰©ç†æƒ…å ±ç™»éŒ²è§£é™¤
 }
 
 /// <summary>
-/// “–‚½‚è”»’è‚ğ’Ç‰Á
+/// å½“ãŸã‚Šåˆ¤å®šã‚’è¿½åŠ 
 /// </summary>
 std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const ColliderBase::Kind& kind, bool isTrigger)
 {
 	std::shared_ptr<ColliderBase> add;
 
-	//í—Ş‚É‚æ‚Á‚Ä’Ç‰Á‚·‚é“–‚½‚è”»’è‚Ì”h¶æ‚ğ•ÏX‚·‚é
+	//ç¨®é¡ã«ã‚ˆã£ã¦è¿½åŠ ã™ã‚‹å½“ãŸã‚Šåˆ¤å®šã®æ´¾ç”Ÿå…ˆã‚’å¤‰æ›´ã™ã‚‹
 	if (kind == ColliderBase::Kind::Sphere)
 	{
 		add = std::make_shared<ColliderSphere>(isTrigger);
@@ -52,10 +52,10 @@ std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const Collid
 	}
 	else
 	{
-		assert(0 && "w’è‚³‚ê‚½í—Ş‚Ì“–‚½‚è”»’è‚ğ’Ç‰Á‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+		assert(0 && "æŒ‡å®šã•ã‚ŒãŸç¨®é¡ã®å½“ãŸã‚Šåˆ¤å®šã‚’è¿½åŠ ã§ãã¾ã›ã‚“ã§ã—ãŸ");
 	}
 
-	//“–‚½‚è”»’è‚ğ’Ç‰Á‚·‚é
+	//å½“ãŸã‚Šåˆ¤å®šã‚’è¿½åŠ ã™ã‚‹
 	m_colliders.emplace_back(add);
 
 	return add;

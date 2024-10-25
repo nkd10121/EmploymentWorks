@@ -1,31 +1,31 @@
-#pragma once
+ï»¿#pragma once
 #include "CharacterBase.h"
 
 class LoadCSV
 {
 private:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	LoadCSV() {};
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~LoadCSV() {};
 
-	//static‚É‚·‚é‚±‚Æ‚Å
-	//Singleton‚Ìƒ|ƒCƒ“ƒ^‚ªƒvƒƒOƒ‰ƒ€‹N“®‚Éˆê‚Âì‚ç‚ê‚é‚æ‚¤‚É‚·‚é
+	//staticã«ã™ã‚‹ã“ã¨ã§
+	//Singletonã®ãƒã‚¤ãƒ³ã‚¿ãŒãƒ—ãƒ­ã‚°ãƒ©ãƒ èµ·å‹•æ™‚ã«ä¸€ã¤ä½œã‚‰ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹
 	static LoadCSV* m_instance;
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚©‚çÀ‘Ì‚Ì¶¬‚ª‚Å‚«‚Ä‚µ‚Ü‚¤‚½‚ß
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‹Ö~‚·‚é
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‹ã‚‰å®Ÿä½“ã®ç”ŸæˆãŒã§ãã¦ã—ã¾ã†ãŸã‚
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç¦æ­¢ã™ã‚‹
 	LoadCSV(const LoadCSV&) = delete;
 	LoadCSV& operator=(const LoadCSV&) = delete;
 	LoadCSV(LoadCSV&&) = delete;
 	LoadCSV& operator= (const LoadCSV&&) = delete;
 
 	/// <summary>
-	/// LoadCSV‚ÍGetInstance()‚ğ’Ê‚µ‚½QÆ‚©‚ç‚µ‚©—˜—p‚Å‚«‚È‚¢
+	/// LoadCSVã¯GetInstance()ã‚’é€šã—ãŸå‚ç…§ã‹ã‚‰ã—ã‹åˆ©ç”¨ã§ããªã„
 	/// </summary>
 	/// <returns></returns>
 	static LoadCSV& GetInstance()
@@ -38,7 +38,7 @@ public:
 		return *m_instance;
 	}
 
-	//‚±‚ê‚ğ‚µ–Y‚ê‚é‚Æ•’Ê‚Éƒƒ‚ƒŠƒŠ[ƒN
+	//ã“ã‚Œã‚’ã—å¿˜ã‚Œã‚‹ã¨æ™®é€šã«ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯
 	static void Destroy()
 	{
 		delete m_instance;
@@ -47,13 +47,13 @@ public:
 
 public:
 	/// <summary>
-	/// ƒXƒe[ƒ^ƒXî•ñ‚ğæ“¾
+	/// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æƒ…å ±ã‚’å–å¾—
 	/// </summary>
-	/// <param name="characterName">ƒXƒe[ƒ^ƒX‚ğæ“¾‚µ‚½‚¢ƒLƒƒƒ‰ƒNƒ^[–¼</param>
+	/// <param name="characterName">ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å–å¾—ã—ãŸã„ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼å</param>
 	CharacterBase::Status LoadStatus(const char* characterName);
 
 	/// <summary>
-	/// ‚»‚ÌƒV[ƒ“‚Åƒ[ƒh‚·‚éƒŠƒ\[ƒX–¼‚ğæ“¾
+	/// ãã®ã‚·ãƒ¼ãƒ³ã§ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ãƒªã‚½ãƒ¼ã‚¹åã‚’å–å¾—
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>

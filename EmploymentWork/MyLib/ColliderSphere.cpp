@@ -1,7 +1,7 @@
-#include "ColliderSphere.h"
+ï»¿#include "ColliderSphere.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 MyLib::ColliderSphere::ColliderSphere(bool isTrigger) :
 	ColliderBase(ColliderBase::Kind::Sphere, isTrigger),

@@ -1,60 +1,61 @@
-#pragma once
+ï»¿#pragma once
 #include "ObjectBase.h"
 
 /// <summary>
-/// ‰“‹——£UŒ‚‚Ì’eƒNƒ‰ƒX
+/// é è·é›¢æ”»æ’ƒã®å¼¾ã‚¯ãƒ©ã‚¹
 /// </summary>
 class Shot : public ObjectBase
 {
 public:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
-	/// <param name="tag">“–‚½‚è”»’èƒ^ƒO</param>
+	/// <param name="tag">å½“ãŸã‚Šåˆ¤å®šã‚¿ã‚°</param>
 	Shot(GameObjectTag tag);
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	virtual ~Shot();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="physics">•¨—ƒNƒ‰ƒXƒ|ƒCƒ“ƒ^</param>
-	void Init(std::shared_ptr<MyLib::Physics> physics);
+	/// <param name="physics">ç‰©ç†ã‚¯ãƒ©ã‚¹ãƒã‚¤ãƒ³ã‚¿</param>
+	void Init(std::shared_ptr<MyLib::Physics> physics)override;
 	/// <summary>
-	/// “–‚½‚è”»’è‚ğíœ
+	/// å½“ãŸã‚Šåˆ¤å®šã‚’å‰Šé™¤
 	/// </summary>
-	/// <param name="physics">•¨—ƒNƒ‰ƒXƒ|ƒCƒ“ƒ^</param>
+	/// <param name="physics">ç‰©ç†ã‚¯ãƒ©ã‚¹ãƒã‚¤ãƒ³ã‚¿</param>
 	void Finalize(std::shared_ptr<MyLib::Physics> physics) override;
 	/// <summary>
-	/// ¶¬À•W‚ÆŒü‚«‚ÆUŒ‚—Í‚ğİ’è
+	/// ç”Ÿæˆåº§æ¨™ã¨å‘ãã¨æ”»æ’ƒåŠ›ã‚’è¨­å®š
 	/// </summary>
-	/// <param name="pos">¶¬À•W</param>
-	/// <param name="m_dir">Œü‚«</param>
-	/// <param name="atk">UŒ‚—Í</param>
+	/// <param name="pos">ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="m_dir">å‘ã</param>
+	/// <param name="atk">æ”»æ’ƒåŠ›</param>
 	void Set(const Vec3& pos, const Vec3& m_dir, const int& atk);
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
-	void Update();
+	void Update()override;
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
-	void Draw();
+	void Draw()override;
 
 	/// <summary>
-	/// I—¹’Ê’m
-	/// “–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg‚©‚çŒÄ‚Î‚ê‚é
+	/// çµ‚äº†é€šçŸ¥
+	/// å½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰å‘¼ã°ã‚Œã‚‹
 	/// </summary>
 	void End();
+
+
 
 	const bool GetIsExist()const { return m_isExist; }
 	const int GetAtk()const { return m_atk; }
 
 private:
 	Vec3 m_moveDir;
-	bool m_isExist;
 
 	int m_frameCount;
 

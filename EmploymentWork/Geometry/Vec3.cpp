@@ -1,4 +1,4 @@
-#include "Vec3.h"
+ï»¿#include "Vec3.h"
 #include <cassert>
 
 Vec3::Vec3() :
@@ -90,7 +90,7 @@ Vec3 Vec3::operator/(float scale) const
 {
 	if (scale == 0.0f)
 	{
-		assert(0 && "0œŽZ‚ðŒŸ’m");
+		assert(0 && "0é™¤ç®—ã‚’æ¤œçŸ¥");
 		return Vec3();
 	}
 
@@ -107,7 +107,7 @@ void Vec3::operator/=(float scale)
 	}
 	else
 	{
-		assert(0 && "0œŽZ‚ðŒŸ’m");
+		assert(0 && "0é™¤ç®—ã‚’æ¤œçŸ¥");
 		x = 0.0f;
 		y = 0.0f;
 		z = 0.0f;
@@ -144,7 +144,7 @@ Vec3 Vec3::Normalize() const
 	float size = this->Length();
 	if (size == 0.0f)
 	{
-		//assert(0 && "0œŽZ‚ðŒŸ’m");
+		//assert(0 && "0é™¤ç®—ã‚’æ¤œçŸ¥");
 		return ret;
 	}
 	ret.x = this->x / size;

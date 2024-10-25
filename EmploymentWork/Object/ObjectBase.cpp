@@ -1,19 +1,30 @@
-#include "ObjectBase.h"
+ï»¿#include "ObjectBase.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ObjectBase::ObjectBase(Priority priority, GameObjectTag tag):
-	Collidable(priority,tag)
+	Collidable(priority,tag),
+	m_modelHandle(-1),
+	m_isExist(false)
 {
 	rigidbody = std::make_shared<MyLib::Rigidbody>();
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 ObjectBase::~ObjectBase()
 {
-	//ƒŠƒ\[ƒXŠJ•ú
+	//ãƒªã‚½ãƒ¼ã‚¹é–‹æ”¾
 	MV1DeleteModel(m_modelHandle);
+}
+
+/// <summary>
+/// åº§æ¨™ã‚’è¨­å®š
+/// </summary>
+void ObjectBase::SetPosition(Vec3 pos)
+{
+	rigidbody->SetPos(pos);
+	MV1SetPosition(m_modelHandle, rigidbody->GetPosVECTOR());
 }

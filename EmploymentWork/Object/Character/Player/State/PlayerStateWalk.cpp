@@ -1,4 +1,4 @@
-#include "PlayerStateWalk.h"
+ï»¿#include "PlayerStateWalk.h"
 #include "Input.h"
 #include "Player.h"
 #include "PlayerStateIdle.h"
@@ -6,15 +6,15 @@
 
 namespace
 {
-	/*ƒAƒiƒƒOƒXƒeƒBƒbƒN‚É‚æ‚éˆÚ“®ŠÖ˜A*/
-	constexpr float kMaxSpeed = 0.2f;			//ƒvƒŒƒCƒ„[‚ÌÅ‘å‘¬“x
-	constexpr float kAnalogRangeMin = 0.1f;		//ƒAƒiƒƒOƒXƒeƒBƒbƒN‚Ì“ü—Í”»’èÅ¬”ÍˆÍ
-	constexpr float kAnalogRangeMax = 0.8f;		//ƒAƒiƒƒOƒXƒeƒBƒbƒN‚Ì“ü—Í”»’èÅ‘å”ÍˆÍ
-	constexpr float kAnalogInputMax = 1000.0f;	//ƒAƒiƒƒOƒXƒeƒBƒbƒN‚©‚ç“ü—Í‚³‚ê‚éƒxƒNƒgƒ‹‚ÌÅ‘å
+	/*ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã«ã‚ˆã‚‹ç§»å‹•é–¢é€£*/
+	constexpr float kMaxSpeed = 0.2f;			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æœ€å¤§é€Ÿåº¦
+	constexpr float kAnalogRangeMin = 0.1f;		//ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›åˆ¤å®šæœ€å°ç¯„å›²
+	constexpr float kAnalogRangeMax = 0.8f;		//ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›åˆ¤å®šæœ€å¤§ç¯„å›²
+	constexpr float kAnalogInputMax = 1000.0f;	//ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‹ã‚‰å…¥åŠ›ã•ã‚Œã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã®æœ€å¤§
 }
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 	StateBase(own)
@@ -23,14 +23,14 @@ PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 void PlayerStateWalk::Init()
 {
 }
 
 /// <summary>
-/// XV
+/// æ›´æ–°
 /// </summary>
 void PlayerStateWalk::Update()
 {
@@ -38,7 +38,7 @@ void PlayerStateWalk::Update()
 
 	auto own = dynamic_cast<Player*>(m_pOwn.get());
 
-	//¶ƒXƒeƒBƒbƒN‚ª“ü—Í‚³‚ê‚Ä‚¢‚½‚çState‚ğWalk‚É‚·‚é
+	//å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãŸã‚‰Stateã‚’Walkã«ã™ã‚‹
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 		Input::GetInstance().GetInputStick(false).second == 0.0f)
 	{
@@ -48,41 +48,41 @@ void PlayerStateWalk::Update()
 		return;
 	}
 
-	//ƒRƒ“ƒgƒ[ƒ‰[‚Ì¶ƒXƒeƒBƒbƒN‚Ì“ü—Í‚ğæ“¾
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›ã‚’å–å¾—
 	auto input = Input::GetInstance().GetInputStick(false);
-	//ˆÚ“®•ûŒü‚ğİ’è‚·‚é
+	//ç§»å‹•æ–¹å‘ã‚’è¨­å®šã™ã‚‹
 	auto temp_moveVec = Vec3(input.first,0.0f,-input.second);
-	//ˆÚ“®ƒxƒNƒgƒ‹‚Ì’·‚³‚ğæ“¾‚·‚é
+	//ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ã‚’å–å¾—ã™ã‚‹
 	float len = temp_moveVec.Length();
 
-	//ƒxƒNƒgƒ‹‚Ì’·‚³‚ğ0.0`1.0‚ÌŠ„‡‚É•ÏŠ·‚·‚é
+	//ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ã‚’0.0ï½1.0ã®å‰²åˆã«å¤‰æ›ã™ã‚‹
 	float rate = len / kAnalogInputMax;
 
-	//ƒAƒiƒƒOƒXƒeƒBƒbƒN–³Œø‚È”ÍˆÍ‚ğœŠO‚·‚é(ƒfƒbƒhƒ][ƒ“)
+	//ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯ç„¡åŠ¹ãªç¯„å›²ã‚’é™¤å¤–ã™ã‚‹(ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³)
 	rate = (rate - kAnalogRangeMin) / (kAnalogRangeMax - kAnalogRangeMin);
 	rate = min(rate, 1.0f);
 	rate = max(rate, 0.0f);
 
-	//‘¬“x‚ªŒˆ’è‚Å‚«‚é‚Ì‚ÅˆÚ“®ƒxƒNƒgƒ‹‚É”½‰f‚·‚é
+	//é€Ÿåº¦ãŒæ±ºå®šã§ãã‚‹ã®ã§ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã«åæ˜ ã™ã‚‹
 	temp_moveVec = temp_moveVec.Normalize();
 	float speed = /*m_status.speed*/1.0f * rate;
 
 	temp_moveVec = temp_moveVec * speed;
 
-	//ƒvƒŒƒCƒ„[‚Ì³–Ê•ûŒü‚ğŒvZ‚µ‚Ä³–Ê•ûŒü‚ğŠî€‚ÉˆÚ“®‚·‚é
-	//ƒJƒƒ‰‚Ì³–Ê•ûŒüƒxƒNƒgƒ‹
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ­£é¢æ–¹å‘ã‚’è¨ˆç®—ã—ã¦æ­£é¢æ–¹å‘ã‚’åŸºæº–ã«ç§»å‹•ã™ã‚‹
+	//ã‚«ãƒ¡ãƒ©ã®æ­£é¢æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	Vec3 front(own->GetCameraDirecton().x, 0.0f, own->GetCameraDirecton().z);
-	//Œü‚«ƒxƒNƒgƒ‹*ˆÚ“®—Ê
+	//å‘ããƒ™ã‚¯ãƒˆãƒ«*ç§»å‹•é‡
 	front = front * temp_moveVec.z;
-	//ƒJƒƒ‰‚Ì‰E•ûŒüƒxƒNƒgƒ‹
+	//ã‚«ãƒ¡ãƒ©ã®å³æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	Vec3 right(-own->GetCameraDirecton().z, 0.0f, own->GetCameraDirecton().x);
-	//Œü‚«ƒxƒNƒgƒ‹*ˆÚ“®—Ê
+	//å‘ããƒ™ã‚¯ãƒˆãƒ«*ç§»å‹•é‡
 	right = right * (-temp_moveVec.x);
 
-	//ˆÚ“®ƒxƒNƒgƒ‹‚Ì¶¬
+	//ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã®ç”Ÿæˆ
 	temp_moveVec = front + right;
 	temp_moveVec = temp_moveVec.Normalize() * speed;
-	//ˆÚ“®ˆ—
+	//ç§»å‹•å‡¦ç†
 	//MV1SetPosition(m_modelHandle, m_collisionPos.ToVECTOR());
 
 	

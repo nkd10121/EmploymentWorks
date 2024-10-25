@@ -1,4 +1,4 @@
-#include "SceneBase.h"
+ï»¿#include "SceneBase.h"
 #include "Game.h"
 
 #include "ModelManager.h"
@@ -6,19 +6,19 @@
 
 namespace
 {
-	// ƒtƒF[ƒh‚É‚©‚©‚éƒtƒŒ[ƒ€ƒfƒtƒHƒ‹ƒg
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ã«ã‹ã‹ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
 	constexpr int kFadeFrameDefault = 30;
-	// 1ƒtƒŒ[ƒ€“–‚½‚è‚ÌƒtƒF[ƒh‘¬“x
+	// 1ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®ãƒ•ã‚§ãƒ¼ãƒ‰é€Ÿåº¦
 	constexpr int kFadeSpeed = 255 / kFadeFrameDefault;
 
-	//–¾‚é‚³‚ÌÅ‘å
+	//æ˜ã‚‹ã•ã®æœ€å¤§
 	constexpr int kBrightMax = 255;
-	//–¾‚é‚³‚ÌÅ’á
+	//æ˜ã‚‹ã•ã®æœ€ä½
 	constexpr int kBrightMin = 0;
 }
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 SceneBase::SceneBase() :
 	m_loadPath(),
@@ -35,7 +35,7 @@ SceneBase::SceneBase() :
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 void SceneBase::EndThisScene()
 {
@@ -44,42 +44,42 @@ void SceneBase::EndThisScene()
 }
 
 /// <summary>
-/// ”h¶æ‚Ì‰Šú‰»‚ÆƒV[ƒ“‹¤’Ê‚Å•K—v‚È‰Šú‰»‚ğs‚¤
+/// æ´¾ç”Ÿå…ˆã®åˆæœŸåŒ–ã¨ã‚·ãƒ¼ãƒ³å…±é€šã§å¿…è¦ãªåˆæœŸåŒ–ã‚’è¡Œã†
 /// </summary>
 void SceneBase::InitAll()
 {
-	// ƒtƒF[ƒhƒAƒEƒgó‘Ô‚©‚çŠJn
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆçŠ¶æ…‹ã‹ã‚‰é–‹å§‹
 	m_fadeAlpha = kBrightMax;
 	StartFadeIn();
-	// Œp³æƒV[ƒ“‚Ì‰Šú‰»ˆ—
+	// ç¶™æ‰¿å…ˆã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 	Init();
 }
 
 /// <summary>
-/// ”h¶æ‚ÌXV‚ÆƒV[ƒ“‹¤’Ê‚Å•K—v‚ÈXV‚ğs‚¤
+/// æ´¾ç”Ÿå…ˆã®æ›´æ–°ã¨ã‚·ãƒ¼ãƒ³å…±é€šã§å¿…è¦ãªæ›´æ–°ã‚’è¡Œã†
 /// </summary>
 void SceneBase::UpdateAll()
 {
 #ifdef DISP_PROCESS
 	LONGLONG start = GetNowHiPerformanceCount();
 #endif
-	//Œp³æ‚ÌƒV[ƒ“‚ÌƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªI‚í‚Á‚Ä‚¢‚é‚©Šm”F
+	//ç¶™æ‰¿å…ˆã®ã‚·ãƒ¼ãƒ³ã®ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ã¦ã„ã‚‹ã‹ç¢ºèª
 	if (!IsLoaded())
 	{
-		//ƒ[ƒh’†‚È‚çXVˆ—‰½‚às‚í‚È‚¢
+		//ãƒ­ãƒ¼ãƒ‰ä¸­ãªã‚‰æ›´æ–°å‡¦ç†ä½•ã‚‚è¡Œã‚ãªã„
 		return;
 	}
 
-	//‰Šú‰»ŠÖ”‚ğŒÄ‚ñ‚¾‚©Šm”F
+	//åˆæœŸåŒ–é–¢æ•°ã‚’å‘¼ã‚“ã ã‹ç¢ºèª
 	if (!m_isInit)
 	{
-		//ŒÄ‚ñ‚Å‚¢‚È‚©‚Á‚½‚ç‰Šú‰»ŠÖ”‚ğŒÄ‚Ô
+		//å‘¼ã‚“ã§ã„ãªã‹ã£ãŸã‚‰åˆæœŸåŒ–é–¢æ•°ã‚’å‘¼ã¶
 		InitAll();
 		m_isInit = true;
 	}
 
 	UpdateFade();
-	// Œp³æ‚ÌƒV[ƒ“‚ÌXVˆ—
+	// ç¶™æ‰¿å…ˆã®ã‚·ãƒ¼ãƒ³ã®æ›´æ–°å‡¦ç†
 	Update();
 
 #ifdef DISP_PROCESS
@@ -88,7 +88,7 @@ void SceneBase::UpdateAll()
 }
 
 /// <summary>
-/// ”h¶æ‚Ì•`‰æ‚ÆƒV[ƒ“‹¤’Ê‚Å•K—v‚È•`‰æ‚ğs‚¤
+/// æ´¾ç”Ÿå…ˆã®æç”»ã¨ã‚·ãƒ¼ãƒ³å…±é€šã§å¿…è¦ãªæç”»ã‚’è¡Œã†
 /// </summary>
 void SceneBase::DrawAll()
 {
@@ -107,7 +107,7 @@ void SceneBase::DrawAll()
 	}
 #endif
 
-	//Œp³æ‚ÌƒV[ƒ“‚Ì•`‰æˆ—
+	//ç¶™æ‰¿å…ˆã®ã‚·ãƒ¼ãƒ³ã®æç”»å‡¦ç†
 	Draw();
 	DrawFade();
 	DrawLoading();
@@ -115,31 +115,31 @@ void SceneBase::DrawAll()
 #ifdef DISP_PROCESS
 	m_drawTime = GetNowHiPerformanceCount() - start;
 
-	// ˆ—ƒo[‚Ì•\¦
-	// à–¾ 
-	DrawString(0, Game::kWindowHeight - 48, "ˆ—", 0xffffff, 0x000000);
+	// å‡¦ç†ãƒãƒ¼ã®è¡¨ç¤º
+	// èª¬æ˜ 
+	DrawString(0, Game::kWindowHeight - 48, "å‡¦ç†", 0xffffff, 0x000000);
 	DrawBox(32 + 2, Game::kWindowHeight - 48 + 2, 48 + 16 - 2, Game::kWindowHeight - 32 - 2, 0x0000ff, true);
-	DrawString(0, Game::kWindowHeight - 32, "•`‰æ", 0xffffff, 0x000000);
+	DrawString(0, Game::kWindowHeight - 32, "æç”»", 0xffffff, 0x000000);
 	DrawBox(32 + 2, Game::kWindowHeight - 32 + 2, 48 + 16 - 2, Game::kWindowHeight - 16 - 2, 0xff0000, true);
 
 	float rate = static_cast<float>(m_updateTime + m_drawTime) / 16666.6f;
 	int width = static_cast<int>(Game::kWindowWidth * rate);
-	DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0xff0000, true);	// ˆ—+•`‰æ
+	DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0xff0000, true);	// å‡¦ç†+æç”»
 
 	rate = static_cast<float>(m_updateTime) / 16666.6f;
 	width = static_cast<int>(Game::kWindowWidth * rate);
-	DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0x0000ff, true);	// ˆ—+•`‰æ‚Ìã‚©‚çˆ—ŠÔ‚Ì‚İ•`‰æ
+	DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0x0000ff, true);	// å‡¦ç†+æç”»ã®ä¸Šã‹ã‚‰å‡¦ç†æ™‚é–“ã®ã¿æç”»
 #endif
 }
 
 /// <summary>
-/// Œ»İ‚ÌƒV[ƒ“‚ªŠ®‘S‚ÉI—¹‚µ‚½‚©‚Ç‚¤‚©
+/// ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ãŒå®Œå…¨ã«çµ‚äº†ã—ãŸã‹ã©ã†ã‹
 /// </summary>
 bool SceneBase::IsSceneEnd()
 {
-	// ‚»‚à‚»‚àI‚í‚é‚ÆŒ¾‚Á‚Ä‚¢‚È‚¢
+	// ãã‚‚ãã‚‚çµ‚ã‚ã‚‹ã¨è¨€ã£ã¦ã„ãªã„
 	if (!m_isEnd)	return false;
-	// ‚Ü‚¾ƒtƒF[ƒhƒAƒEƒgI‚í‚Á‚Ä‚È‚¢
+	// ã¾ã ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆçµ‚ã‚ã£ã¦ãªã„
 	if (m_fadeAlpha < kBrightMax)	return false;
 
 
@@ -149,14 +149,14 @@ bool SceneBase::IsSceneEnd()
 }
 
 /// <summary>
-/// ƒtƒF[ƒh‚ÌXV
+/// ãƒ•ã‚§ãƒ¼ãƒ‰ã®æ›´æ–°
 /// </summary>
 void SceneBase::UpdateFade()
 {
-	// ƒŠƒ\[ƒX‚Ìƒ[ƒh‚ªŠ®—¹‚µ‚Ä‚¢‚È‚¢
+	// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ­ãƒ¼ãƒ‰ãŒå®Œäº†ã—ã¦ã„ãªã„
 	if (m_fadeSpeed < 0 && (!IsLoaded()))
 	{
-		return;	// ƒ[ƒhŠ®—¹‚Ü‚Å‚ÍƒtƒF[ƒhƒCƒ“ˆ—‚ğs‚í‚È‚¢
+		return;	// ãƒ­ãƒ¼ãƒ‰å®Œäº†ã¾ã§ã¯ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³å‡¦ç†ã‚’è¡Œã‚ãªã„
 	}
 
 	m_fadeAlpha += m_fadeSpeed;
@@ -179,7 +179,7 @@ void SceneBase::UpdateFade()
 }
 
 /// <summary>
-/// ƒtƒF[ƒh‚Ì•`‰æ
+/// ãƒ•ã‚§ãƒ¼ãƒ‰ã®æç”»
 /// </summary>
 void SceneBase::DrawFade() const
 {
@@ -189,7 +189,7 @@ void SceneBase::DrawFade() const
 }
 
 /// <summary>
-/// ƒ[ƒh’†•`‰æ
+/// ãƒ­ãƒ¼ãƒ‰ä¸­æç”»
 /// </summary>
 void SceneBase::DrawLoading() const
 {
@@ -200,7 +200,7 @@ void SceneBase::DrawLoading() const
 }
 
 /// <summary>
-/// ƒtƒF[ƒhƒCƒ“ŠJn
+/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³é–‹å§‹
 /// </summary>
 void SceneBase::StartFadeIn()
 {
@@ -208,7 +208,7 @@ void SceneBase::StartFadeIn()
 }
 
 /// <summary>
-/// ƒtƒF[ƒhƒAƒEƒgŠJn
+/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆé–‹å§‹
 /// </summary>
 void SceneBase::StartFadeOut()
 {
@@ -216,7 +216,7 @@ void SceneBase::StartFadeOut()
 }
 
 /// <summary>
-/// ƒtƒF[ƒhƒCƒ“‚ğƒXƒLƒbƒv‚·‚é
+/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
 /// </summary>
 void SceneBase::SkipFadeIn()
 {
@@ -225,7 +225,7 @@ void SceneBase::SkipFadeIn()
 }
 
 /// <summary>
-/// ƒtƒF[ƒhƒAƒEƒg‚ğƒXƒLƒbƒv‚·‚é
+/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
 /// </summary>
 void SceneBase::SkipFadeOut()
 {

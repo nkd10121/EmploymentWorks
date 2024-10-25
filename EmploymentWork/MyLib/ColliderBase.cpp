@@ -1,7 +1,7 @@
-#include "ColliderBase.h"
+ï»¿#include "ColliderBase.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 MyLib::ColliderBase::ColliderBase(Kind kind, bool isTrigger)
 {

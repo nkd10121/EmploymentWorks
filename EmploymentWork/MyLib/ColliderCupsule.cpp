@@ -1,7 +1,7 @@
-#include "ColliderCupsule.h"
+ï»¿#include "ColliderCupsule.h"
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 MyLib::ColliderCupsule::ColliderCupsule(bool isTrigger) :
 	ColliderBase(ColliderBase::Kind::Cupsule, isTrigger),
