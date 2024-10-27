@@ -96,6 +96,9 @@ void SceneGame::Init()
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("data");
+
+	m_stageModel = ModelManager::GetInstance().GetModelHandle("data/model/stage/Collision/Collision.mv1");
+	MV1SetScale(m_stageModel, VGet(0.1f, 0.1f, 0.1f));
 }
 
 /// <summary>
@@ -104,6 +107,8 @@ void SceneGame::Init()
 void SceneGame::End()
 {
 	//TODO:ここでリソースの開放をする
+
+	MV1DeleteModel(m_stageModel);
 
 	//ポーションの解放
 	for (auto& object : m_pObjects)
@@ -186,7 +191,9 @@ void SceneGame::Draw()
 	if (!IsInitialized())	return;
 
 	//ステージの描画
-	MapManager::GetInstance().Draw();
+	//MapManager::GetInstance().Draw();
+	MV1DrawModel(m_stageModel);
+
 
 	//プレイヤーの描画
 	m_pPlayer->Draw();
