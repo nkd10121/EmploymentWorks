@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\SoundManager.cpp" />
+    <ClCompile Include="Common\EffectManager.cpp" />
     <ClCompile Include="Object\Crystal.cpp" />
     <ClCompile Include="Object\Character\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Object\Character\Enemy\EnemyNormal.cpp" />
@@ -55,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\SoundManager.h" />
+    <ClInclude Include="Common\EffectManager.h" />
     <ClInclude Include="Object\Crystal.h" />
     <ClInclude Include="Object\Character\Enemy\EnemyBase.h" />
     <ClInclude Include="Object\Character\Enemy\EnemyNormal.h" />

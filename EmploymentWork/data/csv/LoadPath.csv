@@ -8,3 +8,4 @@ SCENE_GAME,model/stage/wall,.mv1
 SCENE_GAME,model/arrow,.mv1
 SCENE_GAME,model/stage/Collision/Collision,.mv1
 SCENE_GAME,data/sound/se/enemyHit,.mp3
+SCENE_GAME,data/effect/enemy_hit,.efk

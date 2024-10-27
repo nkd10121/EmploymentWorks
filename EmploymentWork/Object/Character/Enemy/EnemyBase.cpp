@@ -2,6 +2,7 @@
 
 #include "Shot.h"
 #include "SoundManager.h"
+#include "EffectManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -49,7 +50,7 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 			}
 
 			SoundManager::GetInstance().PlaySE("seTest");
-
+			EffectManager::GetInstance().CreateEffect("EnemyHit",rigidbody->GetPos());
 			//当たった弾の終了処理を呼ぶ
 			col->End();
 

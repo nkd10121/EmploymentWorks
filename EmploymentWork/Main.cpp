@@ -1,4 +1,5 @@
 ﻿#include "DxLib.h"
+#include "EffekseerForDXLib.h"
 #include "Util/Game.h"
 #include "Camera.h"
 #include "Input.h"
@@ -29,6 +30,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWriteZBuffer3D(true);
 	SetUseBackCulling(true);
 
+	Effekseer_Init(800);
+	Effekseer_InitDistortion();
+	SetChangeScreenModeGraphicsSystemResetFlag(false);
+	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
+
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -40,6 +46,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		LONGLONG  time = GetNowHiPerformanceCount();
 		// 画面のクリア
 		ClearDrawScreen();
+
+		Effekseer_Sync3DSetting();
 
 		//シーンの更新
 		SceneManager::GetInstance().Update();
@@ -64,6 +72,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ModelManager::GetInstance().Destroy();
 	LoadCSV::GetInstance().Destroy();
 
+	Effkseer_End();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
 	return 0;				// ソフトの終了 

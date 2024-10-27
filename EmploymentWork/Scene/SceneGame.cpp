@@ -7,6 +7,7 @@
 
 #include "ModelManager.h"
 #include "SoundManager.h"
+#include "EffectManager.h"
 #include "MapManager.h"
 #include "LoadCSV.h"
 
@@ -62,6 +63,13 @@ void SceneGame::StartLoad()
 		{
 			auto p = path.first + path.second;
 			SoundManager::GetInstance().Load("seTest", p, false);
+		}
+		else if (path.second == ".efk")
+		{
+			SetUseASyncLoadFlag(false);
+			auto p = path.first + path.second;
+			EffectManager::GetInstance().Load("EnemyHit", p.c_str(), 30);
+			SetUseASyncLoadFlag(true);
 		}
 	}
 
@@ -224,6 +232,9 @@ void SceneGame::Update()
 	//カメラの更新
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
 	m_pCamera->Update();
+
+	//エフェクトの更新
+	EffectManager::GetInstance().Update();
 }
 
 /// <summary>
@@ -241,6 +252,8 @@ void SceneGame::Draw()
 	MV1DrawModel(m_stageModel);
 
 	m_pCrystal->Draw();
+
+	EffectManager::GetInstance().Draw();
 
 	//プレイヤーの描画
 	m_pPlayer->Draw();
