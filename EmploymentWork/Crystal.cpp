@@ -32,6 +32,8 @@ Crystal::Crystal(int hp):
 
 Crystal::~Crystal()
 {
+	MV1DeleteModel(m_modelHandle);
+	MV1DeleteModel(m_crystalStandHandle);
 }
 
 void Crystal::Init(std::shared_ptr<MyLib::Physics> physics)

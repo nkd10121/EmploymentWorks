@@ -13,7 +13,7 @@ class SoundManager
 {
 private:
 	// シングルトンパターンなのでコンストラクタはprivateに置く
-	SoundManager() {};
+	SoundManager();
 
 public:
 	virtual ~SoundManager();
@@ -55,6 +55,12 @@ public:
 	/// <param name="path">サウンドパス</param>
 	/// <param name="isBGM">true = BGM,false = SE</param>
 	void Load(std::string name, std::string path, bool isBGM);
+
+	/// <summary>
+	/// すべてのリソースの読み込みが終了しているかどうかを取得
+	/// </summary>
+	/// <returns></returns>
+	const bool IsLoaded()const;
 
 	/// <summary>
 	/// 指定した名前のサウンドを流す

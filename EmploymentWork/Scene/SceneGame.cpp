@@ -6,6 +6,7 @@
 #include "HealPortion.h"
 
 #include "ModelManager.h"
+#include "SoundManager.h"
 #include "MapManager.h"
 #include "LoadCSV.h"
 
@@ -56,6 +57,12 @@ void SceneGame::StartLoad()
 			auto p = path.first + path.second;
 			ModelManager::GetInstance().LoadModel(p);
 		}
+		//音声データなら
+		else if (path.second == ".mp3")		
+		{
+			auto p = path.first + path.second;
+			SoundManager::GetInstance().Load("seTest", p, false);
+		}
 	}
 
 
@@ -73,6 +80,7 @@ bool SceneGame::IsLoaded() const
 	//TODO:ここでリソースがロード中かどうかを判断する
 
 	if (!ModelManager::GetInstance().IsLoaded())	return false;
+	if (!SoundManager::GetInstance().IsLoaded())	return false;
 
 	return true;
 }

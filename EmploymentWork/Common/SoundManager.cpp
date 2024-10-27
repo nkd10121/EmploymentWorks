@@ -44,6 +44,13 @@ public:
 	}
 };
 
+SoundManager::SoundManager():
+	m_BGMvolume(0.5f),
+	m_SEvolume(0.5f)
+{
+
+}
+
 SoundManager::~SoundManager()
 {
 	for (auto& bgm : m_BGM)
@@ -112,6 +119,21 @@ void SoundManager::Load(std::string name, std::string path, bool isBGM)
 			}
 		}
 	}
+}
+
+const bool SoundManager::IsLoaded() const
+{
+	for (auto& bgm : m_BGM)
+	{
+		if (CheckHandleASyncLoad(bgm->GetHandle()))		return false;
+	}
+
+	for (auto& se : m_SE)
+	{
+		if (CheckHandleASyncLoad(se->GetHandle()))		return false;
+	}
+
+	return true;
 }
 
 void SoundManager::PlayBGM(std::string name, bool isFromStart)

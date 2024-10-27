@@ -1,6 +1,7 @@
 ﻿#include "EnemyBase.h"
 
 #include "Shot.h"
+#include "SoundManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -46,6 +47,8 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 			{
 				m_status.hp -= damage;
 			}
+
+			SoundManager::GetInstance().PlaySE("seTest");
 
 			//当たった弾の終了処理を呼ぶ
 			col->End();

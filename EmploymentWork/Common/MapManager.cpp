@@ -63,9 +63,6 @@ void MapManager::LoadModel()
 	ModelManager::GetInstance().LoadModel((kModelPathFront + "floor" + kModelPathBack));
 	ModelManager::GetInstance().LoadModel((kModelPathFront + "wall" + kModelPathBack));
 	ModelManager::GetInstance().LoadModel((kModelPathFront + "doorFrame" + kModelPathBack));
-
-	ModelManager::GetInstance().LoadModel((kModelPathFront + "crystal" + kModelPathBack));
-	ModelManager::GetInstance().LoadModel((kModelPathFront + "crystalStand" + kModelPathBack));
 }
 
 /// <summary>
