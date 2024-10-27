@@ -64,6 +64,9 @@
     <Filter Include="ソース ファイル\Object\Character\Enemy">
       <UniqueIdentifier>{b7dbd386-100c-4ecc-88bf-c8a1b721551c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Object\Character\Enemy">
+      <UniqueIdentifier>{b502dab4-079e-461a-92f1-3c72ce0d6019}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -144,26 +147,26 @@
     <ClCompile Include="Common\LoadCSV.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\SoundManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBase.cpp">
+    <ClCompile Include="Object\Character\Enemy\EnemyBase.cpp">
       <Filter>ソース ファイル\Object\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateJump.cpp">
+    <ClCompile Include="Object\Character\Player\State\PlayerStateJump.cpp">
       <Filter>ソース ファイル\Object\Character\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="Shot.cpp">
+    <ClCompile Include="Object\Shot.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Geometry\MathHelp.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyNormal.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Crystal.cpp">
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Crystal.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Character\Enemy\EnemyNormal.cpp">
+      <Filter>ソース ファイル\Object\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\SoundManager.cpp">
+      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,26 +254,26 @@
     <ClInclude Include="Common\LoadCSV.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Crystal.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Character\Enemy\EnemyNormal.h">
+      <Filter>ヘッダー ファイル\Object\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Character\Enemy\EnemyBase.h">
+      <Filter>ヘッダー ファイル\Object\Character\Enemy</Filter>
+    </ClInclude>
     <ClInclude Include="Geometry\MathHelp.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\SoundManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Shot.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Object\Character\Player\State\PlayerStateJump.h">
+      <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStateJump.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyNormal.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Crystal.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Object\Shot.h">
+      <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
