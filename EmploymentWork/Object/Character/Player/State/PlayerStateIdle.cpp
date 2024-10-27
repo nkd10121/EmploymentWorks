@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Player.h"
 #include "PlayerStateWalk.h"
+#include "PlayerStateJump.h"
 
 /// <summary>
 /// コンストラクタ
@@ -24,9 +25,9 @@ void PlayerStateIdle::Init()
 /// </summary>
 void PlayerStateIdle::Update()
 {
-	CheckPlayer();
+	//持ち主がプレイヤーかどうかをチェックする
+	if (!CheckPlayer())	return;
 
-	auto own = dynamic_cast<Player*>(m_pOwn.get());
 
 	//左スティックが入力されていたらStateをWalkにする
 	if (Input::GetInstance().GetInputStick(false).first != 0.0f ||
@@ -37,6 +38,16 @@ void PlayerStateIdle::Update()
 		state->Init();
 		return;
 	}
+
+	if (Input::GetInstance().IsTriggered("A"))
+	{
+		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn);
+		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
+		state->Init();
+		return;
+	}
+
+	auto own = dynamic_cast<Player*>(m_pOwn.get());
 
 	//プレイヤーの速度を0にする(重力の影響を受けながら)
 	auto prevVel = own->GetRigidbody()->GetVelocity();

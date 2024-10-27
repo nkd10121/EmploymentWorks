@@ -14,10 +14,10 @@ namespace
 	//ポーションが上下する速度
 	constexpr float kMoveSpeed = 0.04f;
 	//ポーションが上下する幅
-	constexpr float kMoveRange = 0.6f;
+	constexpr float kMoveRange = 0.01f;
 	//座標を設定するときのY座標のオフセット
 	constexpr float kOffsetPosY = 2.0f;
-
+	//ポーションのパス
 	const std::string kPortionPath = "data/model/object/portion/bottle_red.mv1";
 
 }

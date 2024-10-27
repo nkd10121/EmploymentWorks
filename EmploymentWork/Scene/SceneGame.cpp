@@ -17,7 +17,7 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-SceneGame::SceneGame():
+SceneGame::SceneGame() :
 	m_pPlayer(nullptr),
 	m_pCamera(nullptr),
 	m_pPhysics(nullptr),
@@ -93,6 +93,11 @@ void SceneGame::Init()
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("data");
 
+	//DEBUG:ポーションを生成
+	m_pObjects.emplace_back(std::make_shared<HealPortion>());
+	m_pObjects.back()->Init(m_pPhysics);
+	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
+
 	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle("data/model/stage/Collision/Collision.mv1");
 	MV1SetScale(m_stageModel, VGet(0.1f, 0.1f, 0.1f));
@@ -138,13 +143,13 @@ void SceneGame::Update()
 		return;
 	}
 
-	//DEBUG:Aボタンを押した時にポーションを生成するように
-	if (Input::GetInstance().IsTriggered("A"))
-	{
-		m_pObjects.emplace_back(std::make_shared<HealPortion>());
-		m_pObjects.back()->Init(m_pPhysics);
-		m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
-	}
+	////DEBUG:Aボタンを押した時にポーションを生成するように
+	//if (Input::GetInstance().IsTriggered("A"))
+	//{
+	//	m_pObjects.emplace_back(std::make_shared<HealPortion>());
+	//	m_pObjects.back()->Init(m_pPhysics);
+	//	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
+	//}
 
 	//プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());

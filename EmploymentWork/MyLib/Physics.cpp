@@ -22,9 +22,9 @@ namespace
 	constexpr float kWallPolyHeight = 5.0f;
 
 	//重力
-	constexpr float kGravity = -0.018f;
+	constexpr float kGravity = -0.032f;
 	//最大重力加速度
-	constexpr float kMaxGravityAccel = -2.00f;
+	constexpr float kMaxGravityAccel = -4.00f;
 
 	//補正前情報色
 	const int kBeforeFixInfoColor = 0x0000ff;
@@ -663,6 +663,10 @@ void MyLib::Physics::FixPosition()
 #endif
 		// Posを更新するので、velocityもそこに移動するvelocityに修正
 		Vec3 toFixedPos = item->rigidbody->GetNextPos() - item->rigidbody->GetPos();
+		if (toFixedPos.y > 0.8001f)
+		{
+			toFixedPos.y = 0.0f;
+		}
 		item->rigidbody->SetVelocity(toFixedPos);
 
 		// 位置確定
@@ -949,6 +953,8 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 	// 床ポリゴンに当たったかどうかのフラグを倒しておく
 	m_isHitFlag = false;
 
+	std::list<float> posY;
+
 	// 床ポリゴンの数だけ繰り返し
 	for (int i = 0; i < m_floorNum; i++)
 	{
@@ -956,31 +962,45 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		m_pPoly = m_pFloorPoly[i];
 
 		auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
-		auto capsulePos1 = VGet(capsuleCenterPos.x, capsuleCenterPos.y + size, capsuleCenterPos.z);
-		auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
+		auto capsulePos1 = VGet(capsuleCenterPos.x, capsuleCenterPos.y + size + radius, capsuleCenterPos.z);
+		auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size - radius, capsuleCenterPos.z);
 
 		// 頭から足元まででポリゴンと当たっているかを判定
-		m_lineRes = HitCheck_Line_Triangle(VAdd(capsulePos1, VGet(0.0f, radius, 0.0f)),
-			VAdd(capsulePos1, VGet(0.0f, -radius, 0.0f)), m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]);
+		m_lineRes = HitCheck_Line_Triangle(capsulePos1, capsulePos2,
+			m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]);
 
 		// 接触していなかったら何もしない
 		if (!m_lineRes.HitFlag) continue;
 
-		// 既に当たったポリゴンがあり、且つ今まで検出した床ポリゴンより低い場合は何もしない
-		if (m_isHitFlag && PolyMaxPosY > m_lineRes.Position.y) continue;
+		posY.emplace_back(m_pPoly->Position[0].y);
+		posY.emplace_back(m_pPoly->Position[1].y);
+		posY.emplace_back(m_pPoly->Position[2].y);
+
 
 		// ポリゴンに当たったフラグを立てる
 		m_isHitFlag = true;
-
-		// 接触したＹ座標を保存する
-		PolyMaxPosY = m_lineRes.Position.y;
 	}
 
-	// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
-	auto set = col->rigidbody->GetNextPos();
-	set.y = PolyMaxPosY + size + radius;
-	col->rigidbody->SetNextPos(set);
 
+
+	if (m_isHitFlag)
+	{
+		auto total = 0.0f;
+		int num = 0;
+
+		for (auto& y : posY)
+		{
+			total += y;
+			num++;
+		}
+
+		PolyMaxPosY = total / num;
+
+		// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
+		auto set = col->rigidbody->GetNextPos();
+		set.y = PolyMaxPosY + size + radius;
+		col->rigidbody->SetNextPos(set);
+	}
 
 
 	////ジャンプ中かつ上昇中の場合

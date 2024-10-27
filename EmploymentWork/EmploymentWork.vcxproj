@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\SoundManager.cpp" />
+    <ClCompile Include="EnemyBase.cpp" />
     <ClCompile Include="Geometry\MathHelp.cpp" />
     <ClCompile Include="Object\Character\CharacterBase.cpp" />
     <ClCompile Include="MyLib\Collidable.cpp" />
@@ -37,6 +38,7 @@
     <ClCompile Include="Object\Character\Player\State\PlayerStateIdle.cpp" />
     <ClCompile Include="Object\Character\Player\State\PlayerStateWalk.cpp" />
     <ClCompile Include="MyLib\Rigidbody.cpp" />
+    <ClCompile Include="PlayerStateJump.cpp" />
     <ClCompile Include="Scene\ScenePause.cpp" />
     <ClCompile Include="Object\Character\Player\State\StateBase.cpp" />
     <ClCompile Include="Shot.cpp" />
@@ -51,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\SoundManager.h" />
+    <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Geometry\MathHelp.h" />
     <ClInclude Include="Object\Character\CharacterBase.h" />
     <ClInclude Include="MyLib\Collidable.h" />
@@ -70,6 +73,7 @@
     <ClInclude Include="Object\Character\Player\State\PlayerStateIdle.h" />
     <ClInclude Include="Object\Character\Player\State\PlayerStateWalk.h" />
     <ClInclude Include="MyLib\Rigidbody.h" />
+    <ClInclude Include="PlayerStateJump.h" />
     <ClInclude Include="Scene\ScenePause.h" />
     <ClInclude Include="Object\Character\Player\State\StateBase.h" />
     <ClInclude Include="Shot.h" />

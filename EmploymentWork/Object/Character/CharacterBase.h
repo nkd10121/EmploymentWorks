@@ -40,20 +40,25 @@ public:
 
 
 	/// <summary>
-	/// 自身の現在のHPを返す
+	/// 自身の現在のHPを取得
 	/// </summary>
 	/// <returns>現在のHP</returns>
 	const int GetHp()const { return m_status.hp; }
 	///// <summary>
-	///// 自身の最大HPを返す
+	///// 自身の最大HPを取得
 	///// </summary>
 	///// <returns>最大HP</returns>
 	//const int GetMaxHp()const { return m_maxHp; }
 	/// <summary>
-	/// 物理データを返す
+	/// 物理データを取得
 	/// </summary>
 	/// <returns>物理データ</returns>
 	std::shared_ptr<MyLib::Rigidbody> GetRigidbody(){ return rigidbody; }
+	/// <summary>
+	/// アニメーションが終了したかどうかを取得
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsAnimationEnd()const { return m_isAnimationFinish; }
 
 protected:
 	/// <summary>

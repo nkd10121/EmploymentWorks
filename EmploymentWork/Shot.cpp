@@ -73,7 +73,7 @@ void Shot::Update()
 	m_frameCount++;
 
 	auto dirNorm = m_moveDir.Normalize();
-	rigidbody->SetVelocity(dirNorm * 1.0f);
+	rigidbody->SetVelocity(dirNorm * 4.0f);
 
 	auto hitDim = MV1CollCheck_Sphere(m_mapHandle, -1, rigidbody->GetPosVECTOR(), kCollisionRadius);
 

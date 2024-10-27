@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Player.h"
 #include "PlayerStateIdle.h"
+#include "PlayerStateJump.h"
 #include "CharacterBase.h"
 
 namespace
@@ -34,7 +35,8 @@ void PlayerStateWalk::Init()
 /// </summary>
 void PlayerStateWalk::Update()
 {
-	CheckPlayer();
+	//持ち主がプレイヤーかどうかをチェックする
+	if (!CheckPlayer())	return;
 
 	auto own = dynamic_cast<Player*>(m_pOwn.get());
 
@@ -44,6 +46,14 @@ void PlayerStateWalk::Update()
 	{
 		m_nextState = std::make_shared<PlayerStateIdle>(m_pOwn);
 		auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_nextState);
+		state->Init();
+		return;
+	}
+
+	if (Input::GetInstance().IsTriggered("A"))
+	{
+		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn);
+		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
 		state->Init();
 		return;
 	}

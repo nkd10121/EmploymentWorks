@@ -72,7 +72,7 @@ protected:
 	/// <summary>
 	/// 持ち主がプレイヤーかどうかを判断する
 	/// </summary>
-	void CheckPlayer();
+	bool CheckPlayer();
 
 protected:
 	std::shared_ptr<CharacterBase> m_pOwn;	//所有者のポインタ

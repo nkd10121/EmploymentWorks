@@ -55,10 +55,15 @@ void StateBase::DebugDrawState(int x, int y)
 /// <summary>
 /// 持ち主がプレイヤーかどうかを判断する
 /// </summary>
-void StateBase::CheckPlayer()
+bool StateBase::CheckPlayer()
 {
 	if (m_pOwn->GetTag() != GameObjectTag::Player)
 	{
+#ifdef _DEBUG
 		assert(0 && "持ち主がプレイヤーではありません");
+#endif
+		return false;
 	}
+
+	return true;
 }
