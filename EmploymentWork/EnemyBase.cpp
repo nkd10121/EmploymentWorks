@@ -21,11 +21,17 @@ EnemyBase::~EnemyBase()
 {
 }
 
+/// <summary>
+/// ほかのオブジェクトと衝突したときに呼ばれる
+/// </summary>
 void EnemyBase::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 {
 
 }
 
+/// <summary>
+/// ほかのオブジェクトと衝突したときに呼ばれる
+/// </summary>
 void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
 	//矢、トラップ

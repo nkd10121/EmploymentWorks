@@ -10,6 +10,9 @@ namespace
 	constexpr int kCupsuleDivNum = 10;
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 EnemyNormal::EnemyNormal():
 	EnemyBase()
 {
@@ -21,10 +24,16 @@ EnemyNormal::EnemyNormal():
 	sphereCol->m_size = kCupsuleSize;
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 EnemyNormal::~EnemyNormal()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 {
 	m_pPhysics = physics;
@@ -44,11 +53,17 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 	m_isExist = true;
 }
 
+/// <summary>
+/// 終了
+/// </summary>
 void EnemyNormal::Finalize()
 {
 	Collidable::Finalize(m_pPhysics);
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void EnemyNormal::Update()
 {
 	//存在していない状態なら何もさせない
@@ -60,6 +75,9 @@ void EnemyNormal::Update()
 	}
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void EnemyNormal::Draw()
 {
 	//存在していない状態なら何もさせない
