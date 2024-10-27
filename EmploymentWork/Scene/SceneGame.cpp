@@ -89,14 +89,11 @@ void SceneGame::Init()
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init();
 
-	//m_pPortions.emplace_back(std::make_shared<HealPortion>());
-	//m_pPortions.back()->Init(m_pPhysics);
-	//m_pPortions.back()->SetPosition(Vec3(0.0f,0.0f,-10.0f));
-
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("data");
 
+	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle("data/model/stage/Collision/Collision.mv1");
 	MV1SetScale(m_stageModel, VGet(0.1f, 0.1f, 0.1f));
 }
@@ -153,10 +150,6 @@ void SceneGame::Update()
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
 	m_pPlayer->Update(this);
 
-	//カメラの更新
-	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
-	m_pCamera->Update();
-
 	//ポーションの更新
 	for (auto& object : m_pObjects)
 	{
@@ -178,6 +171,10 @@ void SceneGame::Update()
 
 	//物理更新
 	m_pPhysics->Update();
+
+	//カメラの更新
+	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
+	m_pCamera->Update();
 }
 
 /// <summary>

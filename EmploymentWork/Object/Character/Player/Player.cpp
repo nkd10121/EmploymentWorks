@@ -62,7 +62,7 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	state->Init();
 
 	//プレイヤーの初期位置設定
-	rigidbody->Init(false);
+	rigidbody->Init(true);
 	rigidbody->SetPos(m_pos);
 	rigidbody->SetNextPos(rigidbody->GetPos());
 
