@@ -26,7 +26,7 @@ namespace
 /// コンストラクタ
 /// </summary>
 Player::Player():
-	CharacterBase(Collidable::Priority::Low, GameObjectTag::Player),
+	CharacterBase(Collidable::Priority::High, GameObjectTag::Player),
 	m_pos(Vec3(0.0f, kCupsuleRadius+ kCupsuleSize,0.0f)),
 	temp_moveVec(),
 	m_cameraDirection(),

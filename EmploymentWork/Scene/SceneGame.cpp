@@ -2,6 +2,7 @@
 #include "SceneTitle.h"
 #include "ScenePause.h"
 #include "Player.h"
+#include "Crystal.h"
 #include "HealPortion.h"
 
 #include "ModelManager.h"
@@ -92,6 +93,11 @@ void SceneGame::Init()
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init();
 
+	//クリスタルの生成
+	m_pCrystal = std::make_shared<Crystal>(2);
+	m_pCrystal->Init(m_pPhysics);
+	m_pCrystal->Set(Vec3(0.0f,0.0f,10.0f));
+
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("data");
@@ -150,13 +156,18 @@ void SceneGame::Update()
 		return;
 	}
 
-	////DEBUG:Aボタンを押した時にポーションを生成するように
-	//if (Input::GetInstance().IsTriggered("A"))
-	//{
-	//	m_pObjects.emplace_back(std::make_shared<HealPortion>());
-	//	m_pObjects.back()->Init(m_pPhysics);
-	//	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
-	//}
+	//DEBUG:Aボタンを押した時にポーションを生成するように
+	if (Input::GetInstance().IsTriggered("A"))
+	{
+		m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
+		m_pEnemies.back()->Init(m_pPhysics);
+	}
+
+	m_pCrystal->Update();
+	if (m_pCrystal->GetIsBreak())
+	{
+		DrawFormatString(640, 0, 0xffff00, "ゲームオーバー");
+	}
 
 	//プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
@@ -221,6 +232,7 @@ void SceneGame::Draw()
 	//MapManager::GetInstance().Draw();
 	MV1DrawModel(m_stageModel);
 
+	m_pCrystal->Draw();
 
 	//プレイヤーの描画
 	m_pPlayer->Draw();

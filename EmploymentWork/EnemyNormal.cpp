@@ -40,6 +40,10 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 
 	Collidable::Init(physics);
 
+	m_drawPos.x = GetRand(20) - 10;
+	m_drawPos.y = 8.0f;
+	m_drawPos.z = GetRand(20) - 10;
+
 	//初期位置設定
 	rigidbody->Init(true);
 	rigidbody->SetPos(m_drawPos);
@@ -73,6 +77,10 @@ void EnemyNormal::Update()
 	{
 		m_isExist = false;
 	}
+
+	//速度を0にする(重力の影響を受けながら)
+	auto prevVel = rigidbody->GetVelocity();
+	rigidbody->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 }
 
 /// <summary>

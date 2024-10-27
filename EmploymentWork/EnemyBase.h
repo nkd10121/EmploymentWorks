@@ -32,6 +32,11 @@ public:
 	virtual void Draw() {};
 
 	/// <summary>
+	/// 終了(他から呼ぶ)
+	/// </summary>
+	void End() { m_isExist = false; }
+
+	/// <summary>
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
