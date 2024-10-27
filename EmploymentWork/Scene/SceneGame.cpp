@@ -8,6 +8,9 @@
 #include "MapManager.h"
 #include "LoadCSV.h"
 
+#include "EnemyBase.h"
+#include "EnemyNormal.h"
+
 namespace
 {
 	//ポーションモデルのパス
@@ -98,6 +101,10 @@ void SceneGame::Init()
 	m_pObjects.back()->Init(m_pPhysics);
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
+	//DEBUG:敵を生成
+	m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
+	m_pEnemies.back()->Init(m_pPhysics);
+
 	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle("data/model/stage/Collision/Collision.mv1");
 	MV1SetScale(m_stageModel, VGet(0.1f, 0.1f, 0.1f));
@@ -155,6 +162,24 @@ void SceneGame::Update()
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
 	m_pPlayer->Update(this);
 
+	//敵の更新
+	for (auto& enemy : m_pEnemies)
+	{
+		enemy->Update();
+		if (!enemy->GetIsExist())
+		{
+			enemy->Finalize();
+		}
+	}
+	//isExistがfalseのオブジェクトを削除
+	{
+		auto it = std::remove_if(m_pEnemies.begin(), m_pEnemies.end(), [](auto& v)
+			{
+				return v->GetIsExist() == false;
+			});
+		m_pEnemies.erase(it, m_pEnemies.end());
+	}
+
 	//ポーションの更新
 	for (auto& object : m_pObjects)
 	{
@@ -199,6 +224,11 @@ void SceneGame::Draw()
 
 	//プレイヤーの描画
 	m_pPlayer->Draw();
+
+	for (auto& enemy : m_pEnemies)
+	{
+		enemy->Draw();
+	}
 
 	//ポーションの描画
 	for (auto& object : m_pObjects)

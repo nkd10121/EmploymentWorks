@@ -8,6 +8,7 @@
 //プロトタイプ宣言
 class Player;	//プレイヤー
 class ObjectBase;	//回復ポーション
+class EnemyBase;	//敵
 
 /// <summary>
 /// ゲームシーン
@@ -66,6 +67,7 @@ private:
 	std::shared_ptr<Camera> m_pCamera;			//カメラポインタ
 	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
 	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//オブジェクトポインタの配列
+	std::list<std::shared_ptr<EnemyBase>> m_pEnemies;	//敵ポインタの配列
 
 	int m_stageModel;	//モデルハンドル(仮)
 

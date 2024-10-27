@@ -188,7 +188,7 @@ void MyLib::Physics::Update()
 
 	for (auto& item : m_collidables)
 	{
-		if (item->GetTag() == GameObjectTag::Player)
+		if (item->GetTag() == GameObjectTag::Player || item->GetTag() == GameObjectTag::Enemy)
 		{
 			float rad = 0;
 			float size = 0;
@@ -199,14 +199,16 @@ void MyLib::Physics::Update()
 				rad = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
 				size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
 
-				if (item->GetTag() == GameObjectTag::Player)
-				{
-					modelHandle = m_stageCollisionHandle;
-				}
-				else
-				{
-					modelHandle = m_enemyCollisionHandle;
-				}
+				modelHandle = m_stageCollisionHandle;
+
+				//if (item->GetTag() == GameObjectTag::Player)
+				//{
+				//	modelHandle = m_stageCollisionHandle;
+				//}
+				//else
+				//{
+				//	modelHandle = m_enemyCollisionHandle;
+				//}
 			}
 
 			//カプセルの中心座標

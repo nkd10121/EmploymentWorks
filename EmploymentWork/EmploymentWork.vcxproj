@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Common\SoundManager.cpp" />
     <ClCompile Include="EnemyBase.cpp" />
+    <ClCompile Include="EnemyNormal.cpp" />
     <ClCompile Include="Geometry\MathHelp.cpp" />
     <ClCompile Include="Object\Character\CharacterBase.cpp" />
     <ClCompile Include="MyLib\Collidable.cpp" />
@@ -54,6 +55,7 @@
   <ItemGroup>
     <ClInclude Include="Common\SoundManager.h" />
     <ClInclude Include="EnemyBase.h" />
+    <ClInclude Include="EnemyNormal.h" />
     <ClInclude Include="Geometry\MathHelp.h" />
     <ClInclude Include="Object\Character\CharacterBase.h" />
     <ClInclude Include="MyLib\Collidable.h" />
