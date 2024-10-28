@@ -72,5 +72,7 @@ private:
 	float m_angle;				//プレイヤーが向いている方向
 
 	std::shared_ptr<StateBase> m_pState;	//Stateパターン
+
+	int m_attackButtonPushCount;
 };
 

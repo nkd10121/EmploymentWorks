@@ -25,13 +25,17 @@ namespace
 		DOWN = 0x00000001,	//下ボタン
 		LEFT = 0x00000002,	//左ボタン
 	};
+
+	//トリガーボタンのデッドゾーン
+	constexpr int kTriggerDeadZone = 60;
 }
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 Input::Input():
-	m_padState()
+	m_padState(),
+	XInputState(new XINPUT_STATE)
 {
 	//ここでコマンドテーブルにコマンドを追加する
 
@@ -72,6 +76,8 @@ void Input::Update()
 
 	//ボタンの入力を取得
 	GetJoypadDirectInputState(DX_INPUT_PAD1, &m_padState);
+	//ZR,ZLの入力を取得
+	GetJoypadXInputState(DX_INPUT_PAD1, XInputState);
 }
 
 /// <summary>
@@ -116,5 +122,36 @@ std::pair<float, float> Input::GetInputStick(bool isRight) const
 	{
 		//左スティックの入力情報を返す
 		return std::make_pair(static_cast<float>(m_padState.X), static_cast<float>(m_padState.Y));
+	}
+}
+
+/// <summary>
+/// ZR,ZLボタンの入力情報を取得
+/// </summary>
+bool Input::GetIsPushedTriggerButton(bool isRight)const
+{
+	if (isRight)
+	{
+		//ZRの入力情報を返す
+		if (XInputState->RightTrigger > kTriggerDeadZone)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		//ZRの入力情報を返す
+		if (XInputState->LeftTrigger > kTriggerDeadZone)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }

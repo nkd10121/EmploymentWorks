@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 #include<unordered_map>
 #include<map>
@@ -6,41 +6,41 @@
 
 enum class InputType
 {
-	keyboard,	//ƒL[ƒ{[ƒh
-	pad			//ƒpƒbƒh
+	keyboard,	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
+	pad			//ãƒ‘ãƒƒãƒ‰
 };
 
-//ƒGƒCƒŠƒAƒXéŒ¾
+//ã‚¨ã‚¤ãƒªã‚¢ã‚¹å®£è¨€
 using InputTable_t = std::unordered_map<std::string, int>;
 
 /// <summary>
-/// “ü—Íî•ñŠÇ—ƒNƒ‰ƒX
+/// å…¥åŠ›æƒ…å ±ç®¡ç†ã‚¯ãƒ©ã‚¹
 /// </summary>
 class Input
 {
 private:
 	/// <summary>
-	/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	Input();
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	~Input() {};
 
-	static Input* m_instance;	//ƒCƒ“ƒXƒ^ƒ“ƒX
+	static Input* m_instance;	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‹Ö~‚·‚é
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç¦æ­¢ã™ã‚‹
 	Input(const Input&) = delete;
 	Input& operator=(const Input&) = delete;
 	Input(Input&&) = delete;
 	Input& operator= (const Input&&) = delete;
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒCƒ“ƒXƒ^ƒ“ƒX</returns>
+	/// <returns>ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</returns>
 	static Input& GetInstance()
 	{
 		if (!m_instance)
@@ -51,7 +51,7 @@ public:
 	}
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğíœ
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å‰Šé™¤
 	/// </summary>
 	static void Destroy()
 	{
@@ -61,40 +61,48 @@ public:
 
 public:
 	/// <summary>
-	/// “ü—Íî•ñ‚ğXV‚·‚é
+	/// å…¥åŠ›æƒ…å ±ã‚’æ›´æ–°ã™ã‚‹
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// w’è‚ÌƒRƒ}ƒ“ƒh‚ª‰Ÿ‚³‚ê‚½uŠÔ‚È‚Ì‚©
+	/// æŒ‡å®šã®ã‚³ãƒãƒ³ãƒ‰ãŒæŠ¼ã•ã‚ŒãŸç¬é–“ãªã®ã‹
 	/// </summary>
-	/// <param name="command">ƒRƒ}ƒ“ƒh•¶š—ñ</param>
-	/// <returns> true : ‰Ÿ‚³‚ê‚½uŠÔ, false : ‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢‚©A‰Ÿ‚µ‚Á‚Ï</returns>
+	/// <param name="command">ã‚³ãƒãƒ³ãƒ‰æ–‡å­—åˆ—</param>
+	/// <returns> true : æŠ¼ã•ã‚ŒãŸç¬é–“, false : æŠ¼ã•ã‚Œã¦ã„ãªã„ã‹ã€æŠ¼ã—ã£ã±</returns>
 	bool IsTriggered(const char* command)const;
 
 	/// <summary>
-	/// w’è‚ÌƒRƒ}ƒ“ƒh‚ª‰Ÿ‚µ‘±‚¯‚ç‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
+	/// æŒ‡å®šã®ã‚³ãƒãƒ³ãƒ‰ãŒæŠ¼ã—ç¶šã‘ã‚‰ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹
 	/// </summary>
-	/// <param name="command">ƒRƒ}ƒ“ƒh•¶š—ñ</param>
-	/// <returns>true : ‰Ÿ‚µ‘±‚¯‚ç‚ê‚Ä‚¢‚é, false : ‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢‚©A‰Ÿ‚³‚ê‚½uŠÔ</returns>
+	/// <param name="command">ã‚³ãƒãƒ³ãƒ‰æ–‡å­—åˆ—</param>
+	/// <returns>true : æŠ¼ã—ç¶šã‘ã‚‰ã‚Œã¦ã„ã‚‹, false : æŠ¼ã•ã‚Œã¦ã„ãªã„ã‹ã€æŠ¼ã•ã‚ŒãŸç¬é–“</returns>
 	bool IsPushed(const char* command)const;
 
 	/// <summary>
-	/// ƒXƒeƒBƒbƒN‚Ì“ü—Íî•ñ‚ğæ“¾
+	/// ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›æƒ…å ±ã‚’å–å¾—
 	/// </summary>
-	/// <param name="isRight">‰EƒXƒeƒBƒbƒN‚©‚Ç‚¤‚©@false : ¶ƒXƒeƒBƒbƒN, true : ‰EƒXƒeƒBƒbƒN</param>
+	/// <param name="isRight">å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‹ã©ã†ã‹ã€€false : å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯, true : å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯</param>
 	/// <returns></returns>
 	std::pair<float, float> GetInputStick(bool isRight)const;
 
+	/// <summary>
+	/// ZR,ZLãƒœã‚¿ãƒ³ã®å…¥åŠ›æƒ…å ±ã‚’å–å¾—
+	/// </summary>
+	/// <param name="isRight">true:ZR,false:ZL</param>
+	/// <returns>true:æŠ¼ã•ã‚Œã¦ã„ã‚‹,false:æŠ¼ã•ã‚Œã¦ã„ãªã„</returns>
+	bool GetIsPushedTriggerButton(bool isRight)const;
+
 private:
-	InputTable_t m_commandTable;	//ƒRƒ}ƒ“ƒh”z—ñ
+	InputTable_t m_commandTable;	//ã‚³ãƒãƒ³ãƒ‰é…åˆ—
 
-	//ƒRƒ}ƒ“ƒh‚Ì“ü—Í‚ğŠo‚¦‚Ä‚¨‚­‚½‚ß‚Ì”z—ñ
-	std::map < std::string, bool> m_inputData;		//Œ»İ‚Ì“ü—Í
-	std::map < std::string, bool> m_lastInputData;	//’¼‘O‚Ì“ü—Í
+	//ã‚³ãƒãƒ³ãƒ‰ã®å…¥åŠ›ã‚’è¦šãˆã¦ãŠããŸã‚ã®é…åˆ—
+	std::map < std::string, bool> m_inputData;		//ç¾åœ¨ã®å…¥åŠ›
+	std::map < std::string, bool> m_lastInputData;	//ç›´å‰ã®å…¥åŠ›
 
-	//ƒRƒ“ƒgƒ[ƒ‰[‚Ì“ü—Íî•ñ
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®å…¥åŠ›æƒ…å ±
 	DINPUT_JOYSTATE m_padState;
+	XINPUT_STATE* XInputState;
 
 };
 

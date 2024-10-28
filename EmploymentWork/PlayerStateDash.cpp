@@ -1,9 +1,9 @@
-﻿#include "PlayerStateWalk.h"
+﻿#include "PlayerStateDash.h"
 #include "Input.h"
 #include "Player.h"
 #include "PlayerStateIdle.h"
 #include "PlayerStateJump.h"
-#include "PlayerStateDash.h"
+#include "PlayerStateWalk.h"
 #include "CharacterBase.h"
 
 namespace
@@ -15,26 +15,17 @@ namespace
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
+PlayerStateDash::PlayerStateDash(std::shared_ptr<CharacterBase> own) :
 	StateBase(own)
 {
-	m_nowState = StateKind::Walk;
+	m_nowState = StateKind::Dash;
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void PlayerStateWalk::Init()
+void PlayerStateDash::Init()
 {
 }
 
-/// <summary>
-/// 更新
-/// </summary>
-void PlayerStateWalk::Update()
+void PlayerStateDash::Update()
 {
 	//持ち主がプレイヤーかどうかをチェックする
 	if (!CheckPlayer())	return;
@@ -61,8 +52,8 @@ void PlayerStateWalk::Update()
 
 	if (Input::GetInstance().IsTriggered("B"))
 	{
-		m_nextState = std::make_shared<PlayerStateDash>(m_pOwn);
-		auto state = std::dynamic_pointer_cast<PlayerStateDash>(m_nextState);
+		m_nextState = std::make_shared<PlayerStateWalk>(m_pOwn);
+		auto state = std::dynamic_pointer_cast<PlayerStateWalk>(m_nextState);
 		state->Init();
 		return;
 	}
@@ -70,7 +61,7 @@ void PlayerStateWalk::Update()
 	//コントローラーの左スティックの入力を取得
 	auto input = Input::GetInstance().GetInputStick(false);
 	//移動方向を設定する
-	auto temp_moveVec = Vec3(input.first,0.0f,-input.second);
+	auto temp_moveVec = Vec3(input.first, 0.0f, -input.second);
 	//移動ベクトルの長さを取得する
 	float len = temp_moveVec.Length();
 
@@ -84,7 +75,7 @@ void PlayerStateWalk::Update()
 
 	//速度が決定できるので移動ベクトルに反映する
 	temp_moveVec = temp_moveVec.Normalize();
-	float speed = /*m_status.speed*/1.0f * rate;
+	float speed = /*m_status.speed*/2.0f * rate;
 
 	temp_moveVec = temp_moveVec * speed;
 
@@ -104,13 +95,8 @@ void PlayerStateWalk::Update()
 	//移動処理
 	//MV1SetPosition(m_modelHandle, m_collisionPos.ToVECTOR());
 
-	
+
 	Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
 	Vec3 newVelocity = Vec3(temp_moveVec.x, prevVelocity.y, temp_moveVec.z);
 	own->GetRigidbody()->SetVelocity(newVelocity);
 }
-
-//int PlayerStateWalk::OnDamage(std::shared_ptr<MyLib::Collidable> collider)
-//{
-//	return 0;
-//}

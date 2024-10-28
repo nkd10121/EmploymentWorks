@@ -32,7 +32,8 @@ Player::Player():
 	m_cameraDirection(),
 	m_rot(),
 	m_cameraAngle(0.0f),
-	m_angle(0.0f)
+	m_angle(0.0f),
+	m_attackButtonPushCount(0)
 {
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
@@ -88,13 +89,22 @@ void Player::Update(SceneGame* pScene)
 	//ステートの更新
 	m_pState->Update();
 
-	if (Input::GetInstance().IsTriggered("B"))
+	if (Input::GetInstance().GetIsPushedTriggerButton(true))
 	{
-		std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
-		shot->Init(m_pPhysics);
-		shot->Set(m_pos, m_cameraDirection, m_status.atk);
+		if (m_attackButtonPushCount % 20 == 0)
+		{
+			std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
+			shot->Init(m_pPhysics);
+			shot->Set(m_pos, m_cameraDirection, m_status.atk);
 
-		pScene->AddObject(shot);
+			pScene->AddObject(shot);
+		}
+
+		m_attackButtonPushCount++;
+	}
+	else
+	{
+		m_attackButtonPushCount = 0;
 	}
 
 	//if (input->GetIsPushedTriggerButton(true) && m_nowSlotIdx == 0 && m_status.hp > 0)
