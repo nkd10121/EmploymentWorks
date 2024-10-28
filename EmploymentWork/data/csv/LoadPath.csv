@@ -7,6 +7,6 @@ SCENE_GAME,MOD_FLOOR,data/model/stage/floor,.mv1,0,
 SCENE_GAME,MOD_WALL,data/model/stage/wall,.mv1,0,
 SCENE_GAME,MOD_ARROW,data/model/arrow,.mv1,0,
 SCENE_GAME,MOD_STAGECOLLISION,data/model/stage/Collision/Collision,.mv1,0,
-SCENE_GAME,EFF_ENEMYHIT,data/sound/se/enemyHit,.mp3,0,0
-SCENE_GAME,SE_ENEMYHIT,data/effect/enemy_hit,.efk,0,
 SCENE_GAME,MOD_ENEMYNORMAL,data/model/character/enemy/EnemyNormal,.mv1,0,
+SCENE_GAME,SE_ENEMYHIT,data/effect/enemy_hit,.efk,0,
+SCENE_GAME,EFF_ENEMYHIT,data/sound/se/enemyHit,.mp3,0,0
