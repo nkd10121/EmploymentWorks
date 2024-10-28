@@ -75,14 +75,11 @@ void SceneGame::StartLoad()
 			SetUseASyncLoadFlag(false);
 			//エフェクトをロードする
 			auto path = data.path + data.extension;
-			EffectManager::GetInstance().Load(data.id, path, 30);
+			EffectManager::GetInstance().Load(data.id, path, 30, data.isEternal);
 			//非同期ロードをONに戻す
 			SetUseASyncLoadFlag(true);
 		}
 	}
-
-
-	//MapManager::GetInstance().LoadModel();
 
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);

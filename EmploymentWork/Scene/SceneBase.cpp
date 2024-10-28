@@ -2,6 +2,7 @@
 #include "Game.h"
 
 #include "ModelManager.h"
+#include "EffectManager.h"
 #include "SoundManager.h"
 #include "MapManager.h"
 
@@ -145,6 +146,7 @@ bool SceneBase::IsSceneEnd()
 
 	ModelManager::GetInstance().Clear();
 	SoundManager::GetInstance().Clear();
+	EffectManager::GetInstance().Clear();
 	MapManager::GetInstance().DeleteModel();
 	return true;
 }

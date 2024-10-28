@@ -10,17 +10,13 @@ EffectManager* EffectManager::m_instance = nullptr;
 /// </summary>
 EffectManager::~EffectManager()
 {
-	//まずすでに同じパスのエフェクトがロードされていないか確認する
-	for (auto& effect : m_effect)
-	{
-		DeleteEffekseerEffect(effect.second->emitterHandle);
-	}
+	Clear();
 }
 
 /// <summary>
 /// エフェクトをロード
 /// </summary>
-void EffectManager::Load(std::string name, std::string path, int endFrame, float scale)
+void EffectManager::Load(std::string name, std::string path, int endFrame, bool isEternal)
 {
 	//まずすでに同じパスのエフェクトがロードされていないか確認する
 	for (auto& effect : m_effect)
@@ -33,9 +29,10 @@ void EffectManager::Load(std::string name, std::string path, int endFrame, float
 
 	//ここまで来たらエフェクトをロードする
 	std::shared_ptr<EffectEmitter> add = std::make_shared<EffectEmitter>();
-	add->emitterHandle = LoadEffekseerEffect(path.c_str(), scale);
+	add->emitterHandle = LoadEffekseerEffect(path.c_str(), 1.0f);
 	assert(add->emitterHandle != -1 && "エフェクトロード失敗");
 	add->endFrame = endFrame;
+	add->isEternal = isEternal;
 
 	m_effect[name] = add;
 
@@ -77,6 +74,21 @@ void EffectManager::Update()
 void EffectManager::Draw()
 {
 	DrawEffekseer3D();
+}
+
+void EffectManager::Clear()
+{
+	for (auto& emitter : m_effect)
+	{
+		for (auto& ef : emitter.second->effects)
+		{
+			StopEffekseer3DEffect(ef.handle);
+		}
+		DeleteEffekseerEffect(emitter.second->emitterHandle);
+		emitter.second->effects.clear();
+	}
+
+	m_effect.clear();
 }
 
 /// <summary>

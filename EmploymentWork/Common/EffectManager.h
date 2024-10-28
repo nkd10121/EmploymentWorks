@@ -34,6 +34,7 @@ private:
 		const char* effectPath = "";	//エフェクトのパス
 		std::vector<Effect> effects;	//エフェクト配列
 		int endFrame;					//エフェクトの終了フレーム
+		bool isEternal;					//常駐フラグ
 	};
 
 
@@ -89,7 +90,7 @@ public:
 	/// <param name="path">パス</param>
 	/// <param name="endFrame">終了フレーム数</param>
 	/// <param name="scale">拡大率</param>
-	void Load(std::string name, std::string path, int endFrame, float scale = 1.0f);
+	void Load(std::string name, std::string path, int endFrame,bool isEternal);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -98,6 +99,11 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// 常駐フラグがfalseのハンドルを削除する
+	/// </summary>
+	void Clear();
 
 	/// <summary>
 	/// エフェクトを生成
