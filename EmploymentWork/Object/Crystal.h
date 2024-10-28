@@ -36,7 +36,11 @@ public:
 	/// </summary>
 	/// <returns>破壊フラグ</returns>
 	const bool GetIsBreak()const { return m_isBreak; }
-
+	/// <summary>
+	/// クリスタルの現在HPを取得する
+	/// </summary>
+	/// <returns>クリスタルの現在HP</returns>
+	const int GetHp()const { return m_hp; }
 
 private:
 	Vec3 m_pos;	//座標

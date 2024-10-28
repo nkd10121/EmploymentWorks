@@ -42,7 +42,7 @@ void PlayerStateJump::Update()
 
 	auto own = dynamic_cast<Player*>(m_pOwn.get());
 
-	if (m_jumpCount > 30)
+	if (m_jumpCount > 2)
 	{
 		//左スティックが入力されていたらStateをWalkにする
 		if (Input::GetInstance().GetInputStick(false).first == 0.0f &&

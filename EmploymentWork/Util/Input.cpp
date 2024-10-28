@@ -39,6 +39,8 @@ Input::Input():
 	m_commandTable["B"] = { PadCheckMask::B };
 	m_commandTable["X"] = { PadCheckMask::X };
 	m_commandTable["Y"] = { PadCheckMask::Y };
+	m_commandTable["P"] = { PadCheckMask::P };
+
 }
 
 /// <summary>

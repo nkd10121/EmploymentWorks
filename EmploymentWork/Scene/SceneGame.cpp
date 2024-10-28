@@ -110,7 +110,7 @@ void SceneGame::Init()
 	m_pCamera->Init();
 
 	//クリスタルの生成
-	m_pCrystal = std::make_shared<Crystal>(2);
+	m_pCrystal = std::make_shared<Crystal>(10);
 	m_pCrystal->Init(m_pPhysics);
 	m_pCrystal->Set(Vec3(0.0f,0.0f,10.0f));
 
@@ -166,14 +166,14 @@ void SceneGame::Update()
 	}
 
 	//Yボタンを押したらポーズ画面を開くように
-	if (Input::GetInstance().IsTriggered("Y"))
+	if (Input::GetInstance().IsTriggered("P"))
 	{
 		SceneManager::GetInstance().PushScene(std::make_shared<ScenePause>());
 		return;
 	}
 
 	//DEBUG:Aボタンを押した時にポーションを生成するように
-	if (Input::GetInstance().IsTriggered("A"))
+	if (Input::GetInstance().IsTriggered("Y"))
 	{
 		m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
 		m_pEnemies.back()->Init(m_pPhysics);
@@ -273,6 +273,7 @@ void SceneGame::Draw()
 	MyLib::DebugDraw::Draw3D();
 
 	DrawString(0, 0, "GAME", 0xffffff);
+	DrawFormatString(1120,0,0xbbbbbb,"クリスタルHP:%d",m_pCrystal->GetHp());
 #endif
 }
 
