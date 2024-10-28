@@ -32,9 +32,8 @@ HealPortion::HealPortion() :
 	m_posOffsetY(0.0f)
 {
 	//当たり判定の生成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
-	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
-	sphereCol->m_size = kCollisionRadius;
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, false);
+	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
 }
 

@@ -40,9 +40,9 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 
 	Collidable::Init(physics);
 
-	m_drawPos.x = GetRand(20) - 10;
+	m_drawPos.x = static_cast<float>(GetRand(20) - 10);
 	m_drawPos.y = 8.0f;
-	m_drawPos.z = GetRand(20) - 10;
+	m_drawPos.z = static_cast<float>(GetRand(20) - 10);
 
 	//初期位置設定
 	rigidbody->Init(true);
