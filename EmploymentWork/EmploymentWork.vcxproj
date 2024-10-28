@@ -42,7 +42,7 @@
     <ClCompile Include="Object\Character\Player\State\PlayerStateWalk.cpp" />
     <ClCompile Include="MyLib\Rigidbody.cpp" />
     <ClCompile Include="Object\Character\Player\State\PlayerStateJump.cpp" />
-    <ClCompile Include="PlayerStateDash.cpp" />
+    <ClCompile Include="Object\Character\Player\State\PlayerStateDash.cpp" />
     <ClCompile Include="Scene\ScenePause.cpp" />
     <ClCompile Include="Object\Character\Player\State\StateBase.cpp" />
     <ClCompile Include="Object\Shot.cpp" />
@@ -81,7 +81,7 @@
     <ClInclude Include="Object\Character\Player\State\PlayerStateWalk.h" />
     <ClInclude Include="MyLib\Rigidbody.h" />
     <ClInclude Include="Object\Character\Player\State\PlayerStateJump.h" />
-    <ClInclude Include="PlayerStateDash.h" />
+    <ClInclude Include="Object\Character\Player\State\PlayerStateDash.h" />
     <ClInclude Include="Scene\ScenePause.h" />
     <ClInclude Include="Object\Character\Player\State\StateBase.h" />
     <ClInclude Include="Object\Shot.h" />

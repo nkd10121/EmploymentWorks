@@ -171,8 +171,8 @@
     <ClCompile Include="Common\EffectManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateDash.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Character\Player\State\PlayerStateDash.cpp">
+      <Filter>ソース ファイル\Object\Character\Player\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,8 +284,8 @@
     <ClInclude Include="Common\EffectManager.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStateDash.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Object\Character\Player\State\PlayerStateDash.h">
+      <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
