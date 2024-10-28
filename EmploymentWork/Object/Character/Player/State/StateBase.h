@@ -75,7 +75,7 @@ protected:
 	bool CheckPlayer();
 
 protected:
-	std::shared_ptr<CharacterBase> m_pOwn;	//所有者のポインタ
+	std::weak_ptr<CharacterBase> m_pOwn;	//所有者のポインタ
 	std::shared_ptr<StateBase> m_nextState;	//遷移先のStateを保存する
 
 	StateKind m_nowState;					//現在のステート

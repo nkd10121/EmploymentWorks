@@ -57,7 +57,7 @@ void StateBase::DebugDrawState(int x, int y)
 /// </summary>
 bool StateBase::CheckPlayer()
 {
-	if (m_pOwn->GetTag() != GameObjectTag::Player)
+	if (m_pOwn.lock()->GetTag() != GameObjectTag::Player)
 	{
 #ifdef _DEBUG
 		assert(0 && "持ち主がプレイヤーではありません");

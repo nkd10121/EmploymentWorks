@@ -147,6 +147,13 @@ void SoundManager::PlaySE(std::string id)
 			return;
 		}
 	}
+
+	//ここまできたらなにかしらの理由でサウンドを流すのを失敗している
+#ifdef _DEBUG
+	assert(0 && "SEを流すのに失敗しました。");
+	//指定したIDがスペルミスしているか、ロードできていないかが原因
+#endif
+	return;
 }
 
 void SoundManager::FadeOutBGM(std::string id, int fadeFrame)

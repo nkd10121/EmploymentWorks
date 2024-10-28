@@ -94,7 +94,7 @@ void Player::Update(SceneGame* pScene)
 		if (m_attackButtonPushCount % 20 == 0)
 		{
 			std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
-			shot->Init(m_pPhysics);
+			shot->Init(m_pPhysics.lock());
 			shot->Set(m_pos, m_cameraDirection, m_status.atk);
 
 			pScene->AddObject(shot);

@@ -61,18 +61,6 @@ MyLib::Physics::~Physics()
 	m_newTirrigerInfo.clear();
 	m_preTirrigerInfo.clear();
 
-	MV1CollResultPolyDimTerminate(m_hitDim);
-	for (auto& poly : m_pWallPoly)
-	{
-		poly = nullptr;
-	}
-
-	for (auto& poly : m_pFloorPoly)
-	{
-		poly = nullptr;
-	}
-
-	m_pPoly = nullptr;
 }
 
 /// <summary>

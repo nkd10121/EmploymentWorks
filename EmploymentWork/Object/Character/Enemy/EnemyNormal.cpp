@@ -70,7 +70,7 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 /// </summary>
 void EnemyNormal::Finalize()
 {
-	Collidable::Finalize(m_pPhysics);
+	Collidable::Finalize(m_pPhysics.lock());
 }
 
 /// <summary>

@@ -33,7 +33,7 @@ void PlayerStateIdle::Update()
 	if (Input::GetInstance().GetInputStick(false).first != 0.0f ||
 		Input::GetInstance().GetInputStick(false).second != 0.0f)
 	{
-		m_nextState = std::make_shared<PlayerStateWalk>(m_pOwn);
+		m_nextState = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateWalk>(m_nextState);
 		state->Init();
 		return;
@@ -41,13 +41,13 @@ void PlayerStateIdle::Update()
 
 	if (Input::GetInstance().IsTriggered("A"))
 	{
-		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn);
+		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
 		state->Init();
 		return;
 	}
 
-	auto own = dynamic_cast<Player*>(m_pOwn.get());
+	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
 	//プレイヤーの速度を0にする(重力の影響を受けながら)
 	auto prevVel = own->GetRigidbody()->GetVelocity();

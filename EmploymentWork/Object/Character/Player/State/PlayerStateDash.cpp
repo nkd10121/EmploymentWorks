@@ -30,13 +30,13 @@ void PlayerStateDash::Update()
 	//持ち主がプレイヤーかどうかをチェックする
 	if (!CheckPlayer())	return;
 
-	auto own = dynamic_cast<Player*>(m_pOwn.get());
+	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
 	//左スティックが入力されていたらStateをWalkにする
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 		Input::GetInstance().GetInputStick(false).second == 0.0f)
 	{
-		m_nextState = std::make_shared<PlayerStateIdle>(m_pOwn);
+		m_nextState = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_nextState);
 		state->Init();
 		return;
@@ -44,7 +44,7 @@ void PlayerStateDash::Update()
 
 	if (Input::GetInstance().IsTriggered("A"))
 	{
-		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn);
+		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
 		state->Init();
 		return;
@@ -52,7 +52,7 @@ void PlayerStateDash::Update()
 
 	if (Input::GetInstance().IsTriggered("B"))
 	{
-		m_nextState = std::make_shared<PlayerStateWalk>(m_pOwn);
+		m_nextState = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateWalk>(m_nextState);
 		state->Init();
 		return;
