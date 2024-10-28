@@ -8,7 +8,12 @@ LoadCSV* LoadCSV::m_instance = nullptr;
 
 namespace
 {
-	// csvデータの,で文字列を分割する
+	/// <summary>
+	/// csvデータの,で文字列を分割する
+	/// </summary>
+	/// <param name="input">取得した情報文字列</param>
+	/// <param name="delimiter">区切る文字</param>
+	/// <returns>区切る文字で取得した情報文字列を区切った文字列配列</returns>
 	std::vector<std::string> Split(std::string& input, char delimiter)
 	{
 		std::istringstream stream(input);
@@ -133,15 +138,17 @@ std::map<std::string, std::string> LoadCSV::GetLoadResourcePath(std::string stag
 		//取得した文字列をカンマ区切りの配列(情報群)にする
 		strConmaBuf = Split(strBuf, ',');
 
-		//[0] ID
-		//[1] パス
-		//[2] 拡張子
+		//[0] ステージID
+		//[1] 識別ID
+		//[2] パス
+		//[3] 拡張子
+		//[4] 常駐フラグ
 
-		//指定したIDと一致していたら
+		//指定したステージIDと一致していたら
 		if (stageId == strConmaBuf[0])
 		{
 			//戻り値の変数にデータを追加する
-			ret[strConmaBuf[1]] = strConmaBuf[2];
+			ret[strConmaBuf[2]] = strConmaBuf[3];
 		}
 	}
 

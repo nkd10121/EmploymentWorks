@@ -14,33 +14,42 @@
 class EffectManager
 {
 private:
-	//エフェクト構造体
+	/// <summary>
+	/// エフェクト構造体
+	/// </summary>
 	struct Effect
 	{
-		int handle;
-		float x, y, z;
-		int frame;
-		bool isExist;
+		int handle;		//エフェクトハンドル
+		float x, y, z;	//座標
+		int frame;		//フレーム数
+		bool isExist;	//存在フラグ
 	};
 
-	//エフェクト生成構造体
+	/// <summary>
+	/// エフェクト生成構造体
+	/// </summary>
 	struct EffectEmitter
 	{
-		int emitterHandle = -1;
-		const char* effectPath = "";
-		std::vector<Effect> effects;
-		int endFrame;
+		int emitterHandle = -1;			//エフェクト生成機のハンドル
+		const char* effectPath = "";	//エフェクトのパス
+		std::vector<Effect> effects;	//エフェクト配列
+		int endFrame;					//エフェクトの終了フレーム
 	};
 
 
 private:
-	// シングルトンパターンなのでコンストラクタはprivateに置く
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	EffectManager() {};
-
-public:
-	//デストラクタ
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	virtual ~EffectManager();
 
+	static EffectManager* m_instance;	//インスタンス
+
+public:
 	//コピーコンストラクタから実体の生成ができてしまうため
 	//コピーコンストラクタを禁止する
 	EffectManager(const EffectManager&) = delete;
@@ -49,9 +58,9 @@ public:
 	EffectManager& operator= (const EffectManager&&) = delete;
 
 	/// <summary>
-	/// EffectManagerはGetInstance()を通した参照からしか利用できない
+	/// インスタンスを取得
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>インスタンス</returns>
 	static EffectManager& GetInstance()
 	{
 		if (!m_instance)
@@ -62,7 +71,10 @@ public:
 		return *m_instance;
 	}
 
-	//これをし忘れると普通にメモリリーク
+	/// <summary>
+	/// 削除
+	/// これをし忘れると普通にメモリリーク
+	/// </summary>
 	static void Destroy()
 	{
 		delete m_instance;
@@ -70,29 +82,46 @@ public:
 	}
 
 public:
-	//エフェクトをロード
+	/// <summary>
+	/// エフェクトをロード
+	/// </summary>
+	/// <param name="name">エフェクト名</param>
+	/// <param name="path">パス</param>
+	/// <param name="endFrame">終了フレーム数</param>
+	/// <param name="scale">拡大率</param>
 	void Load(std::string name, const char* path, int endFrame, float scale = 1.0f);
-	//更新
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
-	//描画
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
 
-	//エフェクトを生成
+	/// <summary>
+	/// エフェクトを生成
+	/// </summary>
+	/// <param name="name">エフェクト名</param>
+	/// <param name="pos">描画座標</param>
+	/// <param name="rot">回転角度</param>
 	void CreateEffect(std::string name, Vec3 pos, Vec3 rot = Vec3());
 
-	// 指定した名前のすべてのエフェクトの座標を移動させる
+	/// <summary>
+	/// 指定した名前のすべてのエフェクトの座標を移動させる
+	/// </summary>
+	/// <param name="name">移動させたいエフェクトの名前</param>
+	/// <param name="pos">移動先座標</param>
 	void SetPos(std::string name, Vec3 pos);
 
-	//指定した名前のすべてのエフェクトを回転させる
+	/// <summary>
+	/// 指定した名前のすべてのエフェクトを回転させる
+	/// </summary>
+	/// <param name="name">エフェクト名</param>
+	/// <param name="rot">回転角度</param>
 	void SetRotation(std::string name, Vec3 rot);
 
 private:
-	//staticにすることで
-	//Singletonのポインタがプログラム起動時に一つ作られるようにする
-	static EffectManager* m_instance;
-
-private:
-	//エフェクトハンドル
-	std::map<std::string, std::shared_ptr<EffectEmitter>> m_effect;
+	std::map<std::string, std::shared_ptr<EffectEmitter>> m_effect;	//エフェクトハンドル
 };
 

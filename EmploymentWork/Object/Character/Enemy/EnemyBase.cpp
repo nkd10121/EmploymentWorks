@@ -11,6 +11,7 @@ EnemyBase::EnemyBase():
 	CharacterBase(Collidable::Priority::Middle, GameObjectTag::Enemy),
 	kind(),
 	m_isExist(false),
+	m_modelHandle(-1),
 	m_drawPos(),
 	m_hitObjectTag()
 {
@@ -21,6 +22,7 @@ EnemyBase::EnemyBase():
 /// </summary>
 EnemyBase::~EnemyBase()
 {
+	MV1DeleteModel(m_modelHandle);
 }
 
 /// <summary>

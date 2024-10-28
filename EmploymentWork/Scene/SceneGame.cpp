@@ -55,20 +55,26 @@ void SceneGame::StartLoad()
 		//モデルデータなら
 		if (path.second == ".mv1")
 		{
+			//モデルをロードする
 			auto p = path.first + path.second;
 			ModelManager::GetInstance().LoadModel(p);
 		}
 		//音声データなら
 		else if (path.second == ".mp3")		
 		{
+			//サウンドをロードする
 			auto p = path.first + path.second;
 			SoundManager::GetInstance().Load("seTest", p, false);
 		}
+		//エフェクトデータなら
 		else if (path.second == ".efk")
 		{
+			//エフェクトのロードは非同期ロード対応してないっぽい
 			SetUseASyncLoadFlag(false);
+			//エフェクトをロードする
 			auto p = path.first + path.second;
 			EffectManager::GetInstance().Load("EnemyHit", p.c_str(), 30);
+			//非同期ロードをONに戻す
 			SetUseASyncLoadFlag(true);
 		}
 	}

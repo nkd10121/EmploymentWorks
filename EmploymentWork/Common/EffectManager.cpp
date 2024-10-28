@@ -5,6 +5,9 @@
 
 EffectManager* EffectManager::m_instance = nullptr;
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 EffectManager::~EffectManager()
 {
 	//まずすでに同じパスのエフェクトがロードされていないか確認する
@@ -17,10 +20,6 @@ EffectManager::~EffectManager()
 /// <summary>
 /// エフェクトをロード
 /// </summary>
-/// <param name="name">エフェクト名</param>
-/// <param name="path">パス</param>
-/// <param name="endFrame">終了フレーム数</param>
-/// <param name="scale">拡大率</param>
 void EffectManager::Load(std::string name, const char* path, int endFrame, float scale)
 {
 	//まずすでに同じパスのエフェクトがロードされていないか確認する
@@ -83,9 +82,6 @@ void EffectManager::Draw()
 /// <summary>
 /// エフェクトを生成
 /// </summary>
-/// <param name="name">エフェクト名</param>
-/// <param name="pos">描画座標</param>
-/// <param name="rot">回転角度</param>
 void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 {
 	int handle = -1;
@@ -122,8 +118,6 @@ void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 /// <summary>
 /// 指定した名前のすべてのエフェクトの座標を移動させる
 /// </summary>
-/// <param name="name">移動させたいエフェクトの名前</param>
-/// <param name="pos">移動先座標</param>
 void EffectManager::SetPos(std::string name, Vec3 pos)
 {
 	std::shared_ptr<EffectEmitter> emit;
@@ -150,8 +144,6 @@ void EffectManager::SetPos(std::string name, Vec3 pos)
 /// <summary>
 /// 指定した名前のすべてのエフェクトを回転させる
 /// </summary>
-/// <param name="name">エフェクト名</param>
-/// <param name="rot">回転角度</param>
 void EffectManager::SetRotation(std::string name, Vec3 rot)
 {
 	for (auto& effects : m_effect)

@@ -1,6 +1,7 @@
 ﻿#include "EnemyNormal.h"
 
 #include "LoadCSV.h"
+#include "ModelManager.h"
 
 namespace
 {
@@ -8,6 +9,8 @@ namespace
 	constexpr float kCupsuleSize = 2.0f;
 	constexpr float kCupsuleRadius = 2.0f;
 	constexpr int kCupsuleDivNum = 10;
+
+	constexpr float kModelScale = 0.018f;
 }
 
 /// <summary>
@@ -22,6 +25,10 @@ EnemyNormal::EnemyNormal():
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
 	sphereCol->m_radius = kCupsuleRadius;
 	sphereCol->m_size = kCupsuleSize;
+
+	//モデルハンドルを取得
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("data/model/character/enemy/EnemyNormal.mv1");
+	MV1SetScale(m_modelHandle,VGet(kModelScale, kModelScale, kModelScale));
 }
 
 /// <summary>
@@ -48,6 +55,7 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->Init(true);
 	rigidbody->SetPos(m_drawPos);
 	rigidbody->SetNextPos(rigidbody->GetPos());
+
 
 	//プレイヤーのステータス取得
 	m_status = LoadCSV::GetInstance().LoadStatus("EnemyNormal");
@@ -78,6 +86,12 @@ void EnemyNormal::Update()
 		m_isExist = false;
 	}
 
+	//モデルの描画座標を設定
+	auto modelSetPos = m_drawPos;
+	modelSetPos.y -= kCupsuleSize + kCupsuleRadius;
+	MV1SetPosition(m_modelHandle, modelSetPos.ToVECTOR());
+
+
 	//速度を0にする(重力の影響を受けながら)
 	auto prevVel = rigidbody->GetVelocity();
 	rigidbody->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
@@ -99,5 +113,7 @@ void EnemyNormal::Draw()
 	VECTOR low = VGet(m_drawPos.x, m_drawPos.y - kCupsuleSize, m_drawPos.z);
 	VECTOR high = VGet(m_drawPos.x, m_drawPos.y + kCupsuleSize, m_drawPos.z);
 	DrawCapsule3D(low, high, kCupsuleRadius, kCupsuleDivNum, 0xffffff, 0xffffff, false);
+
+	MV1DrawModel(m_modelHandle);
 }
 
