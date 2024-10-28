@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "DxLib.h"
 #include <string>
-#include <vector>
+#include <list>
 #include <memory>
 
 struct Sound;
@@ -12,11 +12,20 @@ struct Sound;
 class SoundManager
 {
 private:
+	struct Sound
+	{
+		std::string id;
+		std::string path;
+		int handle;
+		bool isEteral;
+	};
+private:
 	// シングルトンパターンなのでコンストラクタはprivateに置く
-	SoundManager();
-
-public:
+	SoundManager() {};
 	virtual ~SoundManager();
+
+	static SoundManager* m_instance;	//インスタンス
+public:
 
 	//コピーコンストラクタから実体の生成ができてしまうため
 	//コピーコンストラクタを禁止する
@@ -51,10 +60,10 @@ public:
 	/// <summary>
 	/// サウンドを読み込む
 	/// </summary>
-	/// <param name="name">サウンドネーム</param>
+	/// <param name="id">サウンドID</param>
 	/// <param name="path">サウンドパス</param>
 	/// <param name="isBGM">true = BGM,false = SE</param>
-	void Load(std::string name, std::string path, bool isBGM);
+	void Load(std::string id, std::string path, bool isBGM,bool isEternal);
 
 	/// <summary>
 	/// すべてのリソースの読み込みが終了しているかどうかを取得
@@ -63,37 +72,36 @@ public:
 	const bool IsLoaded()const;
 
 	/// <summary>
+	/// 常駐フラグがfalseのハンドルを全削除する
+	/// </summary>
+	void Clear();
+
+	/// <summary>
 	/// 指定した名前のサウンドを流す
 	/// </summary>
-	/// <param name="name">流したいサウンドネーム</param>
+	/// <param name="id">流したいサウンドネーム</param>
 	/// <param name="isFromStart">true = 最初から,false = 途中から</param>
-	void PlayBGM(std::string name, bool isFromStart);
+	void PlayBGM(std::string id, bool isFromStart);
 
-	void PlaySE(std::string name);
+	void PlaySE(std::string id);
 
-	void FadeOutBGM(std::string name, int fadeFrame);
+	void FadeOutBGM(std::string id, int fadeFrame);
 
 	/// <summary>
 	/// 指定した名前のサウンドを止める
 	/// </summary>
-	/// <param name="name">止めたいサウンドネーム</param>
-	void StopBGM(std::string name);
-
-	/// <summary>
-	/// eternalフラグがfalseのサウンドを削除する
-	/// </summary>
-	void Delete();
+	/// <param name="id">止めたいサウンドネーム</param>
+	void StopBGM(std::string id);
 
 	/// <summary>
 	/// 指定したサウンドが流れているどうか
 	/// </summary>
-	/// <param name="name">サウンドネーム</param>
+	/// <param name="id">サウンドネーム</param>
 	/// <returns>true = 流れている,false = 流れていない</returns>
-	bool isPlayingSound(std::string name);
+	bool isPlayingSound(std::string id);
 
 	void ChangeBGMVolume(float volume);
 	void ChangeSEVolume(float volume);
-
 
 private:
 	/// <summary>
@@ -104,16 +112,10 @@ private:
 	bool CheckPlaying(int handle) { return CheckSoundMem(handle); }
 
 private:
-	//staticにすることで
-	//Singletonのポインタがプログラム起動時に一つ作られるようにする
-	static SoundManager* m_instance;
+	std::list<std::shared_ptr<Sound>> m_BGM;
+	std::list<std::shared_ptr<Sound>> m_SE;
 
-private:
-	std::vector<std::shared_ptr<Sound>> m_BGM;
-	std::vector<std::shared_ptr<Sound>> m_SE;
-
-	float m_BGMvolume;
-	float m_SEvolume;
-
+	float m_BGMvolume;	//bgmの音量　min:0.0f,max:1.0f
+	float m_SEvolume;	//seの音量　min:0.0f,max:1.0f
 };
 

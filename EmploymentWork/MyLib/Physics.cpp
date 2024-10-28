@@ -39,7 +39,7 @@ namespace
 /// </summary>
 MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollisionHandle*/)
 {
-	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("data/model/stage/Collision/Collision.mv1");
+	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
 	MV1SetScale(m_stageCollisionHandle, VGet(0.1f, 0.1f, 0.1f));
 
 	//m_stageCollisionHandle = normalStageCollisionHandle;

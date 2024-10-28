@@ -51,8 +51,8 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 				m_status.hp -= damage;
 			}
 
-			SoundManager::GetInstance().PlaySE("seTest");
-			EffectManager::GetInstance().CreateEffect("EnemyHit",rigidbody->GetPos());
+			SoundManager::GetInstance().PlaySE("SE_ENEMYHIT");
+			EffectManager::GetInstance().CreateEffect("EFF_ENEMYHIT",rigidbody->GetPos());
 			//当たった弾の終了処理を呼ぶ
 			col->End();
 

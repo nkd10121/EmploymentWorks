@@ -11,9 +11,10 @@ public:
 	//モデル構造体
 	struct Model
 	{
-		std::string path;	//モデルパス
-		int handle;			//モデルハンドル
-		bool isEternal;		//常駐フラグ
+		std::string path;		//モデルパス
+		std::string modelId;	//モデルID
+		int handle;				//モデルハンドル
+		bool isEternal;			//常駐フラグ
 	};
 
 private:
@@ -65,16 +66,17 @@ public:
 	/// <summary>
 	/// 指定したパスをモデルをロードする
 	/// </summary>
+	/// <param name="id">モデルID</param>
 	/// <param name="path">モデルパス</param>
 	/// <param name="isEternal">常駐フラグ</param>
-	void LoadModel(std::string path, bool isEternal = false);
+	void Load(std::string id, std::string path, bool isEternal = false);
 
 	/// <summary>
 	/// モデルハンドルを取得する
 	/// </summary>
-	/// <param name="path">モデルパス</param>
+	/// <param name="id">モデルID</param>
 	/// <returns>-1 : エラー, -1以外 : モデルの複製ハンドル</returns>
-	int GetModelHandle(std::string path);
+	int GetModelHandle(std::string id);
 
 	/// <summary>
 	/// 常駐フラグがfalseのハンドルを全削除する

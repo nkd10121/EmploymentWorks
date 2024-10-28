@@ -5,6 +5,19 @@ class LoadCSV
 {
 private:
 	/// <summary>
+	/// リソースのデータ
+	/// </summary>
+	struct ResourceData
+	{
+		std::string id;			//リソースID
+		std::string path;		//パス
+		std::string extension;	//拡張子
+		bool isEternal;			//常駐フラグ
+		bool isBGM;				//サウンドデータの場合格納するデータ
+	};
+
+private:
+	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	LoadCSV() {};
@@ -57,5 +70,5 @@ public:
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	std::map<std::string, std::string> GetLoadResourcePath(std::string stageId);
+	std::list<ResourceData>GetLoadResourcePath(std::string stageId);
 };

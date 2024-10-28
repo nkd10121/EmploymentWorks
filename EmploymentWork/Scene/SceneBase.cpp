@@ -2,6 +2,7 @@
 #include "Game.h"
 
 #include "ModelManager.h"
+#include "SoundManager.h"
 #include "MapManager.h"
 
 namespace
@@ -21,7 +22,6 @@ namespace
 /// コンストラクタ
 /// </summary>
 SceneBase::SceneBase() :
-	m_loadPath(),
 	m_isInit(false),
 	m_isEnd(false),
 	m_fadeAlpha(kBrightMax),
@@ -144,6 +144,7 @@ bool SceneBase::IsSceneEnd()
 
 
 	ModelManager::GetInstance().Clear();
+	SoundManager::GetInstance().Clear();
 	MapManager::GetInstance().DeleteModel();
 	return true;
 }

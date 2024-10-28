@@ -19,13 +19,11 @@ namespace
 	const std::string kStageDataPathFront = "data/stageData/";
 	const std::string kStageDataPathBack = ".loc";
 
-	const std::string kPath[] = 
+	const std::string kId[] = 
 	{
-		"floor",
-		"wall",
-		"doorFrame",
-		"crystal",
-		"crystalStand"
+		"MOD_FLOOR",
+		"MOD_WALL",
+		"MOD_FRAME",
 	};
 }
 
@@ -49,20 +47,10 @@ MapManager::~MapManager()
 void MapManager::Init()
 {
 	//ロードが完了しているときにここが呼ばれるため、モデルマネージャーに頼んでおいたモデルを取得する
-	for (auto& path : kPath)
+	for (auto& path : kId)
 	{
-		m_handles[path] = ModelManager::GetInstance().GetModelHandle((kModelPathFront + path + kModelPathBack));
+		m_handles[path] = ModelManager::GetInstance().GetModelHandle(path);
 	}
-}
-
-/// <summary>
-/// ステージの生成に必要なモデルの読み込み
-/// </summary>
-void MapManager::LoadModel()
-{
-	ModelManager::GetInstance().LoadModel((kModelPathFront + "floor" + kModelPathBack));
-	ModelManager::GetInstance().LoadModel((kModelPathFront + "wall" + kModelPathBack));
-	ModelManager::GetInstance().LoadModel((kModelPathFront + "doorFrame" + kModelPathBack));
 }
 
 /// <summary>

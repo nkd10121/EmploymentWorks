@@ -81,10 +81,6 @@ public:
 	void Init();
 
 	/// <summary>
-	/// ステージの生成に必要なモデルの読み込み
-	/// </summary>
-	void LoadModel();
-	/// <summary>
 	/// ステージの生成に必要なモデルの削除
 	/// </summary>
 	void DeleteModel();

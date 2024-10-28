@@ -140,10 +140,6 @@ protected:
 	/// </summary>
 	void SkipFadeOut();
 
-protected:
-	std::map<std::string, std::string> m_loadPath;
-
-
 private:
 	bool m_isInit;	//初期化処理終了判定
 	bool m_isEnd;	//次のシーンに遷移する

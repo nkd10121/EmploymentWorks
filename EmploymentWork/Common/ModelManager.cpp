@@ -25,7 +25,7 @@ ModelManager::~ModelManager()
 /// <summary>
 /// 指定したパスをモデルをロードする
 /// </summary>
-void ModelManager::LoadModel(std::string path, bool isEternal)
+void ModelManager::Load(std::string id, std::string path, bool isEternal)
 {
 	//すでにロードされていたら何もしない
 	for (auto& h : m_handles)
@@ -44,6 +44,7 @@ void ModelManager::LoadModel(std::string path, bool isEternal)
 	//→新しくロードする必要がある
 	Model add;
 	add.handle = MV1LoadModel(path.c_str());
+	add.modelId = id;
 	add.path = path;
 	add.isEternal = isEternal;
 
@@ -59,12 +60,12 @@ void ModelManager::LoadModel(std::string path, bool isEternal)
 /// <summary>
 /// モデルハンドルを取得する
 /// </summary>
-int ModelManager::GetModelHandle(std::string path)
+int ModelManager::GetModelHandle(std::string id)
 {
 	//ロードされていたら複製ハンドルを返す
 	for (auto& h : m_handles)
 	{
-		if (h.path == path)
+		if (h.modelId == id)
 		{
 			return MV1DuplicateModel(h.handle);
 		}
@@ -73,7 +74,7 @@ int ModelManager::GetModelHandle(std::string path)
 	//ここまで来たということはロードされていなかった
 #ifdef _DEBUG
 	//念のためassertを仕込んでおく
-	assert(0 && "指定したパスはロードされていません");
+	assert(0 && "指定したモデルIDはロードされていません");
 #endif
 	return -1;
 }

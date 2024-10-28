@@ -20,7 +20,7 @@ EffectManager::~EffectManager()
 /// <summary>
 /// エフェクトをロード
 /// </summary>
-void EffectManager::Load(std::string name, const char* path, int endFrame, float scale)
+void EffectManager::Load(std::string name, std::string path, int endFrame, float scale)
 {
 	//まずすでに同じパスのエフェクトがロードされていないか確認する
 	for (auto& effect : m_effect)
@@ -33,7 +33,7 @@ void EffectManager::Load(std::string name, const char* path, int endFrame, float
 
 	//ここまで来たらエフェクトをロードする
 	std::shared_ptr<EffectEmitter> add = std::make_shared<EffectEmitter>();
-	add->emitterHandle = LoadEffekseerEffect(path, scale);
+	add->emitterHandle = LoadEffekseerEffect(path.c_str(), scale);
 	assert(add->emitterHandle != -1 && "エフェクトロード失敗");
 	add->endFrame = endFrame;
 

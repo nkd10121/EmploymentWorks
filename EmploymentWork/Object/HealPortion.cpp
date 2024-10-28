@@ -56,7 +56,7 @@ void HealPortion::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->Init();
 
 	//モデルのハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle(kPortionPath);
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("MOD_PORTION");
 	//モデルのスケールを設定
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 

@@ -112,10 +112,10 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 	return retStatus;
 }
 
-std::map<std::string, std::string> LoadCSV::GetLoadResourcePath(std::string stageId)
+std::list<LoadCSV::ResourceData> LoadCSV::GetLoadResourcePath(std::string stageId)
 {
 	//戻り値
-	std::map<std::string, std::string> ret;
+	std::list<LoadCSV::ResourceData> ret;
 
 	// 一時保存用string
 	std::string strBuf;
@@ -143,12 +143,22 @@ std::map<std::string, std::string> LoadCSV::GetLoadResourcePath(std::string stag
 		//[2] パス
 		//[3] 拡張子
 		//[4] 常駐フラグ
+		//[5] BGMフラグ(soundデータの場合のみ)
 
 		//指定したステージIDと一致していたら
 		if (stageId == strConmaBuf[0])
 		{
-			//戻り値の変数にデータを追加する
-			ret[strConmaBuf[2]] = strConmaBuf[3];
+			ResourceData add;
+			add.id = strConmaBuf[1];
+			add.path = strConmaBuf[2];
+			add.extension = strConmaBuf[3];
+			add.isEternal = stoi(strConmaBuf[4]);
+			if (add.extension == ".mp3")
+			{
+				add.isBGM = stoi(strConmaBuf[5]);
+			}
+
+			ret.emplace_back(add);
 		}
 	}
 

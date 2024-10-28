@@ -27,7 +27,7 @@ EnemyNormal::EnemyNormal():
 	sphereCol->m_size = kCupsuleSize;
 
 	//モデルハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("data/model/character/enemy/EnemyNormal.mv1");
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("MOD_ENEMYNORMAL");
 	MV1SetScale(m_modelHandle,VGet(kModelScale, kModelScale, kModelScale));
 }
 

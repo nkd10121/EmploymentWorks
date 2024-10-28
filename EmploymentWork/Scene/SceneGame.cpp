@@ -29,8 +29,7 @@ SceneGame::SceneGame() :
 	m_pPhysics(nullptr),
 	m_pObjects()
 {
-	//このシーンでロードするべきリソースのパスを取得
-	m_loadPath = LoadCSV::GetInstance().GetLoadResourcePath("SCENE_GAME");
+
 }
 
 /// <summary>
@@ -45,35 +44,38 @@ SceneGame::~SceneGame()
 /// </summary>
 void SceneGame::StartLoad()
 {
+	//このシーンでロードするべきリソースのパスを取得
+	auto loadResourceData = LoadCSV::GetInstance().GetLoadResourcePath("SCENE_GAME");
+
 	// 非同期読み込みを開始する
 	SetUseASyncLoadFlag(true);
 
 	// TODO:この間でリソースをロードする
 
-	for (auto& path : m_loadPath)
+	for (auto& data : loadResourceData)
 	{
 		//モデルデータなら
-		if (path.second == ".mv1")
+		if (data.extension == ".mv1")
 		{
 			//モデルをロードする
-			auto p = path.first + path.second;
-			ModelManager::GetInstance().LoadModel(p);
+			auto path = data.path + data.extension;
+			ModelManager::GetInstance().Load(data.id,path,data.isEternal);
 		}
 		//音声データなら
-		else if (path.second == ".mp3")		
+		else if (data.extension == ".mp3")
 		{
 			//サウンドをロードする
-			auto p = path.first + path.second;
-			SoundManager::GetInstance().Load("seTest", p, false);
+			auto path = data.path + data.extension;
+			SoundManager::GetInstance().Load(data.id, path,data.isBGM, data.isEternal);
 		}
 		//エフェクトデータなら
-		else if (path.second == ".efk")
+		else if (data.extension == ".efk")
 		{
 			//エフェクトのロードは非同期ロード対応してないっぽい
 			SetUseASyncLoadFlag(false);
 			//エフェクトをロードする
-			auto p = path.first + path.second;
-			EffectManager::GetInstance().Load("EnemyHit", p.c_str(), 30);
+			auto path = data.path + data.extension;
+			EffectManager::GetInstance().Load(data.id, path, 30);
 			//非同期ロードをONに戻す
 			SetUseASyncLoadFlag(true);
 		}
@@ -134,7 +136,7 @@ void SceneGame::Init()
 	m_pEnemies.back()->Init(m_pPhysics);
 
 	//ステージの当たり判定モデルを取得する(描画するため)
-	m_stageModel = ModelManager::GetInstance().GetModelHandle("data/model/stage/Collision/Collision.mv1");
+	m_stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
 	MV1SetScale(m_stageModel, VGet(0.1f, 0.1f, 0.1f));
 }
 

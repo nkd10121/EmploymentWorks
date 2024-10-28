@@ -89,7 +89,7 @@ public:
 	/// <param name="path">パス</param>
 	/// <param name="endFrame">終了フレーム数</param>
 	/// <param name="scale">拡大率</param>
-	void Load(std::string name, const char* path, int endFrame, float scale = 1.0f);
+	void Load(std::string name, std::string path, int endFrame, float scale = 1.0f);
 	/// <summary>
 	/// 更新
 	/// </summary>
