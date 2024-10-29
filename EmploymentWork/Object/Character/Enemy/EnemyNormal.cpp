@@ -56,7 +56,6 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->SetPos(m_drawPos);
 	rigidbody->SetNextPos(rigidbody->GetPos());
 
-
 	//プレイヤーのステータス取得
 	m_status = LoadCSV::GetInstance().LoadStatus("EnemyNormal");
 	//最大HPを設定しておく
