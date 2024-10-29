@@ -3,7 +3,14 @@
 class Crystal : public ObjectBase
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="hp">体力</param>
 	Crystal(int hp);
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	virtual ~Crystal();
 
 	/// <summary>
@@ -12,11 +19,6 @@ public:
 	/// <param name="physics">物理クラスポインタ</param>
 	void Init(std::shared_ptr<MyLib::Physics> physics)override;
 	/// <summary>
-	/// 生成座標を設定
-	/// </summary>
-	/// <param name="pos">生成座標</param>
-	void Set(const Vec3& pos);
-	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update()override;
@@ -24,6 +26,12 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw()override;
+
+	/// <summary>
+	/// 生成座標を設定
+	/// </summary>
+	/// <param name="pos">生成座標</param>
+	void Set(const Vec3& pos);
 
 	/// <summary>
 	/// ほかのオブジェクトと衝突したときに呼ばれる

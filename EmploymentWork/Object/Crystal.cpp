@@ -15,6 +15,9 @@ namespace
 	const std::string kCrystalStandPath = "data/model/stage/crystalStand.mv1";
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 Crystal::Crystal(int hp):
 	ObjectBase(Collidable::Priority::Low,GameObjectTag::Crystal),
 	m_pos(),
@@ -30,12 +33,18 @@ Crystal::Crystal(int hp):
 	sphereCol->m_size = kCollisionSize;
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Crystal::~Crystal()
 {
 	MV1DeleteModel(m_modelHandle);
 	MV1DeleteModel(m_crystalStandHandle);
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void Crystal::Init(std::shared_ptr<MyLib::Physics> physics)
 {
 	//当たり判定の初期化
@@ -51,18 +60,9 @@ void Crystal::Init(std::shared_ptr<MyLib::Physics> physics)
 	MV1SetScale(m_crystalStandHandle, VGet(0.2f, 0.2f, 0.2f));
 }
 
-void Crystal::Set(const Vec3& pos)
-{
-	m_pos = pos;
-
-	m_pos.y -= 18.0f;
-
-	MV1SetPosition(m_modelHandle, m_pos.ToVECTOR());
-	MV1SetPosition(m_crystalStandHandle, m_pos.ToVECTOR());
-
-	rigidbody->SetPos(pos);
-}
-
+/// <summary>
+/// 更新
+/// </summary>
 void Crystal::Update()
 {
 	if (m_isBreak)	return;
@@ -79,12 +79,33 @@ void Crystal::Update()
 	MV1SetRotationXYZ(m_modelHandle, VECTOR(0.0f, m_angle / 4, 0.0f));
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void Crystal::Draw()
 {
 	MV1DrawModel(m_modelHandle);
 	MV1DrawModel(m_crystalStandHandle);
 }
 
+/// <summary>
+/// 生成座標を設定
+/// </summary>
+void Crystal::Set(const Vec3& pos)
+{
+	m_pos = pos;
+
+	m_pos.y -= 18.0f;
+
+	MV1SetPosition(m_modelHandle, m_pos.ToVECTOR());
+	MV1SetPosition(m_crystalStandHandle, m_pos.ToVECTOR());
+
+	rigidbody->SetPos(pos);
+}
+
+/// <summary>
+/// ほかのオブジェクトと衝突したときに呼ばれる
+/// </summary>
 void Crystal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
 	//当たったオブジェクトが敵なら自身のHPを減らす

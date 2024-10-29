@@ -49,20 +49,24 @@ public:
 	/// </summary>
 	void End();
 
-
-
+	/// <summary>
+	/// 存在フラグを取得する
+	/// </summary>
+	/// <returns>存在フラグ</returns>
 	const bool GetIsExist()const { return m_isExist; }
+
+	/// <summary>
+	/// 攻撃力を取得する
+	/// </summary>
+	/// <returns>攻撃力</returns>
 	const int GetAtk()const { return m_atk; }
 
 private:
-	Vec3 m_moveDir;
+	Vec3 m_moveDir;		//移動方向
 
-	int m_frameCount;
+	int m_frameCount;	//フレーム数
 
-	float m_angle;
-	Vec3 m_rot;
+	//int m_mapHandle;
 
-	int m_mapHandle;
-
-	int m_atk;
+	int m_atk;		//攻撃力
 };
