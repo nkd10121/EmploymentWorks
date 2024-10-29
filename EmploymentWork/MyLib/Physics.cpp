@@ -19,7 +19,7 @@ namespace
 	//壁ポリゴンか床ポリゴンかを判断するための変数
 	constexpr float kWallPolyBorder = 0.4f;
 	//壁ポリゴンと判断するための高さ変数
-	constexpr float kWallPolyHeight = 5.0f;
+	constexpr float kWallPolyHeight = 0.2f;
 
 	//重力
 	constexpr float kGravity = -0.032f;
@@ -706,14 +706,20 @@ void MyLib::Physics::CheckWallAndFloor(std::shared_ptr<Collidable>& col)
 		// ポリゴンの法線のＹ成分が壁ポリゴンボーダーに達っしているかどうかで壁ポリゴンか床ポリゴンかを判断する
 		if (m_hitDim.Dim[i].Normal.y < kWallPolyBorder && m_hitDim.Dim[i].Normal.y > -kWallPolyBorder)
 		{
-			// ポリゴンの数が限界数に達していなかったらポリゴンを配列に追加
-			if (m_wallNum < ColInfo::kMaxColHitPolyNum)
+			// 壁ポリゴンと判断された場合でも、プレイヤーのＹ座標より高いポリゴンのみ当たり判定を行う
+			if (m_hitDim.Dim[i].Position[0].y > col->rigidbody->GetPos().y + kWallPolyHeight ||
+				m_hitDim.Dim[i].Position[1].y > col->rigidbody->GetPos().y + kWallPolyHeight ||
+				m_hitDim.Dim[i].Position[2].y > col->rigidbody->GetPos().y + kWallPolyHeight)
 			{
-				// ポリゴンの構造体のアドレスを壁ポリゴンポインタ配列に保存する
-				m_pWallPoly[m_wallNum] = &m_hitDim.Dim[i];
+				// ポリゴンの数が限界数に達していなかったらポリゴンを配列に追加
+				if (m_wallNum < ColInfo::kMaxColHitPolyNum)
+				{
+					// ポリゴンの構造体のアドレスを壁ポリゴンポインタ配列に保存する
+					m_pWallPoly[m_wallNum] = &m_hitDim.Dim[i];
 
-				// 壁ポリゴンの数を加算する
-				m_wallNum++;
+					// 壁ポリゴンの数を加算する
+					m_wallNum++;
+				}
 			}
 		}
 		else
