@@ -1,17 +1,13 @@
 ﻿#pragma once
 #include "StateBase.h"
-
-/// <summary>
-/// 敵の待機状態
-/// </summary>
-class EnemyStateIdle : public StateBase
+class EnemyStateWalk : public StateBase
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="own">持ち主のポインタ</param>
-	EnemyStateIdle(std::shared_ptr<CharacterBase> own);
+	EnemyStateWalk(std::shared_ptr<CharacterBase> own);
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -23,5 +19,6 @@ public:
 
 private:
 	int temp_frame;
+
 };
 

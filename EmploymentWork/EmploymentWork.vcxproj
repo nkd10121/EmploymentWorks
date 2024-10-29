@@ -22,6 +22,7 @@
     <ClCompile Include="Common\SoundManager.cpp" />
     <ClCompile Include="Common\EffectManager.cpp" />
     <ClCompile Include="Character\Enemy\State\EnemyStateIdle.cpp" />
+    <ClCompile Include="EnemyStateWalk.cpp" />
     <ClCompile Include="Object\Crystal.cpp" />
     <ClCompile Include="Character\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Character\Enemy\EnemyNormal.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="Common\SoundManager.h" />
     <ClInclude Include="Common\EffectManager.h" />
     <ClInclude Include="Character\Enemy\State\EnemyStateIdle.h" />
+    <ClInclude Include="EnemyStateWalk.h" />
     <ClInclude Include="Object\Crystal.h" />
     <ClInclude Include="Character\Enemy\EnemyBase.h" />
     <ClInclude Include="Character\Enemy\EnemyNormal.h" />
