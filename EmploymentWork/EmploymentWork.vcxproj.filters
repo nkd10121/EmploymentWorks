@@ -117,19 +117,19 @@
     <ClCompile Include="Util\Input.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\CharacterBase.cpp">
+    <ClCompile Include="Character\CharacterBase.cpp">
       <Filter>ソース ファイル\Object\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\Player\Player.cpp">
+    <ClCompile Include="Character\Player\Player.cpp">
       <Filter>ソース ファイル\Object\Character\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\Player\State\PlayerStateIdle.cpp">
+    <ClCompile Include="Character\Player\State\PlayerStateIdle.cpp">
       <Filter>ソース ファイル\Object\Character\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\Player\State\PlayerStateWalk.cpp">
+    <ClCompile Include="Character\Player\State\PlayerStateWalk.cpp">
       <Filter>ソース ファイル\Object\Character\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\Player\State\StateBase.cpp">
+    <ClCompile Include="Character\Player\State\StateBase.cpp">
       <Filter>ソース ファイル\Object\Character</Filter>
     </ClCompile>
     <ClCompile Include="Object\HealPortion.cpp">
@@ -147,10 +147,10 @@
     <ClCompile Include="Common\LoadCSV.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\Enemy\EnemyBase.cpp">
+    <ClCompile Include="Character\Enemy\EnemyBase.cpp">
       <Filter>ソース ファイル\Object\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\Player\State\PlayerStateJump.cpp">
+    <ClCompile Include="Character\Player\State\PlayerStateJump.cpp">
       <Filter>ソース ファイル\Object\Character\Player\State</Filter>
     </ClCompile>
     <ClCompile Include="Object\Shot.cpp">
@@ -162,7 +162,7 @@
     <ClCompile Include="Object\Crystal.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\Enemy\EnemyNormal.cpp">
+    <ClCompile Include="Character\Enemy\EnemyNormal.cpp">
       <Filter>ソース ファイル\Object\Character\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Common\SoundManager.cpp">
@@ -171,8 +171,11 @@
     <ClCompile Include="Common\EffectManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Character\Player\State\PlayerStateDash.cpp">
+    <ClCompile Include="Character\Player\State\PlayerStateDash.cpp">
       <Filter>ソース ファイル\Object\Character\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Enemy\State\EnemyStateIdle.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,10 +233,10 @@
     <ClInclude Include="Util\Input.h">
       <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\Player\Player.h">
+    <ClInclude Include="Character\Player\Player.h">
       <Filter>ヘッダー ファイル\Object\Character\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\CharacterBase.h">
+    <ClInclude Include="Character\CharacterBase.h">
       <Filter>ヘッダー ファイル\Object\Character</Filter>
     </ClInclude>
     <ClInclude Include="Object\HealPortion.h">
@@ -242,13 +245,13 @@
     <ClInclude Include="Object\ObjectBase.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\Player\State\StateBase.h">
+    <ClInclude Include="Character\Player\State\StateBase.h">
       <Filter>ヘッダー ファイル\Object\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\Player\State\PlayerStateWalk.h">
+    <ClInclude Include="Character\Player\State\PlayerStateWalk.h">
       <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\Player\State\PlayerStateIdle.h">
+    <ClInclude Include="Character\Player\State\PlayerStateIdle.h">
       <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
     </ClInclude>
     <ClInclude Include="Common\MapManager.h">
@@ -263,10 +266,10 @@
     <ClInclude Include="Object\Crystal.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\Enemy\EnemyNormal.h">
+    <ClInclude Include="Character\Enemy\EnemyNormal.h">
       <Filter>ヘッダー ファイル\Object\Character\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\Enemy\EnemyBase.h">
+    <ClInclude Include="Character\Enemy\EnemyBase.h">
       <Filter>ヘッダー ファイル\Object\Character\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\MathHelp.h">
@@ -275,7 +278,7 @@
     <ClInclude Include="Common\SoundManager.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\Player\State\PlayerStateJump.h">
+    <ClInclude Include="Character\Player\State\PlayerStateJump.h">
       <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
     </ClInclude>
     <ClInclude Include="Object\Shot.h">
@@ -284,8 +287,11 @@
     <ClInclude Include="Common\EffectManager.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Character\Player\State\PlayerStateDash.h">
+    <ClInclude Include="Character\Player\State\PlayerStateDash.h">
       <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Enemy\State\EnemyStateIdle.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
