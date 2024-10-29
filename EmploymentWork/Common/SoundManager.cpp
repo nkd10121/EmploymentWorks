@@ -9,12 +9,18 @@ namespace
 	constexpr float kFadeFrame = 30.0f;
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SoundManager::~SoundManager()
 {
 	//念のため全消去しておく
 	Clear();
 }
 
+/// <summary>
+/// サウンドを読み込む
+/// </summary>
 void SoundManager::Load(std::string id, std::string path, bool isBGM, bool isEternal)
 {
 	//BGMの場合
@@ -75,6 +81,9 @@ void SoundManager::Load(std::string id, std::string path, bool isBGM, bool isEte
 	}
 }
 
+/// <summary>
+/// すべてのリソースの読み込みが終了しているかどうかを取得
+/// </summary>
 const bool SoundManager::IsLoaded() const
 {
 	for (auto& bgm : m_BGM)
@@ -90,6 +99,9 @@ const bool SoundManager::IsLoaded() const
 	return true;
 }
 
+/// <summary>
+/// 常駐フラグがfalseのハンドルを全削除する
+/// </summary>
 void SoundManager::Clear()
 {
 	for (auto& bgm : m_BGM)
@@ -108,6 +120,9 @@ void SoundManager::Clear()
 	InitSoundMem();
 }
 
+/// <summary>
+/// 指定したIDのBGMを流す
+/// </summary>
 void SoundManager::PlayBGM(std::string id, bool isFromStart)
 {
 	for (auto& bgm : m_BGM)
@@ -135,6 +150,9 @@ void SoundManager::PlayBGM(std::string id, bool isFromStart)
 	return;
 }
 
+/// <summary>
+///	指定したIDのSEを流す
+/// </summary>
 void SoundManager::PlaySE(std::string id)
 {
 	for (auto& se : m_SE)
@@ -156,6 +174,9 @@ void SoundManager::PlaySE(std::string id)
 	return;
 }
 
+/// <summary>
+/// BGMをフェードアウトさせる
+/// </summary>
 void SoundManager::FadeOutBGM(std::string id, int fadeFrame)
 {
 	float dif = m_BGMvolume * ((kFadeFrame - static_cast<float>(fadeFrame)) / kFadeFrame);
@@ -177,6 +198,9 @@ void SoundManager::FadeOutBGM(std::string id, int fadeFrame)
 	return;
 }
 
+/// <summary>
+/// 指定したIDのBGMを止める
+/// </summary>
 void SoundManager::StopBGM(std::string id)
 {
 	for (auto& bgm : m_BGM)
@@ -197,6 +221,9 @@ void SoundManager::StopBGM(std::string id)
 	}
 }
 
+/// <summary>
+/// 指定したサウンドが流れているどうか
+/// </summary>
 bool SoundManager::isPlayingSound(std::string id)
 {
 	for (auto& bgm : m_BGM)
@@ -215,6 +242,9 @@ bool SoundManager::isPlayingSound(std::string id)
 	return false;
 }
 
+/// <summary>
+/// BGMの音量を変える
+/// </summary>
 void SoundManager::ChangeBGMVolume(float volume)
 {
 	m_BGMvolume = volume;
@@ -225,6 +255,9 @@ void SoundManager::ChangeBGMVolume(float volume)
 	return;
 }
 
+/// <summary>
+/// SEの音量を変える
+/// </summary>
 void SoundManager::ChangeSEVolume(float volume)
 {
 	m_SEvolume = volume;

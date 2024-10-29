@@ -15,16 +15,25 @@ namespace
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 PlayerStateDash::PlayerStateDash(std::shared_ptr<CharacterBase> own) :
 	StateBase(own)
 {
 	m_nowState = StateKind::Dash;
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void PlayerStateDash::Init()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void PlayerStateDash::Update()
 {
 	//持ち主がプレイヤーかどうかをチェックする

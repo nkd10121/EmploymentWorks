@@ -12,16 +12,24 @@ struct Sound;
 class SoundManager
 {
 private:
+	/// <summary>
+	/// サウンド情報
+	/// </summary>
 	struct Sound
 	{
-		std::string id;
-		std::string path;
-		int handle;
-		bool isEteral;
+		std::string id;		//サウンドID
+		std::string path;	//パス
+		int handle;			//ハンドル
+		bool isEteral;		//常駐フラグ
 	};
 private:
-	// シングルトンパターンなのでコンストラクタはprivateに置く
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	SoundManager() {};
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	virtual ~SoundManager();
 
 	static SoundManager* m_instance;	//インスタンス
@@ -35,9 +43,9 @@ public:
 	SoundManager& operator= (const SoundManager&&) = delete;
 
 	/// <summary>
-	/// SoundManagerはGetInstance()を通した参照からしか利用できない
+	/// インスタンスを取得
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>インスタンス</returns>
 	static SoundManager& GetInstance()
 	{
 		if (!m_instance)
@@ -48,7 +56,10 @@ public:
 		return *m_instance;
 	}
 
-	//これをし忘れると普通にメモリリーク
+	/// <summary>
+	/// 削除
+	/// これをし忘れると普通にメモリリーク
+	/// </summary>
 	static void Destroy()
 	{
 		delete m_instance;
@@ -56,19 +67,26 @@ public:
 	}
 
 public:
-
 	/// <summary>
 	/// サウンドを読み込む
 	/// </summary>
 	/// <param name="id">サウンドID</param>
 	/// <param name="path">サウンドパス</param>
 	/// <param name="isBGM">true = BGM,false = SE</param>
+
+	/// <summary>
+	/// サウンドを読み込む
+	/// </summary>
+	/// <param name="id">サウンドID</param>
+	/// <param name="path">サウンドパス</param>
+	/// <param name="isBGM">true : BGM,false : SE</param>
+	/// <param name="isEternal">常駐するかどうか true:する,false:しない</param>
 	void Load(std::string id, std::string path, bool isBGM,bool isEternal);
 
 	/// <summary>
 	/// すべてのリソースの読み込みが終了しているかどうかを取得
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>true:終了,false:まだ</returns>
 	const bool IsLoaded()const;
 
 	/// <summary>
@@ -77,20 +95,29 @@ public:
 	void Clear();
 
 	/// <summary>
-	/// 指定した名前のサウンドを流す
+	/// 指定したIDのBGMを流す
 	/// </summary>
-	/// <param name="id">流したいサウンドネーム</param>
+	/// <param name="id">流したいBGMのID</param>
 	/// <param name="isFromStart">true = 最初から,false = 途中から</param>
 	void PlayBGM(std::string id, bool isFromStart);
 
+	/// <summary>
+	///	指定したIDのSEを流す
+	/// </summary>
+	/// <param name="id">流したいSEのID</param>
 	void PlaySE(std::string id);
 
+	/// <summary>
+	/// BGMをフェードアウトさせる
+	/// </summary>
+	/// <param name="id">フェードアウトさせたいBGMのID</param>
+	/// <param name="fadeFrame"></param>
 	void FadeOutBGM(std::string id, int fadeFrame);
 
 	/// <summary>
-	/// 指定した名前のサウンドを止める
+	/// 指定したIDのBGMを止める
 	/// </summary>
-	/// <param name="id">止めたいサウンドネーム</param>
+	/// <param name="id">止めたいBGMのID</param>
 	void StopBGM(std::string id);
 
 	/// <summary>
@@ -100,7 +127,16 @@ public:
 	/// <returns>true = 流れている,false = 流れていない</returns>
 	bool isPlayingSound(std::string id);
 
+	/// <summary>
+	/// BGMの音量を変える
+	/// </summary>
+	/// <param name="volume">音量 0.0f～1.0f</param>
 	void ChangeBGMVolume(float volume);
+
+	/// <summary>
+	/// SEの音量を変える
+	/// </summary>
+	/// <param name="volume">音量 0.0f～1.0f</param>
 	void ChangeSEVolume(float volume);
 
 private:
@@ -112,8 +148,8 @@ private:
 	bool CheckPlaying(int handle) { return CheckSoundMem(handle); }
 
 private:
-	std::list<std::shared_ptr<Sound>> m_BGM;
-	std::list<std::shared_ptr<Sound>> m_SE;
+	std::list<std::shared_ptr<Sound>> m_BGM;	//BGM配列
+	std::list<std::shared_ptr<Sound>> m_SE;		//SE配列
 
 	float m_BGMvolume;	//bgmの音量　min:0.0f,max:1.0f
 	float m_SEvolume;	//seの音量　min:0.0f,max:1.0f

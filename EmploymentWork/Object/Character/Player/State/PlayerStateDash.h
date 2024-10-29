@@ -10,7 +10,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="own"></param>
+	/// <param name="own">持ち主のポインタ</param>
 	PlayerStateDash(std::shared_ptr<CharacterBase> own);
 	/// <summary>
 	/// 初期化

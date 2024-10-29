@@ -39,7 +39,6 @@ public:
 
 	/// <summary>
 	/// インスタンスを取得
-	/// ModelManagerはGetInstance()を通した参照からしか利用できない
 	/// </summary>
 	/// <returns>インスタンス</returns>
 	static ModelManager& GetInstance()

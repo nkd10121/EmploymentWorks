@@ -25,8 +25,9 @@ namespace
 		return result;
 	}
 
-	const std::string kFrontPathName = "data/csv/";
-	const std::string kBackPathName = ".csv";
+	/*パス関係*/
+	const std::string kFrontPathName = "data/csv/";		//パスの前部分
+	const std::string kBackPathName = ".csv";			//パスの後ろ部分
 
 	namespace LoadData
 	{
@@ -112,6 +113,9 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 	return retStatus;
 }
 
+/// <summary>
+/// そのシーンでロードするリソース情報を取得
+/// </summary>
 std::list<LoadCSV::ResourceData> LoadCSV::GetLoadResourcePath(std::string stageId)
 {
 	//戻り値

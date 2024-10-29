@@ -19,11 +19,11 @@ private:
 	/// </summary>
 	virtual ~MapManager();
 
-	//staticにすることで
-	//Singletonのポインタがプログラム起動時に一つ作られるようにする
-	static MapManager* m_instance;
+	static MapManager* m_instance;	//インスタンス
 
-	//配置情報データ
+	/// <summary>
+	/// 配置情報データ
+	/// </summary>
 	struct LocationData
 	{
 		std::string name;	//名前
@@ -32,13 +32,6 @@ private:
 		Vec3 rot;	//回転
 		Vec3 scale;	//大きさ
 		int handle;
-	};
-
-	struct EnemyRoute
-	{
-		std::vector<Vec3> start;
-		std::vector<std::vector<Vec3>> pos;
-		Vec3 end;
 	};
 
 public:
@@ -53,7 +46,7 @@ public:
 	/// インスタンスを取得
 	/// MapManagerはGetInstance()を通した参照からしか利用できない
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>インスタンス</returns>
 	static MapManager& GetInstance()
 	{
 		if (!m_instance)

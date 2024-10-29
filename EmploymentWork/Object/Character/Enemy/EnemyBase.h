@@ -59,7 +59,7 @@ protected:
 
 	int m_modelHandle;	//モデルハンドル
 
-	Vec3 m_drawPos;				//描画座標
+	Vec3 m_drawPos;		//描画座標
 
-	GameObjectTag m_hitObjectTag;
+	GameObjectTag m_hitObjectTag;	//あったオブジェクトタグ
 };

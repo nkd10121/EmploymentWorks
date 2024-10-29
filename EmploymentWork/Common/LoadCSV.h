@@ -26,9 +26,7 @@ private:
 	/// </summary>
 	virtual ~LoadCSV() {};
 
-	//staticにすることで
-	//Singletonのポインタがプログラム起動時に一つ作られるようにする
-	static LoadCSV* m_instance;
+	static LoadCSV* m_instance;	//インスタンス
 public:
 	//コピーコンストラクタから実体の生成ができてしまうため
 	//コピーコンストラクタを禁止する
@@ -38,7 +36,7 @@ public:
 	LoadCSV& operator= (const LoadCSV&&) = delete;
 
 	/// <summary>
-	/// LoadCSVはGetInstance()を通した参照からしか利用できない
+	/// インスタンスを取得
 	/// </summary>
 	/// <returns></returns>
 	static LoadCSV& GetInstance()
@@ -51,7 +49,10 @@ public:
 		return *m_instance;
 	}
 
-	//これをし忘れると普通にメモリリーク
+	/// <summary>
+	/// 削除
+	/// これをし忘れると普通にメモリリーク
+	/// </summary>
 	static void Destroy()
 	{
 		delete m_instance;
@@ -66,9 +67,9 @@ public:
 	CharacterBase::Status LoadStatus(const char* characterName);
 
 	/// <summary>
-	/// そのシーンでロードするリソース名を取得
+	/// そのシーンでロードするリソース情報を取得
 	/// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
+	/// <param name="stageId">ステージID</param>
+	/// <returns>そのシーンでロードするリソース情報</returns>
 	std::list<ResourceData>GetLoadResourcePath(std::string stageId);
 };
