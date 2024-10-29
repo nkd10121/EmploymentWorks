@@ -180,7 +180,7 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateIdle.cpp">
       <Filter>ソース ファイル\Object\Character\Enemy\State</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyStateWalk.cpp">
+    <ClCompile Include="Character\Enemy\State\EnemyStateWalk.cpp">
       <Filter>ソース ファイル\Object\Character\Enemy\State</Filter>
     </ClCompile>
   </ItemGroup>
@@ -299,7 +299,7 @@
     <ClInclude Include="Character\Enemy\State\EnemyStateIdle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyStateWalk.h">
+    <ClInclude Include="Character\Enemy\State\EnemyStateWalk.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
