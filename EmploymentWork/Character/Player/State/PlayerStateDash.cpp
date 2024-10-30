@@ -41,7 +41,7 @@ void PlayerStateDash::Update()
 
 	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
-	//左スティックが入力されていたらStateをWalkにする
+	//左スティックが入力されていなかったらStateをIdleにする
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 		Input::GetInstance().GetInputStick(false).second == 0.0f)
 	{
@@ -53,6 +53,7 @@ void PlayerStateDash::Update()
 		return;
 	}
 
+	//ジャンプボタンが押されていたらstateをJumpにする
 	if (Input::GetInstance().IsTriggered("A"))
 	{
 		std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
@@ -62,6 +63,7 @@ void PlayerStateDash::Update()
 		return;
 	}
 
+	//ダッシュボタンが押されていたらstateをDashにする
 	if (Input::GetInstance().IsTriggered("B"))
 	{
 		std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());

@@ -41,6 +41,8 @@ void PlayerStateIdle::Update()
 		return;
 	}
 
+
+	//ジャンプボタンが押されていたらstateをJumpにする
 	if (Input::GetInstance().IsTriggered("A"))
 	{
 		std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());

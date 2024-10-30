@@ -53,6 +53,7 @@ void PlayerStateWalk::Update()
 		return;
 	}
 
+	//ジャンプボタンが押されていたらstateをJumpにする
 	if (Input::GetInstance().IsTriggered("A"))
 	{
 		std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
@@ -62,6 +63,7 @@ void PlayerStateWalk::Update()
 		return;
 	}
 
+	//ダッシュボタンが押されていたらstateをDashにする
 	if (Input::GetInstance().IsTriggered("B"))
 	{
 		std::shared_ptr<PlayerStateDash> pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());

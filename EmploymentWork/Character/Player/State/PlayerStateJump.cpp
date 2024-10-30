@@ -44,7 +44,7 @@ void PlayerStateJump::Update()
 
 	if (m_jumpCount > 2)
 	{
-		//左スティックが入力されていたらStateをWalkにする
+		//左スティックが入力されていなかったらStateをIdleにする
 		if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 			Input::GetInstance().GetInputStick(false).second == 0.0f)
 		{
