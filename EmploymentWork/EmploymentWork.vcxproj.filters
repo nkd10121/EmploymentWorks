@@ -70,6 +70,9 @@
     <Filter Include="ソース ファイル\Object\Character\Enemy\State">
       <UniqueIdentifier>{1734faed-1e73-4da1-9bde-0c30873fb827}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Object\Character\Enemy\State">
+      <UniqueIdentifier>{b08059a0-a727-4463-b303-308288558ef8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -297,10 +300,10 @@
       <Filter>ヘッダー ファイル\Object\Character\Player\State</Filter>
     </ClInclude>
     <ClInclude Include="Character\Enemy\State\EnemyStateIdle.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Object\Character\Enemy\State</Filter>
     </ClInclude>
     <ClInclude Include="Character\Enemy\State\EnemyStateWalk.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Object\Character\Enemy\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
