@@ -653,7 +653,7 @@ void MyLib::Physics::FixPosition()
 #endif
 		// Posを更新するので、velocityもそこに移動するvelocityに修正
 		Vec3 toFixedPos = item->rigidbody->GetNextPos() - item->rigidbody->GetPos();
-		if (toFixedPos.y > 0.8001f)
+		if (toFixedPos.y > 1.0f)
 		{
 			toFixedPos.y = 0.0f;
 		}

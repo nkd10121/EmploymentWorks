@@ -10,7 +10,7 @@
 namespace
 {
 	//ジャンプ力
-	constexpr float kJumpPower = 0.8f;
+	constexpr float kJumpPower = 1.0f;
 }
 
 /// <summary>
