@@ -48,6 +48,8 @@ void PlayerStateDash::Update()
 		m_nextState = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_nextState);
 		state->Init();
+
+		m_pOwn.lock()->ChangeAnim(0);
 		return;
 	}
 
@@ -56,6 +58,7 @@ void PlayerStateDash::Update()
 		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
 		state->Init();
+
 		return;
 	}
 
@@ -64,6 +67,8 @@ void PlayerStateDash::Update()
 		m_nextState = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateWalk>(m_nextState);
 		state->Init();
+
+		m_pOwn.lock()->ChangeAnim(1);
 		return;
 	}
 
@@ -84,7 +89,7 @@ void PlayerStateDash::Update()
 
 	//速度が決定できるので移動ベクトルに反映する
 	temp_moveVec = temp_moveVec.Normalize();
-	float speed = /*m_status.speed*/2.0f * rate;
+	float speed = own->GetMoveSpeed() * 2.0f * rate;
 
 	temp_moveVec = temp_moveVec * speed;
 

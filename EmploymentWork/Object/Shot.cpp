@@ -111,7 +111,7 @@ void Shot::Update()
 	//}
 
 	//何も当たらずに飛んで行ったとき、20秒後に自身を削除する
-	if (m_frameCount > 60 * 20)
+	if (m_frameCount > 60 * 10)
 	{
 		m_isExist = false;
 	}

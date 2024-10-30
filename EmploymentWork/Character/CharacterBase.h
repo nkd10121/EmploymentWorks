@@ -50,6 +50,11 @@ public:
 	///// <returns>最大HP</returns>
 	//const int GetMaxHp()const { return m_maxHp; }
 	/// <summary>
+	/// 自身の移動速度を取得
+	/// </summary>
+	/// <returns>自身の移動速度</returns>
+	const float GetMoveSpeed()const { return m_status.speed; }
+	/// <summary>
 	/// 物理データを取得
 	/// </summary>
 	/// <returns>物理データ</returns>
@@ -60,7 +65,7 @@ public:
 	/// <returns></returns>
 	const bool GetIsAnimationEnd()const { return m_isAnimationFinish; }
 
-protected:
+public:
 	/// <summary>
 	/// アニメーションの更新
 	/// </summary>

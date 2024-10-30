@@ -41,13 +41,14 @@ void PlayerStateWalk::Update()
 
 	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
-	//左スティックが入力されていたらStateをWalkにする
+	//左スティックが入力されていなかったらStateをIdleにする
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 		Input::GetInstance().GetInputStick(false).second == 0.0f)
 	{
 		m_nextState = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_nextState);
 		state->Init();
+		m_pOwn.lock()->ChangeAnim(0);
 		return;
 	}
 
@@ -56,6 +57,7 @@ void PlayerStateWalk::Update()
 		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
 		state->Init();
+
 		return;
 	}
 
@@ -64,6 +66,8 @@ void PlayerStateWalk::Update()
 		m_nextState = std::make_shared<PlayerStateDash>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateDash>(m_nextState);
 		state->Init();
+
+		m_pOwn.lock()->ChangeAnim(2);
 		return;
 	}
 
@@ -84,7 +88,7 @@ void PlayerStateWalk::Update()
 
 	//速度が決定できるので移動ベクトルに反映する
 	temp_moveVec = temp_moveVec.Normalize();
-	float speed = /*m_status.speed*/1.0f * rate;
+	float speed = own->GetMoveSpeed() * rate;
 
 	temp_moveVec = temp_moveVec * speed;
 

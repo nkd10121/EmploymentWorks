@@ -36,6 +36,8 @@ void PlayerStateIdle::Update()
 		m_nextState = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateWalk>(m_nextState);
 		state->Init();
+
+		m_pOwn.lock()->ChangeAnim(1);
 		return;
 	}
 
@@ -44,6 +46,7 @@ void PlayerStateIdle::Update()
 		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn.lock());
 		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
 		state->Init();
+
 		return;
 	}
 
