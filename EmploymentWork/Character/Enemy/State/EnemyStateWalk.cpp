@@ -28,9 +28,10 @@ void EnemyStateWalk::Update()
 
 	if (temp_frame >= 120)
 	{
-		m_nextState = std::make_shared<EnemyStateIdle>(m_pOwn.lock());
-		auto state = std::dynamic_pointer_cast<EnemyStateIdle>(m_nextState);
-		state->Init();
+		std::shared_ptr<EnemyStateIdle> pNext = std::make_shared<EnemyStateIdle>(m_pOwn.lock());
+		pNext->Init();
+		m_nextState = pNext;
+
 		return;
 	}
 

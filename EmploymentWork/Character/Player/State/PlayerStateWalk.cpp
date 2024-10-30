@@ -45,29 +45,30 @@ void PlayerStateWalk::Update()
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 		Input::GetInstance().GetInputStick(false).second == 0.0f)
 	{
-		m_nextState = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-		auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_nextState);
-		state->Init();
-		m_pOwn.lock()->ChangeAnim(0);
+		std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
+		pNext->Init();
+		m_nextState = pNext;
+
+		own->ChangeAnim(0);
 		return;
 	}
 
 	if (Input::GetInstance().IsTriggered("A"))
 	{
-		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn.lock());
-		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
-		state->Init();
+		std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
+		pNext->Init();
+		m_nextState = pNext;
 
 		return;
 	}
 
 	if (Input::GetInstance().IsTriggered("B"))
 	{
-		m_nextState = std::make_shared<PlayerStateDash>(m_pOwn.lock());
-		auto state = std::dynamic_pointer_cast<PlayerStateDash>(m_nextState);
-		state->Init();
+		std::shared_ptr<PlayerStateDash> pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
+		pNext->Init();
+		m_nextState = pNext;
 
-		m_pOwn.lock()->ChangeAnim(2);
+		own->ChangeAnim(2);
 		return;
 	}
 

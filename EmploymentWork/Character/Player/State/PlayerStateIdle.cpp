@@ -33,9 +33,9 @@ void PlayerStateIdle::Update()
 	if (Input::GetInstance().GetInputStick(false).first != 0.0f ||
 		Input::GetInstance().GetInputStick(false).second != 0.0f)
 	{
-		m_nextState = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
-		auto state = std::dynamic_pointer_cast<PlayerStateWalk>(m_nextState);
-		state->Init();
+		std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
+		pNext->Init();
+		m_nextState = pNext;
 
 		m_pOwn.lock()->ChangeAnim(1);
 		return;
@@ -43,9 +43,9 @@ void PlayerStateIdle::Update()
 
 	if (Input::GetInstance().IsTriggered("A"))
 	{
-		m_nextState = std::make_shared<PlayerStateJump>(m_pOwn.lock());
-		auto state = std::dynamic_pointer_cast<PlayerStateJump>(m_nextState);
-		state->Init();
+		std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
+		pNext->Init();
+		m_nextState = pNext;
 
 		return;
 	}
