@@ -34,4 +34,7 @@ public:
 	virtual void Update() override;
 
 	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) override;
+
+private:
+	eDir m_dir;
 };

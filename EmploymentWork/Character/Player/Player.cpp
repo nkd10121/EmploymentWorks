@@ -88,7 +88,7 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 
 	//待機アニメーションを設定
-	m_currentAnimNo = MV1AttachAnim(m_modelHandle, 0);
+	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx("Player", "IDLE"));
 	m_nowAnimIdx = 0;
 
 	//プレイヤーのステータス取得

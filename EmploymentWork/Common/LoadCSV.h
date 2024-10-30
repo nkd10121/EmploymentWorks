@@ -72,4 +72,12 @@ public:
 	/// <param name="stageId">ステージID</param>
 	/// <returns>そのシーンでロードするリソース情報</returns>
 	std::list<ResourceData>GetLoadResourcePath(std::string stageId);
+
+	/// <summary>
+	/// 指定したキャラクターIDの指定したアニメーションの名前を取得する
+	/// </summary>
+	/// <param name="characterID">キャラクターID</param>
+	/// <param name="animID">アニメーションID</param>
+	/// <returns>アニメーション番号</returns>
+	int GetAnimIdx(std::string characterID,std::string animID);
 };

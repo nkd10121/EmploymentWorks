@@ -6,6 +6,8 @@
 #include "PlayerStateDash.h"
 #include "CharacterBase.h"
 
+#include "LoadCSV.h"
+
 namespace
 {
 	/// <summary>
@@ -59,7 +61,8 @@ namespace
 /// コンストラクタ
 /// </summary>
 PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
-	StateBase(own)
+	StateBase(own),
+	m_dir(eDir::Forward)
 {
 	m_nowState = StateKind::Walk;
 }
@@ -83,7 +86,17 @@ void PlayerStateWalk::Update()
 
 	//コントローラーの左スティックの入力を取得
 	auto input = Input::GetInstance().GetInputStick(false);
-	auto dir = static_cast<eDir>(direction(input.first, -input.second));
+	auto dirLog = m_dir;
+	m_dir = static_cast<eDir>(direction(input.first, -input.second));
+
+	//直前の入力方向と異なるとき
+	if (dirLog != m_dir)
+	{
+		if (m_dir == eDir::Forward)
+		{
+			//own->ChangeAnim();
+		}
+	}
 
 	//左スティックが入力されていなかったらStateをIdleにする
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
@@ -93,7 +106,7 @@ void PlayerStateWalk::Update()
 		pNext->Init();
 		m_nextState = pNext;
 
-		own->ChangeAnim(0);
+		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "IDLE"));
 		return;
 	}
 
@@ -104,18 +117,18 @@ void PlayerStateWalk::Update()
 		pNext->Init();
 		m_nextState = pNext;
 
-		m_pOwn.lock()->ChangeAnim(4);
+		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_UP"));
 		return;
 	}
 
 	//ダッシュボタンが押されていたらstateをDashにする
-	if (Input::GetInstance().IsTriggered("INPUT_DASH") && dir == eDir::Forward)
+	if (Input::GetInstance().IsTriggered("INPUT_DASH") && m_dir == eDir::Forward)
 	{
 		std::shared_ptr<PlayerStateDash> pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
 		pNext->Init();
 		m_nextState = pNext;
 
-		own->ChangeAnim(2);
+		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "RUN_FORWARD"));
 		return;
 	}
 

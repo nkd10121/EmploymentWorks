@@ -6,6 +6,8 @@
 #include "PlayerStateWalk.h"
 #include "CharacterBase.h"
 
+#include "LoadCSV.h"
+
 namespace
 {
 	/// <summary>
@@ -93,7 +95,7 @@ void PlayerStateDash::Update()
 		pNext->Init();
 		m_nextState = pNext;
 
-		m_pOwn.lock()->ChangeAnim(0);
+		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "IDLE"));
 		return;
 	}
 
@@ -104,7 +106,7 @@ void PlayerStateDash::Update()
 		pNext->Init();
 		m_nextState = pNext;
 
-		m_pOwn.lock()->ChangeAnim(4);
+		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_UP"));
 		return;
 	}
 
@@ -115,7 +117,7 @@ void PlayerStateDash::Update()
 		pNext->Init();
 		m_nextState = pNext;
 
-		m_pOwn.lock()->ChangeAnim(1, PlayerAnim::kWalkAnimSpeed);
+		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "WALK_FORWARD"), PlayerAnim::kWalkAnimSpeed);
 		return;
 	}
 

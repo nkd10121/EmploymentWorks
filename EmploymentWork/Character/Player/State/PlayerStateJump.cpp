@@ -6,6 +6,7 @@
 #include "PlayerStateWalk.h"
 
 #include "ModelManager.h"
+#include "LoadCSV.h"
 
 namespace
 {
@@ -82,10 +83,9 @@ void PlayerStateJump::Update()
 
 void PlayerStateJump::UpUpdate()
 {
-	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
-	if (own->GetNowAnimEndFrame() * 0.98f <= m_jumpFrame)
+	if (m_pOwn.lock()->GetNowAnimEndFrame() * 0.98f <= m_jumpFrame)
 	{
-		own->ChangeAnim(5);
+		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_AIR"));
 		m_jumpFrame = 0;
 		m_updateFunc = &PlayerStateJump::LoopUpdate;
 	}
@@ -101,8 +101,8 @@ void PlayerStateJump::LoopUpdate()
 		MV1SetScale(stageModel, VGet(0.1f, 0.1f, 0.1f));
 
 		auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
-		auto pos = own->GetRigidbody()->GetPos();
-		auto vel = own->GetRigidbody()->GetVelocity();
+		auto pos = m_pOwn.lock()->GetRigidbody()->GetPos();
+		auto vel = m_pOwn.lock()->GetRigidbody()->GetVelocity();
 		auto modelBottomPos = pos;
 		modelBottomPos.y -= own->GetCollisionSize();
 		auto underPos = modelBottomPos;
@@ -112,7 +112,7 @@ void PlayerStateJump::LoopUpdate()
 
 		if (hit.HitFlag)
 		{
-			own->ChangeAnim(6, 0.75f);
+			own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_DOWN"), 0.75f);
 			m_jumpFrame = 0;
 			m_updateFunc = &PlayerStateJump::DownUpdate;
 		}
@@ -132,7 +132,7 @@ void PlayerStateJump::DownUpdate()
 {
 	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
 
-	if (m_jumpFrame >= own->GetNowAnimEndFrame() * 0.6f)
+	if (m_jumpFrame >= m_pOwn.lock()->GetNowAnimEndFrame() * 0.6f)
 	{
 		//左スティックが入力されていなかったらStateをIdleにする
 		if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
@@ -142,7 +142,7 @@ void PlayerStateJump::DownUpdate()
 			pNext->Init();
 			m_nextState = pNext;
 
-			own->ChangeAnim(0);
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "IDLE"));
 			return;
 		}
 
@@ -154,7 +154,7 @@ void PlayerStateJump::DownUpdate()
 			pNext->Init();
 			m_nextState = pNext;
 
-			m_pOwn.lock()->ChangeAnim(1, PlayerAnim::kWalkAnimSpeed);
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "WALK_FORWARD"), PlayerAnim::kWalkAnimSpeed);
 			return;
 		}
 	}

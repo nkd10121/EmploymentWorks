@@ -168,3 +168,56 @@ std::list<LoadCSV::ResourceData> LoadCSV::GetLoadResourcePath(std::string stageI
 
 	return ret;
 }
+
+int LoadCSV::GetAnimIdx(std::string characterID, std::string animID)
+{
+	int ret = -1;
+
+	// 一時保存用string
+	std::string strBuf;
+	// カンマ分け一時保存用string
+	std::vector<std::string> strConmaBuf;
+
+	// ファイル読み込み
+	std::ifstream ifs("data/csv/animIdx.csv");
+	if (!ifs)
+	{
+		assert(0 && "ファイルにアクセスできませんでした。");
+		return ret;
+	}
+
+	//最初は対応表情報が入っているだけなので無視する
+	std::getline(ifs, strBuf);
+	auto buf = Split(strBuf, ',');
+
+	int index = -1;
+
+	for (int i = 1;i < buf.size();i++)
+	{
+		if (buf[i] == animID)
+		{
+			index = i;
+		}
+	}
+
+	if (index == -1)
+	{
+		assert(index == -1 && "アニメーションIDが見つかりませんでした");
+		return ret;
+	}
+
+
+	while (getline(ifs, strBuf))
+	{
+		//取得した文字列をカンマ区切りの配列(情報群)にする
+		strConmaBuf = Split(strBuf, ',');
+
+		//指定したステージIDと一致していたら
+		if (characterID == strConmaBuf[0])
+		{
+			ret = stoi(strConmaBuf[index]);
+		}
+	}
+
+	return ret;
+}
