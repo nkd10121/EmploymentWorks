@@ -21,6 +21,8 @@ CharacterBase::CharacterBase(Priority priority, GameObjectTag tag) :
 /// </summary>
 CharacterBase::~CharacterBase()
 {
+	//基底クラスで削除しておく
+	MV1DeleteModel(m_modelHandle);
 }
 
 /// <summary>

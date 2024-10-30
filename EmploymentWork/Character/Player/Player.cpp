@@ -7,27 +7,36 @@
 
 #include "Shot.h"
 #include "SceneGame.h"
+#include "ModelManager.h"
 
 namespace
 {
-	//デバッグ用のカプセル関係
-	constexpr float kCupsuleSize = 2.0f;
-	constexpr float kCupsuleRadius = 2.0f;
-	constexpr int kCupsuleDivNum = 10;
+	/*デバッグ用のカプセル関係*/
+	constexpr float kCupsuleSize = 3.0f;		//カプセルのサイズ
+	constexpr float kCupsuleRadius = 2.0f;		//カプセルの半径
+	constexpr int kCupsuleDivNum = 10;			//カプセルの分け数(?)	//TODO:いらんかったら消す
 
 	/*アナログスティックによる移動関連*/
 	constexpr float kMaxSpeed = 0.2f;			//プレイヤーの最大速度
 	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定範囲
 	constexpr float kAnalogRangeMax = 0.8f;
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
+
+	/*モデル関係*/
+	constexpr float kModelScale = 0.05f;		//モデルのサイズ
+
+	/*アニメーション関係*/
+	constexpr float kAnimChangeFrame = 10.0f;							//アニメーションの切り替えにかかるフレーム数
+	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;		//1フレーム当たりのアニメーション切り替えが進む速さ
+	constexpr float kAnimBlendRateMax = 1.0f;							//アニメーションブレンド率の最大
 }
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Player::Player():
+Player::Player() :
 	CharacterBase(Collidable::Priority::High, GameObjectTag::Player),
-	m_pos(Vec3(0.0f, kCupsuleRadius+ kCupsuleSize,0.0f)),
+	m_pos(Vec3(0.0f, kCupsuleRadius + kCupsuleSize, 0.0f)),
 	temp_moveVec(),
 	m_cameraDirection(),
 	m_rot(),
@@ -35,6 +44,7 @@ Player::Player():
 	m_angle(0.0f),
 	m_attackButtonPushCount(0)
 {
+	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
 	sphereCol->m_radius = kCupsuleRadius;
@@ -46,6 +56,8 @@ Player::Player():
 /// </summary>
 Player::~Player()
 {
+	//基底クラスで呼んでいるが念のため
+	MV1DeleteModel(m_modelHandle);
 }
 
 /// <summary>
@@ -67,6 +79,15 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->SetPos(m_pos);
 	rigidbody->SetNextPos(rigidbody->GetPos());
 
+	//プレイヤーモデルを取得
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("MOD_PLAYER");
+	//スケールの変更
+	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
+
+	//待機アニメーションを設定
+	m_currentAnimNo = MV1AttachAnim(m_modelHandle, 0);
+	m_nowAnimIdx = 0;
+
 	//プレイヤーのステータス取得
 	m_status = LoadCSV::GetInstance().LoadStatus("Player");
 	//最大HPを設定しておく
@@ -85,9 +106,34 @@ void Player::Update(SceneGame* pScene)
 		m_pState = m_pState->GetNextState();
 		m_pState->SetNextState(m_pState);
 	}
-	
+
+	m_isAnimationFinish = UpdateAnim(m_currentAnimNo);
+
+	//アニメーションの切り替え
+	if (m_prevAnimNo != -1)
+	{
+		//フレームでアニメーションを切り替える
+		m_animBlendRate += kAnimChangeRateSpeed;
+		if (m_animBlendRate >= kAnimBlendRateMax)
+		{
+			m_animBlendRate = kAnimBlendRateMax;
+		}
+
+		//アニメーションのブレンド率を設定する
+		MV1SetAttachAnimBlendRate(m_modelHandle, m_prevAnimNo, kAnimBlendRateMax - m_animBlendRate);
+		MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
+	}
+
+
 	//ステートの更新
 	m_pState->Update();
+
+	//カメラの座標からプレイヤーを回転させる方向を計算する
+	m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
+	m_rot = Vec3(0.0f, m_angle, 0.0f);
+
+	//プレイヤーを回転させる
+	MV1SetRotationXYZ(m_modelHandle, m_rot.ToVECTOR());
 
 	if (Input::GetInstance().GetIsPushedTriggerButton(true))
 	{
@@ -176,16 +222,22 @@ void Player::Draw()
 	rigidbody->SetPos(rigidbody->GetNextPos());
 	m_pos = rigidbody->GetPos();
 
-	//プレイヤー想定のカプセル
-	VECTOR low = VGet(m_pos.x, m_pos.y - kCupsuleSize, m_pos.z);
-	VECTOR high = VGet(m_pos.x, m_pos.y + kCupsuleSize, m_pos.z);
-	DrawCapsule3D(low, high, kCupsuleRadius, kCupsuleDivNum, 0xffffff, 0xffffff, false);
+	auto drawPos = m_pos;
+	drawPos.y -= kCupsuleRadius + kCupsuleSize;
+
+	MV1SetPosition(m_modelHandle, drawPos.ToVECTOR());
+	MV1DrawModel(m_modelHandle);
+
+	////プレイヤー想定のカプセル
+	//VECTOR low = VGet(m_pos.x, m_pos.y - kCupsuleSize, m_pos.z);
+	//VECTOR high = VGet(m_pos.x, m_pos.y + kCupsuleSize, m_pos.z);
+	//DrawCapsule3D(low, high, kCupsuleRadius, kCupsuleDivNum, 0xffffff, 0xffffff, false);
 
 #ifdef _DEBUG	//デバッグ描画
 	//入力値の確認
 	DrawFormatString(0, 16, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
 	//ステートパターンの確認
-	m_pState->DebugDrawState(0,32);
+	m_pState->DebugDrawState(0, 32);
 #endif
 }
 
@@ -194,27 +246,27 @@ void Player::Draw()
 /// </summary>
 void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 {
-//#ifdef _DEBUG
-//	std::string message = "プレイヤーが";
-//#endif
-//	auto tag = colider->GetTag();
-//	switch (tag)
-//	{
-//	case GameObjectTag::Enemy:
-//#ifdef _DEBUG
-//		message += "敵";
-//#endif
-//		break;
-//	case GameObjectTag::Portion:
-//#ifdef _DEBUG
-//		message += "ポーション";
-//#endif
-//		break;
-//	}
-//#ifdef _DEBUG
-//	message += "と当たった！\n";
-//	printfDx(message.c_str());
-//#endif
+	//#ifdef _DEBUG
+	//	std::string message = "プレイヤーが";
+	//#endif
+	//	auto tag = colider->GetTag();
+	//	switch (tag)
+	//	{
+	//	case GameObjectTag::Enemy:
+	//#ifdef _DEBUG
+	//		message += "敵";
+	//#endif
+	//		break;
+	//	case GameObjectTag::Portion:
+	//#ifdef _DEBUG
+	//		message += "ポーション";
+	//#endif
+	//		break;
+	//	}
+	//#ifdef _DEBUG
+	//	message += "と当たった！\n";
+	//	printfDx(message.c_str());
+	//#endif
 }
 
 /// <summary>

@@ -7,7 +7,7 @@
 namespace
 {
 	//デバッグ用のカプセル関係
-	constexpr float kCupsuleSize = 2.0f;
+	constexpr float kCupsuleSize = 3.0f;
 	constexpr float kCupsuleRadius = 2.0f;
 	constexpr int kCupsuleDivNum = 10;
 
@@ -20,8 +20,6 @@ namespace
 EnemyNormal::EnemyNormal():
 	EnemyBase()
 {
-	//MEMO:武器をゲームシーンに渡すために引数で持ってきた
-
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
 	sphereCol->m_radius = kCupsuleRadius;
