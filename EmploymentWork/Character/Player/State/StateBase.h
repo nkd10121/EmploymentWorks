@@ -4,12 +4,20 @@
 
 class CharacterBase;
 
+namespace PlayerAnim
+{
+	constexpr float kWalkAnimSpeed = 0.35f;
+}
+
 /// <summary>
 /// ステートパターンの基底クラス
 /// </summary>
 class StateBase : public std::enable_shared_from_this<StateBase>
 {
+protected:
+
 public:
+
 	//ステート
 	enum class StateKind
 	{
@@ -22,7 +30,7 @@ public:
 		OnHit,		//被ダメージ
 		Death,		//死亡
 	};
-
+public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>

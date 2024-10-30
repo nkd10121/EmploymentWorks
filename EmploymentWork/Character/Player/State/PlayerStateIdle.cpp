@@ -37,18 +37,19 @@ void PlayerStateIdle::Update()
 		pNext->Init();
 		m_nextState = pNext;
 
-		m_pOwn.lock()->ChangeAnim(1);
+		m_pOwn.lock()->ChangeAnim(1, PlayerAnim::kWalkAnimSpeed);
 		return;
 	}
 
 
 	//ジャンプボタンが押されていたらstateをJumpにする
-	if (Input::GetInstance().IsTriggered("A"))
+	if (Input::GetInstance().IsTriggered("INPUT_JUMP"))
 	{
 		std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
 		pNext->Init();
 		m_nextState = pNext;
 
+		m_pOwn.lock()->ChangeAnim(4);
 		return;
 	}
 

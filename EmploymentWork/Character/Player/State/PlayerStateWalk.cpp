@@ -8,6 +8,46 @@
 
 namespace
 {
+	/// <summary>
+	/// 引数の2つの値から角度を計算する
+	/// </summary>
+	/// <param name="x">X</param>
+	/// <param name="y">Y</param>
+	/// <returns></returns>
+	int direction(float x, float y)
+	{
+		auto angle = atan2(y, x);
+		if (angle < 0) {
+			angle = angle + 2 * DX_PI_F;
+		}
+		angle = floor(angle * 360 / (2 * DX_PI_F));
+
+		if (23 <= angle && angle <= 67) {
+			return 7;
+		}
+		else if (68 <= angle && angle <= 112) {
+			return 6;
+		}
+		else if (113 <= angle && angle <= 157) {
+			return 5;
+		}
+		else if (158 <= angle && angle <= 202) {
+			return 4;
+		}
+		else if (203 <= angle && angle <= 247) {
+			return 3;
+		}
+		else if (248 <= angle && angle <= 292) {
+			return 2;
+		}
+		else if (293 <= angle && angle <= 337) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
 	/*アナログスティックによる移動関連*/
 	constexpr float kMaxSpeed = 0.2f;			//プレイヤーの最大速度
 	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定最小範囲
@@ -41,6 +81,10 @@ void PlayerStateWalk::Update()
 
 	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
+	//コントローラーの左スティックの入力を取得
+	auto input = Input::GetInstance().GetInputStick(false);
+	auto dir = static_cast<eDir>(direction(input.first, -input.second));
+
 	//左スティックが入力されていなかったらStateをIdleにする
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 		Input::GetInstance().GetInputStick(false).second == 0.0f)
@@ -54,17 +98,18 @@ void PlayerStateWalk::Update()
 	}
 
 	//ジャンプボタンが押されていたらstateをJumpにする
-	if (Input::GetInstance().IsTriggered("A"))
+	if (Input::GetInstance().IsTriggered("INPUT_JUMP"))
 	{
 		std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
 		pNext->Init();
 		m_nextState = pNext;
 
+		m_pOwn.lock()->ChangeAnim(4);
 		return;
 	}
 
 	//ダッシュボタンが押されていたらstateをDashにする
-	if (Input::GetInstance().IsTriggered("B"))
+	if (Input::GetInstance().IsTriggered("INPUT_DASH") && dir == eDir::Forward)
 	{
 		std::shared_ptr<PlayerStateDash> pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
 		pNext->Init();
@@ -74,8 +119,7 @@ void PlayerStateWalk::Update()
 		return;
 	}
 
-	//コントローラーの左スティックの入力を取得
-	auto input = Input::GetInstance().GetInputStick(false);
+
 	//移動方向を設定する
 	auto temp_moveVec = Vec3(input.first,0.0f,-input.second);
 	//移動ベクトルの長さを取得する

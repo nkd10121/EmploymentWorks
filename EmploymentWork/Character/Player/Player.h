@@ -52,6 +52,18 @@ public:
 	const Vec3 GetCameraDirecton()const { return m_cameraDirection; }
 
 	/// <summary>
+	/// 当たり判定のカプセルのサイズを取得
+	/// </summary>
+	/// <returns>当たり判定のカプセルのサイズ</returns>
+	const float GetCollisionSize()const { return m_collisionSize; }
+	/// <summary>
+	/// 当たり判定のカプセルの半径を取得
+	/// </summary>
+	/// <returns>当たり判定のカプセルの半径</returns>
+	const float GetCollisionRadius()const { return m_collisionRadius; }
+
+
+	/// <summary>
 	/// 押し出し処理を行うオブジェクトと衝突したとき
 	/// </summary>
 	/// <param name="colider">衝突したオブジェクト</param>
@@ -67,6 +79,9 @@ private:
 	Vec3 temp_moveVec;		//入力情報を確認するためのデバッグ用
 	Vec3 m_cameraDirection;	//カメラの方向ベクトル
 	Vec3 m_rot;				//角度
+
+	float m_collisionSize;
+	float m_collisionRadius;
 
 	float m_cameraAngle;		//カメラの角度
 	float m_angle;				//プレイヤーが向いている方向

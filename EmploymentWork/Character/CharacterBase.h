@@ -60,10 +60,15 @@ public:
 	/// <returns>物理データ</returns>
 	std::shared_ptr<MyLib::Rigidbody> GetRigidbody(){ return rigidbody; }
 	/// <summary>
-	/// アニメーションが終了したかどうかを取得
+	/// 現在再生中のアニメーションの終了フレームを取得
 	/// </summary>
 	/// <returns></returns>
-	const bool GetIsAnimationEnd()const { return m_isAnimationFinish; }
+	const float GetNowAnimEndFrame()const { return MV1GetAttachAnimTotalTime(m_modelHandle, m_currentAnimNo); }
+	/// <summary>
+	/// 現在再生中のアニメーションが終了したかどうか
+	/// </summary>
+	/// <returns></returns>
+	const bool GetAnimEnd()const { return m_isAnimationFinish; }
 
 public:
 	/// <summary>

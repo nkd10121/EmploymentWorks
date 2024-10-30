@@ -6,6 +6,18 @@
 /// </summary>
 class PlayerStateDash : public StateBase
 {
+private:
+	const enum eDir : int
+	{
+		Right,
+		BackRight,
+		Back,
+		BackLeft,
+		Left,
+		ForwardLeft,
+		Forward,
+		ForwardRight
+	};
 public:
 	/// <summary>
 	/// コンストラクタ

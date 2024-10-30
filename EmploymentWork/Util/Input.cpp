@@ -39,8 +39,8 @@ Input::Input():
 {
 	//ここでコマンドテーブルにコマンドを追加する
 
-	m_commandTable["A"] = { PadCheckMask::A };
-	m_commandTable["B"] = { PadCheckMask::B };
+	m_commandTable["INPUT_JUMP"] = { PadCheckMask::A };
+	m_commandTable["INPUT_DASH"] = { PadCheckMask::B };
 	m_commandTable["X"] = { PadCheckMask::X };
 	m_commandTable["Y"] = { PadCheckMask::Y };
 	m_commandTable["P"] = { PadCheckMask::P };
@@ -54,9 +54,6 @@ void Input::Update()
 {
 	m_lastInputData = m_inputData;	//直前入力をコピーしておく(押した瞬間を取得する用)
 
-	//ハードウェア入力チェック
-	char keystate[256];
-	GetHitKeyStateAll(keystate);//現在のキーボード入力を取得
 	int padstate = GetJoypadInputState(DX_INPUT_PAD1);//パッド情報の取得
 
 	//登録された情報とハードの情報を照らし合わせながら
@@ -65,7 +62,7 @@ void Input::Update()
 	{
 		auto& input = m_inputData[cmd.first];//コマンドの名前から入力データを作る
 
-		//キーボードのチェック
+		//コントローラーのチェック
 		input = false;
 		if (padstate & cmd.second)
 		{

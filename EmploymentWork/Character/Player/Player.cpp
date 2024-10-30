@@ -49,6 +49,9 @@ Player::Player() :
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
 	sphereCol->m_radius = kCupsuleRadius;
 	sphereCol->m_size = kCupsuleSize;
+
+	m_collisionRadius = kCupsuleRadius;
+	m_collisionSize = kCupsuleSize;
 }
 
 /// <summary>
@@ -107,6 +110,9 @@ void Player::Update(SceneGame* pScene)
 		m_pState->SetNextState(m_pState);
 	}
 
+	//ステートの更新
+	m_pState->Update();
+
 	m_isAnimationFinish = UpdateAnim(m_currentAnimNo);
 
 	//アニメーションの切り替え
@@ -125,8 +131,6 @@ void Player::Update(SceneGame* pScene)
 	}
 
 
-	//ステートの更新
-	m_pState->Update();
 
 	//カメラの座標からプレイヤーを回転させる方向を計算する
 	m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
