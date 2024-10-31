@@ -1,23 +1,13 @@
 ﻿#pragma once
 #include "StateBase.h"
 
+class Player;
+
 /// <summary>
 /// プレイヤーの歩き状態
 /// </summary>
 class PlayerStateWalk : public StateBase
 {
-private:
-	const enum eDir : int
-	{
-		Right,
-		BackRight,
-		Back,
-		BackLeft,
-		Left,
-		ForwardLeft,
-		Forward,
-		ForwardRight
-	};
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -34,6 +24,10 @@ public:
 	virtual void Update() override;
 
 	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) override;
+
+	std::string GetWalkAnimName(eDir dir);
+
+private:
 
 private:
 	eDir m_dir;

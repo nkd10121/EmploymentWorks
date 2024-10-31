@@ -41,9 +41,10 @@ Input::Input():
 
 	m_commandTable["INPUT_JUMP"] = { PadCheckMask::A };
 	m_commandTable["INPUT_DASH"] = { PadCheckMask::B };
+	m_commandTable["CANSEL"] = { PadCheckMask::B };
 	m_commandTable["X"] = { PadCheckMask::X };
 	m_commandTable["Y"] = { PadCheckMask::Y };
-	m_commandTable["P"] = { PadCheckMask::P };
+	m_commandTable["PAUSE"] = { PadCheckMask::P };
 
 }
 

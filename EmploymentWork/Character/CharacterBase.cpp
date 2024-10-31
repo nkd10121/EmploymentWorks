@@ -5,6 +5,8 @@
 /// </summary>
 CharacterBase::CharacterBase(Priority priority, GameObjectTag tag) :
 	Collidable(priority, tag),
+	m_modelHandle(-1),
+	m_characterName(),
 	m_status(),
 	m_hpMax(0),
 	m_currentAnimNo(-1),

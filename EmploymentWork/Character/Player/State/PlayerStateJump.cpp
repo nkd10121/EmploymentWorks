@@ -2,11 +2,10 @@
 #include "Input.h"
 #include "Player.h"
 
-#include "PlayerStateIdle.h"
-#include "PlayerStateWalk.h"
-
 #include "ModelManager.h"
 #include "LoadCSV.h"
+
+//TODO:ジャンプ中の状態遷移はStateとして作るべき？？？？
 
 namespace
 {
@@ -45,40 +44,6 @@ void PlayerStateJump::Update()
 	if (!CheckPlayer())	return;
 
 	(this->*m_updateFunc)();
-
-	//auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
-
-
-	//auto jumpAnimEndFrame = own->GetNowAnimEndFrame();
-
-	//if (jumpAnimEndFrame * 0.72f < m_jumpFrame)
-	//{
-	//	//左スティックが入力されていなかったらStateをIdleにする
-	//	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
-	//		Input::GetInstance().GetInputStick(false).second == 0.0f)
-	//	{
-	//		std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-	//		pNext->Init();
-	//		m_nextState = pNext;
-
-	//		own->ChangeAnim(0);
-	//		return;
-	//	}
-
-	//	//左スティックが入力されていたらStateをWalkにする
-	//	if (Input::GetInstance().GetInputStick(false).first != 0.0f ||
-	//		Input::GetInstance().GetInputStick(false).second != 0.0f)
-	//	{
-	//		std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
-	//		pNext->Init();
-	//		m_nextState = pNext;
-
-	//		m_pOwn.lock()->ChangeAnim(1, PlayerAnim::kWalkAnimSpeed);
-	//		return;
-	//	}
-	//}
-
-	//m_jumpFrame++;
 }
 
 void PlayerStateJump::UpUpdate()
@@ -138,11 +103,7 @@ void PlayerStateJump::DownUpdate()
 		if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 			Input::GetInstance().GetInputStick(false).second == 0.0f)
 		{
-			std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-			pNext->Init();
-			m_nextState = pNext;
-
-			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "IDLE"));
+			ChangeState(StateKind::Idle);
 			return;
 		}
 
@@ -150,11 +111,7 @@ void PlayerStateJump::DownUpdate()
 		if (Input::GetInstance().GetInputStick(false).first != 0.0f ||
 			Input::GetInstance().GetInputStick(false).second != 0.0f)
 		{
-			std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
-			pNext->Init();
-			m_nextState = pNext;
-
-			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "WALK_FORWARD"), PlayerAnim::kWalkAnimSpeed);
+			ChangeState(StateKind::Walk);
 			return;
 		}
 	}

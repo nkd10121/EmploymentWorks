@@ -1,23 +1,16 @@
 ﻿#pragma once
 #include <memory>
+#include <string>
 #include "MyLib.h"
 
 class CharacterBase;
-
-namespace PlayerAnim
-{
-	constexpr float kWalkAnimSpeed = 0.35f;
-}
 
 /// <summary>
 /// ステートパターンの基底クラス
 /// </summary>
 class StateBase : public std::enable_shared_from_this<StateBase>
 {
-protected:
-
 public:
-
 	//ステート
 	enum class StateKind
 	{
@@ -29,6 +22,21 @@ public:
 		Attack,		//攻撃
 		OnHit,		//被ダメージ
 		Death,		//死亡
+	};
+
+protected:
+	//左スティックの入力角度
+	const enum eDir : int
+	{
+		Forward,
+		ForwardRight,
+		Right,
+		BackRight,
+		Back,
+		BackLeft,
+		Left,
+		ForwardLeft,
+		None
 	};
 public:
 	/// <summary>
@@ -66,7 +74,6 @@ public:
 	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) abstract;
 
 
-
 #ifdef _DEBUG
 	/// <summary>
 	/// 現在のステートのデバッグ描画
@@ -78,6 +85,12 @@ public:
 
 protected:
 	/// <summary>
+	/// ステートを遷移する
+	/// </summary>
+	/// <param name="kind"></param>
+	void ChangeState(StateKind kind);
+
+	/// <summary>
 	/// 持ち主がプレイヤーかどうかを判断する
 	/// </summary>
 	bool CheckPlayer();
@@ -87,6 +100,14 @@ protected:
 	/// </summary>
 	/// <returns></returns>
 	bool CheakEnemy();
+
+	/// <summary>
+	/// 引数の2つの値から角度を計算する
+	/// </summary>
+	/// <param name="x">X</param>
+	/// <param name="y">Y</param>
+	/// <returns></returns>
+	const eDir GetDirection(float x, float y)const;
 
 protected:
 	std::weak_ptr<CharacterBase> m_pOwn;	//所有者のポインタ

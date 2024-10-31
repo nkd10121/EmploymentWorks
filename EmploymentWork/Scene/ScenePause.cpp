@@ -54,7 +54,7 @@ void ScenePause::End()
 /// </summary>
 void ScenePause::Update()
 {
-	if(Input::GetInstance().IsTriggered("B"))
+	if(Input::GetInstance().IsTriggered("CANSEL"))
 	{
 		SceneManager::GetInstance().PopScene();
 		SkipFadeIn();

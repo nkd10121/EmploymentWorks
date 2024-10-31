@@ -52,6 +52,9 @@ Player::Player() :
 
 	m_collisionRadius = kCupsuleRadius;
 	m_collisionSize = kCupsuleSize;
+
+	//キャラクター名を設定
+	m_characterName = "Player";
 }
 
 /// <summary>

@@ -171,7 +171,7 @@ void SceneGame::Update()
 	}
 
 	//Yボタンを押したらポーズ画面を開くように
-	if (Input::GetInstance().IsTriggered("P"))
+	if (Input::GetInstance().IsTriggered("PAUSE"))
 	{
 		SceneManager::GetInstance().PushScene(std::make_shared<ScenePause>());
 		return;

@@ -1,55 +1,12 @@
 ﻿#include "PlayerStateWalk.h"
 #include "Input.h"
 #include "Player.h"
-#include "PlayerStateIdle.h"
-#include "PlayerStateJump.h"
-#include "PlayerStateDash.h"
 #include "CharacterBase.h"
 
 #include "LoadCSV.h"
 
 namespace
 {
-	/// <summary>
-	/// 引数の2つの値から角度を計算する
-	/// </summary>
-	/// <param name="x">X</param>
-	/// <param name="y">Y</param>
-	/// <returns></returns>
-	int direction(float x, float y)
-	{
-		auto angle = atan2(y, x);
-		if (angle < 0) {
-			angle = angle + 2 * DX_PI_F;
-		}
-		angle = floor(angle * 360 / (2 * DX_PI_F));
-
-		if (23 <= angle && angle <= 67) {
-			return 7;
-		}
-		else if (68 <= angle && angle <= 112) {
-			return 6;
-		}
-		else if (113 <= angle && angle <= 157) {
-			return 5;
-		}
-		else if (158 <= angle && angle <= 202) {
-			return 4;
-		}
-		else if (203 <= angle && angle <= 247) {
-			return 3;
-		}
-		else if (248 <= angle && angle <= 292) {
-			return 2;
-		}
-		else if (293 <= angle && angle <= 337) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
-	}
-
 	/*アナログスティックによる移動関連*/
 	constexpr float kMaxSpeed = 0.2f;			//プレイヤーの最大速度
 	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定最小範囲
@@ -62,9 +19,13 @@ namespace
 /// </summary>
 PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 	StateBase(own),
-	m_dir(eDir::Forward)
+	m_dir()
 {
 	m_nowState = StateKind::Walk;
+
+	//このシーンに遷移した瞬間の左スティックの入力角度を取得しておく
+	auto input = Input::GetInstance().GetInputStick(false);
+	m_dir = GetDirection(input.first, -input.second);
 }
 
 /// <summary>
@@ -84,54 +45,39 @@ void PlayerStateWalk::Update()
 
 	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
-	//コントローラーの左スティックの入力を取得
-	auto input = Input::GetInstance().GetInputStick(false);
-	auto dirLog = m_dir;
-	m_dir = static_cast<eDir>(direction(input.first, -input.second));
-
-	//直前の入力方向と異なるとき
-	if (dirLog != m_dir)
-	{
-		if (m_dir == eDir::Forward)
-		{
-			//own->ChangeAnim();
-		}
-	}
-
 	//左スティックが入力されていなかったらStateをIdleにする
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 		Input::GetInstance().GetInputStick(false).second == 0.0f)
 	{
-		std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-		pNext->Init();
-		m_nextState = pNext;
-
-		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "IDLE"));
+		ChangeState(StateKind::Idle);
 		return;
 	}
 
 	//ジャンプボタンが押されていたらstateをJumpにする
 	if (Input::GetInstance().IsTriggered("INPUT_JUMP"))
 	{
-		std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
-		pNext->Init();
-		m_nextState = pNext;
-
-		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_UP"));
+		ChangeState(StateKind::Jump);
 		return;
 	}
 
 	//ダッシュボタンが押されていたらstateをDashにする
 	if (Input::GetInstance().IsTriggered("INPUT_DASH") && m_dir == eDir::Forward)
 	{
-		std::shared_ptr<PlayerStateDash> pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
-		pNext->Init();
-		m_nextState = pNext;
-
-		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "RUN_FORWARD"));
+		ChangeState(StateKind::Dash);
 		return;
 	}
 
+	//コントローラーの左スティックの入力を取得
+	auto input = Input::GetInstance().GetInputStick(false);
+	auto dirLog = m_dir;
+	m_dir = GetDirection(input.first, -input.second);
+
+	//直前の入力方向と異なるとき
+	if (dirLog != m_dir)
+	{
+		auto animName = GetWalkAnimName(m_dir);
+		own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", animName));
+	}
 
 	//移動方向を設定する
 	auto temp_moveVec = Vec3(input.first,0.0f,-input.second);
@@ -174,7 +120,39 @@ void PlayerStateWalk::Update()
 	own->GetRigidbody()->SetVelocity(newVelocity);
 }
 
-//int PlayerStateWalk::OnDamage(std::shared_ptr<MyLib::Collidable> collider)
-//{
-//	return 0;
-//}
+std::string PlayerStateWalk::GetWalkAnimName(eDir dir)
+{
+	if (dir == eDir::Forward)
+	{
+		return std::string("WALK_FORWARD");
+	}
+	else if (dir == eDir::ForwardRight)
+	{
+		return std::string("WALK_FORWARDRIGHT");
+	}
+	else if (dir == eDir::Right)
+	{
+		return std::string("WALK_RIGHT");
+	}
+	else if (dir == eDir::BackRight)
+	{
+		return std::string("WALK_BACKWARDRIGHT");
+	}
+	else if (dir == eDir::Back)
+	{
+		return std::string("WALK_BACKWARD");
+	}
+	else if (dir == eDir::BackLeft)
+	{
+		return std::string("WALK_BACKWARDLEFT");
+	}
+	else if (dir == eDir::Left)
+	{
+		return std::string("WALK_LEFT");
+	}
+	else if (dir == eDir::ForwardLeft)
+	{
+		return std::string("WALK_FORWARDLEFT");
+	}
+
+}

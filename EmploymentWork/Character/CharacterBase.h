@@ -69,7 +69,11 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const bool GetAnimEnd()const { return m_isAnimationFinish; }
-
+	/// <summary>
+	/// 自身のキャラクター名を取得
+	/// </summary>
+	/// <returns>キャラクター名</returns>
+	const std::string GetCharacterName()const { return m_characterName; }
 public:
 	/// <summary>
 	/// アニメーションの更新
@@ -86,7 +90,9 @@ public:
 
 protected:
 	int m_modelHandle;	//モデルハンドル
-	
+	std::string m_characterName;	//キャラクター名 
+									//データの取得や種類の判別に使う
+
 	Status m_status;	//ステータス
 	int m_hpMax;
 

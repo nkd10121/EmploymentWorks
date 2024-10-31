@@ -3,6 +3,20 @@
 #include <string>
 #include <cassert>
 
+#include "PlayerStateIdle.h"
+#include "PlayerStateWalk.h"
+#include "PlayerStateDash.h"
+#include "PlayerStateJump.h"
+
+#include "LoadCSV.h"
+#include "Input.h"
+
+namespace PlayerAnim
+{
+	constexpr float kWalkAnimSpeed = 0.35f;
+}
+
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -67,6 +81,61 @@ void StateBase::DebugDrawState(int x, int y)
 }
 #endif
 
+void StateBase::ChangeState(StateKind kind)
+{
+	//タグを取得
+	auto tag = m_pOwn.lock()->GetTag();
+
+	//タグから持ち主がプレイヤーか敵かを判断して処理を分ける
+	if (tag == GameObjectTag::Player)
+	{
+		//持ち主の名前を取得(アニメーション番号を取得するために今後必要)
+		auto name = m_pOwn.lock()->GetCharacterName();
+		if (kind == StateKind::Idle)
+		{
+			std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
+			pNext->Init();
+			m_nextState = pNext;
+
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "IDLE"));
+			return;
+		}
+		else if (kind == StateKind::Walk)
+		{
+			std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
+			pNext->Init();
+			m_nextState = pNext;
+
+			//左スティックの入力に応じてアニメーションを変更する
+			auto input = Input::GetInstance().GetInputStick(false);
+			auto dir = GetDirection(input.first, -input.second);
+			auto animName = pNext->GetWalkAnimName(dir);
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, animName), PlayerAnim::kWalkAnimSpeed);
+			return;
+		}
+		else if (kind == StateKind::Dash)
+		{
+			std::shared_ptr<PlayerStateDash> pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
+			pNext->Init();
+			m_nextState = pNext;
+
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "RUN_FORWARD"));
+			return;
+		}
+		else if (kind == StateKind::Jump)
+		{
+			std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
+			pNext->Init();
+			m_nextState = pNext;
+
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "JUMP_UP"));
+			return;
+		}
+	}
+
+
+}
+
 /// <summary>
 /// 持ち主がプレイヤーかどうかを判断する
 /// </summary>
@@ -74,9 +143,9 @@ bool StateBase::CheckPlayer()
 {
 	if (m_pOwn.lock()->GetTag() != GameObjectTag::Player)
 	{
-#ifdef _DEBUG
-		assert(0 && "持ち主がプレイヤーではありません");
-#endif
+//#ifdef _DEBUG
+//		assert(0 && "持ち主がプレイヤーではありません");
+//#endif
 		return false;
 	}
 
@@ -87,11 +156,45 @@ bool StateBase::CheakEnemy()
 {
 	if (m_pOwn.lock()->GetTag() != GameObjectTag::Enemy)
 	{
-#ifdef _DEBUG
-		assert(0 && "持ち主が敵ではありません");
-#endif
+//#ifdef _DEBUG
+//		assert(0 && "持ち主が敵ではありません");
+//#endif
 		return false;
 	}
 
 	return true;
+}
+
+const StateBase::eDir StateBase::GetDirection(float x, float y) const
+{
+	auto angle = atan2(y, x);
+	if (angle < 0) {
+		angle = angle + 2 * DX_PI_F;
+	}
+	angle = floor(angle * 360 / (2 * DX_PI_F));
+
+	if (23 <= angle && angle <= 67) {
+		return eDir::ForwardRight;
+	}
+	else if (68 <= angle && angle <= 112) {
+		return eDir::Forward;
+	}
+	else if (113 <= angle && angle <= 157) {
+		return eDir::ForwardLeft;
+	}
+	else if (158 <= angle && angle <= 202) {
+		return eDir::Left;
+	}
+	else if (203 <= angle && angle <= 247) {
+		return eDir::BackLeft;
+	}
+	else if (248 <= angle && angle <= 292) {
+		return eDir::Back;
+	}
+	else if (293 <= angle && angle <= 337) {
+		return eDir::BackRight;
+	}
+	else {
+		return eDir::Right;
+	}
 }

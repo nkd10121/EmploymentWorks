@@ -194,6 +194,9 @@ int LoadCSV::GetAnimIdx(std::string characterID, std::string animID)
 
 	for (int i = 1;i < buf.size();i++)
 	{
+		//もしすでにアニメーション番号を見つけていたらfor文を抜ける
+		if (index != -1) break;
+
 		if (buf[i] == animID)
 		{
 			index = i;
