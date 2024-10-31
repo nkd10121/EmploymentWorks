@@ -23,12 +23,20 @@ namespace
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
 
 	/*モデル関係*/
-	constexpr float kModelScale = 0.05f;		//モデルのサイズ
+	//キャラクターモデル
+	constexpr float kModelScale = 0.08f;		//モデルのサイズ
+	//constexpr float kModelScale = 0.05f;		//モデルのサイズ
+
+	//武器モデル
+	constexpr float kCrossbowModelScale = kModelScale * 0.64f * 10.0f;	//モデルのサイズ
+	const char* kAttachFrameName = "mixamorig:RightHandThumb1";
 
 	/*アニメーション関係*/
 	constexpr float kAnimChangeFrame = 10.0f;							//アニメーションの切り替えにかかるフレーム数
 	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;		//1フレーム当たりのアニメーション切り替えが進む速さ
 	constexpr float kAnimBlendRateMax = 1.0f;							//アニメーションブレンド率の最大
+
+
 }
 
 /// <summary>
@@ -64,6 +72,7 @@ Player::~Player()
 {
 	//基底クラスで呼んでいるが念のため
 	MV1DeleteModel(m_modelHandle);
+	MV1DeleteModel(m_crossbowHandle);
 }
 
 /// <summary>
@@ -92,12 +101,18 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 
 	//待機アニメーションを設定
 	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx("Player", "IDLE"));
+	m_preAnimIdx = 0;
 	m_nowAnimIdx = 0;
 
 	//プレイヤーのステータス取得
 	m_status = LoadCSV::GetInstance().LoadStatus("Player");
 	//最大HPを設定しておく
 	m_hpMax = m_status.hp;
+
+	//クロスボウのモデルハンドルを取得する
+	m_crossbowHandle = ModelManager::GetInstance().GetModelHandle("MOD_CROSSBOW");
+	//スケールの変更
+	MV1SetScale(m_crossbowHandle, VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
 }
 
 /// <summary>
@@ -133,8 +148,6 @@ void Player::Update(SceneGame* pScene)
 		MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
 	}
 
-
-
 	//カメラの座標からプレイヤーを回転させる方向を計算する
 	m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
 	m_rot = Vec3(0.0f, m_angle, 0.0f);
@@ -159,65 +172,6 @@ void Player::Update(SceneGame* pScene)
 	{
 		m_attackButtonPushCount = 0;
 	}
-
-	//if (input->GetIsPushedTriggerButton(true) && m_nowSlotIdx == 0 && m_status.hp > 0)
-	//{
-	//	if (shotTime % kShotIntervalFrame == 0)
-	//	{
-	//		SoundManager::GetInstance().PlaySE("shot");
-
-	//		auto add = std::make_shared<Shot>();
-	//		add->Init(m_pPhysics);
-	//		MyLib::Vec3 offset = MyLib::Vec3(0.0f, kModelOffsetY * kModelSizeScale / 2, 0.0f);
-
-	//		auto shotVec = m_cameraDirection;
-	//		int offsetX = GetRand(100) - 50;
-	//		int offsetY = GetRand(100) - 50;
-	//		int offsetZ = GetRand(100) - 50;
-	//		MyLib::Vec3 offsetVec = MyLib::Vec3(static_cast<float>(offsetX), static_cast<float>(offsetY), static_cast<float>(offsetZ));
-	//		offsetVec = offsetVec.Normalize() * m_shotOffsetPower;
-	//		shotVec += offsetVec;
-
-	//		add->Set(m_collisionPos + offset, shotVec, m_status.atk);
-	//		m_pShots.emplace_back(add);
-
-	//		m_shotOffsetPower += 0.028f;
-
-	//		if (m_shotOffsetPower >= 0.1f)
-	//		{
-	//			m_shotOffsetPower = 0.1f;
-	//		}
-	//	}
-	//	shotTime++;
-	//}
-	//else
-	//{
-	//	shotTime = 0;
-	//}
-
-	//m_difAngle = static_cast<int>(m_shotOffsetPower * 100);
-	//if (m_difAngle < 2)
-	//{
-	//	m_difAngle = 2;
-	//}
-
-	//for (auto& shot : m_pShots)
-	//{
-	//	shot->Update();
-	//	if (!shot->GetIsExist())
-	//	{
-	//		//メモリを解放する
-	//		shot->Finalize(m_pPhysics);
-	//		shot.reset();
-	//		shot = nullptr;
-	//	}
-	//}
-
-	////不要になった敵をここで削除処理する
-	//auto lIt = remove_if(m_pShots.begin(), m_pShots.end(), [](auto& v) {
-	//	return v == nullptr;
-	//	});
-	//m_pShots.erase(lIt, m_pShots.end());
 }
 
 /// <summary>
@@ -225,7 +179,24 @@ void Player::Update(SceneGame* pScene)
 /// </summary>
 void Player::Draw()
 {
-	//FIX:Drawのなかで座標を変更しているのはどうなの？
+
+	MV1DrawModel(m_modelHandle);
+
+
+	MV1DrawModel(m_crossbowHandle);
+
+#ifdef _DEBUG	//デバッグ描画
+	//入力値の確認
+	DrawFormatString(0, 16, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
+	DrawFormatString(0, 80, 0xff0000, "%d", MV1GetAttachAnim(m_modelHandle, m_currentAnimNo));
+	//ステートパターンの確認
+	m_pState->DebugDrawState(0, 32);
+#endif
+}
+
+void Player::UpdateModelPos()
+{
+	//キャラクターモデル描画座標の更新
 	rigidbody->SetPos(rigidbody->GetNextPos());
 	m_pos = rigidbody->GetPos();
 
@@ -233,19 +204,36 @@ void Player::Draw()
 	drawPos.y -= kCupsuleRadius + kCupsuleSize;
 
 	MV1SetPosition(m_modelHandle, drawPos.ToVECTOR());
-	MV1DrawModel(m_modelHandle);
 
-	////プレイヤー想定のカプセル
-	//VECTOR low = VGet(m_pos.x, m_pos.y - kCupsuleSize, m_pos.z);
-	//VECTOR high = VGet(m_pos.x, m_pos.y + kCupsuleSize, m_pos.z);
-	//DrawCapsule3D(low, high, kCupsuleRadius, kCupsuleDivNum, 0xffffff, 0xffffff, false);
+	//クロスボウモデル描画座標の更新
+	auto weponAttachFrameNum = MV1SearchFrame(m_modelHandle, kAttachFrameName);
+	auto weponFrameMat = MV1GetFrameLocalWorldMatrix(m_modelHandle, weponAttachFrameNum);
 
-#ifdef _DEBUG	//デバッグ描画
-	//入力値の確認
-	DrawFormatString(0, 16, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
-	//ステートパターンの確認
-	m_pState->DebugDrawState(0, 32);
-#endif
+	//結果収納用変数
+	Vec3 nowLocalPos;
+	Vec3 nowLocalRot;
+	Vec3 preLocalPos;
+	Vec3 preLocalRot;
+
+	LoadCSV::GetInstance().GetCrossbowLocationData(m_nowAnimIdx, nowLocalPos, nowLocalRot);
+	LoadCSV::GetInstance().GetCrossbowLocationData(m_preAnimIdx, preLocalPos, preLocalRot);
+
+	auto weaponRot = preLocalRot + (nowLocalRot - preLocalRot) * m_animBlendRate;
+
+	auto xMat = MGetRotX(weaponRot.x);
+	auto yMat = MGetRotY(weaponRot.y);
+	auto zMat = MGetRotZ(weaponRot.z);
+
+	auto posM = MGetTranslate(nowLocalPos.ToVECTOR());
+	posM = MMult(posM, weponFrameMat);
+
+	auto rotM = MMult(MMult(xMat, yMat), zMat);
+	auto setM = MMult(rotM, posM);
+
+	auto scaM = MGetScale(VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
+	setM = MMult(scaM, setM);
+
+	MV1SetMatrix(m_crossbowHandle, setM);
 }
 
 /// <summary>

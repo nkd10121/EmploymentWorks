@@ -35,6 +35,11 @@ public:
 	void Draw();
 
 	/// <summary>
+	/// モデル座標の更新
+	/// </summary>
+	void UpdateModelPos();
+
+	/// <summary>
 	/// プレイヤーの現在座標を取得する
 	/// </summary>
 	/// <returns>プレイヤーの現在座標</returns>
@@ -75,6 +80,8 @@ public:
 	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
 
 private:
+	int m_crossbowHandle;
+
 	Vec3 m_pos;				//プレイヤーの描画座標
 	Vec3 temp_moveVec;		//入力情報を確認するためのデバッグ用
 	Vec3 m_cameraDirection;	//カメラの方向ベクトル

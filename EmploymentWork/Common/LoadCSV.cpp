@@ -25,10 +25,6 @@ namespace
 		return result;
 	}
 
-	/*パス関係*/
-	const std::string kFrontPathName = "data/csv/";		//パスの前部分
-	const std::string kBackPathName = ".csv";			//パスの後ろ部分
-
 	namespace LoadData
 	{
 		//ステータス情報の並び列挙型
@@ -42,6 +38,15 @@ namespace
 			point	//ドロップする罠ポイント
 		};
 	}
+
+	//ステータス情報が入ったcsvのパス
+	const char* kStatuCSVPath = "data/csv/Status.csv";
+	//シーンごとに必要なリソース情報をまとめたcsvのパス
+	const char* kLoadResourseCSVPath = "data/csv/LoadPath.csv";
+	//アニメーションの名前と番号の対応表csvのパス
+	const char* kAnimCSVPath = "data/csv/AnimIdx.csv";
+	//クロスボウのロケーション情報csvのパス
+	const char* kCrossbowLocationCSVPath = "data/csv/CrossbowLocationInfo.csv";
 }
 
 /// <summary>
@@ -58,7 +63,7 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 	std::vector<std::string> strConmaBuf;
 
 	// ファイル読み込み
-	std::ifstream ifs("data/csv/status.csv");
+	std::ifstream ifs(kStatuCSVPath);
 	if (!ifs)
 	{
 		assert(0 && "ファイルにアクセスできませんでした。");
@@ -127,7 +132,7 @@ std::list<LoadCSV::ResourceData> LoadCSV::GetLoadResourcePath(std::string stageI
 	std::vector<std::string> strConmaBuf;
 
 	// ファイル読み込み
-	std::ifstream ifs("data/csv/LoadPath.csv");
+	std::ifstream ifs(kLoadResourseCSVPath);
 	if (!ifs)
 	{
 		assert(0 && "ファイルにアクセスできませんでした。");
@@ -179,7 +184,7 @@ int LoadCSV::GetAnimIdx(std::string characterID, std::string animID)
 	std::vector<std::string> strConmaBuf;
 
 	// ファイル読み込み
-	std::ifstream ifs("data/csv/animIdx.csv");
+	std::ifstream ifs(kAnimCSVPath);
 	if (!ifs)
 	{
 		assert(0 && "ファイルにアクセスできませんでした。");
@@ -223,4 +228,52 @@ int LoadCSV::GetAnimIdx(std::string characterID, std::string animID)
 	}
 
 	return ret;
+}
+
+void LoadCSV::GetCrossbowLocationData(int idx, Vec3& pos, Vec3& rot)
+{
+	// 一時保存用string
+	std::string strBuf;
+	// カンマ分け一時保存用string
+	std::vector<std::string> strConmaBuf;
+
+	// ファイル読み込み
+	std::ifstream ifs(kCrossbowLocationCSVPath);
+	if (!ifs)
+	{
+		assert(0 && "ファイルにアクセスできませんでした。");
+		return;
+	}
+
+	//最初は対応表情報が入っているだけなので無視する
+	std::getline(ifs, strBuf);
+	int index = 0;
+
+
+	while (getline(ifs, strBuf))
+	{
+		//取得した文字列をカンマ区切りの配列(情報群)にする
+		strConmaBuf = Split(strBuf, ',');
+
+
+		if (idx == index)
+		{
+			pos.x = stof(strConmaBuf[1]);
+			pos.y = stof(strConmaBuf[2]);
+			pos.z = stof(strConmaBuf[3]);
+
+			rot.x = stof(strConmaBuf[4]);
+			rot.y = stof(strConmaBuf[5]);
+			rot.z = stof(strConmaBuf[6]);
+			return;
+		}
+
+		index++;
+	}
+
+#ifdef _DEBUG
+	assert(0 && "クロスボウのロケーション情報の取得に失敗しました。");
+#endif
+
+	return;
 }

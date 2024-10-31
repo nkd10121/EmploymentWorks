@@ -80,4 +80,12 @@ public:
 	/// <param name="animID">アニメーションID</param>
 	/// <returns>アニメーション番号</returns>
 	int GetAnimIdx(std::string characterID,std::string animID);
+
+	/// <summary>
+	/// クロスボウのロケーション情報を取得
+	/// </summary>
+	/// <param name="idx"></param>
+	/// <param name="pos"></param>
+	/// <param name="rot"></param>
+	void GetCrossbowLocationData(int idx, Vec3& pos, Vec3& rot);
 };

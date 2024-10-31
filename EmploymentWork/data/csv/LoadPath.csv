@@ -9,5 +9,6 @@ SCENE_GAME,MOD_ARROW,data/model/object/arrow,.mv1,0,
 SCENE_GAME,MOD_STAGECOLLISION,data/model/stage/Collision/Collision,.mv1,0,
 SCENE_GAME,MOD_ENEMYNORMAL,data/model/character/enemy/EnemyNormal,.mv1,0,
 SCENE_GAME,MOD_PLAYER,data/model/character/player,.mv1,0,
+SCENE_GAME,MOD_CROSSBOW,data/model/object/Crossbow,.mv1,0,
 SCENE_GAME,EFF_ENEMYHIT,data/effect/enemy_hit,.efk,0,
 SCENE_GAME,SE_ENEMYHIT,data/sound/se/enemyHit,.mp3,0,0

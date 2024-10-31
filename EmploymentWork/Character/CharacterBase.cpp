@@ -12,6 +12,8 @@ CharacterBase::CharacterBase(Priority priority, GameObjectTag tag) :
 	m_currentAnimNo(-1),
 	m_prevAnimNo(-1),
 	m_animBlendRate(1.0f),
+	m_nowAnimIdx(-1),
+	m_preAnimIdx(-1),
 	m_animSpeed(0.5f),
 	m_isAnimationFinish(false)
 {
@@ -68,6 +70,9 @@ void CharacterBase::ChangeAnim(int animIndex, float animSpeed)
 	{
 		MV1DetachAnim(m_modelHandle, m_prevAnimNo);
 	}
+
+	m_preAnimIdx = m_nowAnimIdx;
+	m_nowAnimIdx = animIndex;
 
 	//現在再生中の待機アニメーションは変更目のアニメーションの扱いにする
 	m_prevAnimNo = m_currentAnimNo;

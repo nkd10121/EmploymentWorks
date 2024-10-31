@@ -100,13 +100,15 @@ protected:
 
 	/*アニメーション関係*/
 	std::map<std::string, int> m_animIdx;
-	int m_nowAnimIdx;
 	int m_equipAnimNo;			//1つ前ののアニメーション
 	int m_currentAnimNo;		//現在のアニメーション
 	int m_prevAnimNo;			//変更前のアニメーション
 	float m_animBlendRate;		//アニメーションの合成割合
 	//0.0f:prevが再生
 	//1.0f:currntが再生
+
+	int m_nowAnimIdx;
+	int m_preAnimIdx;
 
 	float m_animSpeed;			//アニメーション再生速度
 	bool m_isAnimationFinish;	//アニメーションが終わったかどうか
