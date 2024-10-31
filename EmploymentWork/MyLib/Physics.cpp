@@ -872,7 +872,7 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 	auto capsulePos1 = VGet(capsuleCenterPos.x, capsuleCenterPos.y + size, capsuleCenterPos.z);
 	auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
 
-
+#if false
 	// 壁からの押し出し処理を試みる最大数だけ繰り返し
 	for (int i = 0; i < ColInfo::kMaxColHitTryNum; i++)
 	{
@@ -920,6 +920,31 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 		//ループ終了
 		if (!isHitWall) break;
 	}
+#else
+	Vec3 fixVec;
+
+	// 壁ポリゴンの数だけ繰り返し
+	for (int j = 0; j < m_wallNum; j++)
+	{
+		// i番目の壁ポリゴンのアドレスを壁ポリゴンポインタ配列から取得
+		m_pPoly = m_pWallPoly[j];
+
+		// ポリゴンとプレイヤーが当たっていなかったら次のカウントへ
+		if (!HitCheck_Capsule_Triangle(capsulePos1, capsulePos2, radius,
+			m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2])) continue;
+
+		fixVec += m_pPoly->Normal;
+	}
+
+	auto pos = col->rigidbody->GetPos();
+	auto nextPos = col->rigidbody->GetNextPos();
+	auto dir = nextPos - pos;
+
+	auto set = Vec3(VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(fixVec.ToVECTOR(), dir.Length() + 0.0001f)));
+
+	// 当たっていたら規定距離分プレイヤーを壁の法線方向に移動させる
+	col->rigidbody->SetNextPos(set);
+#endif
 }
 
 /// <summary>
@@ -972,13 +997,9 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		posY.emplace_back(m_pPoly->Position[1].y);
 		posY.emplace_back(m_pPoly->Position[2].y);
 
-
 		// ポリゴンに当たったフラグを立てる
 		m_isHitFlag = true;
 	}
-
-
-
 	if (m_isHitFlag)
 	{
 		auto total = 0.0f;
@@ -997,113 +1018,4 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		set.y = PolyMaxPosY + size + radius;
 		col->rigidbody->SetNextPos(set);
 	}
-
-
-	////ジャンプ中かつ上昇中の場合
-	//if (dynamic_cast<CharacterBase*>(this)->GetJumpState() && dynamic_cast<CharacterBase*>(this)->GetJumpPower() >= 0.0f)
-	//{
-	//	// 天井に頭をぶつける処理を行う
-	//	// 一番低い天井にぶつける為の判定用変数を初期化
-	//	float PolyMinPosY = 0.0f;
-
-	//	// 床ポリゴンの数だけ繰り返し
-	//	for (int i = 0; i < m_floorNum; i++)
-	//	{
-	//		// i番目の床ポリゴンのアドレスを床ポリゴンポインタ配列から取得
-	//		m_pPoly = m_pFloorPoly[i];
-
-	//		// 足先から頭の高さまでの間でポリゴンと接触しているかどうかを判定
-	//		m_lineRes = HitCheck_Line_Triangle(m_nextPos, VAdd(m_nextPos, VGet(0.0f, kHeadHeight, 0.0f)),
-	//			m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]);
-
-	//		// 接触していなかったら何もしない
-	//		if (!m_lineRes.HitFlag) continue;
-
-	//		// 天井ポリゴンが今まで検出されたポリゴンより低い場合処理を通す
-	//		if (PolyMinPosY < m_lineRes.Position.y)
-	//		{
-	//			// ポリゴンに当たったフラグを立てる
-	//			IsHitFlag = true;
-
-	//			// 接触したＹ座標を保存する
-	//			PolyMinPosY = m_lineRes.Position.y;
-	//		}
-	//	}
-
-	//	// 接触したポリゴンがあれば
-	//	if (IsHitFlag)
-	//	{
-	//		// 接触した場合はプレイヤーのＹ座標を接触座標を元に更新
-	//		m_nextPos.y = PolyMinPosY - kHeadHeight;
-
-	//		//地面に当たった時の処理を行う
-	//		dynamic_cast<CharacterBase*>(this)->HitGroundUpdate();
-	//	}
-	//}
-
-	//// 床ポリゴンとの当たり判定
-	////一番高い床ポリゴンにぶつける為の判定用変数を初期化
-	//float PolyMaxPosY = 0.0f;
-
-	//// 床ポリゴンに当たったかどうかのフラグを倒しておく
-	//m_isHitFlag = false;
-
-	//// 床ポリゴンの数だけ繰り返し
-	//for (int i = 0; i < m_floorNum; i++)
-	//{
-	//	// i番目の床ポリゴンのアドレスを床ポリゴンポインタ配列から取得
-	//	m_pPoly = m_pFloorPoly[i];
-
-
-	//	auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
-	//	auto capsulePos1 = VGet(capsuleCenterPos.x, capsuleCenterPos.y + size, capsuleCenterPos.z);
-	//	auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
-
-	//	// ポリゴンとプレイヤーが当たっていなかったら次のカウントへ
-	//	if (!HitCheck_Capsule_Triangle(capsulePos1, capsulePos2,radius,
-	//		m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2])) continue;
-
-	//	float mostHeightY = m_pPoly->Position[0].y;
-
-	//	if (mostHeightY < m_pPoly->Position[1].y)
-	//	{
-	//		mostHeightY = m_pPoly->Position[1].y;
-	//	}
-
-	//	if (mostHeightY < m_pPoly->Position[2].y)
-	//	{
-	//		mostHeightY = m_pPoly->Position[2].y;
-	//	}
-
-	//	// 既に当たったポリゴンがあり、且つ今まで検出した床ポリゴンより低い場合は何もしない
-	//	if (m_isHitFlag && PolyMaxPosY > mostHeightY) continue;
-
-	//	// ポリゴンに当たったフラグを立てる
-	//	m_isHitFlag = true;
-
-	//	// 接触したＹ座標を保存する
-	//	PolyMaxPosY = mostHeightY;
-	//}
-
-	//// 床ポリゴンの当たり判定かつ、ジャンプ力が0よりも小さい(下降中の場合)どうかで処理を分岐
-	//if (m_isHitFlag)
-	//{
-	//	// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
-	//	auto set = col->rigidbody->GetNextPos();
-	//	auto underPos = VGet(set.x, set.y + size, set.z);
-	//	set.y = PolyMaxPosY + radius;
-	//	col->rigidbody->SetNextPos(set);
-
-	//	//m_nextPos.y = PolyMaxPosY;
-	//	//dynamic_cast<CharacterBase*>(this)->HitGroundUpdate();
-
-	//	////ジャンプ力が0よりも小さい(下降中)かつ、ジャンプ中であった場合
-	//	////ジャンプ処理を終了する
-	//	//if (dynamic_cast<CharacterBase*>(this)->GetJumpPower() <= 0.0f &&
-	//	//	dynamic_cast<CharacterBase*>(this)->GetJumpState())
-	//	//{
-	//	//	dynamic_cast<CharacterBase*>(this)->EndJumpState();
-	//	//}
-	//}
-
 }

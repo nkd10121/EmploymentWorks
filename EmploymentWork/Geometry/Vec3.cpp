@@ -15,6 +15,13 @@ Vec3::Vec3(float inX, float inY, float inZ) :
 {
 }
 
+Vec3::Vec3(DxLib::VECTOR vec) :
+	x(vec.x),
+	y(vec.y),
+	z(vec.z)
+{
+}
+
 Vec3 Vec3::Right()
 {
 	return Vec3(1.0f, 0.0f, 0.0f);

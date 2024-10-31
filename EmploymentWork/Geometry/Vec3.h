@@ -1,155 +1,160 @@
-#pragma once
+ï»¿#pragma once
 #include <DxLib.h>
 #include <cmath>
 
 struct Vec3
 {
 public:
-	float x, y, z;	//À•W
+	float x, y, z;	//åº§æ¨™
 
 public:
 	/// <summary>
-	/// ˆø”‚È‚µƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// å¼•æ•°ãªã—ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	Vec3();
 	/// <summary>
-	/// ˆø”‚ ‚èƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	/// å¼•æ•°ã‚ã‚Šã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
-	/// <param name="inX">XÀ•W</param>
-	/// <param name="inY">YÀ•W</param>
-	/// <param name="inZ">ZÀ•W</param>
+	/// <param name="inX">Xåº§æ¨™</param>
+	/// <param name="inY">Yåº§æ¨™</param>
+	/// <param name="inZ">Zåº§æ¨™</param>
 	Vec3(float inX, float inY, float inZ);
+	/// <summary>
+	/// å¼•æ•°ã‚ã‚Šã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	/// </summary>
+	/// <param name="vec">DxLibã®VECTORå‹</param>
+	Vec3(DxLib::VECTOR vec);
 
 	/// <summary>
-	/// ‰EƒxƒNƒgƒ‹
+	/// å³ãƒ™ã‚¯ãƒˆãƒ«
 	/// </summary>
 	/// <returns>(1, 0, 0)</returns>
 	static Vec3 Right();
 	/// <summary>
-	/// ¶ƒxƒNƒgƒ‹
+	/// å·¦ãƒ™ã‚¯ãƒˆãƒ«
 	/// </summary>
 	/// <returns>(-1, 0, 0)</returns>
 	static Vec3 Left();
 	/// <summary>
-	/// ãƒxƒNƒgƒ‹
+	/// ä¸Šãƒ™ã‚¯ãƒˆãƒ«
 	/// </summary>
 	/// <returns>(0, 1, 0)</returns>
 	static Vec3 Up();
 	/// <summary>
-	/// ‰ºƒxƒNƒgƒ‹
+	/// ä¸‹ãƒ™ã‚¯ãƒˆãƒ«
 	/// </summary>
 	/// <returns>(0, -1, 0)</returns>
 	static Vec3 Down();
 	/// <summary>
-	/// ³–ÊƒxƒNƒgƒ‹
+	/// æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«
 	/// </summary>
 	/// <returns>(0, 0, 1)</returns>
 	static Vec3 Front();
 	/// <summary>
-	/// ”w–ÊƒxƒNƒgƒ‹
+	/// èƒŒé¢ãƒ™ã‚¯ãƒˆãƒ«
 	/// </summary>
 	/// <returns>(0, 0, -1)</returns>
 	static Vec3 Back();
 
-	/* ‰‰Z */
+	/* æ¼”ç®— */
 	/// <summary>
-	/// Še’l‚É-‚ğ‚©‚¯‚é
+	/// å„å€¤ã«-ã‚’ã‹ã‘ã‚‹
 	/// </summary>
 	Vec3 operator-() const;					
 	/// <summary>
-	/// ‘«‚µZ
+	/// è¶³ã—ç®—
 	/// </summary>
 	Vec3 operator+(const Vec3& val) const;
 	/// <summary>
-	/// ‘«‚µZ
+	/// è¶³ã—ç®—
 	/// </summary>
 	void operator+=(const Vec3& val);
 	/// <summary>
-	/// ˆø‚«Z
+	/// å¼•ãç®—
 	/// </summary>
 	Vec3 operator-(const Vec3& val) const;
 	/// <summary>
-	/// ˆø‚«Z
+	/// å¼•ãç®—
 	/// </summary>
 	void operator-=(const Vec3& val);
 	/// <summary>
-	/// Š|‚¯Z
+	/// æ›ã‘ç®—
 	/// </summary>
 	Vec3 operator*(float scale) const;
 	/// <summary>
-	/// Š|‚¯Z
+	/// æ›ã‘ç®—
 	/// </summary>
 	void operator*=(float scale);
 	/// <summary>
-	/// Š„‚èZ
+	/// å‰²ã‚Šç®—
 	/// </summary>
 	Vec3 operator/(float scale) const;
 	/// <summary>
-	/// Š„‚èZ
+	/// å‰²ã‚Šç®—
 	/// </summary>
 	void operator/=(float scale);
 	/// <summary>
-	/// ”äŠr
+	/// æ¯”è¼ƒ
 	/// </summary>
 	bool operator==(const Vec3& val)const;
 	/// <summary>
-	/// ”äŠr
+	/// æ¯”è¼ƒ
 	/// </summary>
 	bool operator!=(const Vec3& val)const;
 
 	/// <summary>
-	/// ’·‚³‚ğæ“¾
+	/// é•·ã•ã‚’å–å¾—
 	/// </summary>
-	/// <returns>’·‚³</returns>
+	/// <returns>é•·ã•</returns>
 	float Length()const;
 
 	/// <summary>
-	/// ’·‚³‚Ì“ñæ‚ğæ“¾
+	/// é•·ã•ã®äºŒä¹—ã‚’å–å¾—
 	/// </summary>
-	/// <returns>’·‚³‚Ì“ñæ</returns>
+	/// <returns>é•·ã•ã®äºŒä¹—</returns>
 	float SqLength()const;
 
 	/// <summary>
-	/// ³‹K‰»ƒxƒNƒgƒ‹‚ğæ“¾
+	/// æ­£è¦åŒ–ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
 	/// </summary>
-	/// <returns>³‹K‰»ƒxƒNƒgƒ‹</returns>
+	/// <returns>æ­£è¦åŒ–ãƒ™ã‚¯ãƒˆãƒ«</returns>
 	Vec3 Normalize()const;
 
 	/// <summary>
-	/// DxLib‚ÌVECTORŒ^‚É•ÏŠ·
+	/// DxLibã®VECTORå‹ã«å¤‰æ›
 	/// </summary>
 	/// <returns></returns>
 	VECTOR ToVECTOR()const;
 };
 
 /// <summary>
-/// “àÏ
+/// å†…ç©
 /// </summary>
-/// <param name="item1">ƒxƒNƒgƒ‹‚P</param>
-/// <param name="item2">ƒxƒNƒgƒ‹‚Q</param>
-/// <returns>“àÏŒ‹‰Ê</returns>
+/// <param name="item1">ãƒ™ã‚¯ãƒˆãƒ«ï¼‘</param>
+/// <param name="item2">ãƒ™ã‚¯ãƒˆãƒ«ï¼’</param>
+/// <returns>å†…ç©çµæœ</returns>
 float Dot(const Vec3& item1, const Vec3& item2);
 /// <summary>
-/// ŠOÏ
+/// å¤–ç©
 /// </summary>
-/// <param name="item1">ƒxƒNƒgƒ‹‚P</param>
-/// <param name="item2">ƒxƒNƒgƒ‹‚Q</param>
-/// <returns>ŠOÏŒ‹‰Ê</returns>
+/// <param name="item1">ãƒ™ã‚¯ãƒˆãƒ«ï¼‘</param>
+/// <param name="item2">ãƒ™ã‚¯ãƒˆãƒ«ï¼’</param>
+/// <returns>å¤–ç©çµæœ</returns>
 Vec3 Cross(const Vec3& item1, const Vec3& item2);
 
 //namespace MyLib
 //{
 //	/// <summary>
-//	/// OŸŒ³ƒxƒNƒgƒ‹‚ğˆµ‚¤ƒNƒ‰ƒX
+//	/// ä¸‰æ¬¡å…ƒãƒ™ã‚¯ãƒˆãƒ«ã‚’æ‰±ã†ã‚¯ãƒ©ã‚¹
 //	/// </summary>
 //	class Vec3
 //	{
 //	public:
-//		float x, y, z;	//À•W
+//		float x, y, z;	//åº§æ¨™
 //
 //	public:
 //		/// <summary>
-//		/// ˆø”‚È‚µƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//		/// å¼•æ•°ãªã—ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //		/// </summary>
 //		Vec3() :
 //			x(0.0f),
@@ -160,11 +165,11 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ˆø”—L‚èƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//		/// å¼•æ•°æœ‰ã‚Šã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //		/// </summary>
-//		/// <param name="x">XÀ•W</param>
-//		/// <param name="y">YÀ•W</param>
-//		/// <param name="z">ZÀ•W</param>
+//		/// <param name="x">Xåº§æ¨™</param>
+//		/// <param name="y">Yåº§æ¨™</param>
+//		/// <param name="z">Zåº§æ¨™</param>
 //		Vec3(const float x, const float y, const float z)
 //		{
 //			this->x = x;
@@ -173,10 +178,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ‘«‚µZ
+//		/// è¶³ã—ç®—
 //		/// </summary>
-//		/// <param name="other">‘«‚·ƒxƒNƒgƒ‹</param>
-//		/// <returns>©g‚Éˆø”‚ÌƒxƒNƒgƒ‹‚ğ‘«‚µ‚½Œ‹‰ÊƒxƒNƒgƒ‹</returns>
+//		/// <param name="other">è¶³ã™ãƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>è‡ªèº«ã«å¼•æ•°ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¶³ã—ãŸçµæœãƒ™ã‚¯ãƒˆãƒ«</returns>
 //		Vec3 operator+(const Vec3& other)const
 //		{
 //			Vec3 ret;
@@ -187,10 +192,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ‘«‚µZ
+//		/// è¶³ã—ç®—
 //		/// </summary>
-//		/// <param name="other">‘«‚·ƒxƒNƒgƒ‹</param>
-//		/// <returns>©g‚Éˆø”‚ÌƒxƒNƒgƒ‹‚ğ‘«‚µ‚½Œ‹‰ÊƒxƒNƒgƒ‹</returns>
+//		/// <param name="other">è¶³ã™ãƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>è‡ªèº«ã«å¼•æ•°ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¶³ã—ãŸçµæœãƒ™ã‚¯ãƒˆãƒ«</returns>
 //		Vec3 operator+=(const Vec3& other)
 //		{
 //			this->x += other.x;
@@ -200,10 +205,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ˆø‚«Z
+//		/// å¼•ãç®—
 //		/// </summary>
-//		/// <param name="other">ˆø‚­ƒxƒNƒgƒ‹</param>
-//		/// <returns>©g‚©‚çˆø”‚ÌƒxƒNƒgƒ‹‚ğˆø‚¢‚½Œ‹‰ÊƒxƒNƒgƒ‹</returns>
+//		/// <param name="other">å¼•ããƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>è‡ªèº«ã‹ã‚‰å¼•æ•°ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å¼•ã„ãŸçµæœãƒ™ã‚¯ãƒˆãƒ«</returns>
 //		Vec3 operator-(const Vec3& other)const
 //		{
 //			Vec3 ret;
@@ -214,10 +219,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ˆø‚«Z
+//		/// å¼•ãç®—
 //		/// </summary>
-//		/// <param name="other">ˆø‚­ƒxƒNƒgƒ‹</param>
-//		/// <returns>©g‚©‚çˆø”‚ÌƒxƒNƒgƒ‹‚ğˆø‚¢‚½Œ‹‰ÊƒxƒNƒgƒ‹</returns>
+//		/// <param name="other">å¼•ããƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>è‡ªèº«ã‹ã‚‰å¼•æ•°ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å¼•ã„ãŸçµæœãƒ™ã‚¯ãƒˆãƒ«</returns>
 //		Vec3 operator-=(const Vec3& other)
 //		{
 //			this->x -= other.x;
@@ -227,10 +232,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// Š|‚¯Z
+//		/// æ›ã‘ç®—
 //		/// </summary>
-//		/// <param name="scale">‚©‚¯‚é”</param>
-//		/// <returns>©g‚Ì‚»‚ê‚¼‚ê‚É‚©‚¯‚é”‚ğŠ|‚¯‚½Œ‹‰ÊƒxƒNƒgƒ‹</returns>
+//		/// <param name="scale">ã‹ã‘ã‚‹æ•°</param>
+//		/// <returns>è‡ªèº«ã®ãã‚Œãã‚Œã«ã‹ã‘ã‚‹æ•°ã‚’æ›ã‘ãŸçµæœãƒ™ã‚¯ãƒˆãƒ«</returns>
 //		Vec3 operator*(const float scale)
 //		{
 //			Vec3 ret;
@@ -241,10 +246,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ‘ã“ü
+//		/// ä»£å…¥
 //		/// </summary>
-//		/// <param name="vec">‘ã“ü‚·‚éƒxƒNƒgƒ‹</param>
-//		/// <returns>‘ã“üŒ‹‰ÊƒxƒNƒgƒ‹</returns>
+//		/// <param name="vec">ä»£å…¥ã™ã‚‹ãƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>ä»£å…¥çµæœãƒ™ã‚¯ãƒˆãƒ«</returns>
 //		Vec3 operator=(const VECTOR& vec)
 //		{
 //			Vec3 ret;
@@ -255,10 +260,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ”äŠr
+//		/// æ¯”è¼ƒ
 //		/// </summary>
-//		/// <param name="other">”äŠr‘ÎÛƒxƒNƒgƒ‹</param>
-//		/// <returns>”äŠrŒ‹‰Ê@false : “¯ˆê‚Å‚È‚¢, true : “¯ˆê</returns>
+//		/// <param name="other">æ¯”è¼ƒå¯¾è±¡ãƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>æ¯”è¼ƒçµæœã€€false : åŒä¸€ã§ãªã„, true : åŒä¸€</returns>
 //		bool operator==(const Vec3& other)const
 //		{
 //			bool ret;
@@ -267,10 +272,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ”äŠr
+//		/// æ¯”è¼ƒ
 //		/// </summary>
-//		/// <param name="other">”äŠr‘ÎÛƒxƒNƒgƒ‹</param>
-//		/// <returns>”äŠrŒ‹‰Ê@false : “¯ˆê, true : “¯ˆê‚Å‚È‚¢</returns>
+//		/// <param name="other">æ¯”è¼ƒå¯¾è±¡ãƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>æ¯”è¼ƒçµæœã€€false : åŒä¸€, true : åŒä¸€ã§ãªã„</returns>
 //		bool operator!=(const Vec3& other)const
 //		{
 //			bool ret;
@@ -279,9 +284,9 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ƒxƒNƒgƒ‹‚ÌƒTƒCƒY‚ğæ“¾‚·‚é
+//		/// ãƒ™ã‚¯ãƒˆãƒ«ã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
 //		/// </summary>
-//		/// <returns>ƒxƒNƒgƒ‹‚ÌƒTƒCƒY</returns>
+//		/// <returns>ãƒ™ã‚¯ãƒˆãƒ«ã®ã‚µã‚¤ã‚º</returns>
 //		float Length()const
 //		{
 //			float ret;
@@ -290,9 +295,9 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ƒxƒNƒgƒ‹‚ÌƒTƒCƒY‚Ì2æ‚ğæ“¾‚·‚é
+//		/// ãƒ™ã‚¯ãƒˆãƒ«ã®ã‚µã‚¤ã‚ºã®2ä¹—ã‚’å–å¾—ã™ã‚‹
 //		/// </summary>
-//		/// <returns>ƒxƒNƒgƒ‹‚ÌƒTƒCƒY‚Ì2æ</returns>
+//		/// <returns>ãƒ™ã‚¯ãƒˆãƒ«ã®ã‚µã‚¤ã‚ºã®2ä¹—</returns>
 //		float SqLength()const
 //		{
 //			float ret;
@@ -301,9 +306,9 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// ³‹K‰»ƒxƒNƒgƒ‹‚ğæ“¾‚·‚é
+//		/// æ­£è¦åŒ–ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—ã™ã‚‹
 //		/// </summary>
-//		/// <returns>³‹K‰»ƒxƒNƒgƒ‹</returns>
+//		/// <returns>æ­£è¦åŒ–ãƒ™ã‚¯ãƒˆãƒ«</returns>
 //		Vec3 Normalize()const
 //		{
 //			Vec3 ret;
@@ -319,10 +324,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚Ì“àÏ‚ğæ“¾‚·‚é
+//		/// äºŒã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã®å†…ç©ã‚’å–å¾—ã™ã‚‹
 //		/// </summary>
-//		/// <param name="other">æƒxƒNƒgƒ‹</param>
-//		/// <returns>“àÏ</returns>
+//		/// <param name="other">ä¹—ãƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>å†…ç©</returns>
 //		float Dot(const Vec3& other)const
 //		{
 //			float ret;
@@ -331,10 +336,10 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// “ñ‚Â‚ÌƒxƒNƒgƒ‹‚ÌŠOÏ‚ğæ“¾‚·‚é
+//		/// äºŒã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã®å¤–ç©ã‚’å–å¾—ã™ã‚‹
 //		/// </summary>
-//		/// <param name="other">æƒxƒNƒgƒ‹</param>
-//		/// <returns>ŠOÏ</returns>
+//		/// <param name="other">ä¹—ãƒ™ã‚¯ãƒˆãƒ«</param>
+//		/// <returns>å¤–ç©</returns>
 //		Vec3 Cross(const Vec3& other)const
 //		{
 //			Vec3 ret;
@@ -345,9 +350,9 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2);
 //		}
 //
 //		/// <summary>
-//		/// DxLib‚ÌVECTORŒ^‚É•ÏŠ·
+//		/// DxLibã®VECTORå‹ã«å¤‰æ›
 //		/// </summary>
-//		/// <returns>DxLib::VECTORŒ^ƒxƒNƒgƒ‹</returns>
+//		/// <returns>DxLib::VECTORå‹ãƒ™ã‚¯ãƒˆãƒ«</returns>
 //		DxLib::VECTOR ConvertToVECTOR()
 //		{
 //			DxLib::VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
