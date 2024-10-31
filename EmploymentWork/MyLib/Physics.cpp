@@ -652,11 +652,9 @@ void MyLib::Physics::FixPosition()
 		//}
 #endif
 		// Posを更新するので、velocityもそこに移動するvelocityに修正
-		Vec3 toFixedPos = item->rigidbody->GetNextPos() - item->rigidbody->GetPos();
-		if (toFixedPos.y > 1.0f)
-		{
-			toFixedPos.y = 0.0f;
-		}
+		auto nextPos = item->rigidbody->GetNextPos();
+		auto pos = item->rigidbody->GetPos();
+		Vec3 toFixedPos = nextPos - pos;
 		item->rigidbody->SetVelocity(toFixedPos);
 
 		// 位置確定
@@ -954,6 +952,7 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 /// </summary>
 void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 {
+#if false
 	//床ポリゴンがない場合は何もしない
 	if (m_floorNum == 0) return;
 
@@ -984,6 +983,7 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		// i番目の床ポリゴンのアドレスを床ポリゴンポインタ配列から取得
 		m_pPoly = m_pFloorPoly[i];
 
+
 		auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
 		auto capsulePos1 = VGet(capsuleCenterPos.x, capsuleCenterPos.y + size + radius, capsuleCenterPos.z);
 		auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size - radius, capsuleCenterPos.z);
@@ -998,6 +998,7 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		posY.emplace_back(m_pPoly->Position[0].y);
 		posY.emplace_back(m_pPoly->Position[1].y);
 		posY.emplace_back(m_pPoly->Position[2].y);
+
 
 		// ポリゴンに当たったフラグを立てる
 		m_isHitFlag = true;
@@ -1020,4 +1021,75 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		set.y = PolyMaxPosY + size + radius;
 		col->rigidbody->SetNextPos(set);
 	}
+#else
+	//床ポリゴンがない場合は何もしない
+	if (m_floorNum == 0) return;
+
+	float radius = 0.0f;
+	float size = 0.0f;
+	for (auto& col : col->m_colliders)
+	{
+		radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
+		size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+	}
+
+	// 床ポリゴンとの当たり判定処理
+	//あたったかどうかのフラグ初期化
+	bool IsHitFlag = false;
+
+	// 床ポリゴンとの当たり判定
+	//一番高い床ポリゴンにぶつける為の判定用変数を初期化
+	float polyMaxPosY = 0.0f;
+
+	// 床ポリゴンに当たったかどうかのフラグを倒しておく
+	m_isHitFlag = false;
+
+	// 床ポリゴンの数だけ繰り返し
+	for (int i = 0; i < m_floorNum; i++)
+	{
+		// i番目の床ポリゴンのアドレスを床ポリゴンポインタ配列から取得
+		m_pPoly = m_pFloorPoly[i];
+
+		auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
+		auto capsuleUnderPos = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
+
+		auto hit = MV1CollCheck_Sphere(m_stageCollisionHandle, -1, capsuleUnderPos, radius);
+
+		if (hit.HitNum > 0)
+		{
+			if (polyMaxPosY < hit.Dim->HitPosition.y)
+			{
+				polyMaxPosY = hit.Dim->HitPosition.y;
+			}
+		}
+		else
+		{
+			// ポリゴンに当たったフラグを立てる
+			m_isHitFlag = true;
+		}
+
+		// 検出したプレイヤーの周囲のポリゴン情報を開放する
+		MV1CollResultPolyDimTerminate(hit);
+
+	}
+	if (m_isHitFlag)
+	{
+		//auto total = 0.0f;
+		//int num = 0;
+
+		//for (auto& y : posY)
+		//{
+		//	total += y;
+		//	num++;
+		//}
+
+		//PolyMaxPosY = total / num;
+
+		// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
+		auto set = col->rigidbody->GetNextPos();
+		set.y = polyMaxPosY + size + radius;
+		col->rigidbody->SetNextPos(set);
+	}
+#endif
 }
+

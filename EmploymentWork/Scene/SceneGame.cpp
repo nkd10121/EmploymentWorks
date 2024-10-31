@@ -128,9 +128,9 @@ void SceneGame::Init()
 	m_pObjects.back()->Init(m_pPhysics);
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
-	//DEBUG:敵を生成
-	m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
-	m_pEnemies.back()->Init(m_pPhysics);
+	////DEBUG:敵を生成
+	//m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
+	//m_pEnemies.back()->Init(m_pPhysics);
 
 	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
