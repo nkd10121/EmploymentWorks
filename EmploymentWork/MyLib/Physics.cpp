@@ -940,6 +940,8 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 	auto nextPos = col->rigidbody->GetNextPos();
 	auto dir = nextPos - pos;
 
+	fixVec = fixVec.Normalize();
+
 	auto set = Vec3(VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(fixVec.ToVECTOR(), dir.Length() + 0.0001f)));
 
 	// 当たっていたら規定距離分プレイヤーを壁の法線方向に移動させる
