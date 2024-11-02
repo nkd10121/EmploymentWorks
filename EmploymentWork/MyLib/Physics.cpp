@@ -1044,14 +1044,14 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 	// 床ポリゴンに当たったかどうかのフラグを倒しておく
 	m_isHitFlag = false;
 
+	auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
+	auto capsuleUnderPos = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
+
 	// 床ポリゴンの数だけ繰り返し
 	for (int i = 0; i < m_floorNum; i++)
 	{
 		// i番目の床ポリゴンのアドレスを床ポリゴンポインタ配列から取得
 		m_pPoly = m_pFloorPoly[i];
-
-		auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
-		auto capsuleUnderPos = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
 
 		auto hit = MV1CollCheck_Sphere(m_stageCollisionHandle, -1, capsuleUnderPos, radius);
 
@@ -1072,17 +1072,6 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 	}
 	if (m_isHitFlag)
 	{
-		//auto total = 0.0f;
-		//int num = 0;
-
-		//for (auto& y : posY)
-		//{
-		//	total += y;
-		//	num++;
-		//}
-
-		//PolyMaxPosY = total / num;
-
 		// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
 		auto set = col->rigidbody->GetNextPos();
 		set.y = polyMaxPosY + size + radius;
