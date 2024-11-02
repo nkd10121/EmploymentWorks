@@ -1055,18 +1055,16 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 
 		auto hit = MV1CollCheck_Sphere(m_stageCollisionHandle, -1, capsuleUnderPos, radius);
 
-		if (hit.HitNum > 0)
-		{
-			if (polyMaxPosY < hit.Dim->HitPosition.y)
-			{
-				polyMaxPosY = hit.Dim->HitPosition.y;
-			}
-		}
-		else
-		{
-			// ポリゴンに当たったフラグを立てる
-			m_isHitFlag = true;
-		}
+		// 当たっていなかったら何もしない
+		if (hit.HitNum == 0) continue;
+
+		// 既に当たったポリゴンがあり、且つ今まで検出した床ポリゴンより低い場合は何もしない
+		if (m_isHitFlag && polyMaxPosY > hit.Dim->HitPosition.y) continue;
+
+		polyMaxPosY = hit.Dim->HitPosition.y;
+
+		// ポリゴンに当たったフラグを立てる
+		m_isHitFlag = true;
 
 		// 検出したプレイヤーの周囲のポリゴン情報を開放する
 		MV1CollResultPolyDimTerminate(hit);
