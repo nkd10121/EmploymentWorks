@@ -5,8 +5,8 @@
 
 namespace
 {
-	constexpr float kCameraDist = 26.0f;
-	constexpr float kCameraHeight = 4.0f;
+	constexpr float kCameraDist = 22.0f;
+	constexpr float kCameraHeight = 8.0f;
 
 	constexpr float kCameraNear = 1.0f;
 	constexpr float kCameraFar = 360.0f;
@@ -26,7 +26,7 @@ namespace
 	constexpr float kCameraAngleVLimitMax = DX_PI_F / 2.0f - 0.6f;
 
 	// カメラからプレイヤーまでの最大距離
-	constexpr float kCameraToPlayerLenghtMax = 175.0f;
+	constexpr float kCameraToPlayerLengthMax = 175.0f;
 }
 
 /// <summary>
@@ -118,7 +118,7 @@ void Camera::Update()
 	tempPos2.y = tempPos1.y;
 	tempPos2.z = sinParam * tempPos1.x + cosParam * tempPos1.z;
 
-	m_aimPos = Vec3(m_playerPos.x, m_playerPos.y + 9.0f, m_playerPos.z);
+	m_aimPos = Vec3(m_playerPos.x, m_playerPos.y + kCameraHeight, m_playerPos.z);
 
 	// 算出した座標に注視点の位置を加算したものがカメラの位置になる
 	m_cameraPos = tempPos2 + m_aimPos;

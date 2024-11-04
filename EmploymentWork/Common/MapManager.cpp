@@ -1,6 +1,7 @@
 ﻿#include "MapManager.h"
 #include <fstream>
 #include <sstream>
+#include <map>
 
 #include "ModelManager.h"
 
@@ -19,11 +20,11 @@ namespace
 	const std::string kStageDataPathFront = "data/stageData/";
 	const std::string kStageDataPathBack = ".loc";
 
-	const std::string kId[] = 
+	const std::map<std::string,std::string> kId = 
 	{
-		"MOD_FLOOR",
-		"MOD_WALL",
-		"MOD_FRAME",
+		{"floor","MOD_FLOOR"},
+		{"wall","MOD_WALL"},
+		{"doorFrame","MOD_FRAME"},
 	};
 }
 
@@ -49,7 +50,7 @@ void MapManager::Init()
 	//ロードが完了しているときにここが呼ばれるため、モデルマネージャーに頼んでおいたモデルを取得する
 	for (auto& path : kId)
 	{
-		m_handles[path] = ModelManager::GetInstance().GetModelHandle(path);
+		m_handles[path.first] = ModelManager::GetInstance().GetModelHandle(path.second);
 	}
 }
 

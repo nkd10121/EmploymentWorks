@@ -24,11 +24,11 @@ namespace
 
 	/*モデル関係*/
 	//キャラクターモデル
-	constexpr float kModelScale = 0.08f;		//モデルのサイズ
-	//constexpr float kModelScale = 0.05f;		//モデルのサイズ
+	//constexpr float kModelScale = 0.08f;		//モデルのサイズ
+	constexpr float kModelScale = 0.05f;		//モデルのサイズ
 
 	//武器モデル
-	constexpr float kCrossbowModelScale = kModelScale * 0.64f * 10.0f;	//モデルのサイズ
+	constexpr float kCrossbowModelScale = 0.64f;	//モデルのサイズ
 	const char* kAttachFrameName = "mixamorig:RightHandThumb1";
 
 	/*アニメーション関係*/
@@ -179,13 +179,17 @@ void Player::Update(SceneGame* pScene)
 /// </summary>
 void Player::Draw()
 {
-
+	//プレイヤーモデルの描画
 	MV1DrawModel(m_modelHandle);
 
-
+	//クロスボウモデルの描画
 	MV1DrawModel(m_crossbowHandle);
 
 #ifdef _DEBUG	//デバッグ描画
+	//向いてる方向の線
+	auto target = m_pos + m_cameraDirection * 1000.0f;
+	DrawLine3D(m_pos.ToVECTOR(), target.ToVECTOR(), 0x00ff00);
+
 	//入力値の確認
 	DrawFormatString(0, 16, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
 	auto pos = rigidbody->GetPos();
@@ -208,8 +212,8 @@ void Player::UpdateModelPos()
 	MV1SetPosition(m_modelHandle, drawPos.ToVECTOR());
 
 	//クロスボウモデル描画座標の更新
-	auto weponAttachFrameNum = MV1SearchFrame(m_modelHandle, kAttachFrameName);
-	auto weponFrameMat = MV1GetFrameLocalWorldMatrix(m_modelHandle, weponAttachFrameNum);
+	auto weaponAttachFrameNum = MV1SearchFrame(m_modelHandle, kAttachFrameName);
+	auto weaponFrameMat = MV1GetFrameLocalWorldMatrix(m_modelHandle, weaponAttachFrameNum);
 
 	//結果収納用変数
 	Vec3 nowLocalPos;
@@ -227,7 +231,7 @@ void Player::UpdateModelPos()
 	auto zMat = MGetRotZ(weaponRot.z);
 
 	auto posM = MGetTranslate(nowLocalPos.ToVECTOR());
-	posM = MMult(posM, weponFrameMat);
+	posM = MMult(posM, weaponFrameMat);
 
 	auto rotM = MMult(MMult(xMat, yMat), zMat);
 	auto setM = MMult(rotM, posM);

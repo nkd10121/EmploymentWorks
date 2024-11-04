@@ -10,6 +10,7 @@
 #include "EffectManager.h"
 #include "MapManager.h"
 #include "LoadCSV.h"
+#include "Game.h"
 
 #include "EnemyBase.h"
 #include "EnemyNormal.h"
@@ -256,8 +257,8 @@ void SceneGame::Draw()
 	if (!IsInitialized())	return;
 
 	//ステージの描画
-	//MapManager::GetInstance().Draw();
-	MV1DrawModel(m_stageModel);
+	MapManager::GetInstance().Draw();
+	//MV1DrawModel(m_stageModel);
 
 	m_pCrystal->Draw();
 
@@ -279,6 +280,14 @@ void SceneGame::Draw()
 
 #ifdef _DEBUG
 	MyLib::DebugDraw::Draw3D();
+
+	//クロスヘアの描画
+	auto centerX = Game::kWindowWidth / 2;
+	auto centerY = Game::kWindowHeight / 2;
+	auto wid = 14;
+	auto hei = 2;
+	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xffffff, true);
+	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xffffff, true);
 
 	DrawString(0, 0, "GAME", 0xffffff);
 	DrawFormatString(1120,0,0xbbbbbb,"クリスタルHP:%d",m_pCrystal->GetHp());
