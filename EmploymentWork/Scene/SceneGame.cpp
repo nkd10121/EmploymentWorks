@@ -122,7 +122,7 @@ void SceneGame::Init()
 
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
-	MapManager::GetInstance().Load("data");
+	MapManager::GetInstance().Load("test");
 
 	//DEBUG:ポーションを生成
 	m_pObjects.emplace_back(std::make_shared<HealPortion>());
@@ -135,7 +135,7 @@ void SceneGame::Init()
 
 	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
-	MV1SetScale(m_stageModel, VGet(0.1f, 0.1f, 0.1f));
+	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));
 }
 
 /// <summary>
@@ -258,7 +258,7 @@ void SceneGame::Draw()
 
 	//ステージの描画
 	MapManager::GetInstance().Draw();
-	//MV1DrawModel(m_stageModel);
+	MV1DrawModel(m_stageModel);
 
 	m_pCrystal->Draw();
 

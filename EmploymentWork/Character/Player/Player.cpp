@@ -44,7 +44,7 @@ namespace
 /// </summary>
 Player::Player() :
 	CharacterBase(Collidable::Priority::High, GameObjectTag::Player),
-	m_pos(Vec3(0.0f, kCupsuleRadius + kCupsuleSize *2, 0.0f)),
+	m_pos(Vec3(0.0f, kCupsuleRadius + kCupsuleSize *5, 0.0f)),
 	temp_moveVec(),
 	m_cameraDirection(),
 	m_rot(),

@@ -71,13 +71,13 @@ void PlayerStateJump::LoopUpdate()
 		auto modelBottomPos = pos;
 		modelBottomPos.y -= own->GetCollisionSize();
 		auto underPos = modelBottomPos;
-		underPos.y -= (own->GetCollisionRadius() + own->GetCollisionSize()) * 2.0f * (0.4f - vel.y);
+		underPos.y -= (own->GetCollisionRadius() + own->GetCollisionSize()) * 2.0f * (-0.4f * vel.y);
 
 		auto hit = MV1CollCheck_Line(stageModel, -1, modelBottomPos.ToVECTOR(), underPos.ToVECTOR());
 
 		if (hit.HitFlag)
 		{
-			own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_DOWN"), 0.75f);
+			own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_DOWN"), 0.7f);
 			m_jumpFrame = 0;
 			m_updateFunc = &PlayerStateJump::DownUpdate;
 		}

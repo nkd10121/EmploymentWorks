@@ -11,7 +11,7 @@
 namespace
 {
 	//最大当たり判定ポリゴン数
-	constexpr int kMaxColHitPolyNum = 2000;
+	constexpr int kMaxColHitPolyNum = 200;
 	//壁押し出し処理の最大試行回数
 	constexpr int kMaxColHitTryNum = 16;
 	//壁押し出し時にスライドさせる距離
@@ -40,7 +40,7 @@ namespace
 MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollisionHandle*/)
 {
 	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
-	MV1SetScale(m_stageCollisionHandle, VGet(0.1f, 0.1f, 0.1f));
+	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
 
 	//m_stageCollisionHandle = normalStageCollisionHandle;
 	//m_enemyCollisionHandle = enemyStageCollisionHandle;
@@ -205,7 +205,7 @@ void MyLib::Physics::Update()
 			auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
 
 			//カプセルの上下の座標と半径から、第一引数に設定したモデルとの当たり判定を検出してくれる
-			m_hitDim = MV1CollCheck_Capsule(modelHandle, -1, capsulePos1, capsulePos2, rad * 2);
+			m_hitDim = MV1CollCheck_Capsule(modelHandle, -1, capsulePos1, capsulePos2, rad);
 		}
 		else
 		{
@@ -697,6 +697,14 @@ void MyLib::Physics::CheckWallAndFloor(std::shared_ptr<Collidable>& col)
 	// 壁ポリゴンと床ポリゴンの数を初期化する
 	m_wallNum = 0;
 	m_floorNum = 0;
+	for (auto& wall : m_pWallPoly)
+	{
+		wall = {};
+	}
+	for (auto& floor : m_pFloorPoly)
+	{
+		floor = {};
+	}
 
 	// 検出されたポリゴンの数だけ繰り返し
 	for (int i = 0; i < m_hitDim.HitNum; i++)

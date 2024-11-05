@@ -141,7 +141,6 @@ void MapManager::Load(const char* stageName)
 		MV1SetPosition(loc.handle, loc.pos.ToVECTOR());
 		MV1SetScale(loc.handle, loc.scale.ToVECTOR());
 		MV1SetRotationXYZ(loc.handle, loc.rot.ToVECTOR());
-
 	}
 }
 
@@ -154,6 +153,12 @@ void MapManager::Draw()
 	{
 		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "doorFrame" && loc.tag != "crystal" && loc.tag != "Blocks")
 		{
+			continue;
+		}
+
+		if (loc.tag == "trapPos")
+		{
+			DrawSphere3D(loc.pos.ToVECTOR(),4,4,0xffffff,0xffffff,false);
 			continue;
 		}
 
