@@ -1068,32 +1068,23 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 	}
 	if (m_isHitFlag)
 	{
+		auto undest = Vec3(capsuleCenterPos.x, capsuleCenterPos.y - radius - size, capsuleCenterPos.z);
+		auto centerToUndest = undest - capsuleCenterPos;
+		auto centerToUndestLegth = centerToUndest.Length();
+
+		auto most = Vec3(capsuleCenterPos.x, polyMaxPosY.y, capsuleCenterPos.z);
+		auto centerToMost = most - capsuleCenterPos;
+		auto centerToMostLength = centerToMost.Length();
+
+		//if (centerToUndestLegth - centerToMostLength > 1.0f)
+		//{
+		//	polyMaxPosY.y += centerToUndestLegth - centerToMostLength;
+		//}
 
 		// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
 		auto set = col->rigidbody->GetNextPos();
-
-		auto asimoto = Vec3(capsuleUnderPos.x, capsuleUnderPos.y - radius, capsuleUnderPos.z);
-		if ((asimoto - polyMaxPosY).Length() < 0.45f)
-		{
-			DrawFormatString(1000, 64, 0xff0000, "平面床");
-
-			set.y = polyMaxPosY.y + size + radius;
-			col->rigidbody->SetNextPos(set);
-		}
-		else
-		{
-			DrawFormatString(1000, 64, 0xff0000, "角");
-
-			auto wallPosToCapsuleUnderPos = Vec3(capsuleUnderPos) - polyMaxPosY;
-			auto wallPosToCapsuleUnderPosN = wallPosToCapsuleUnderPos.Normalize();
-
-			auto awayDist = radius + 0.0001f;	// そのままだとちょうど当たる位置になるので少し余分に離す
-			auto primaryToNewSecondaryPos = wallPosToCapsuleUnderPosN * awayDist;
-			auto fixedPos = Vec3(capsuleUnderPos) + primaryToNewSecondaryPos;
-			fixedPos.y += size;
-			col->rigidbody->SetNextPos(fixedPos);
-		}
-
+		set.y = polyMaxPosY.y + size + radius;
+		col->rigidbody->SetNextPos(set);
 	}
 #else
 	//床ポリゴンがない場合は何もしない
