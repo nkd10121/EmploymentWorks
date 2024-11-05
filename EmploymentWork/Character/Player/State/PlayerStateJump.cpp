@@ -63,7 +63,7 @@ void PlayerStateJump::LoopUpdate()
 	if (m_jumpFrame > 10)
 	{
 		auto stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
-		MV1SetScale(stageModel, VGet(0.1f, 0.1f, 0.1f));
+		MV1SetScale(stageModel, VGet(0.01f, 0.01f, 0.01f));
 
 		auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
 		auto pos = m_pOwn.lock()->GetRigidbody()->GetPos();
@@ -71,7 +71,7 @@ void PlayerStateJump::LoopUpdate()
 		auto modelBottomPos = pos;
 		modelBottomPos.y -= own->GetCollisionSize();
 		auto underPos = modelBottomPos;
-		underPos.y -= (own->GetCollisionRadius() + own->GetCollisionSize()) * 2.0f * (-0.4f * vel.y);
+		underPos.y -= (own->GetCollisionRadius() + own->GetCollisionSize()) * 2.0f * (0.4f - vel.y);
 
 		auto hit = MV1CollCheck_Line(stageModel, -1, modelBottomPos.ToVECTOR(), underPos.ToVECTOR());
 

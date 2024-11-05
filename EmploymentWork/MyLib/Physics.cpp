@@ -2,6 +2,7 @@
 #include "MyLib.h"
 #include "DxLib.h"
 #include "MathHelp.h"
+#include "CharacterBase.h"
 
 //おそらく一時的な実装
 #include "ModelManager.h"
@@ -768,7 +769,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 	auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
 
 	// 移動したかどうかで処理を分岐
-	if (col->rigidbody->GetDir().Length() != 0.0f)
+	if (col->rigidbody->GetVelocity().Length() >= 0.05f)
 	{
 		// 壁ポリゴンの数だけ繰り返し
 		for (int i = 0; i < m_wallNum; i++)
@@ -845,7 +846,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 			m_pPoly = m_pWallPoly[i];
 
 			// ポリゴンに当たっていたら当たったフラグを立てた上でループから抜ける
-			if (!HitCheck_Capsule_Triangle(capsulePos1, capsulePos2, radius,
+			if (HitCheck_Capsule_Triangle(capsulePos1, capsulePos2, radius,
 				m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]))
 			{
 				m_isHitFlag = true;
@@ -948,7 +949,7 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 
 	fixVec = fixVec.Normalize();
 
-	auto set = Vec3(VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(fixVec.ToVECTOR(), dir.Length() + 0.0001f)));
+	auto set = Vec3(VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(fixVec.ToVECTOR(), dir.Length() + 0.00001f)));
 
 	// 当たっていたら規定距離分プレイヤーを壁の法線方向に移動させる
 	col->rigidbody->SetNextPos(set);
@@ -961,75 +962,6 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 {
 #if false
-	//床ポリゴンがない場合は何もしない
-	if (m_floorNum == 0) return;
-
-	float radius = 0.0f;
-	float size = 0.0f;
-	for (auto& col : col->m_colliders)
-	{
-		radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
-		size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
-	}
-
-	// 床ポリゴンとの当たり判定処理
-	//あたったかどうかのフラグ初期化
-	bool IsHitFlag = false;
-
-	// 床ポリゴンとの当たり判定
-	//一番高い床ポリゴンにぶつける為の判定用変数を初期化
-	float PolyMaxPosY = 0.0f;
-
-	// 床ポリゴンに当たったかどうかのフラグを倒しておく
-	m_isHitFlag = false;
-
-	std::list<float> posY;
-
-	// 床ポリゴンの数だけ繰り返し
-	for (int i = 0; i < m_floorNum; i++)
-	{
-		// i番目の床ポリゴンのアドレスを床ポリゴンポインタ配列から取得
-		m_pPoly = m_pFloorPoly[i];
-
-
-		auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
-		auto capsulePos1 = VGet(capsuleCenterPos.x, capsuleCenterPos.y + size + radius, capsuleCenterPos.z);
-		auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size - radius, capsuleCenterPos.z);
-
-		// 頭から足元まででポリゴンと当たっているかを判定
-		m_lineRes = HitCheck_Line_Triangle(capsulePos1, capsulePos2,
-			m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]);
-
-		// 接触していなかったら何もしない
-		if (!m_lineRes.HitFlag) continue;
-
-		posY.emplace_back(m_pPoly->Position[0].y);
-		posY.emplace_back(m_pPoly->Position[1].y);
-		posY.emplace_back(m_pPoly->Position[2].y);
-
-
-		// ポリゴンに当たったフラグを立てる
-		m_isHitFlag = true;
-	}
-	if (m_isHitFlag)
-	{
-		auto total = 0.0f;
-		int num = 0;
-
-		for (auto& y : posY)
-		{
-			total += y;
-			num++;
-		}
-
-		PolyMaxPosY = total / num;
-
-		// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
-		auto set = col->rigidbody->GetNextPos();
-		set.y = PolyMaxPosY + size + radius;
-		col->rigidbody->SetNextPos(set);
-	}
-#else
 	//床ポリゴンがない場合は何もしない
 	if (m_floorNum == 0) return;
 
@@ -1076,6 +1008,139 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 
 		// 検出したプレイヤーの周囲のポリゴン情報を開放する
 		MV1CollResultPolyDimTerminate(hit);
+
+	}
+	if (m_isHitFlag)
+	{
+		// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
+		auto set = col->rigidbody->GetNextPos();
+		set.y = polyMaxPosY + size + radius;
+		col->rigidbody->SetNextPos(set);
+	}
+#elif true
+		//床ポリゴンがない場合は何もしない
+		if (m_floorNum == 0) return;
+
+	float radius = 0.0f;
+	float size = 0.0f;
+	for (auto& col : col->m_colliders)
+	{
+		radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
+		size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+	}
+
+	// 床ポリゴンとの当たり判定処理
+	//あたったかどうかのフラグ初期化
+	bool IsHitFlag = false;
+
+	// 床ポリゴンとの当たり判定
+	//一番高い床ポリゴンにぶつける為の判定用変数を初期化
+	Vec3 polyMaxPosY;
+
+	// 床ポリゴンに当たったかどうかのフラグを倒しておく
+	m_isHitFlag = false;
+
+	auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
+	auto capsuleUnderPos = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
+
+	// 床ポリゴンの数だけ繰り返し
+	for (int i = 0; i < m_floorNum; i++)
+	{
+		// i番目の床ポリゴンのアドレスを床ポリゴンポインタ配列から取得
+		m_pPoly = m_pFloorPoly[i];
+
+		auto hit = MV1CollCheck_Sphere(m_stageCollisionHandle, -1, capsuleUnderPos, radius);
+
+		// 当たっていなかったら何もしない
+		if (hit.HitNum == 0) continue;
+
+		// 既に当たったポリゴンがあり、且つ今まで検出した床ポリゴンより低い場合は何もしない
+		if (m_isHitFlag && polyMaxPosY.y > hit.Dim->HitPosition.y) continue;
+
+		polyMaxPosY = hit.Dim->HitPosition;
+
+		// ポリゴンに当たったフラグを立てる
+		m_isHitFlag = true;
+
+		// 検出したプレイヤーの周囲のポリゴン情報を開放する
+		MV1CollResultPolyDimTerminate(hit);
+
+	}
+	if (m_isHitFlag)
+	{
+
+		// 接触したポリゴンで一番高いＹ座標をプレイヤーのＹ座標にする
+		auto set = col->rigidbody->GetNextPos();
+
+		auto asimoto = Vec3(capsuleUnderPos.x, capsuleUnderPos.y - radius, capsuleUnderPos.z);
+		if ((asimoto - polyMaxPosY).Length() < 0.45f)
+		{
+			DrawFormatString(1000, 64, 0xff0000, "平面床");
+
+			set.y = polyMaxPosY.y + size + radius;
+			col->rigidbody->SetNextPos(set);
+		}
+		else
+		{
+			DrawFormatString(1000, 64, 0xff0000, "角");
+
+			auto wallPosToCapsuleUnderPos = Vec3(capsuleUnderPos) - polyMaxPosY;
+			auto wallPosToCapsuleUnderPosN = wallPosToCapsuleUnderPos.Normalize();
+
+			auto awayDist = radius + 0.0001f;	// そのままだとちょうど当たる位置になるので少し余分に離す
+			auto primaryToNewSecondaryPos = wallPosToCapsuleUnderPosN * awayDist;
+			auto fixedPos = Vec3(capsuleUnderPos) + primaryToNewSecondaryPos;
+			fixedPos.y += size;
+			col->rigidbody->SetNextPos(fixedPos);
+		}
+
+	}
+#else
+	//床ポリゴンがない場合は何もしない
+	if (m_floorNum == 0) return;
+
+	float radius = 0.0f;
+	float size = 0.0f;
+	for (auto& col : col->m_colliders)
+	{
+		radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
+		size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+	}
+
+	// 床ポリゴンとの当たり判定処理
+	//あたったかどうかのフラグ初期化
+	bool IsHitFlag = false;
+
+	// 床ポリゴンとの当たり判定
+	//一番高い床ポリゴンにぶつける為の判定用変数を初期化
+	float polyMaxPosY = 0.0f;
+
+	// 床ポリゴンに当たったかどうかのフラグを倒しておく
+	m_isHitFlag = false;
+
+	auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
+	auto capsuleUnderPos = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size - radius, capsuleCenterPos.z);
+
+	// 床ポリゴンの数だけ繰り返し
+	for (int i = 0; i < m_floorNum; i++)
+	{
+		// i番目の床ポリゴンのアドレスを床ポリゴンポインタ配列から取得
+		m_pPoly = m_pFloorPoly[i];
+
+		// 足先から頭の高さまでの間でポリゴンと接触しているかどうかを判定
+		m_lineRes = HitCheck_Line_Triangle(capsuleCenterPos, capsuleUnderPos,
+			m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]);
+
+		// 当たっていなかったら何もしない
+		if (m_lineRes.HitFlag == 0)	continue;
+
+		// 既に当たったポリゴンがあり、且つ今まで検出した床ポリゴンより低い場合は何もしない
+		if (m_isHitFlag && polyMaxPosY > m_lineRes.Position.y) continue;
+
+		polyMaxPosY = m_lineRes.Position.y;
+
+		// ポリゴンに当たったフラグを立てる
+		m_isHitFlag = true;
 
 	}
 	if (m_isHitFlag)

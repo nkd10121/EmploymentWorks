@@ -90,3 +90,16 @@ void CharacterBase::ChangeAnim(int animIndex, float animSpeed)
 	//変更後のアニメーション0%
 	MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
 }
+
+bool CharacterBase::IsInAir()
+{
+	auto prePos = rigidbody->GetPos();
+	auto newPos = rigidbody->GetNextPos();
+
+	if (abs(prePos.y - newPos.y) > 0.5f)
+	{
+		return false;
+	}
+
+	return true;
+}

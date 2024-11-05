@@ -128,7 +128,7 @@ void StateBase::ChangeState(StateKind kind)
 			pNext->Init();
 			m_nextState = pNext;
 
-			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "JUMP_UP"));
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "JUMP_UP"),0.75f);
 			return;
 		}
 	}

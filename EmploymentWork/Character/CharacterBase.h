@@ -87,7 +87,7 @@ public:
 	/// <param name="animIndex">変更後のアニメーション番号</param>
 	void ChangeAnim(int animIndex, float animSpeed = 0.5f);
 
-
+	bool IsInAir();
 protected:
 	int m_modelHandle;	//モデルハンドル
 	std::string m_characterName;	//キャラクター名 
