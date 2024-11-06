@@ -6,6 +6,9 @@ TagManager:
   tags:
   - floor
   - trapPos
+  - wall
+  - stairs
+  - stairsWall
   layers:
   - Default
   - TransparentFX

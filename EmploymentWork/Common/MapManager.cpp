@@ -151,16 +151,20 @@ void MapManager::Draw()
 {
 	for (auto& loc : m_data)
 	{
-		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "doorFrame" && loc.tag != "crystal" && loc.tag != "Blocks")
+#ifdef _DEBUG
+		if (loc.tag == "trapPos")
+		{
+			DrawSphere3D(loc.pos.ToVECTOR(), 4, 4, 0xffffff, 0xffffff, false);
+			continue;
+		}
+#endif
+
+		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "doorFrame")
 		{
 			continue;
 		}
 
-		if (loc.tag == "trapPos")
-		{
-			DrawSphere3D(loc.pos.ToVECTOR(),4,4,0xffffff,0xffffff,false);
-			continue;
-		}
+
 
 		MV1DrawModel(loc.handle);
 	}

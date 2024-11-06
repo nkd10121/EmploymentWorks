@@ -42,6 +42,7 @@ MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollision
 {
 	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
 	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
+	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 
 	//m_stageCollisionHandle = normalStageCollisionHandle;
 	//m_enemyCollisionHandle = enemyStageCollisionHandle;
@@ -663,33 +664,6 @@ void MyLib::Physics::FixPosition()
 	}
 }
 
-
-//Vec3 MyLib::Physics::GetClosestPtOnSegment(Vec3 pt, Vec3 start, Vec3 end)
-//{
-//	// 最近接点がstart側線分外領域の場合
-//	auto startToPt = pt - start;
-//	auto startToEnd = end - start;
-//	auto startToEndN = startToEnd.Normalize();
-//	if (startToPt.Dot(startToEndN) < 0)
-//	{
-//		return start;
-//	}
-//	auto endToPt = pt - end;
-//	auto endToStart = start - end;
-//	auto endToStartN = endToStart.Normalize();
-//	// 最近接点がend側線分外領域の場合
-//	if (endToPt.Dot(endToStartN) < 0)
-//	{
-//		return end;
-//	}
-//	// 中間領域の場合
-//	else
-//	{
-//		float t = startToEndN.Dot(startToPt);
-//		return start + startToEndN * t;
-//	}
-//}
-
 /// <summary>
 /// チェックしたポリゴンが壁ポリゴンか床ポリゴンかを判断し保存する
 /// </summary>
@@ -947,7 +921,7 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 	auto nextPos = col->rigidbody->GetNextPos();
 	auto dir = nextPos - pos;
 
-	fixVec = fixVec.Normalize();
+	fixVec = fixVec * 0.2f;
 
 	auto set = Vec3(VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(fixVec.ToVECTOR(), dir.Length() + 0.00001f)));
 
@@ -1017,7 +991,7 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		set.y = polyMaxPosY + size + radius;
 		col->rigidbody->SetNextPos(set);
 	}
-#elif true
+#elif false
 		//床ポリゴンがない場合は何もしない
 		if (m_floorNum == 0) return;
 

@@ -136,6 +136,7 @@ void SceneGame::Init()
 	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
 	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));
+	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));
 }
 
 /// <summary>

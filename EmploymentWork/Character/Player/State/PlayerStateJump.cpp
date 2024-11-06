@@ -64,6 +64,7 @@ void PlayerStateJump::LoopUpdate()
 	{
 		auto stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
 		MV1SetScale(stageModel, VGet(0.01f, 0.01f, 0.01f));
+		MV1SetRotationXYZ(stageModel, VGet(0.0f, DX_PI_F, 0.0f));
 
 		auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
 		auto pos = m_pOwn.lock()->GetRigidbody()->GetPos();
