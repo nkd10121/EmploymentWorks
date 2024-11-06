@@ -37,15 +37,6 @@
     <Filter Include="ヘッダー ファイル\Object">
       <UniqueIdentifier>{2d00ee4c-f571-4e7e-afb0-28415d810091}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Character">
-      <UniqueIdentifier>{7eb17488-b92e-4558-b38a-c8c191cd87e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Character\Player">
-      <UniqueIdentifier>{8f11c3d7-f8e4-437e-99a9-5320223dc1cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Character\Player\State">
-      <UniqueIdentifier>{f67808dc-c87c-4bdb-a403-123266784fc0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Common">
       <UniqueIdentifier>{02102386-f21c-42cf-9964-44f46e93e7b4}</UniqueIdentifier>
     </Filter>
@@ -61,17 +52,29 @@
     <Filter Include="ヘッダー ファイル\Common">
       <UniqueIdentifier>{8ae727cf-2b56-41e8-b986-fe7fe0924a98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Character\Enemy">
-      <UniqueIdentifier>{b7dbd386-100c-4ecc-88bf-c8a1b721551c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Object\Character\Enemy">
       <UniqueIdentifier>{b502dab4-079e-461a-92f1-3c72ce0d6019}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Character\Enemy\State">
-      <UniqueIdentifier>{1734faed-1e73-4da1-9bde-0c30873fb827}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Object\Character\Enemy\State">
       <UniqueIdentifier>{b08059a0-a727-4463-b303-308288558ef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character">
+      <UniqueIdentifier>{7eb17488-b92e-4558-b38a-c8c191cd87e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\Player">
+      <UniqueIdentifier>{8f11c3d7-f8e4-437e-99a9-5320223dc1cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\Player\State">
+      <UniqueIdentifier>{f67808dc-c87c-4bdb-a403-123266784fc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\Enemy">
+      <UniqueIdentifier>{b7dbd386-100c-4ecc-88bf-c8a1b721551c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\Enemy\State">
+      <UniqueIdentifier>{1734faed-1e73-4da1-9bde-0c30873fb827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Trap">
+      <UniqueIdentifier>{c11e7215-b23d-4744-9c14-5755d9928a9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,19 +127,19 @@
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
     <ClCompile Include="Character\CharacterBase.cpp">
-      <Filter>ソース ファイル\Object\Character</Filter>
+      <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
     <ClCompile Include="Character\Player\Player.cpp">
-      <Filter>ソース ファイル\Object\Character\Player</Filter>
+      <Filter>ソース ファイル\Character\Player</Filter>
     </ClCompile>
     <ClCompile Include="Character\Player\State\PlayerStateIdle.cpp">
-      <Filter>ソース ファイル\Object\Character\Player\State</Filter>
+      <Filter>ソース ファイル\Character\Player\State</Filter>
     </ClCompile>
     <ClCompile Include="Character\Player\State\PlayerStateWalk.cpp">
-      <Filter>ソース ファイル\Object\Character\Player\State</Filter>
+      <Filter>ソース ファイル\Character\Player\State</Filter>
     </ClCompile>
     <ClCompile Include="Character\Player\State\StateBase.cpp">
-      <Filter>ソース ファイル\Object\Character</Filter>
+      <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
     <ClCompile Include="Object\HealPortion.cpp">
       <Filter>ソース ファイル\Object</Filter>
@@ -154,10 +157,10 @@
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
     <ClCompile Include="Character\Enemy\EnemyBase.cpp">
-      <Filter>ソース ファイル\Object\Character\Enemy</Filter>
+      <Filter>ソース ファイル\Character\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Character\Player\State\PlayerStateJump.cpp">
-      <Filter>ソース ファイル\Object\Character\Player\State</Filter>
+      <Filter>ソース ファイル\Character\Player\State</Filter>
     </ClCompile>
     <ClCompile Include="Object\Shot.cpp">
       <Filter>ソース ファイル\Object</Filter>
@@ -169,7 +172,7 @@
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Character\Enemy\EnemyNormal.cpp">
-      <Filter>ソース ファイル\Object\Character\Enemy</Filter>
+      <Filter>ソース ファイル\Character\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Common\SoundManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
@@ -178,15 +181,18 @@
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
     <ClCompile Include="Character\Player\State\PlayerStateDash.cpp">
-      <Filter>ソース ファイル\Object\Character\Player\State</Filter>
+      <Filter>ソース ファイル\Character\Player\State</Filter>
     </ClCompile>
     <ClCompile Include="Character\Enemy\State\EnemyStateIdle.cpp">
-      <Filter>ソース ファイル\Object\Character\Enemy\State</Filter>
+      <Filter>ソース ファイル\Character\Enemy\State</Filter>
     </ClCompile>
     <ClCompile Include="Character\Enemy\State\EnemyStateWalk.cpp">
-      <Filter>ソース ファイル\Object\Character\Enemy\State</Filter>
+      <Filter>ソース ファイル\Character\Enemy\State</Filter>
     </ClCompile>
     <ClCompile Include="TrapManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="TrapBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -309,6 +315,9 @@
       <Filter>ヘッダー ファイル\Object\Character\Enemy\State</Filter>
     </ClInclude>
     <ClInclude Include="TrapManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TrapBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

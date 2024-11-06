@@ -48,6 +48,7 @@
     <ClCompile Include="Scene\ScenePause.cpp" />
     <ClCompile Include="Character\Player\State\StateBase.cpp" />
     <ClCompile Include="Object\Shot.cpp" />
+    <ClCompile Include="TrapBase.cpp" />
     <ClCompile Include="TrapManager.cpp" />
     <ClCompile Include="Util\Camera.cpp" />
     <ClCompile Include="Util\Input.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Scene\ScenePause.h" />
     <ClInclude Include="Character\Player\State\StateBase.h" />
     <ClInclude Include="Object\Shot.h" />
+    <ClInclude Include="TrapBase.h" />
     <ClInclude Include="TrapManager.h" />
     <ClInclude Include="Util\Camera.h" />
     <ClInclude Include="Util\Game.h" />
