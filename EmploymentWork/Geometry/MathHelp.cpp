@@ -1,5 +1,9 @@
 ﻿#include "MathHelp.h"
 
+namespace BoundingBox
+{
+}
+
 /// <summary>
 /// 線分と点の線分上の最近接点を取得
 /// </summary>
@@ -35,4 +39,28 @@ void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& cent
 
 	resultAPos = sizeA * s + centerA;
 	resultBPos = sizeB * t + centerB;
+}
+
+std::list<std::shared_ptr<TrapManager::Trap>> CheckHitBoundingBoxAndPoints(const Vec3& start, const Vec3& end, const std::list<std::shared_ptr<TrapManager::Trap>> trap)
+{
+	//最終的に返す変数
+	std::list<std::shared_ptr<TrapManager::Trap>> ret;
+
+	Vec3 min, max;
+	min = Vec3(min(start.x, end.x), min(start.y, end.y), min(start.z, end.z));
+	max = Vec3(max(start.x, end.x), max(start.y, end.y), max(start.z, end.z));
+
+	for (auto& t : trap)
+	{
+		bool isAdd = (t->pos.x >= min.x && t->pos.x <= max.x &&
+			t->pos.y >= min.y && t->pos.y <= max.y &&
+			t->pos.z >= min.z && t->pos.z <= max.z);
+
+		if (isAdd)
+		{
+			ret.emplace_back(t);
+		}
+	}
+
+	return ret;
 }

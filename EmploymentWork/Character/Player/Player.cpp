@@ -177,10 +177,10 @@ void Player::Update(SceneGame* pScene)
 	}
 
 
-	TrapManager::GetInstance().GetPlayerInfo(m_pos, m_cameraDirection);
+	TrapManager::GetInstance().SelectPoint(m_pos, m_cameraDirection);
 	if (Input::GetInstance().IsTriggered("Y"))
 	{
-		TrapManager::GetInstance().EstablishTrap(m_pos, m_cameraDirection, 1);
+		TrapManager::GetInstance().EstablishTrap(m_pos, m_cameraDirection,0);
 	}
 }
 

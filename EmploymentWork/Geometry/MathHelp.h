@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Vec3.h"
-
+#include "TrapManager.h"
 
 /// <summary>
 /// 線分と点の直線上の最近接点を取得
@@ -21,3 +21,5 @@ Vec3 GetNearestPtOnLine(const Vec3& start, const Vec3& end, const Vec3& point);
 /// <param name="resultAPos">線分A上の線分Bとの最近接点座標</param>
 /// <param name="resultBPos">線分B上の線分Aとの最近接点座標</param>
 void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& centerB, const Vec3& sizeB,Vec3& resultAPos,Vec3& resultBPos);
+
+std::list<std::shared_ptr<TrapManager::Trap>> CheckHitBoundingBoxAndPoints(const Vec3& start, const Vec3& end, const std::list<std::shared_ptr<TrapManager::Trap>> trap);

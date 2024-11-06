@@ -7,19 +7,19 @@
 
 class TrapManager
 {
-private:
+public:
 	struct Trap
 	{
 		//std::shared_ptr<TrapBase> trap;
 		Vec3 pos;
 		bool isPlaced;
-		std::list<Trap*> m_neighborTraps;
+		std::list<std::weak_ptr<Trap>> neighborTraps;
 	};
 private:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	TrapManager() {};
+	TrapManager();
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -60,7 +60,7 @@ public:
 	}
 
 private:
-	const bool CheckNeighbor(std::list<Trap*> check)const;
+	const bool CheckNeighbor(std::list<std::weak_ptr<Trap>> check)const;
 public:
 	void AddTrapPos(Vec3 pos);
 
@@ -76,12 +76,11 @@ public:
 
 
 	//デバッグ用
-	void GetPlayerInfo(Vec3 playerPos, Vec3 targetPos);
+	void SelectPoint(Vec3 playerPos, Vec3 targetPos);
 private:
-	std::list<Trap> m_traps;
-
+	std::list<std::shared_ptr<Trap>> m_traps;
 
 	//デバッグ用
-	Trap debugTrap;
+	std::shared_ptr<Trap> debugTrap;
 };
 
