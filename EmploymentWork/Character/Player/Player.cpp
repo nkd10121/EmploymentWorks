@@ -8,11 +8,12 @@
 #include "Shot.h"
 #include "SceneGame.h"
 #include "ModelManager.h"
+#include "TrapManager.h"
 
 namespace
 {
 	/*デバッグ用のカプセル関係*/
-	constexpr float kCupsuleSize = 3.0f;		//カプセルのサイズ
+	constexpr float kCupsuleSize = 4.0f;		//カプセルのサイズ
 	constexpr float kCupsuleRadius = 2.0f;		//カプセルの半径
 	constexpr int kCupsuleDivNum = 10;			//カプセルの分け数(?)	//TODO:いらんかったら消す
 
@@ -24,8 +25,8 @@ namespace
 
 	/*モデル関係*/
 	//キャラクターモデル
-	//constexpr float kModelScale = 0.08f;		//モデルのサイズ
-	constexpr float kModelScale = 0.05f;		//モデルのサイズ
+	constexpr float kModelScale = 0.065f;		//モデルのサイズ
+	//constexpr float kModelScale = 0.05f;		//モデルのサイズ
 
 	//武器モデル
 	constexpr float kCrossbowModelScale = 0.64f;	//モデルのサイズ
@@ -113,6 +114,8 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	m_crossbowHandle = ModelManager::GetInstance().GetModelHandle("MOD_CROSSBOW");
 	//スケールの変更
 	MV1SetScale(m_crossbowHandle, VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
+
+
 }
 
 /// <summary>
@@ -171,6 +174,13 @@ void Player::Update(SceneGame* pScene)
 	else
 	{
 		m_attackButtonPushCount = 0;
+	}
+
+
+	TrapManager::GetInstance().GetPlayerInfo(m_pos, m_cameraDirection);
+	if (Input::GetInstance().IsTriggered("Y"))
+	{
+		TrapManager::GetInstance().EstablishTrap(m_pos, m_cameraDirection, 1);
 	}
 }
 

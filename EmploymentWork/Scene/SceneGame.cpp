@@ -6,6 +6,7 @@
 #include "HealPortion.h"
 
 #include "ModelManager.h"
+#include "TrapManager.h"
 #include "SoundManager.h"
 #include "EffectManager.h"
 #include "MapManager.h"
@@ -137,6 +138,8 @@ void SceneGame::Init()
 	m_stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
 	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));
 	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));
+
+	TrapManager::GetInstance().SetUp();
 }
 
 /// <summary>
@@ -179,12 +182,12 @@ void SceneGame::Update()
 		return;
 	}
 
-	//DEBUG:Aボタンを押した時にポーションを生成するように
-	if (Input::GetInstance().IsTriggered("Y"))
-	{
-		m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
-		m_pEnemies.back()->Init(m_pPhysics);
-	}
+	////DEBUG:Aボタンを押した時にポーションを生成するように
+	//if (Input::GetInstance().IsTriggered("Y"))
+	//{
+	//	m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
+	//	m_pEnemies.back()->Init(m_pPhysics);
+	//}
 
 	m_pCrystal->Update();
 	if (m_pCrystal->GetIsBreak())
@@ -281,6 +284,8 @@ void SceneGame::Draw()
 
 #ifdef _DEBUG
 	MyLib::DebugDraw::Draw3D();
+
+	TrapManager::GetInstance().Draw();
 
 	//クロスヘアの描画
 	auto centerX = Game::kWindowWidth / 2;

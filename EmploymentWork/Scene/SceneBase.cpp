@@ -5,6 +5,7 @@
 #include "EffectManager.h"
 #include "SoundManager.h"
 #include "MapManager.h"
+#include "TrapManager.h"
 
 namespace
 {
@@ -148,6 +149,7 @@ bool SceneBase::IsSceneEnd()
 	SoundManager::GetInstance().Clear();
 	EffectManager::GetInstance().Clear();
 	MapManager::GetInstance().DeleteModel();
+	TrapManager::GetInstance().Clear();
 	return true;
 }
 

@@ -4,6 +4,7 @@
 #include <map>
 
 #include "ModelManager.h"
+#include "TrapManager.h"
 
 MapManager* MapManager::m_instance = nullptr;
 
@@ -117,16 +118,10 @@ void MapManager::Load(const char* stageName)
 		//大きさを取得する
 		FileRead_read(&loc.scale, sizeof(loc.scale), handle);
 
-		//if (loc.tag == "trapPos")
-		//{
-		//	m_trapPos.push_back(loc.pos);
-		//}
-
-		//if (loc.tag == "crystal")
-		//{
-		//	m_crustalPos = loc.pos;
-		//}
-		//LoadEnemyRoute(loc);
+		if (loc.tag == "trapPos")
+		{
+			TrapManager::GetInstance().AddTrapPos(loc.pos);
+		}
 
 	}
 	FileRead_close(handle);
@@ -151,20 +146,10 @@ void MapManager::Draw()
 {
 	for (auto& loc : m_data)
 	{
-#ifdef _DEBUG
-		if (loc.tag == "trapPos")
-		{
-			DrawSphere3D(loc.pos.ToVECTOR(), 4, 4, 0xffffff, 0xffffff, false);
-			continue;
-		}
-#endif
-
 		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "doorFrame")
 		{
 			continue;
 		}
-
-
 
 		MV1DrawModel(loc.handle);
 	}
