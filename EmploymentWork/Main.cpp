@@ -28,6 +28,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;			// エラーが起きたら直ちに終了
 	}
 
+#ifdef _DEBUG
+	AllocConsole();                                        // コンソール
+	FILE* out = 0; freopen_s(&out, "CON", "w", stdout); // stdout
+	FILE* in = 0; freopen_s(&in, "CON", "r", stdin);   // stdin
+
+	SetForegroundWindow(GetMainWindowHandle());
+#endif
+
 	SetUseZBuffer3D(true);
 	SetWriteZBuffer3D(true);
 	SetUseBackCulling(true);
@@ -76,6 +84,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Effkseer_End();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
+
+	// コンソール解放
+	fclose(out); fclose(in); FreeConsole();
 
 	return 0;				// ソフトの終了 
 }

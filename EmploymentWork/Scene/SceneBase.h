@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	SceneBase();
+	SceneBase(std::string name);
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -149,6 +149,8 @@ private:
 						//0:フェード中じゃない,0以上:フェード中
 	int m_fadeSpeed;	//フェード速度
 	unsigned int m_fadeColor;	//フェード時の色
+
+	std::string sceneName;
 
 #ifdef DISP_PROCESS
 	/*処理負荷計測*/

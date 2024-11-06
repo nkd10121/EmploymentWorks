@@ -4,7 +4,8 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-SceneTitle::SceneTitle()
+SceneTitle::SceneTitle():
+	SceneBase("SceneTitle")
 {
 
 }

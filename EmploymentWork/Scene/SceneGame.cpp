@@ -26,6 +26,7 @@ namespace
 /// コンストラクタ
 /// </summary>
 SceneGame::SceneGame() :
+	SceneBase("SceneGame"),
 	m_pPlayer(nullptr),
 	m_pCamera(nullptr),
 	m_pPhysics(nullptr),

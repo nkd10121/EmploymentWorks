@@ -5,7 +5,8 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-ScenePause::ScenePause()
+ScenePause::ScenePause():
+	SceneBase("ScenePause")
 {
 }
 

@@ -23,12 +23,13 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-SceneBase::SceneBase() :
+SceneBase::SceneBase(std::string name) :
 	m_isInit(false),
 	m_isEnd(false),
 	m_fadeAlpha(kBrightMax),
 	m_fadeSpeed(0),
-	m_fadeColor(0x000000)
+	m_fadeColor(0x000000),
+	sceneName(name)
 #ifdef DISP_PROCESS
 	, m_updateTime(0),
 	m_drawTime(0)
@@ -64,6 +65,9 @@ void SceneBase::UpdateAll()
 {
 #ifdef DISP_PROCESS
 	LONGLONG start = GetNowHiPerformanceCount();
+
+	printf("---------------------------------------\n");
+
 #endif
 	//継承先のシーンのリソースのロードが終わっているか確認
 	if (!IsLoaded())

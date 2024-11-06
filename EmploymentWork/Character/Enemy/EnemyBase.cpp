@@ -58,7 +58,7 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 
 #ifdef _DEBUG
 			//DEBUG:残りHPを表示
-			//printfDx("%d\n", m_status.hp);
+			//printf("%d\n", m_status.hp);
 #endif
 		}
 	}

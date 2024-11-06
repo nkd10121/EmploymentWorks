@@ -338,7 +338,7 @@ void MyLib::Physics::CheckColide()
 		if (doCheck && checkCount > 800)
 		{
 #if _DEBUG
-			//printfDx("規定回数を超えました");
+			//printf("規定回数を超えました");
 #endif
 			break;
 		}

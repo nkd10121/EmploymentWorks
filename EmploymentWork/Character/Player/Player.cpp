@@ -276,7 +276,7 @@ void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 	//	}
 	//#ifdef _DEBUG
 	//	message += "と当たった！\n";
-	//	printfDx(message.c_str());
+	//	printf(message.c_str());
 	//#endif
 }
 
@@ -321,6 +321,6 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 	}
 #ifdef _DEBUG
 	message += "と当たった！\n";
-	printfDx(message.c_str());
+	printf(message.c_str());
 #endif
 }
