@@ -263,7 +263,7 @@ void SceneGame::Draw()
 
 	//ステージの描画
 	MapManager::GetInstance().Draw();
-	MV1DrawModel(m_stageModel);
+	//MV1DrawModel(m_stageModel);
 
 #ifdef _DEBUG
 	TrapManager::GetInstance().Draw();

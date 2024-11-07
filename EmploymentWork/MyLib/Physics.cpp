@@ -11,12 +11,6 @@
 
 namespace
 {
-	//最大当たり判定ポリゴン数
-	constexpr int kMaxColHitPolyNum = 200;
-	//壁押し出し処理の最大試行回数
-	constexpr int kMaxColHitTryNum = 16;
-	//壁押し出し時にスライドさせる距離
-	constexpr float kColHitSlideLength = 0.2f;
 	//壁ポリゴンか床ポリゴンかを判断するための変数
 	constexpr float kWallPolyBorder = 0.4f;
 	//壁ポリゴンと判断するための高さ変数
@@ -44,20 +38,20 @@ MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollision
 	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
 	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 
-	for (int x = -400; x < 400; x += 8)
-	{
-		for (int z = -400; z < 400; z += 8)
-		{
-			auto hit = MV1CollCheck_LineDim(m_stageCollisionHandle,-1,VGet(static_cast<float>(x), 100, static_cast<float>(z)), VGet(static_cast<float>(x), 0, static_cast<float>(z)));
-			if (hit.HitNum > 0)
-			{
-				for (int i = 0; i < hit.HitNum; i++)
-				{
-					test.emplace_back(Vec3(hit.Dim[i].HitPosition));
-				}
-			}
-		}
-	}
+	//for (int x = -400; x < 400; x += 8)
+	//{
+	//	for (int z = -400; z < 400; z += 8)
+	//	{
+	//		auto hit = MV1CollCheck_LineDim(m_stageCollisionHandle,-1,VGet(static_cast<float>(x), 100, static_cast<float>(z)), VGet(static_cast<float>(x), 0, static_cast<float>(z)));
+	//		if (hit.HitNum > 0)
+	//		{
+	//			for (int i = 0; i < hit.HitNum; i++)
+	//			{
+	//				test.emplace_back(Vec3(hit.Dim[i].HitPosition));
+	//			}
+	//		}
+	//	}
+	//}
 
 	//m_stageCollisionHandle = normalStageCollisionHandle;
 	//m_enemyCollisionHandle = enemyStageCollisionHandle;
@@ -131,15 +125,6 @@ void MyLib::Physics::Update()
 	m_onCollideInfo.clear();
 
 	Vec3 debug;
-
-	//int size = 4;
-
-	//for (auto& p : test)
-	//{
-	//	auto f = VGet(p.x - size, p.y, p.z - size);
-	//	auto s = VGet(p.x + size, p.y + size, p.z + size);
-	//	DrawCube3D(f, s, 0xffff00, 0xffff00, false);
-	//}
 
 	// 移動
 	for (auto& item : m_collidables)
@@ -683,8 +668,19 @@ void MyLib::Physics::FixPosition()
 		Vec3 toFixedPos = nextPos - pos;
 		item->rigidbody->SetVelocity(toFixedPos);
 
+		if (item->GetTag() == GameObjectTag::Player)
+		{
+			printf("補正前:%f,%f,%f\n", pos.x, pos.y, pos.z);
+		}
+
 		// 位置確定
 		item->rigidbody->SetPos(item->rigidbody->GetNextPos());
+
+		if (item->GetTag() == GameObjectTag::Player)
+		{
+			auto p = item->rigidbody->GetNextPos();
+			printf("補正後:%f,%f,%f\n", p.x, p.y, p.z);
+		}
 	}
 }
 
@@ -758,6 +754,8 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 	// 壁ポリゴンがない場合は何もしない
 	if (m_wallNum == 0) return;
 
+	printf("当たった壁の数:%d\n", m_wallNum);
+
 	// 壁ポリゴンとの当たり判定処理
 	// 壁に当たったかどうかのフラグは初期状態では「当たっていない」にしておく
 	m_isHitFlag = false;
@@ -815,7 +813,7 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 				m_pPoly = m_pWallPoly[j];
 
 				// 当たっていたらループから抜ける
-				if (!HitCheck_Capsule_Triangle(capsulePos1, capsulePos2, radius,
+				if (HitCheck_Capsule_Triangle(capsulePos1, capsulePos2, radius,
 					m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]))
 				{
 					//trueにする
@@ -874,15 +872,20 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 	}
 
 	auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
-	auto capsulePos1 = VGet(capsuleCenterPos.x, capsuleCenterPos.y + size, capsuleCenterPos.z);
-	auto capsulePos2 = VGet(capsuleCenterPos.x, capsuleCenterPos.y - size, capsuleCenterPos.z);
 
-#if false
+
+#if TRUE
+
+	auto nextPos = capsuleCenterPos;
 	// 壁からの押し出し処理を試みる最大数だけ繰り返し
 	for (int i = 0; i < ColInfo::kMaxColHitTryNum; i++)
 	{
 		// 当たる可能性のある壁ポリゴンを全て見る
 		bool isHitWall = false;
+
+		auto capsulePos1 = VGet(nextPos.x, nextPos.y + size, nextPos.z);
+		auto capsulePos2 = VGet(nextPos.x, nextPos.y - size, nextPos.z);
+
 		// 壁ポリゴンの数だけ繰り返し
 		for (int j = 0; j < m_wallNum; j++)
 		{
@@ -893,38 +896,47 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 			if (!HitCheck_Capsule_Triangle(capsulePos1, capsulePos2, radius,
 				m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2])) continue;
 
-			auto ret = VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(m_pPoly->Normal, kColHitSlideLength));
+			auto ret = VAdd(nextPos, VScale(m_pPoly->Normal, col->rigidbody->GetVelocity().Length() * 0.035f));
 
-			Vec3 set;
-			set = Vec3(ret.x, ret.y, ret.z);
+			nextPos = VGet(ret.x, ret.y, ret.z);
 
-			// 当たっていたら規定距離分プレイヤーを壁の法線方向に移動させる
-			col->rigidbody->SetNextPos(set);
+			//// 当たっていたら規定距離分プレイヤーを壁の法線方向に移動させる
+			//col->rigidbody->SetNextPos(set);
 
 			//移動後の座標からカプセルの上下の座標を求める
-			capsulePos1 = VGet(set.x, set.y + size, set.z);
-			capsulePos2 = VGet(set.x, set.y - size, set.z);
+			capsulePos1 = VGet(nextPos.x, nextPos.y + size, nextPos.z);
+			capsulePos2 = VGet(nextPos.x, nextPos.y - size, nextPos.z);
 
 			// 移動した上で壁ポリゴンと接触しているかどうかを判定
 			for (int k = 0; k < m_wallNum; k++)
 			{
 				// 当たっていたらループを抜ける
 				m_pPoly = m_pWallPoly[k];
-				if (!HitCheck_Capsule_Triangle(capsulePos1, capsulePos2, radius,
+				if (HitCheck_Capsule_Triangle(capsulePos1, capsulePos2, radius,
 					m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]))
 				{
 					isHitWall = true;
+					printf("試行回数:%d\n",i);
 					break;
 				}
 			}
 
 			// 全てのポリゴンと当たっていなかったらここでループ終了
-			if (!isHitWall) break;
+			if (!isHitWall)
+			{
+				printf("試行回数:%d\n", i);
+				break;
+			}
 		}
 
 		//ループ終了
-		if (!isHitWall) break;
+		if (!isHitWall)
+		{
+			printf("試行回数:%d\n", i);
+			break;
+		}
 	}
+	col->rigidbody->SetNextPos(Vec3(nextPos));
 #else
 	Vec3 fixVec;
 
@@ -941,11 +953,15 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 		fixVec += m_pPoly->Normal;
 	}
 
+	if (fixVec.Length() == 0.0f)	return;
+
 	auto pos = col->rigidbody->GetPos();
 	auto nextPos = col->rigidbody->GetNextPos();
 	auto dir = nextPos - pos;
 
-	fixVec = fixVec * 0.2f;
+	fixVec = fixVec.Normalize();
+
+	printf("修正ベクトル:%f,%f,%f\n", fixVec.x, fixVec.y, fixVec.z);
 
 	auto set = Vec3(VAdd(col->rigidbody->GetNextPosVECTOR(), VScale(fixVec.ToVECTOR(), dir.Length() + 0.00001f)));
 

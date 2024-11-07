@@ -26,6 +26,8 @@ namespace
 		{"floor","MOD_FLOOR"},
 		{"wall","MOD_WALL"},
 		{"doorFrame","MOD_FRAME"},
+		{"stairs","MOD_STAIRS"},
+		{"stairsWall","MOD_SMOOTHBLOCK"},
 	};
 }
 
@@ -138,7 +140,15 @@ void MapManager::Load(const char* stageName)
 		loc.handle = MV1DuplicateModel(m_handles[loc.tag]);
 		MV1SetPosition(loc.handle, loc.pos.ToVECTOR());
 		MV1SetScale(loc.handle, loc.scale.ToVECTOR());
-		MV1SetRotationXYZ(loc.handle, loc.rot.ToVECTOR());
+		if (loc.tag != "stairs")
+		{
+			MV1SetRotationXYZ(loc.handle, loc.rot.ToVECTOR());
+		}
+		else
+		{
+			loc.rot.y -= DX_PI_F;
+			MV1SetRotationXYZ(loc.handle, loc.rot.ToVECTOR());
+		}
 	}
 }
 
@@ -149,12 +159,10 @@ void MapManager::Draw()
 {
 	for (auto& loc : m_data)
 	{
-		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "doorFrame")
+		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "doorFrame" && loc.tag != "stairs" && loc.tag != "stairsWall")
 		{
 			continue;
 		}
 		MV1DrawModel(loc.handle);
 	}
-
-
 }

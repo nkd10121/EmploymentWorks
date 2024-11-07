@@ -5,6 +5,7 @@
 #include <list>
 #include <vector>
 #include <unordered_map>
+#include <map>
 
 namespace MyLib {
 
@@ -15,7 +16,7 @@ namespace ColInfo
 	//最大当たり判定ポリゴン数
 	constexpr int kMaxColHitPolyNum = 2000;
 	//壁押し出し処理の最大試行回数
-	constexpr int kMaxColHitTryNum = 16;
+	constexpr int kMaxColHitTryNum = 100;
 	//壁押し出し時にスライドさせる距離
 	constexpr float kColHitSlideLength = 1.0f;
 }
@@ -174,7 +175,7 @@ private:
 	HITRESULT_LINE m_lineRes{};
 
 
-	std::list<Vec3> test;
+	std::map<int,Vec3> test;
 };
 
 }
