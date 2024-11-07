@@ -85,8 +85,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Effkseer_End();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
+#ifdef _DEBUG
 	// コンソール解放
 	fclose(out); fclose(in); FreeConsole();
+#endif
 
 	return 0;				// ソフトの終了 
 }

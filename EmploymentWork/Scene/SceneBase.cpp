@@ -7,6 +7,9 @@
 #include "MapManager.h"
 #include "TrapManager.h"
 
+#include<chrono>
+#include<ctime>
+
 namespace
 {
 	// フェードにかかるフレームデフォルト
@@ -67,7 +70,18 @@ void SceneBase::UpdateAll()
 	LONGLONG start = GetNowHiPerformanceCount();
 
 	printf("---------------------------------------\n");
+	printf("現在のシーン : %s\n", sceneName.c_str());
 
+	// 現在時刻をsystem_clockを用いて取得
+	auto now = std::chrono::system_clock::now();
+
+	// 現在時刻をtime_t形式に変換
+	std::time_t t = std::chrono::system_clock::to_time_t(now);
+
+	//現在時刻を表示
+	printf("現在時刻 : %d", (t / 3600 + 9) % 24);//時
+	printf(":%d", t / 60 % 60);//分
+	printf(":%d\n", t % 60);//秒
 #endif
 	//継承先のシーンのリソースのロードが終わっているか確認
 	if (!IsLoaded())
