@@ -131,25 +131,48 @@ void SceneBase::DrawAll()
 	Draw();
 	DrawFade();
 	DrawLoading();
-
-#ifdef DISP_PROCESS
+#ifdef _DEBUG
+#ifdef TRUE
 	m_drawTime = GetNowHiPerformanceCount() - start;
 
-	// 処理バーの表示
 	// 説明 
-	DrawString(0, Game::kWindowHeight - 48, "処理", 0xffffff, 0x000000);
-	DrawBox(32 + 2, Game::kWindowHeight - 48 + 2, 48 + 16 - 2, Game::kWindowHeight - 32 - 2, 0x0000ff, true);
-	DrawString(0, Game::kWindowHeight - 32, "描画", 0xffffff, 0x000000);
-	DrawBox(32 + 2, Game::kWindowHeight - 32 + 2, 48 + 16 - 2, Game::kWindowHeight - 16 - 2, 0xff0000, true);
+	DrawString(0, Game::kWindowHeight - 32, "処理:", 0xffffff, 0x000000);
+	DrawString(0, Game::kWindowHeight - 16, "描画:", 0xffffff, 0x000000);
 
-	float rate = static_cast<float>(m_updateTime + m_drawTime) / 16666.6f;
+	// 処理バーの表示
+	float rate = static_cast<float>(m_updateTime) / 16666.6f;
 	int width = static_cast<int>(Game::kWindowWidth * rate);
-	DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0xff0000, true);	// 処理+描画
+	DrawBox(40 + 2, Game::kWindowHeight - 32, 40 + 2 + width, Game::kWindowHeight - 16, 0x0000ff, true);
 
-	rate = static_cast<float>(m_updateTime) / 16666.6f;
+	rate = static_cast<float>(m_drawTime) / 16666.6f;
 	width = static_cast<int>(Game::kWindowWidth * rate);
-	DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0x0000ff, true);	// 処理+描画の上から処理時間のみ描画
-#endif
+	DrawBox(40 + 2, Game::kWindowHeight - 16, 40 + 2 + width, Game::kWindowHeight, 0xff0000, true);
+
+	printf("更新処理時間:%d\n",m_updateTime);
+	printf("描画処理時間:%d\n", m_drawTime);
+
+	//float rate = static_cast<float>(m_updateTime + m_drawTime) / 16666.6f;
+	//int width = static_cast<int>(Game::kWindowWidth * rate);
+	//DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0xff0000, true);	// 処理+描画
+
+	//rate = static_cast<float>(m_updateTime) / 16666.6f;
+	//width = static_cast<int>(Game::kWindowWidth * rate);
+	//DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0x0000ff, true);	// 処理+描画の上から処理時間のみ描画
+#else
+	m_drawTime = GetNowHiPerformanceCount() - start;
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawBox(0, Game::kWindowHeight - 32 - 2, 84, Game::kWindowHeight, 0xffffff, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	// 処理バーの表示
+	// 説明
+	DrawString(0, Game::kWindowHeight - 32, "処理:", 0x0000ff, 0x000000);
+	DrawFormatString(40 + 2, Game::kWindowHeight - 32, 0x0000ff, "%d", m_updateTime);
+	DrawString(0, Game::kWindowHeight - 16, "描画:", 0xff0000, 0x000000);
+	DrawFormatString(40 + 2, Game::kWindowHeight - 16, 0xff0000, "%d", m_drawTime);
+#endif	//DISP_PROCESS
+#endif	//_DEBUG
 }
 
 /// <summary>
@@ -218,7 +241,7 @@ void SceneBase::DrawLoading() const
 {
 	if (!IsLoaded())
 	{
-		DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 16,0xffffff,"Loading...");
+		DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 16, 0xffffff, "Loading...");
 	}
 }
 

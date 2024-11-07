@@ -265,6 +265,11 @@ void SceneGame::Draw()
 	MapManager::GetInstance().Draw();
 	MV1DrawModel(m_stageModel);
 
+#ifdef _DEBUG
+	TrapManager::GetInstance().Draw();
+	MyLib::DebugDraw::Draw3D();
+#endif
+
 	m_pCrystal->Draw();
 
 	EffectManager::GetInstance().Draw();
@@ -284,10 +289,6 @@ void SceneGame::Draw()
 	}
 
 #ifdef _DEBUG
-	MyLib::DebugDraw::Draw3D();
-
-	TrapManager::GetInstance().Draw();
-
 	//クロスヘアの描画
 	auto centerX = Game::kWindowWidth / 2;
 	auto centerY = Game::kWindowHeight / 2;

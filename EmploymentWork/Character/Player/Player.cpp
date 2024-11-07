@@ -177,10 +177,21 @@ void Player::Update(SceneGame* pScene)
 	}
 
 
-	TrapManager::GetInstance().SelectPoint(m_pos, m_cameraDirection);
+	auto bottomPos = m_pos;
+	bottomPos.y -= kCupsuleSize + kCupsuleRadius;
+	if (m_cameraDirection.y < 0.0f)
+	{
+		bottomPos.y += 1.0f;
+	}
+	else if(m_cameraDirection.y > 0.0f)
+	{
+		bottomPos.y -= 1.0f;
+	}
+
+	TrapManager::GetInstance().SelectPoint(bottomPos, m_cameraDirection);
 	if (Input::GetInstance().IsTriggered("Y"))
 	{
-		TrapManager::GetInstance().EstablishTrap(m_pos, m_cameraDirection,0);
+		TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection,0);
 	}
 }
 

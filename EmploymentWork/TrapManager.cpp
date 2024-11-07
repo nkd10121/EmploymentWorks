@@ -41,11 +41,11 @@ void TrapManager::Draw()
 	{
 		if (pos->isPlaced)
 		{
-			DrawSphere3D(pos->pos.ToVECTOR(), 2, 4, 0xffffff, 0xffffff, false);
+			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
 		}
 		else
 		{
-			DrawSphere3D(pos->pos.ToVECTOR(), 2, 4, 0xff0000, 0xff0000, false);
+			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0x000000, 0x000000, false);
 		}
 	}
 
@@ -100,6 +100,7 @@ void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
 
 void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
 {
+#ifdef TRUE	//バウンディングボックスを使った処理方法
 	//線分の始点と終点を設定
 	auto start = playerPos;
 	auto end = playerPos + targetPos * 60;
@@ -133,4 +134,33 @@ void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
 			}
 		}
 	}
+#else		//バウンディングボックスを使わずにごり押し処理方法
+	//線分の始点と終点を設定
+	auto start = playerPos;
+	auto end = playerPos + targetPos * 60;
+
+	float defaultLength = 100.0f;
+
+	//設置可能なトラップの座標分回す
+	for (auto& trap : m_traps)
+	{
+		//トラップが置かれていない
+		if (!trap->isPlaced && trap->neighborTraps.size() == 8 && CheckNeighbor(trap->neighborTraps))
+		{
+			//線分とトラップ設置可能座標の距離を計算する
+			//float length = Segment_Point_MinLength(start.ConvertToVECTOR(), end.ConvertToVECTOR(), pos.ConvertToVECTOR());
+			float length = Segment_Point_MinLength(start.ToVECTOR(), end.ToVECTOR(), trap->pos.ToVECTOR());
+
+			if (defaultLength > length)
+			{
+				defaultLength = length;
+
+				debugTrap = trap;
+				//debugTrap->isPlaced = trap.isPlaced;
+				//debugTrap->neighborTraps = trap.neighborTraps;
+				//debugTrap->pos = trap.pos;
+			}
+		}
+	}
+#endif
 }
