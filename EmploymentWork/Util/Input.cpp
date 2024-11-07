@@ -44,6 +44,10 @@ Input::Input():
 	m_commandTable["CANSEL"] = { PadCheckMask::B };
 	m_commandTable["X"] = { PadCheckMask::X };
 	m_commandTable["Y"] = { PadCheckMask::Y };
+
+	m_commandTable["RB"] = { PadCheckMask::R };
+	m_commandTable["LB"] = { PadCheckMask::L };
+
 	m_commandTable["PAUSE"] = { PadCheckMask::P };
 
 }

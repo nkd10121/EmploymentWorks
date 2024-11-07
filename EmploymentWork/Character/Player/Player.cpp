@@ -176,6 +176,14 @@ void Player::Update(SceneGame* pScene)
 		m_attackButtonPushCount = 0;
 	}
 
+	if (Input::GetInstance().IsTriggered("RB"))
+	{
+
+	}
+	if (Input::GetInstance().IsTriggered("LB"))
+	{
+
+	}
 
 	auto bottomPos = m_pos;
 	bottomPos.y -= kCupsuleSize + kCupsuleRadius;

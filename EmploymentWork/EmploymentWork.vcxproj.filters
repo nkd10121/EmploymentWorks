@@ -193,7 +193,7 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="TrapBase.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
