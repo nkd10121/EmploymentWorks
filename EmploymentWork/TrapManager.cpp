@@ -37,17 +37,17 @@ void TrapManager::Update()
 void TrapManager::Draw()
 {
 #ifdef _DEBUG
-	for (auto& pos : m_traps)
-	{
-		if (pos->isPlaced)
-		{
-			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
-		}
-		else
-		{
-			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0x000000, 0x000000, false);
-		}
-	}
+	//for (auto& pos : m_traps)
+	//{
+	//	if (pos->isPlaced)
+	//	{
+	//		DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
+	//	}
+	//	else
+	//	{
+	//		DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0x000000, 0x000000, false);
+	//	}
+	//}
 
 	if (debugTrap != nullptr)
 	{

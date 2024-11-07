@@ -123,6 +123,9 @@ void MapManager::Load(const char* stageName)
 			TrapManager::GetInstance().AddTrapPos(loc.pos);
 		}
 
+		m_min = Vec3(min(m_min.x, loc.pos.x), min(m_min.y, loc.pos.y), min(m_min.z, loc.pos.z));
+		m_max = Vec3(max(m_max.x, loc.pos.x), max(m_max.y, loc.pos.y), max(m_max.z, loc.pos.z));
+
 	}
 	FileRead_close(handle);
 
@@ -150,7 +153,8 @@ void MapManager::Draw()
 		{
 			continue;
 		}
-
 		MV1DrawModel(loc.handle);
 	}
+
+
 }

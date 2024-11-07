@@ -172,6 +172,9 @@ private:
 	MV1_COLL_RESULT_POLY* m_pPoly = nullptr;
 	// 線分とポリゴンとの当たり判定の結果を代入する構造体
 	HITRESULT_LINE m_lineRes{};
+
+
+	std::list<Vec3> test;
 };
 
 }

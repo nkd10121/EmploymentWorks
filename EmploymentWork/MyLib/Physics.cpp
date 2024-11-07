@@ -44,6 +44,21 @@ MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollision
 	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
 	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 
+	for (int x = -400; x < 400; x += 8)
+	{
+		for (int z = -400; z < 400; z += 8)
+		{
+			auto hit = MV1CollCheck_LineDim(m_stageCollisionHandle,-1,VGet(static_cast<float>(x), 100, static_cast<float>(z)), VGet(static_cast<float>(x), 0, static_cast<float>(z)));
+			if (hit.HitNum > 0)
+			{
+				for (int i = 0; i < hit.HitNum; i++)
+				{
+					test.emplace_back(Vec3(hit.Dim[i].HitPosition));
+				}
+			}
+		}
+	}
+
 	//m_stageCollisionHandle = normalStageCollisionHandle;
 	//m_enemyCollisionHandle = enemyStageCollisionHandle;
 }
@@ -116,6 +131,15 @@ void MyLib::Physics::Update()
 	m_onCollideInfo.clear();
 
 	Vec3 debug;
+
+	//int size = 4;
+
+	//for (auto& p : test)
+	//{
+	//	auto f = VGet(p.x - size, p.y, p.z - size);
+	//	auto s = VGet(p.x + size, p.y + size, p.z + size);
+	//	DrawCube3D(f, s, 0xffff00, 0xffff00, false);
+	//}
 
 	// 移動
 	for (auto& item : m_collidables)
