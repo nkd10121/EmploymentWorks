@@ -16,7 +16,7 @@ namespace ColInfo
 	//最大当たり判定ポリゴン数
 	constexpr int kMaxColHitPolyNum = 2000;
 	//壁押し出し処理の最大試行回数
-	constexpr int kMaxColHitTryNum = 100;
+	constexpr int kMaxColHitTryNum = 32;
 	//壁押し出し時にスライドさせる距離
 	constexpr float kColHitSlideLength = 1.0f;
 }
