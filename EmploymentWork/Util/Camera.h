@@ -42,9 +42,9 @@ public:
 private:
 	float m_cameraAngleX;		//水平角度
 	float m_cameraAngleY;		//垂直角度
-	Vec3 m_cameraPos;	//カメラの座標
-	Vec3 m_aimPos;		//注視点
-	Vec3 m_playerPos;	//プレイヤーの座標
+	Vec3 m_cameraPos;			//カメラの座標
+	Vec3 m_aimPos;				//注視点
+	Vec3 m_playerPos;			//プレイヤーの座標
 	float m_angleMoveScale;		//視点移動速度
 	int m_lightHandle;			//ライトハンドル
 };
