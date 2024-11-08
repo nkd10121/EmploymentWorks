@@ -51,15 +51,18 @@ Camera::Camera() :
 Camera::~Camera()
 {
 	DeleteLightHandle(m_lightHandle);
+	MV1DeleteModel(m_stageHandle);
 }
 
 /// <summary>
 /// 初期化
 /// </summary>
-void Camera::Init()
+void Camera::Init(int stageHandle)
 {
 	m_cameraAngleX = 0.0f;
 	m_cameraAngleY = 0.0f;
+
+	m_stageHandle = stageHandle;
 }
 
 /// <summary>
@@ -122,6 +125,56 @@ void Camera::Update()
 
 	// 算出した座標に注視点の位置を加算したものがカメラの位置になる
 	m_cameraPos = tempPos2 + m_aimPos;
+
+	// 最初はステージ自体と判定
+	auto hitDim = MV1CollCheck_Capsule(m_stageHandle, -1, m_aimPos.ToVECTOR(), m_cameraPos.ToVECTOR(), kCameraRadius);
+
+	// 検出した周囲のポリゴン情報を開放する
+	MV1CollResultPolyDimTerminate(hitDim);
+
+	// ステージのポリゴンは周囲に無かったら今度はコリジョンオブジェクトのポリゴンが周囲にあるか調べる
+	if (hitDim.HitNum == 0)
+	{
+		// 検出した周囲のポリゴン情報を開放する
+		MV1CollResultPolyDimTerminate(hitDim);
+	}
+	else if (hitDim.HitNum != 0)
+	{
+		bool doCheck = true;
+
+		while (doCheck)
+		{
+
+			doCheck = false;
+
+			//プレイヤーの座標からカメラの移動予定後座標の方向ベクトルを計算する
+			auto playerToCamera = (m_cameraPos - m_aimPos);
+
+			//向きと大きさに分ける
+			auto vec = playerToCamera.Normalize();
+			auto length = playerToCamera.Length();
+
+			//距離を縮める
+			length *= 0.998f;
+
+			auto checkPos = m_aimPos + vec * length;
+
+			// 最初はステージ自体と判定
+			hitDim = MV1CollCheck_Capsule(m_stageHandle, -1, m_aimPos.ToVECTOR(), checkPos.ToVECTOR(), kCameraRadius);
+			MV1CollResultPolyDimTerminate(hitDim);
+
+			if (hitDim.HitNum != 0)
+			{
+				m_cameraPos = checkPos;
+				doCheck = true;
+			}
+			else
+			{
+				doCheck = false;
+			}
+			// HitLength と NoHitLength が十分に近づいていなかったらループ
+		}
+	}
 
 	SetLightDirectionHandle(m_lightHandle, (m_aimPos - m_cameraPos).ToVECTOR());
 
