@@ -81,6 +81,13 @@ bool SceneGame::IsLoaded() const
 void SceneGame::Init()
 {
 	//TODO:ここで実態の生成などをする
+
+	//ステージの当たり判定モデルを取得する(描画するため)
+	m_stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
+	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
+	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
+
+	//物理クラスの生成
 	m_pPhysics = std::make_shared<MyLib::Physics>();
 
 	//プレイヤーの生成
@@ -89,7 +96,7 @@ void SceneGame::Init()
 
 	//カメラの生成
 	m_pCamera = std::make_shared<Camera>();
-	m_pCamera->Init();
+	m_pCamera->Init(m_stageModel);
 
 	//クリスタルの生成
 	m_pCrystal = std::make_shared<Crystal>(10);
@@ -109,10 +116,7 @@ void SceneGame::Init()
 	//m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
 	//m_pEnemies.back()->Init(m_pPhysics);
 
-	//ステージの当たり判定モデルを取得する(描画するため)
-	m_stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
-	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));
-	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));
+
 
 	TrapManager::GetInstance().SetUp();
 }
