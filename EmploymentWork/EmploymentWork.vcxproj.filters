@@ -192,9 +192,6 @@
     <ClCompile Include="TrapManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="TrapBase.cpp">
-      <Filter>ソース ファイル\Object\Trap</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\SceneBase.h">
@@ -315,9 +312,6 @@
       <Filter>ヘッダー ファイル\Object\Character\Enemy\State</Filter>
     </ClInclude>
     <ClInclude Include="TrapManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TrapBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

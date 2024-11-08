@@ -72,7 +72,7 @@ public:
 
 	void Clear();
 
-	void EstablishTrap(Vec3 playerPos,Vec3 targetPos,int slot);
+	void EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot);
 
 
 	//デバッグ用
@@ -83,4 +83,3 @@ private:
 	//デバッグ用
 	std::shared_ptr<Trap> debugTrap;
 };
-
