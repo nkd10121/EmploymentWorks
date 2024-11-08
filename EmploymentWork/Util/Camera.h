@@ -21,7 +21,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init(int stageHandle);
+	void Init();
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -47,7 +47,5 @@ private:
 	Vec3 m_playerPos;	//プレイヤーの座標
 	float m_angleMoveScale;		//視点移動速度
 	int m_lightHandle;			//ライトハンドル
-
-	int m_stageHandle;
 };
 
