@@ -192,7 +192,7 @@
     <ClCompile Include="Common\TrapManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="SceneDebug.cpp">
+    <ClCompile Include="Scene\SceneDebug.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -317,7 +317,7 @@
     <ClInclude Include="Common\TrapManager.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="SceneDebug.h">
+    <ClInclude Include="Scene\SceneDebug.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
