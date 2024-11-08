@@ -2,15 +2,25 @@
 #include "CharacterBase.h"
 #include "StateBase.h"
 
+/// <summary>
+/// 敵の基底クラス
+/// </summary>
 class EnemyBase : public CharacterBase
 {
 public:
+	//種類
 	enum EnemyKind
 	{
 		EnemyNormal,
 	};
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	EnemyBase();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~EnemyBase();
 
 	/// <summary>

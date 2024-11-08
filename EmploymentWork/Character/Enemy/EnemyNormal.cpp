@@ -6,12 +6,15 @@
 
 namespace
 {
-	//デバッグ用のカプセル関係
-	constexpr float kCupsuleSize = 3.0f;
-	constexpr float kCupsuleRadius = 2.0f;
-	constexpr int kCupsuleDivNum = 10;
+	/*当たり判定用のカプセル関係*/
+	constexpr float kCollisionCapsuleSize = 3.0f;	//カプセルの大きさ
+	constexpr float kCollisionCapsuleRadius = 2.0f;	//カプセルの半径
+#ifdef _DEBUG
+	constexpr int kCollisionCapsuleDivNum = 10;		//カプセルの分割数
+#endif
 
-	constexpr float kModelScale = 0.018f;
+	/*モデル関係*/
+	constexpr float kModelScale = 0.018f;		//モデルサイズ
 }
 
 /// <summary>
@@ -20,13 +23,15 @@ namespace
 EnemyNormal::EnemyNormal():
 	EnemyBase()
 {
+	//当たり判定の作成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
-	sphereCol->m_radius = kCupsuleRadius;
-	sphereCol->m_size = kCupsuleSize;
+	sphereCol->m_radius = kCollisionCapsuleRadius;		
+	sphereCol->m_size = kCollisionCapsuleSize;
 
 	//モデルハンドルを取得
 	m_modelHandle = ModelManager::GetInstance().GetModelHandle("MOD_ENEMYNORMAL");
+	//モデルのサイズを変更
 	MV1SetScale(m_modelHandle,VGet(kModelScale, kModelScale, kModelScale));
 }
 
@@ -42,20 +47,25 @@ EnemyNormal::~EnemyNormal()
 /// </summary>
 void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 {
+	//物理クラスを取得
 	m_pPhysics = physics;
 
+	//当たり判定の初期化
 	Collidable::Init(physics);
 
+	//ステートパターンの初期化
 	m_pState = std::make_shared<EnemyStateIdle>(std::dynamic_pointer_cast<EnemyBase>(shared_from_this()));
 	m_pState->SetNextState(m_pState);
 	auto state = std::dynamic_pointer_cast<EnemyStateIdle>(m_pState);
 	state->Init();
 
+	//座標を仮決定
+	//TODO:モデルの座標を設定する部分が作れたら削除する
 	m_drawPos.x = static_cast<float>(GetRand(20) - 10);
 	m_drawPos.y = 8.0f;
 	m_drawPos.z = static_cast<float>(GetRand(20) - 10);
 
-	//初期位置設定
+	//物理データの初期化
 	rigidbody->Init(true);
 	rigidbody->SetPos(m_drawPos);
 	rigidbody->SetNextPos(rigidbody->GetPos());
@@ -65,6 +75,7 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 	//最大HPを設定しておく
 	m_hpMax = m_status.hp;
 
+	//存在フラグをtrueにする
 	m_isExist = true;
 }
 
@@ -73,6 +84,7 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 /// </summary>
 void EnemyNormal::Finalize()
 {
+	//当たり判定の削除
 	Collidable::Finalize(m_pPhysics.lock());
 }
 
@@ -95,6 +107,7 @@ void EnemyNormal::Update()
 	//ステートの更新
 	m_pState->Update();
 
+	//HPが0になったら自身を削除する
 	if (m_status.hp <= 0)
 	{
 		m_isExist = false;
@@ -102,9 +115,8 @@ void EnemyNormal::Update()
 
 	//モデルの描画座標を設定
 	auto modelSetPos = m_drawPos;
-	modelSetPos.y -= kCupsuleSize + kCupsuleRadius;
+	modelSetPos.y -= kCollisionCapsuleSize + kCollisionCapsuleRadius;
 	MV1SetPosition(m_modelHandle, modelSetPos.ToVECTOR());
-
 
 	//速度を0にする(重力の影響を受けながら)
 	auto prevVel = rigidbody->GetVelocity();
@@ -124,10 +136,11 @@ void EnemyNormal::Draw()
 	m_drawPos = rigidbody->GetPos();
 
 	//プレイヤー想定のカプセル
-	VECTOR low = VGet(m_drawPos.x, m_drawPos.y - kCupsuleSize, m_drawPos.z);
-	VECTOR high = VGet(m_drawPos.x, m_drawPos.y + kCupsuleSize, m_drawPos.z);
-	DrawCapsule3D(low, high, kCupsuleRadius, kCupsuleDivNum, 0xffffff, 0xffffff, false);
+	VECTOR low = VGet(m_drawPos.x, m_drawPos.y - kCollisionCapsuleSize, m_drawPos.z);
+	VECTOR high = VGet(m_drawPos.x, m_drawPos.y + kCollisionCapsuleSize, m_drawPos.z);
+	DrawCapsule3D(low, high, kCollisionCapsuleRadius, kCollisionCapsuleDivNum, 0xffffff, 0xffffff, false);
 
+	//モデルを描画
 	MV1DrawModel(m_modelHandle);
 
 #ifdef _DEBUG

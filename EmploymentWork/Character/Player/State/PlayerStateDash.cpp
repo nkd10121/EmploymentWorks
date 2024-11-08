@@ -7,46 +7,6 @@
 
 namespace
 {
-	/// <summary>
-	/// 引数の2つの値から角度を計算する
-	/// </summary>
-	/// <param name="x">X</param>
-	/// <param name="y">Y</param>
-	/// <returns></returns>
-	int direction(float x, float y)
-	{
-		auto angle = atan2(y, x);
-		if (angle < 0) {
-			angle = angle + 2 * DX_PI_F;
-		}
-		angle = floor(angle * 360 / (2 * DX_PI_F));
-
-		if (23 <= angle && angle <= 67) {
-			return 7;
-		}
-		else if (68 <= angle && angle <= 112) {
-			return 6;
-		}
-		else if (113 <= angle && angle <= 157) {
-			return 5;
-		}
-		else if (158 <= angle && angle <= 202) {
-			return 4;
-		}
-		else if (203 <= angle && angle <= 247) {
-			return 3;
-		}
-		else if (248 <= angle && angle <= 292) {
-			return 2;
-		}
-		else if (293 <= angle && angle <= 337) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
-	}
-
 	/*アナログスティックによる移動関連*/
 	constexpr float kMaxSpeed = 0.2f;			//プレイヤーの最大速度
 	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定最小範囲
@@ -60,6 +20,7 @@ namespace
 PlayerStateDash::PlayerStateDash(std::shared_ptr<CharacterBase> own) :
 	StateBase(own)
 {
+	//現在のステートをダッシュ状態にする
 	m_nowState = StateKind::Dash;
 }
 
@@ -78,11 +39,12 @@ void PlayerStateDash::Update()
 	//持ち主がプレイヤーかどうかをチェックする
 	if (!CheckPlayer())	return;
 
+	//持っているキャラクターベースクラスをプレイヤークラスにキャストする(ダウンキャスト)
 	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
 	//コントローラーの左スティックの入力を取得
 	auto input = Input::GetInstance().GetInputStick(false);
-	auto dir = static_cast<eDir>(direction(input.first, -input.second));
+	auto dir = GetDirection(input.first, -input.second);
 
 	//左スティックが入力されていなかったらStateをIdleにする
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
@@ -107,9 +69,9 @@ void PlayerStateDash::Update()
 	}
 
 	//移動方向を設定する
-	auto temp_moveVec = Vec3(input.first, 0.0f, -input.second);
+	auto moveDir = Vec3(input.first, 0.0f, -input.second);
 	//移動ベクトルの長さを取得する
-	float len = temp_moveVec.Length();
+	float len = moveDir.Length();
 
 	//ベクトルの長さを0.0～1.0の割合に変換する
 	float rate = len / kAnalogInputMax;
@@ -120,29 +82,28 @@ void PlayerStateDash::Update()
 	rate = max(rate, 0.0f);
 
 	//速度が決定できるので移動ベクトルに反映する
-	temp_moveVec = temp_moveVec.Normalize();
+	moveDir = moveDir.Normalize();
 	float speed = own->GetMoveSpeed() * 2.0f * rate;
 
-	temp_moveVec = temp_moveVec * speed;
+	//方向ベクトルと移動力をかけて移動ベクトルを生成する
+	auto moveVec = moveDir * speed;
 
 	//プレイヤーの正面方向を計算して正面方向を基準に移動する
 	//カメラの正面方向ベクトル
 	Vec3 front(own->GetCameraDirecton().x, 0.0f, own->GetCameraDirecton().z);
 	//向きベクトル*移動量
-	front = front * temp_moveVec.z;
+	front = front * moveVec.z;
 	//カメラの右方向ベクトル
 	Vec3 right(-own->GetCameraDirecton().z, 0.0f, own->GetCameraDirecton().x);
 	//向きベクトル*移動量
-	right = right * (-temp_moveVec.x);
+	right = right * (-moveVec.x);
 
 	//移動ベクトルの生成
-	temp_moveVec = front;
-	temp_moveVec = temp_moveVec.Normalize() * speed;
-	//移動処理
-	//MV1SetPosition(m_modelHandle, m_collisionPos.ToVECTOR());
+	moveVec = front;
+	moveVec = moveVec.Normalize() * speed;
 
-
+	//直前のY方向の移動速度と入力された移動速度を合わせて移動速度を決定する
 	Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
-	Vec3 newVelocity = Vec3(temp_moveVec.x, prevVelocity.y, temp_moveVec.z);
+	Vec3 newVelocity = Vec3(moveVec.x, prevVelocity.y, moveVec.z);
 	own->GetRigidbody()->SetVelocity(newVelocity);
 }

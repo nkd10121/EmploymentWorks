@@ -20,10 +20,4 @@ public:
 	/// 更新
 	/// </summary>
 	virtual void Update() override;
-	///// <summary>
-	///// 被ダメージ
-	///// </summary>
-	///// <param name="collider">当たったオブジェクト</param>
-	///// <returns>ダメージ数?</returns>
-	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) override;
 };

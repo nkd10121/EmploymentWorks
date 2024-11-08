@@ -13,9 +13,9 @@
 namespace
 {
 	/*デバッグ用のカプセル関係*/
-	constexpr float kCupsuleSize = 4.0f;		//カプセルのサイズ
-	constexpr float kCupsuleRadius = 2.0f;		//カプセルの半径
-	constexpr int kCupsuleDivNum = 10;			//カプセルの分け数(?)	//TODO:いらんかったら消す
+	constexpr float kCollisionCapsuleSize = 4.0f;		//カプセルのサイズ
+	constexpr float kCollisionCapsuleRadius = 2.0f;		//カプセルの半径
+	constexpr int kCollisionCapsuleDivNum = 10;			//カプセルの分け数(?)	//TODO:いらんかったら消す
 
 	/*アナログスティックによる移動関連*/
 	constexpr float kMaxSpeed = 0.2f;			//プレイヤーの最大速度
@@ -45,7 +45,7 @@ namespace
 /// </summary>
 Player::Player() :
 	CharacterBase(Collidable::Priority::High, GameObjectTag::Player),
-	m_pos(Vec3(0.0f, kCupsuleRadius + kCupsuleSize *5, 0.0f)),
+	m_pos(Vec3(0.0f, kCollisionCapsuleRadius + kCollisionCapsuleSize *5, 0.0f)),
 	temp_moveVec(),
 	m_cameraDirection(),
 	m_rot(),
@@ -56,11 +56,11 @@ Player::Player() :
 	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
-	sphereCol->m_radius = kCupsuleRadius;
-	sphereCol->m_size = kCupsuleSize;
+	sphereCol->m_radius = kCollisionCapsuleRadius;
+	sphereCol->m_size = kCollisionCapsuleSize;
 
-	m_collisionRadius = kCupsuleRadius;
-	m_collisionSize = kCupsuleSize;
+	m_collisionRadius = kCollisionCapsuleRadius;
+	m_collisionSize = kCollisionCapsuleSize;
 
 	//キャラクター名を設定
 	m_characterName = "Player";
@@ -186,7 +186,7 @@ void Player::Update(SceneGame* pScene)
 	}
 
 	auto bottomPos = m_pos;
-	bottomPos.y -= kCupsuleSize + kCupsuleRadius;
+	bottomPos.y -= kCollisionCapsuleSize + kCollisionCapsuleRadius;
 	if (m_cameraDirection.y < 0.0f)
 	{
 		bottomPos.y += 1.0f;
@@ -236,7 +236,7 @@ void Player::UpdateModelPos()
 	m_pos = rigidbody->GetPos();
 
 	auto drawPos = m_pos;
-	drawPos.y -= kCupsuleRadius + kCupsuleSize;
+	drawPos.y -= kCollisionCapsuleRadius + kCollisionCapsuleSize;
 
 	MV1SetPosition(m_modelHandle, drawPos.ToVECTOR());
 

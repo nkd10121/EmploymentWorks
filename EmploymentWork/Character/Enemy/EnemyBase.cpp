@@ -22,6 +22,7 @@ EnemyBase::EnemyBase():
 /// </summary>
 EnemyBase::~EnemyBase()
 {
+	//モデルを削除する
 	MV1DeleteModel(m_modelHandle);
 }
 
@@ -38,12 +39,14 @@ void EnemyBase::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 /// </summary>
 void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
-	//矢、トラップ
+	//当たったオブジェクトのタグを取得する
 	m_hitObjectTag = colider->GetTag();
+
+	//当たったオブジェクトがプレイヤーが撃った弾なら
 	if (m_hitObjectTag == GameObjectTag::PlayerShot)
 	{
 		{	
-			//弾の攻撃力分HPを減らす
+			//弾の攻撃力分自身のHPを減らす(防御力と調整しながら)
 			Shot* col = dynamic_cast<Shot*>(colider.get());
 			auto damage = col->GetAtk() - m_status.def;
 			if (damage > 0)
@@ -51,14 +54,15 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 				m_status.hp -= damage;
 			}
 
+			//敵ヒットSEを流す
 			SoundManager::GetInstance().PlaySE("SE_ENEMYHIT");
+			//敵ヒットエフェクトを出す
 			EffectManager::GetInstance().CreateEffect("EFF_ENEMYHIT",rigidbody->GetPos());
 			//当たった弾の終了処理を呼ぶ
 			col->End();
 
 #ifdef _DEBUG
-			//DEBUG:残りHPを表示
-			//printf("%d\n", m_status.hp);
+
 #endif
 		}
 	}

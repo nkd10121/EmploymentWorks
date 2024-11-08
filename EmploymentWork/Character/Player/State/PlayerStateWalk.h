@@ -23,11 +23,12 @@ public:
 	/// </summary>
 	virtual void Update() override;
 
-	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) override;
-
+	/// <summary>
+	/// 入力方向から歩きアニメーション名を取得する
+	/// </summary>
+	/// <param name="dir"></param>
+	/// <returns></returns>
 	std::string GetWalkAnimName(eDir dir);
-
-private:
 
 private:
 	eDir m_dir;

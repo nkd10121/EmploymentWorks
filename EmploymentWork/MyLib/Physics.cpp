@@ -17,9 +17,9 @@ namespace
 	constexpr float kWallPolyHeight = 0.2f;
 
 	//重力
-	constexpr float kGravity = -0.032f;
+	constexpr float kGravity = -0.04f;
 	//最大重力加速度
-	constexpr float kMaxGravityAccel = -4.00f;
+	constexpr float kMaxGravityAccel = -1.50f;
 
 	//補正前情報色
 	const int kBeforeFixInfoColor = 0x0000ff;

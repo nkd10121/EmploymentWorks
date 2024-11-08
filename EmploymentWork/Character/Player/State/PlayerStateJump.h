@@ -22,14 +22,22 @@ public:
 	virtual void Update() override;
 
 private:
-	//状態遷移のためのメンバ関数
+	//状態遷移のためのメンバ関数ポインタ
 	using UpdateFunc_t = void (PlayerStateJump::*)();
 	UpdateFunc_t m_updateFunc;
-	/*状態関数*/
+	/// <summary>
+	/// ジャンプ上昇状態
+	/// </summary>
 	void UpUpdate();
+	/// <summary>
+	/// ジャンプ中状態
+	/// </summary>
 	void LoopUpdate();
+	/// <summary>
+	/// ジャンプ下降状態
+	/// </summary>
 	void DownUpdate();
 
-	int m_jumpFrame;
+	int m_jumpFrame;	//ジャンプフレーム数
 };
 

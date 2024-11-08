@@ -25,7 +25,7 @@ public:
 	};
 
 protected:
-	//左スティックの入力角度
+	//左スティックの入力方向
 	const enum eDir : int
 	{
 		Forward,
@@ -106,7 +106,7 @@ protected:
 	/// </summary>
 	/// <param name="x">X</param>
 	/// <param name="y">Y</param>
-	/// <returns></returns>
+	/// <returns>入力方向</returns>
 	const eDir GetDirection(float x, float y)const;
 
 protected:

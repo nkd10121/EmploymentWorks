@@ -1,5 +1,9 @@
 ﻿#pragma once
 #include "StateBase.h"
+
+/// <summary>
+/// 敵の歩き状態
+/// </summary>
 class EnemyStateWalk : public StateBase
 {
 public:
@@ -18,7 +22,7 @@ public:
 	virtual void Update() override;
 
 private:
-	int temp_frame;
+	int temp_frame;	//ステートを切り替えるための一時的な変数
 
 };
 

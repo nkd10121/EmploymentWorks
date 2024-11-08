@@ -8,6 +8,7 @@
 PlayerStateIdle::PlayerStateIdle(std::shared_ptr<CharacterBase> own):
 	StateBase(own)
 {
+	//現在のステートを待機状態にする
 	m_nowState = StateKind::Idle;
 }
 
@@ -41,14 +42,10 @@ void PlayerStateIdle::Update()
 		return;
 	}
 
+	//持っているキャラクターベースクラスをプレイヤークラスにキャストする(ダウンキャスト)
 	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
 	//プレイヤーの速度を0にする(重力の影響を受けながら)
 	auto prevVel = own->GetRigidbody()->GetVelocity();
 	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 }
-
-//int PlayerStateIdle::OnDamage(std::shared_ptr<MyLib::Collidable> collider)
-//{
-//	return 0;
-//}

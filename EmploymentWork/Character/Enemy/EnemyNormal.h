@@ -1,9 +1,19 @@
 ﻿#pragma once
 #include "EnemyBase.h"
+
+/// <summary>
+/// 基本的な敵クラス
+/// </summary>
 class EnemyNormal : public EnemyBase
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	EnemyNormal();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~EnemyNormal();
 
 	/// <summary>
@@ -24,7 +34,5 @@ public:
 	/// 描画
 	/// </summary>
 	virtual void Draw();
-
-
 };
 

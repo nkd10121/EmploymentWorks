@@ -21,6 +21,7 @@ PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 	StateBase(own),
 	m_dir()
 {
+	//現在のステートを歩き状態にする
 	m_nowState = StateKind::Walk;
 
 	//このシーンに遷移した瞬間の左スティックの入力角度を取得しておく
@@ -43,6 +44,7 @@ void PlayerStateWalk::Update()
 	//持ち主がプレイヤーかどうかをチェックする
 	if (!CheckPlayer())	return;
 
+	//ダウンキャスト
 	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
 
 	//左スティックが入力されていなかったらStateをIdleにする
@@ -75,14 +77,15 @@ void PlayerStateWalk::Update()
 	//直前の入力方向と異なるとき
 	if (dirLog != m_dir)
 	{
+		//アニメーションを変更する
 		auto animName = GetWalkAnimName(m_dir);
 		own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", animName));
 	}
 
 	//移動方向を設定する
-	auto temp_moveVec = Vec3(input.first,0.0f,-input.second);
+	auto moveDir = Vec3(input.first,0.0f,-input.second);
 	//移動ベクトルの長さを取得する
-	float len = temp_moveVec.Length();
+	float len = moveDir.Length();
 
 	//ベクトルの長さを0.0～1.0の割合に変換する
 	float rate = len / kAnalogInputMax;
@@ -93,33 +96,35 @@ void PlayerStateWalk::Update()
 	rate = max(rate, 0.0f);
 
 	//速度が決定できるので移動ベクトルに反映する
-	temp_moveVec = temp_moveVec.Normalize();
+	moveDir = moveDir.Normalize();
 	float speed = own->GetMoveSpeed() * rate;
 
-	temp_moveVec = temp_moveVec * speed;
+	//方向ベクトルと移動力をかけて移動ベクトルを生成する
+	auto moveVec = moveDir * speed;
 
 	//プレイヤーの正面方向を計算して正面方向を基準に移動する
 	//カメラの正面方向ベクトル
 	Vec3 front(own->GetCameraDirecton().x, 0.0f, own->GetCameraDirecton().z);
 	//向きベクトル*移動量
-	front = front * temp_moveVec.z;
+	front = front * moveVec.z;
 	//カメラの右方向ベクトル
 	Vec3 right(-own->GetCameraDirecton().z, 0.0f, own->GetCameraDirecton().x);
 	//向きベクトル*移動量
-	right = right * (-temp_moveVec.x);
+	right = right * (-moveVec.x);
 
 	//移動ベクトルの生成
-	temp_moveVec = front + right;
-	temp_moveVec = temp_moveVec.Normalize() * speed;
-	//移動処理
-	//MV1SetPosition(m_modelHandle, m_collisionPos.ToVECTOR());
-
+	moveVec = front + right;
+	moveVec = moveVec.Normalize() * speed;
 	
+	//直前のY方向の移動速度と入力された移動速度を合わせて移動速度を決定する
 	Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
-	Vec3 newVelocity = Vec3(temp_moveVec.x, prevVelocity.y, temp_moveVec.z);
+	Vec3 newVelocity = Vec3(moveVec.x, prevVelocity.y, moveVec.z);
 	own->GetRigidbody()->SetVelocity(newVelocity);
 }
 
+/// <summary>
+/// 入力方向から歩きアニメーション名を取得する
+/// </summary>
 std::string PlayerStateWalk::GetWalkAnimName(eDir dir)
 {
 	if (dir == eDir::Forward)
@@ -155,4 +160,5 @@ std::string PlayerStateWalk::GetWalkAnimName(eDir dir)
 		return std::string("WALK_FORWARDLEFT");
 	}
 
+	return;
 }
