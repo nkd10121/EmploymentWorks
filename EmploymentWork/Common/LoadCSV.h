@@ -3,7 +3,7 @@
 
 class LoadCSV
 {
-private:
+public:
 	/// <summary>
 	/// リソースのデータ
 	/// </summary>

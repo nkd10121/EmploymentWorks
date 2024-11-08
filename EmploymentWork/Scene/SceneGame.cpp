@@ -26,7 +26,7 @@ namespace
 /// コンストラクタ
 /// </summary>
 SceneGame::SceneGame() :
-	SceneBase("SceneGame"),
+	SceneBase("SCENE_GAME"),
 	m_pPlayer(nullptr),
 	m_pCamera(nullptr),
 	m_pPhysics(nullptr),
@@ -47,42 +47,16 @@ SceneGame::~SceneGame()
 /// </summary>
 void SceneGame::StartLoad()
 {
-	//このシーンでロードするべきリソースのパスを取得
-	auto loadResourceData = LoadCSV::GetInstance().GetLoadResourcePath("SCENE_GAME");
+	// TODO:この間でリソースをロードする
+	
+	//このシーンでロードするべきリソースのデータを取得
+	auto loadResourceData = LoadCSV::GetInstance().GetLoadResourcePath(GetNowSceneName());
 
 	// 非同期読み込みを開始する
 	SetUseASyncLoadFlag(true);
 
-	// TODO:この間でリソースをロードする
-
-	for (auto& data : loadResourceData)
-	{
-		//モデルデータなら
-		if (data.extension == ".mv1")
-		{
-			//モデルをロードする
-			auto path = data.path + data.extension;
-			ModelManager::GetInstance().Load(data.id,path,data.isEternal);
-		}
-		//音声データなら
-		else if (data.extension == ".mp3")
-		{
-			//サウンドをロードする
-			auto path = data.path + data.extension;
-			SoundManager::GetInstance().Load(data.id, path,data.isBGM, data.isEternal);
-		}
-		//エフェクトデータなら
-		else if (data.extension == ".efk")
-		{
-			//エフェクトのロードは非同期ロード対応してないっぽい
-			SetUseASyncLoadFlag(false);
-			//エフェクトをロードする
-			auto path = data.path + data.extension;
-			EffectManager::GetInstance().Load(data.id, path, 30, data.isEternal);
-			//非同期ロードをONに戻す
-			SetUseASyncLoadFlag(true);
-		}
-	}
+	//リソースデータ群をみてリソースのロードを開始する
+	AssortAndLoadResourse(loadResourceData);
 
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);
@@ -263,7 +237,7 @@ void SceneGame::Draw()
 
 	//ステージの描画
 	MapManager::GetInstance().Draw();
-	//MV1DrawModel(m_stageModel);
+	MV1DrawModel(m_stageModel);
 
 #ifdef _DEBUG
 	TrapManager::GetInstance().Draw();

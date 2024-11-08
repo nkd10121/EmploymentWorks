@@ -41,7 +41,10 @@ Input::Input():
 
 	m_commandTable["INPUT_JUMP"] = { PadCheckMask::A };
 	m_commandTable["INPUT_DASH"] = { PadCheckMask::B };
+
+	m_commandTable["OK"] = { PadCheckMask::A };
 	m_commandTable["CANSEL"] = { PadCheckMask::B };
+
 	m_commandTable["X"] = { PadCheckMask::X };
 	m_commandTable["Y"] = { PadCheckMask::Y };
 
@@ -49,6 +52,11 @@ Input::Input():
 	m_commandTable["LB"] = { PadCheckMask::L };
 
 	m_commandTable["PAUSE"] = { PadCheckMask::P };
+
+	m_commandTable["UP"] = { PadCheckMask::UP };
+	m_commandTable["DOWN"] = { PadCheckMask::DOWN };
+	m_commandTable["LEFT"] = { PadCheckMask::LEFT };
+	m_commandTable["RIGHT"] = { PadCheckMask::RIGHT };
 
 }
 
@@ -72,7 +80,6 @@ void Input::Update()
 		if (padstate & cmd.second)
 		{
 			input = true;
-			break;
 		}
 	}
 

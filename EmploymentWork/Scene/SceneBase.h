@@ -6,6 +6,8 @@
 #include "Input.h"
 #include "DxLib.h"
 
+#include "LoadCSV.h"
+
 #ifdef _DEBUG
 // 処理負荷計測
 #define DISP_PROCESS
@@ -78,6 +80,12 @@ protected:
 	/// </summary>
 	void EndThisScene();
 
+	/// <summary>
+	/// リソースの仕分けとロード開始をする
+	/// </summary>
+	/// <param name="name">読み込みたいリソースデータ配列</param>
+	void AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data);
+
 public:	/*継承を行わない処理	SceneManagerから呼び出すのはこっち*/
 
 	/// <summary>
@@ -128,6 +136,8 @@ private:	/*フェード関係*/
 	/// </summary>
 	void StartFadeOut();	
 
+
+
 protected:
 
 	/// <summary>
@@ -140,6 +150,12 @@ protected:
 	/// </summary>
 	void SkipFadeOut();
 
+	/// <summary>
+	/// 現在のシーンの名前を取得
+	/// </summary>
+	/// <returns></returns>
+	const std::string GetNowSceneName()const { return m_sceneName; }
+
 private:
 	bool m_isInit;	//初期化処理終了判定
 	bool m_isEnd;	//次のシーンに遷移する
@@ -150,7 +166,7 @@ private:
 	int m_fadeSpeed;	//フェード速度
 	unsigned int m_fadeColor;	//フェード時の色
 
-	std::string sceneName;
+	std::string m_sceneName;
 
 #ifdef DISP_PROCESS
 	/*処理負荷計測*/

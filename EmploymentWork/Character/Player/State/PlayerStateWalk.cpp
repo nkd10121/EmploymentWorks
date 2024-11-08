@@ -160,5 +160,5 @@ std::string PlayerStateWalk::GetWalkAnimName(eDir dir)
 		return std::string("WALK_FORWARDLEFT");
 	}
 
-	return;
+	return std::string();
 }

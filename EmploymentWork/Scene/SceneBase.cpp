@@ -32,7 +32,7 @@ SceneBase::SceneBase(std::string name) :
 	m_fadeAlpha(kBrightMax),
 	m_fadeSpeed(0),
 	m_fadeColor(0x000000),
-	sceneName(name)
+	m_sceneName(name)
 #ifdef DISP_PROCESS
 	, m_updateTime(0),
 	m_drawTime(0)
@@ -47,6 +47,43 @@ void SceneBase::EndThisScene()
 {
 	m_isEnd = true;
 	StartFadeOut();
+}
+
+void SceneBase::AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data)
+{
+	for (auto& d : data)
+	{
+		//モデルデータなら
+		if (d.extension == ".mv1")
+		{
+			//モデルをロードする
+			auto path = d.path + d.extension;
+			ModelManager::GetInstance().Load(d.id, path, d.isEternal);
+		}
+		//音声データなら
+		else if (d.extension == ".mp3")
+		{
+			//サウンドをロードする
+			auto path = d.path + d.extension;
+			SoundManager::GetInstance().Load(d.id, path, d.isBGM, d.isEternal);
+		}
+		//エフェクトデータなら
+		else if (d.extension == ".efk")
+		{
+			//エフェクトのロードは非同期ロード対応してないっぽい
+			SetUseASyncLoadFlag(false);
+			//エフェクトをロードする
+			auto path = d.path + d.extension;
+			EffectManager::GetInstance().Load(d.id, path, 30, d.isEternal);
+			//非同期ロードをONに戻す
+			SetUseASyncLoadFlag(true);
+		}
+		//画像データなら
+		else if (d.extension == ".png")
+		{
+
+		}
+	}
 }
 
 /// <summary>
@@ -70,7 +107,7 @@ void SceneBase::UpdateAll()
 	LONGLONG start = GetNowHiPerformanceCount();
 
 	printf("---------------------------------------\n");
-	printf("現在のシーン : %s\n", sceneName.c_str());
+	printf("現在のシーン : %s\n", m_sceneName.c_str());
 
 	// 現在時刻をsystem_clockを用いて取得
 	auto now = std::chrono::system_clock::now();

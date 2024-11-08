@@ -6,10 +6,9 @@
 #include "SceneManager.h"
 #include "ModelManager.h"
 #include "LoadCSV.h"
-#include "SceneTitle.h"
 #include <memory>
 
-#include "SceneGame.h"
+#include "SceneDebug.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -49,7 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	//最初にタイトルシーンに遷移する
-	SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
+	SceneManager::GetInstance().ChangeScene(std::make_shared<SceneDebug>());
 
 	while (ProcessMessage() == 0)
 	{

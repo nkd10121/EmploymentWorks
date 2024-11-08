@@ -6,7 +6,7 @@
 /// コンストラクタ
 /// </summary>
 ScenePause::ScenePause():
-	SceneBase("ScenePause")
+	SceneBase("SCENE_PAUSE")
 {
 }
 
