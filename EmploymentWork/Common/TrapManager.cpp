@@ -37,28 +37,29 @@ void TrapManager::Update()
 void TrapManager::Draw()
 {
 #ifdef _DEBUG
-	//for (auto& pos : m_traps)
-	//{
-	//	if (pos->isPlaced)
-	//	{
-	//		DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
-	//	}
-	//	else
-	//	{
-	//		DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0x000000, 0x000000, false);
-	//	}
-	//}
+	for (auto& pos : m_traps)
+	{
+		if (pos->isPlaced)
+		{
+			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
+		}
+		else
+		{
+			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0x000000, 0x000000, false);
+		}
+	}
 
 	if (debugTrap != nullptr)
 	{
-		DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
-		DrawFormatString(0, 220, 0xffffff, "%d", debugTrap->neighborTraps.size());
+		if(!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
+		{
+			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
+		}
+		else
+		{
+			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
+		}
 	}
-
-	//for (auto& temp : m_traps.front().m_neighborTraps)
-	//{
-	//	DrawSphere3D(temp.pos.ToVECTOR(), 2, 12, 0x0000ff, 0x0000ff, false);
-	//}
 
 #endif
 }
@@ -69,7 +70,7 @@ void TrapManager::SetUp()
 	{
 		for (auto& temp : m_traps)
 		{
-			if (abs((trap->pos - temp->pos).Length()) > 0.0f && abs((trap->pos - temp->pos).Length()) <= 12.0f)
+			if (abs((trap->pos - temp->pos).Length()) > 0.0f && abs((trap->pos - temp->pos).Length()) < 12.0f)
 			{
 				trap->neighborTraps.emplace_back(temp);
 			}
@@ -88,13 +89,16 @@ void TrapManager::Clear()
 
 void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
 {
-	auto& sa = debugTrap;
-	sa->isPlaced = true;
-
-
-	for (auto& trap : debugTrap->neighborTraps)
+	if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
 	{
-		trap.lock()->isPlaced = true;
+		auto& sa = debugTrap;
+		sa->isPlaced = true;
+
+
+		for (auto& trap : debugTrap->neighborTraps)
+		{
+			trap.lock()->isPlaced = true;
+		}
 	}
 }
 
@@ -117,7 +121,7 @@ void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
 	for (auto& trap : hit)
 	{
 		//トラップが置かれていない
-		if (!trap->isPlaced && trap->neighborTraps.size() == 8 && CheckNeighbor(trap->neighborTraps))
+		//if (!trap->isPlaced && trap->neighborTraps.size() == 8 && CheckNeighbor(trap->neighborTraps))
 		{
 			//線分とトラップ設置可能座標の距離を計算する
 			//float length = Segment_Point_MinLength(start.ConvertToVECTOR(), end.ConvertToVECTOR(), pos.ConvertToVECTOR());

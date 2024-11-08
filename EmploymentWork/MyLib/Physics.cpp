@@ -6,6 +6,7 @@
 
 //おそらく一時的な実装
 #include "ModelManager.h"
+#include "TrapManager.h"
 
 //using namespace MyLib;
 
@@ -38,16 +39,16 @@ MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollision
 	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
 	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 
-	//for (int x = -400; x < 400; x += 8)
+	//for (float x = -400.0f; x < 400.0f; x += 8.0f)
 	//{
-	//	for (int z = -400; z < 400; z += 8)
+	//	for (float z = -400.0f; z < 400.0f; z += 8.0f)
 	//	{
-	//		auto hit = MV1CollCheck_LineDim(m_stageCollisionHandle,-1,VGet(static_cast<float>(x), 100, static_cast<float>(z)), VGet(static_cast<float>(x), 0, static_cast<float>(z)));
+	//		auto hit = MV1CollCheck_LineDim(m_stageCollisionHandle, -1, VGet(x, 100, z), VGet(x, 0, z));
 	//		if (hit.HitNum > 0)
 	//		{
 	//			for (int i = 0; i < hit.HitNum; i++)
 	//			{
-	//				test.emplace_back(Vec3(hit.Dim[i].HitPosition));
+	//				TrapManager::GetInstance().AddTrapPos(Vec3(hit.Dim[i].HitPosition));
 	//			}
 	//		}
 	//	}
@@ -916,7 +917,7 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 					m_pPoly->Position[0], m_pPoly->Position[1], m_pPoly->Position[2]))
 				{
 					isHitWall = true;
-					printf("試行回数:%d\n",i);
+					printf("試行回数:%d\n", i);
 					break;
 				}
 			}
@@ -1032,8 +1033,8 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		col->rigidbody->SetNextPos(set);
 	}
 #elif false
-		//床ポリゴンがない場合は何もしない
-		if (m_floorNum == 0) return;
+	//床ポリゴンがない場合は何もしない
+	if (m_floorNum == 0) return;
 
 	float radius = 0.0f;
 	float size = 0.0f;
