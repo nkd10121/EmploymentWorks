@@ -708,10 +708,18 @@ void MyLib::Physics::CheckWallAndFloor(std::shared_ptr<Collidable>& col)
 		// ポリゴンの法線のＹ成分が壁ポリゴンボーダーに達っしているかどうかで壁ポリゴンか床ポリゴンかを判断する
 		if (m_hitDim.Dim[i].Normal.y < kWallPolyBorder && m_hitDim.Dim[i].Normal.y > -kWallPolyBorder)
 		{
+			float radius = 0.0f;
+			float size = 0.0f;
+			for (auto& col : col->m_colliders)
+			{
+				radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
+				size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+			}
+
 			// 壁ポリゴンと判断された場合でも、プレイヤーのＹ座標より高いポリゴンのみ当たり判定を行う
-			if (m_hitDim.Dim[i].Position[0].y > col->rigidbody->GetPos().y + kWallPolyHeight ||
-				m_hitDim.Dim[i].Position[1].y > col->rigidbody->GetPos().y + kWallPolyHeight ||
-				m_hitDim.Dim[i].Position[2].y > col->rigidbody->GetPos().y + kWallPolyHeight)
+			if (m_hitDim.Dim[i].Position[0].y > col->rigidbody->GetPos().y - size - radius / 2 ||
+				m_hitDim.Dim[i].Position[1].y > col->rigidbody->GetPos().y - size - radius / 2 ||
+				m_hitDim.Dim[i].Position[2].y > col->rigidbody->GetPos().y - size - radius / 2)
 			{
 				// ポリゴンの数が限界数に達していなかったらポリゴンを配列に追加
 				if (m_wallNum < ColInfo::kMaxColHitPolyNum)
