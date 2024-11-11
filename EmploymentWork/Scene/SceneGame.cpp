@@ -146,13 +146,13 @@ void SceneGame::Update()
 #ifdef _DEBUG
 	MyLib::DebugDraw::Clear();
 #endif
-	//Xボタンを押したらタイトル画面に戻るように
-	if (Input::GetInstance().IsTriggered("X"))
-	{
-		SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
-		EndThisScene();
-		return;
-	}
+	////Xボタンを押したらタイトル画面に戻るように
+	//if (Input::GetInstance().IsTriggered("X"))
+	//{
+	//	SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
+	//	EndThisScene();
+	//	return;
+	//}
 
 	//Yボタンを押したらポーズ画面を開くように
 	if (Input::GetInstance().IsTriggered("PAUSE"))

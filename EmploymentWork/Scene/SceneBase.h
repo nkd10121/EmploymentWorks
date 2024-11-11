@@ -18,6 +18,28 @@
 /// </summary>
 class SceneBase
 {
+protected:
+	struct changeScene
+	{
+		enum class SceneName : int
+		{
+			Start,
+
+			Title,			//タイトル
+			StageSelect,	//ステージセレクト
+			Upgrade,		//強化
+			InGame,			//インゲーム
+			Result,			//リザルト
+			Pause,			//ポーズ
+			Option,			//オプション
+			Ranking,		//ランキング(未実装)
+
+			Last,
+		};
+	};
+
+	changeScene nextScene;
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -139,7 +161,6 @@ private:	/*フェード関係*/
 
 
 protected:
-
 	/// <summary>
 	/// フェードインをスキップする
 	/// </summary>

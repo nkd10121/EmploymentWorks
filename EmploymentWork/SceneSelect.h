@@ -1,16 +1,16 @@
 ﻿#pragma once
 #include "SceneBase.h"
-class SceneDebug : public SceneBase
+class SceneSelect : public SceneBase
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	SceneDebug();
+	SceneSelect();
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~SceneDebug();
+	virtual ~SceneSelect();
 
 	/// <summary>
 	/// //リソースのロード開始
@@ -38,21 +38,5 @@ public:
 	/// 描画
 	/// </summary>
 	virtual void Draw() override;
-
-private:
-	//遷移先列挙型
-	enum eDestination : int
-	{
-		Start,
-
-		Title,			//タイトル
-		InGame,			//インゲーム
-		Pause,			//ポーズ
-
-		Last,
-	};
-
-	//遷移先
-	eDestination m_destinationScene;
 };
 

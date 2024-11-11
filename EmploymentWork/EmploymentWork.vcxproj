@@ -45,6 +45,8 @@
     <ClCompile Include="MyLib\Rigidbody.cpp" />
     <ClCompile Include="Character\Player\State\PlayerStateJump.cpp" />
     <ClCompile Include="Character\Player\State\PlayerStateDash.cpp" />
+    <ClCompile Include="SceneOption.cpp" />
+    <ClCompile Include="SceneSelect.cpp" />
     <ClCompile Include="Scene\SceneDebug.cpp" />
     <ClCompile Include="Scene\ScenePause.cpp" />
     <ClCompile Include="Character\Player\State\StateBase.cpp" />
@@ -88,6 +90,8 @@
     <ClInclude Include="MyLib\Rigidbody.h" />
     <ClInclude Include="Character\Player\State\PlayerStateJump.h" />
     <ClInclude Include="Character\Player\State\PlayerStateDash.h" />
+    <ClInclude Include="SceneOption.h" />
+    <ClInclude Include="SceneSelect.h" />
     <ClInclude Include="Scene\SceneDebug.h" />
     <ClInclude Include="Scene\ScenePause.h" />
     <ClInclude Include="Character\Player\State\StateBase.h" />

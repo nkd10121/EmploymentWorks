@@ -1,16 +1,16 @@
 ﻿#pragma once
 #include "SceneBase.h"
-class SceneDebug : public SceneBase
+class SceneOption : public SceneBase
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	SceneDebug();
+	SceneOption();
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~SceneDebug();
+	virtual ~SceneOption();
 
 	/// <summary>
 	/// //リソースのロード開始
@@ -46,8 +46,13 @@ private:
 		Start,
 
 		Title,			//タイトル
+		//StageSelect,	//ステージセレクト
+		//Upgrade,		//強化
 		InGame,			//インゲーム
+		//Result,			//リザルト
 		Pause,			//ポーズ
+		//Option,			//オプション
+		//Ranking			//ランキング(未実装)
 
 		Last,
 	};

@@ -68,7 +68,6 @@ bool SceneDebug::IsLoaded() const
 /// </summary>
 void SceneDebug::Init()
 {
-	//最初、タイトルシーンを選択してくる状態にする
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
 }
 
