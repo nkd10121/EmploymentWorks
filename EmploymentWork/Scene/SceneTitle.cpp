@@ -1,6 +1,14 @@
 ﻿#include "SceneTitle.h"
 #include "SceneGame.h"
 
+namespace
+{
+	/*テキスト描画関係*/
+	constexpr int kTextX = 64;			//テキスト描画X座標
+	constexpr int kTextY = 32;			//テキスト描画Y座標
+	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
+}
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -48,6 +56,7 @@ bool SceneTitle::IsLoaded() const
 void SceneTitle::Init()
 {
 	//TODO:ここで実態の生成などをする
+	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
 }
 
 /// <summary>
@@ -63,12 +72,7 @@ void SceneTitle::End()
 /// </summary>
 void SceneTitle::Update()
 {
-	if (Input::GetInstance().IsTriggered("X"))
-	{
-		SceneManager::GetInstance().ChangeScene(std::make_shared<SceneGame>());
-		EndThisScene();
-		return;
-	}
+
 }
 
 /// <summary>
@@ -78,5 +82,52 @@ void SceneTitle::Draw()
 {
 #ifdef _DEBUG
 	DrawString(0, 0, "TITLE", 0xffffff);
+
+	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
+
+	DrawString(kTextX, kTextY, "ゲームを始める", 0xffffff);
 #endif
+}
+
+void SceneTitle::SelectNextSceneUpdate()
+{
+	//上を入力したら
+	if (Input::GetInstance().IsTriggered("UP"))
+	{
+		//現在選択している項目から一個上にずらす
+		m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) - 1);
+
+		//もし一番上の項目を選択している状態になっていたら
+		if (m_destinationScene == eDestination::Start)
+		{
+			//一個下にずらす
+			m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) + 1);
+		}
+	}
+
+	//下を入力したら
+	if (Input::GetInstance().IsTriggered("DOWN"))
+	{
+		//現在選択している項目から一個下にずらす
+		m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) + 1);
+
+		//もし一番下の項目を選択している状態になっていたら
+		if (m_destinationScene == eDestination::Last)
+		{
+			//一個上にずらす
+			m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) - 1);
+		}
+	}
+
+	//決定ボタンを押したら現在選択しているシーンに遷移する
+	if (Input::GetInstance().IsTriggered("OK"))
+	{
+		//ゲームシーンに遷移する
+		if (m_destinationScene == eDestination::InGame)
+		{
+			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneGame>());
+			EndThisScene();
+			return;
+		}
+	}
 }

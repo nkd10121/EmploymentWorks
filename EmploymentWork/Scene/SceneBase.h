@@ -18,28 +18,6 @@
 /// </summary>
 class SceneBase
 {
-protected:
-	struct changeScene
-	{
-		enum class SceneName : int
-		{
-			Start,
-
-			Title,			//タイトル
-			StageSelect,	//ステージセレクト
-			Upgrade,		//強化
-			InGame,			//インゲーム
-			Result,			//リザルト
-			Pause,			//ポーズ
-			Option,			//オプション
-			Ranking,		//ランキング(未実装)
-
-			Last,
-		};
-	};
-
-	changeScene nextScene;
-
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -84,6 +62,12 @@ public:	/*派生クラスに継承する必要のある処理*/
 	/// 描画
 	/// </summary>
 	virtual void Draw() = 0;
+
+	/// <summary>
+	/// 次のシーンを選択する更新処理
+	/// 基本的にシーン遷移するときはこのシーンを継承する
+	/// </summary>
+	virtual void SelectNextSceneUpdate() {};
 
 #ifdef _DEBUG
 	// デバッグ表示(最前面表示)

@@ -39,6 +39,11 @@ public:
 	/// </summary>
 	virtual void Draw() override;
 
+	/// <summary>
+	/// 次のシーンを選択する更新処理
+	/// </summary>
+	virtual void SelectNextSceneUpdate()override;
+
 private:
 	//遷移先列挙型
 	enum eDestination : int

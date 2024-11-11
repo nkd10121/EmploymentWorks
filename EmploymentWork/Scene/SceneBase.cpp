@@ -138,6 +138,8 @@ void SceneBase::UpdateAll()
 	UpdateFade();
 	// 継承先のシーンの更新処理
 	Update();
+	//次のシーンを選ぶ更新
+	SelectNextSceneUpdate();
 
 #ifdef DISP_PROCESS
 	m_updateTime = GetNowHiPerformanceCount() - start;

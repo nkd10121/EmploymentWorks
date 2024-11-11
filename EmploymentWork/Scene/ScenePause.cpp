@@ -66,6 +66,32 @@ void ScenePause::End()
 /// </summary>
 void ScenePause::Update()
 {
+
+}
+
+/// <summary>
+/// 描画
+/// </summary>
+void ScenePause::Draw()
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
+
+#ifdef _DEBUG
+	DrawString(0, 16, "PAUSE", 0xffffff);
+
+	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
+
+	DrawString(kTextX, kTextY, "ゲームに戻る", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval, "リスタート", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 2, "タイトルに戻る", 0xffffff);
+#endif
+}
+
+void ScenePause::SelectNextSceneUpdate()
+{
 	//上を入力したら
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
@@ -95,7 +121,7 @@ void ScenePause::Update()
 	}
 
 	//決定ボタンを押したら現在選択しているシーンに遷移する
-	if(Input::GetInstance().IsTriggered("OK"))
+	if (Input::GetInstance().IsTriggered("OK"))
 	{
 		//タイトルシーンに遷移する
 		if (m_destinationScene == eDestination::InGame)
@@ -119,25 +145,4 @@ void ScenePause::Update()
 			return;
 		}
 	}
-}
-
-/// <summary>
-/// 描画
-/// </summary>
-void ScenePause::Draw()
-{
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0x000000, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
-
-#ifdef _DEBUG
-	DrawString(0, 16, "PAUSE", 0xffffff);
-
-	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
-
-	DrawString(kTextX, kTextY, "ゲームに戻る", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval, "リスタート", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 2, "タイトルに戻る", 0xffffff);
-#endif
 }

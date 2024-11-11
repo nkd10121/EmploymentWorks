@@ -83,6 +83,31 @@ void SceneDebug::End()
 /// </summary>
 void SceneDebug::Update()
 {
+
+}
+
+/// <summary>
+/// 描画
+/// </summary>
+void SceneDebug::Draw()
+{
+	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
+
+	int y = kTextY;
+	for (auto& name : kSceneName)
+	{
+		DrawString(kTextX,y,name.c_str(),0xffffff);
+
+		y += kTextYInterval;
+	}
+
+#ifdef _DEBUG
+	DrawString(0, 0, "DEBUG", 0xffffff);
+#endif
+}
+
+void SceneDebug::SelectNextSceneUpdate()
+{
 	//上を入力したら
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
@@ -135,24 +160,4 @@ void SceneDebug::Update()
 			return;
 		}
 	}
-}
-
-/// <summary>
-/// 描画
-/// </summary>
-void SceneDebug::Draw()
-{
-	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
-
-	int y = kTextY;
-	for (auto& name : kSceneName)
-	{
-		DrawString(kTextX,y,name.c_str(),0xffffff);
-
-		y += kTextYInterval;
-	}
-
-#ifdef _DEBUG
-	DrawString(0, 0, "DEBUG", 0xffffff);
-#endif
 }
