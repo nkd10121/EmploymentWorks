@@ -82,7 +82,7 @@ void PlayerStateJump::LoopUpdate()
 	if (m_jumpFrame > kJumpFrame)
 	{
 		//ステージモデルを取得して設定
-		auto stageModel = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
+		auto stageModel = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
 		MV1SetScale(stageModel, VGet(0.01f, 0.01f, 0.01f));
 		MV1SetRotationXYZ(stageModel, VGet(0.0f, DX_PI_F, 0.0f));
 

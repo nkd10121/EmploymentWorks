@@ -35,7 +35,7 @@ namespace
 /// </summary>
 MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollisionHandle*/)
 {
-	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("MOD_STAGECOLLISION");
+	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
 	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
 	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 

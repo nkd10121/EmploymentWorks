@@ -30,7 +30,7 @@ EnemyNormal::EnemyNormal():
 	sphereCol->m_size = kCollisionCapsuleSize;
 
 	//モデルハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("MOD_ENEMYNORMAL");
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_ENEMYNORMAL");
 	//モデルのサイズを変更
 	MV1SetScale(m_modelHandle,VGet(kModelScale, kModelScale, kModelScale));
 }

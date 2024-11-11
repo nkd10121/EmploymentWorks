@@ -46,7 +46,7 @@ void Shot::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->Init();
 
 	//モデルハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("MOD_ARROW");
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_ARROW");
 	MV1SetScale(m_modelHandle, VECTOR(8.0f, 8.0f, 8.0f));
 
 	//マップの当たり判定モデルのハンドルを取得

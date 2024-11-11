@@ -53,8 +53,8 @@ void Crystal::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->Init();
 
 	//モデルハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("MOD_CRYSTAL");
-	m_crystalStandHandle = ModelManager::GetInstance().GetModelHandle("MOD_CRYSTALSTAND");
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_CRYSTAL");
+	m_crystalStandHandle = ModelManager::GetInstance().GetModelHandle("M_CRYSTALSTAND");
 
 	MV1SetScale(m_modelHandle, VGet(0.2f, 0.2f, 0.2f));
 	MV1SetScale(m_crystalStandHandle, VGet(0.2f, 0.2f, 0.2f));

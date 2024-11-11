@@ -23,11 +23,11 @@ namespace
 
 	const std::map<std::string,std::string> kId = 
 	{
-		{"floor","MOD_FLOOR"},
-		{"wall","MOD_WALL"},
-		{"doorFrame","MOD_FRAME"},
-		{"stairs","MOD_STAIRS"},
-		{"stairsWall","MOD_SMOOTHBLOCK"},
+		{"floor","M_FLOOR"},
+		{"wall","M_WALL"},
+		{"doorFrame","M_FRAME"},
+		{"stairs","M_STAIRS"},
+		{"stairsWall","M_SMOOTHBLOCK"},
 	};
 }
 

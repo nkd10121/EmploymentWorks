@@ -55,12 +55,11 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 			}
 
 			//敵ヒットSEを流す
-			SoundManager::GetInstance().PlaySE("SE_ENEMYHIT");
+			SoundManager::GetInstance().PlaySE("S_ENEMYHIT");
 			//敵ヒットエフェクトを出す
-			EffectManager::GetInstance().CreateEffect("EFF_ENEMYHIT",rigidbody->GetPos());
+			EffectManager::GetInstance().CreateEffect("E_ENEMYHIT",rigidbody->GetPos());
 			//当たった弾の終了処理を呼ぶ
 			col->End();
-
 #ifdef _DEBUG
 
 #endif

@@ -96,7 +96,7 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->SetNextPos(rigidbody->GetPos());
 
 	//プレイヤーモデルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("MOD_PLAYER");
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_PLAYER");
 	//スケールの変更
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 
@@ -111,7 +111,7 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	m_hpMax = m_status.hp;
 
 	//クロスボウのモデルハンドルを取得する
-	m_crossbowHandle = ModelManager::GetInstance().GetModelHandle("MOD_CROSSBOW");
+	m_crossbowHandle = ModelManager::GetInstance().GetModelHandle("M_CROSSBOW");
 	//スケールの変更
 	MV1SetScale(m_crossbowHandle, VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
 
