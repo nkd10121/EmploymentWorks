@@ -32,4 +32,6 @@ public:
 
 private:
 	eDir m_dir;
+
+	int m_noInputFrame;
 };

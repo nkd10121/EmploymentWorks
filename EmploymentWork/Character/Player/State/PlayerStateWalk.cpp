@@ -19,7 +19,8 @@ namespace
 /// </summary>
 PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 	StateBase(own),
-	m_dir()
+	m_dir(),
+	m_noInputFrame(0)
 {
 	//現在のステートを歩き状態にする
 	m_nowState = StateKind::Walk;
@@ -51,8 +52,17 @@ void PlayerStateWalk::Update()
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 		Input::GetInstance().GetInputStick(false).second == 0.0f)
 	{
-		ChangeState(StateKind::Idle);
-		return;
+		if (m_noInputFrame == 2)
+		{
+			ChangeState(StateKind::Idle);
+			return;
+		}
+
+		m_noInputFrame++;
+	}
+	else
+	{
+		m_noInputFrame = 0;
 	}
 
 	//ジャンプボタンが押されていたらstateをJumpにする
