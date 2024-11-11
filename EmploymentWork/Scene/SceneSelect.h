@@ -1,27 +1,21 @@
 ﻿#pragma once
 #include "SceneBase.h"
-
-/// <summary>
-/// タイトルシーン
-/// </summary>
-class SceneTitle : public SceneBase
+class SceneSelect : public SceneBase
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	SceneTitle();
-
+	SceneSelect();
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~SceneTitle();
+	virtual ~SceneSelect();
 
 	/// <summary>
 	/// //リソースのロード開始
 	/// </summary>
-	virtual void StartLoad()override;
-
+	virtual void StartLoad() override;
 	/// <summary>
 	/// リソースのロードが終了したかどうか
 	/// </summary>
@@ -32,17 +26,14 @@ public:
 	/// 初期化
 	/// </summary>
 	virtual void Init() override;
-
 	/// <summary>
 	/// 終了
 	/// </summary>
 	virtual void End() override;
-
 	/// <summary>
 	/// 更新
 	/// </summary>
 	virtual void Update() override;
-
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -59,7 +50,12 @@ private:
 	{
 		Start,
 
-		Select,			//セレクト
+		StageSelect,	//セレクト
+		Strengthen,		//強化
+		Option,			//オプション
+		Ranking,		//ランキング
+		Quit,			//やめる
+		Return,			//戻る
 
 		Last,
 	};

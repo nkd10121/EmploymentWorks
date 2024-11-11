@@ -1,16 +1,16 @@
 ﻿#pragma once
 #include "SceneBase.h"
-class SceneOption : public SceneBase
+class SceneStrengthen : public SceneBase
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	SceneOption();
+	SceneStrengthen();
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~SceneOption();
+	virtual ~SceneStrengthen();
 
 	/// <summary>
 	/// //リソースのロード開始
@@ -39,6 +39,11 @@ public:
 	/// </summary>
 	virtual void Draw() override;
 
+	/// <summary>
+	/// 次のシーンを選択する更新処理
+	/// </summary>
+	virtual void SelectNextSceneUpdate()override;
+
 private:
 	//遷移先列挙型
 	enum eDestination : int
@@ -46,13 +51,11 @@ private:
 		Start,
 
 		Title,			//タイトル
-		//StageSelect,	//ステージセレクト
-		//Upgrade,		//強化
+		Select,			//セレクト
+		StageSelect,	//ステージセレクト
 		InGame,			//インゲーム
-		//Result,			//リザルト
 		Pause,			//ポーズ
-		//Option,			//オプション
-		//Ranking			//ランキング(未実装)
+		Option,			//オプション
 
 		Last,
 	};

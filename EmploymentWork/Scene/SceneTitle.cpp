@@ -1,5 +1,5 @@
 ﻿#include "SceneTitle.h"
-#include "SceneGame.h"
+#include "SceneSelect.h"
 
 namespace
 {
@@ -81,7 +81,7 @@ void SceneTitle::Update()
 void SceneTitle::Draw()
 {
 #ifdef _DEBUG
-	DrawString(0, 0, "TITLE", 0xffffff);
+	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
 
@@ -123,9 +123,9 @@ void SceneTitle::SelectNextSceneUpdate()
 	if (Input::GetInstance().IsTriggered("OK"))
 	{
 		//ゲームシーンに遷移する
-		if (m_destinationScene == eDestination::InGame)
+		if (m_destinationScene == eDestination::Select)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneGame>());
+			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneSelect>());
 			EndThisScene();
 			return;
 		}

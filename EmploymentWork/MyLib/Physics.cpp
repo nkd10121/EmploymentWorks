@@ -231,8 +231,8 @@ void MyLib::Physics::Update()
 		//床との当たり判定処理
 		FixNowPositionWithFloor(item);
 
-		// 検出したプレイヤーの周囲のポリゴン情報を開放する
-		MV1CollResultPolyDimTerminate(m_hitDim);
+		//// 検出したプレイヤーの周囲のポリゴン情報を開放する
+		//MV1CollResultPolyDimTerminate(m_hitDim);
 	}
 
 	CheckSendOnCollideInfo(m_preCollideInfo, m_newCollideInfo, false);

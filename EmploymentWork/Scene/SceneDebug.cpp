@@ -1,8 +1,14 @@
 ﻿#include "SceneDebug.h"
 
 #include "SceneTitle.h"
+#include "SceneSelect.h"
+#include "SceneStageSelect.h"
+#include "SceneStrengthen.h"
+#include "SceneRanking.h"
 #include "SceneGame.h"
+#include "SceneResult.h"
 #include "ScenePause.h"
+#include "SceneOption.h"
 
 #include "SoundManager.h"
 #include "LoadCSV.h"
@@ -12,8 +18,14 @@ namespace
 	const std::string kSceneName[] =
 	{
 		"SceneTitle",
+		"SceneSelect",
+		"SceneStageSelect",
+		"SceneStrengthen",
+		"SceneRanking",
 		"SceneGame",
+		"SceneResult",
 		"ScenePause",
+		"SceneOption",
 	};
 
 	/*テキスト描画関係*/
@@ -102,7 +114,7 @@ void SceneDebug::Draw()
 	}
 
 #ifdef _DEBUG
-	DrawString(0, 0, "DEBUG", 0xffffff);
+	DrawFormatString(0, 0, 0xffffff,"%s", GetNowSceneName());
 #endif
 }
 
@@ -146,6 +158,20 @@ void SceneDebug::SelectNextSceneUpdate()
 			EndThisScene();
 			return;
 		}
+		//セレクトシーンに遷移する
+		else if (m_destinationScene == eDestination::Select)
+		{
+			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneSelect>());
+			EndThisScene();
+			return;
+		}
+		//ステージセレクトシーンに遷移する
+		else if (m_destinationScene == eDestination::StageSelect)
+		{
+			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneStageSelect>());
+			EndThisScene();
+			return;
+		}
 		//ゲームシーンに遷移する
 		else if (m_destinationScene == eDestination::InGame)
 		{
@@ -157,6 +183,12 @@ void SceneDebug::SelectNextSceneUpdate()
 		else if (m_destinationScene == eDestination::Pause)
 		{
 			SceneManager::GetInstance().PushScene(std::make_shared<ScenePause>());
+			return;
+		}
+		//オプションシーンに遷移する
+		else if (m_destinationScene == eDestination::Option)
+		{
+			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneOption>());
 			return;
 		}
 	}

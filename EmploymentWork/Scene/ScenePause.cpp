@@ -80,7 +80,7 @@ void ScenePause::Draw()
 	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
 
 #ifdef _DEBUG
-	DrawString(0, 16, "PAUSE", 0xffffff);
+	DrawFormatString(0, 16, 0xffffff, "%s", GetNowSceneName());
 
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
 

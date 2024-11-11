@@ -267,6 +267,8 @@ void SceneGame::Draw()
 	}
 
 #ifdef _DEBUG
+	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
+
 	//クロスヘアの描画
 	auto centerX = Game::kWindowWidth / 2;
 	auto centerY = Game::kWindowHeight / 2;
@@ -275,7 +277,6 @@ void SceneGame::Draw()
 	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xffffff, true);
 	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xffffff, true);
 
-	DrawString(0, 0, "GAME", 0xffffff);
 	DrawFormatString(1120,0,0xbbbbbb,"クリスタルHP:%d",m_pCrystal->GetHp());
 #endif
 }

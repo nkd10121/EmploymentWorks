@@ -159,7 +159,7 @@ protected:
 	/// 現在のシーンの名前を取得
 	/// </summary>
 	/// <returns></returns>
-	const std::string GetNowSceneName()const { return m_sceneName; }
+	const char* GetNowSceneName()const { return m_sceneName.c_str(); }
 
 private:
 	bool m_isInit;	//初期化処理終了判定

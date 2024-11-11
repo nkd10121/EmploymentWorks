@@ -1,5 +1,9 @@
 ﻿#include "SceneOption.h"
 
+namespace
+{
+}
+
 SceneOption::SceneOption():
 	SceneBase("SCENE_OPTION")
 {
@@ -15,7 +19,7 @@ void SceneOption::StartLoad()
 
 bool SceneOption::IsLoaded() const
 {
-	return false;
+	return true;
 }
 
 void SceneOption::Init()
@@ -31,5 +35,12 @@ void SceneOption::Update()
 }
 
 void SceneOption::Draw()
+{
+#ifdef _DEBUG
+	DrawFormatString(0, 16, 0xffffff, "%s", GetNowSceneName());
+#endif
+}
+
+void SceneOption::SelectNextSceneUpdate()
 {
 }
