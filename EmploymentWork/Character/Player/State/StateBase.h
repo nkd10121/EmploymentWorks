@@ -67,13 +67,19 @@ public:
 	/// 遷移予定のStateを返す
 	/// </summary>
 	/// <returns>遷移予定のState</returns>
-	const std::shared_ptr<StateBase> GetNextState()const { return m_nextState; }
+	const StateKind GetNextKind()const { return m_nextState; }
+
+	/// <summary>
+	/// 次のシーンのポインタを取得
+	/// </summary>
+	/// <returns></returns>
+	std::shared_ptr<StateBase> GetNextScenePointer();
 
 	/// <summary>
 	/// 遷移予定のStateを設定する
 	/// </summary>
 	/// <param name="state">遷移予定のState</param>
-	void SetNextState(std::shared_ptr<StateBase> state) { m_nextState = state; }
+	void SetNextKind(StateKind state) { m_nextState = state; }
 
 	///// <summary>
 	///// ダメージを受けた時の処理を行う
@@ -120,8 +126,8 @@ protected:
 
 protected:
 	std::weak_ptr<CharacterBase> m_pOwn;	//所有者のポインタ
-	std::shared_ptr<StateBase> m_nextState;	//遷移先のStateを保存する
 
-	StateKind m_nowState;					//現在のステート
+	StateKind m_nowState;	//現在のステート
+	StateKind m_nextState;	//現在のステート
 };
 

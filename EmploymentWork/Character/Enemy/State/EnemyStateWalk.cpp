@@ -32,7 +32,7 @@ void EnemyStateWalk::Update()
 	{
 		std::shared_ptr<EnemyStateIdle> pNext = std::make_shared<EnemyStateIdle>(m_pOwn.lock());
 		pNext->Init();
-		m_nextState = pNext;
+		m_nextState = StateKind::Idle;
 
 		return;
 	}

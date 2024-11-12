@@ -90,7 +90,7 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	Collidable::Init(physics);
 
 	m_pState = std::make_shared<PlayerStateIdle>(std::dynamic_pointer_cast<Player>(shared_from_this()));
-	m_pState->SetNextState(m_pState);
+	m_pState->SetNextKind(StateBase::StateKind::Idle);
 	m_pState->Init();
 
 	//プレイヤーの初期位置設定
@@ -127,11 +127,10 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 void Player::Update(SceneGame* pScene)
 {
 	//前のフレームとStateを比較して違うStateだったら
-	if (m_pState->GetNextState()->GetKind() != m_pState->GetKind())
+	if (m_pState->GetNextKind() != m_pState->GetKind())
 	{
 		//Stateを変更する
-		m_pState = m_pState->GetNextState();
-		m_pState->SetNextState(m_pState);
+		m_pState = m_pState->GetNextScenePointer();
 	}
 
 	//ステートの更新
@@ -220,7 +219,10 @@ void Player::Update(SceneGame* pScene)
 	if (m_status.hp <= 0 && !m_isDeath)
 	{
 		m_isDeath = true;
-		m_pState->SetNextState(std::make_shared<PlayerStateDeath>(std::dynamic_pointer_cast<Player>(shared_from_this())));
+
+		m_pState = std::make_shared<PlayerStateDeath>(std::dynamic_pointer_cast<Player>(shared_from_this()));
+		m_pState->SetNextKind(StateBase::StateKind::Death);
+		m_pState->Init();
 	}
 }
 

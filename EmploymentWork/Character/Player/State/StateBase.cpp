@@ -34,6 +34,44 @@ StateBase::~StateBase()
 }
 
 #ifdef _DEBUG	//デバッグ描画
+std::shared_ptr<StateBase> StateBase::GetNextScenePointer()
+{
+	std::shared_ptr<StateBase> ret;
+
+	if (m_nextState == StateKind::Idle)
+	{
+		ret = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
+		ret->Init();
+		ret->SetNextKind(m_nextState);
+
+		return ret;
+	}
+	else if (m_nextState == StateKind::Walk)
+	{
+		ret = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
+		ret->Init();
+		ret->SetNextKind(m_nextState);
+
+		return ret;
+	}
+	else if (m_nextState == StateKind::Dash)
+	{
+		ret = std::make_shared<PlayerStateDash>(m_pOwn.lock());
+		ret->Init();
+		ret->SetNextKind(m_nextState);
+
+		return ret;
+	}
+	else if (m_nextState == StateKind::Jump)
+	{
+		ret = std::make_shared<PlayerStateJump>(m_pOwn.lock());
+		ret->Init();
+		ret->SetNextKind(m_nextState);
+
+		return ret;
+	}
+}
+
 /// <summary>
 /// 現在のステートのデバッグ描画
 /// </summary>
@@ -100,9 +138,10 @@ void StateBase::ChangeState(StateKind kind)
 		auto name = m_pOwn.lock()->GetCharacterName();
 		if (kind == StateKind::Idle)
 		{
-			std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-			pNext->Init();
-			m_nextState = pNext;
+			//std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
+			//pNext->Init();
+
+			m_nextState = kind;
 
 			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "IDLE"));
 			return;
@@ -111,7 +150,8 @@ void StateBase::ChangeState(StateKind kind)
 		{
 			std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
 			pNext->Init();
-			m_nextState = pNext;
+
+			m_nextState = kind;
 
 			//左スティックの入力に応じてアニメーションを変更する
 			auto input = Input::GetInstance().GetInputStick(false);
@@ -124,7 +164,8 @@ void StateBase::ChangeState(StateKind kind)
 		{
 			std::shared_ptr<PlayerStateDash> pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
 			pNext->Init();
-			m_nextState = pNext;
+
+			m_nextState = kind;
 
 			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "RUN_FORWARD"));
 			return;
@@ -133,14 +174,13 @@ void StateBase::ChangeState(StateKind kind)
 		{
 			std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
 			pNext->Init();
-			m_nextState = pNext;
+
+			m_nextState = kind;
 
 			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "JUMP_UP"),0.75f);
 			return;
 		}
 	}
-
-
 }
 
 /// <summary>

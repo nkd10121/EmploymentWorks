@@ -54,10 +54,9 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 	Collidable::Init(physics);
 
 	//ステートパターンの初期化
-	m_pState = std::make_shared<EnemyStateIdle>(std::dynamic_pointer_cast<EnemyBase>(shared_from_this()));
-	m_pState->SetNextState(m_pState);
-	auto state = std::dynamic_pointer_cast<EnemyStateIdle>(m_pState);
-	state->Init();
+	m_pState = std::make_shared<EnemyStateIdle>(std::dynamic_pointer_cast<EnemyNormal>(shared_from_this()));
+	m_pState->SetNextKind(StateBase::StateKind::Idle);
+	m_pState->Init();
 
 	//座標を仮決定
 	//TODO:モデルの座標を設定する部分が作れたら削除する
@@ -97,11 +96,10 @@ void EnemyNormal::Update()
 	if (!m_isExist)return;
 
 	//前のフレームとStateを比較して違うStateだったら
-	if (m_pState->GetNextState()->GetKind() != m_pState->GetKind())
+	if (m_pState->GetNextKind() != m_pState->GetKind())
 	{
 		//Stateを変更する
-		m_pState = m_pState->GetNextState();
-		m_pState->SetNextState(m_pState);
+		m_pState = m_pState->GetNextScenePointer();
 	}
 
 	//ステートの更新
