@@ -1,5 +1,9 @@
 ﻿#pragma once
 #include "SceneBase.h"
+
+/// <summary>
+/// メインメニュー画面
+/// </summary>
 class SceneSelect : public SceneBase
 {
 public:

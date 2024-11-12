@@ -102,7 +102,7 @@ void SceneManager::Draw()
 /// <summary>
 /// 実行中のシーンを引数で指定したシーンに切り替える
 /// </summary>
-void SceneManager::ChangeScene(std::shared_ptr<SceneBase> nextScene)
+void SceneManager::SetNextScene(std::shared_ptr<SceneBase> nextScene)
 {
 	//リストが空っぽだったら入れ替えずに
 	if (m_pScene.empty())

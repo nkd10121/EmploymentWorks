@@ -1,5 +1,9 @@
 ﻿#pragma once
 #include "SceneBase.h"
+
+/// <summary>
+/// ランキングシーン
+/// </summary>
 class SceneRanking : public SceneBase
 {
 public:
@@ -43,24 +47,5 @@ public:
 	/// 次のシーンを選択する更新処理
 	/// </summary>
 	virtual void SelectNextSceneUpdate()override;
-
-private:
-	//遷移先列挙型
-	enum eDestination : int
-	{
-		Start,
-
-		Title,			//タイトル
-		Select,			//セレクト
-		StageSelect,	//ステージセレクト
-		InGame,			//インゲーム
-		Pause,			//ポーズ
-		Option,			//オプション
-
-		Last,
-	};
-
-	//遷移先
-	eDestination m_destinationScene;
 };
 

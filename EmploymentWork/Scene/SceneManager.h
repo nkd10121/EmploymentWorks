@@ -68,7 +68,7 @@ public:
 	/// 実行中のシーンを引数で指定したシーンに切り替える
 	/// </summary>
 	/// <param name="nextScene">遷移先のシーン</param>
-	void ChangeScene(std::shared_ptr<SceneBase> nextScene);
+	void SetNextScene(std::shared_ptr<SceneBase> nextScene);
 	/// <summary>
 	/// 現在先頭で実行中のシーンの上にシーンを乗っける
 	/// </summary>

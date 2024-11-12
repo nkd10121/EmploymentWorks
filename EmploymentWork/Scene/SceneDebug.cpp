@@ -118,6 +118,9 @@ void SceneDebug::Draw()
 #endif
 }
 
+/// <summary>
+/// 次のシーンを選択する更新処理
+/// </summary>
 void SceneDebug::SelectNextSceneUpdate()
 {
 	//上を入力したら
@@ -154,63 +157,63 @@ void SceneDebug::SelectNextSceneUpdate()
 		//タイトルシーンに遷移する
 		if (m_destinationScene == eDestination::Title)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneTitle>());
 			EndThisScene();
 			return;
 		}
 		//セレクトシーンに遷移する
 		else if (m_destinationScene == eDestination::Select)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneSelect>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneSelect>());
 			EndThisScene();
 			return;
 		}
 		//ステージセレクトシーンに遷移する
 		else if (m_destinationScene == eDestination::StageSelect)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneStageSelect>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
 			EndThisScene();
 			return;
 		}
 		//強化シーンに遷移する
 		else if (m_destinationScene == eDestination::Strengthen)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneStrengthen>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStrengthen>());
 			EndThisScene(true);
 			return;
 		}
 		//強化シーンに遷移する
 		else if (m_destinationScene == eDestination::Ranking)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneRanking>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneRanking>());
 			EndThisScene(true);
 			return;
 		}
 		//ゲームシーンに遷移する
 		else if (m_destinationScene == eDestination::InGame)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneGame>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
 			EndThisScene();
 			return;
 		}
 		//ゲームシーンに遷移する
 		else if (m_destinationScene == eDestination::Result)
 		{
-			SceneManager::GetInstance().PushScene(std::make_shared<SceneResult>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneResult>());
 			EndThisScene(true);
 			return;
 		}
 		//ポーズシーンを上に表示する
 		else if (m_destinationScene == eDestination::Pause)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<ScenePause>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<ScenePause>());
 			EndThisScene(true);
 			return;
 		}
 		//オプションシーンに遷移する
 		else if (m_destinationScene == eDestination::Option)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneOption>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
 			EndThisScene(true);
 			return;
 		}

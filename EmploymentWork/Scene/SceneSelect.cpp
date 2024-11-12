@@ -16,37 +16,61 @@ namespace
 #endif
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 SceneSelect::SceneSelect() :
 	SceneBase("SCENE_SELECT")
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SceneSelect::~SceneSelect()
 {
 }
 
+/// <summary>
+/// //リソースのロード開始
+/// </summary>
 void SceneSelect::StartLoad()
 {
 }
 
+/// <summary>
+/// リソースのロードが終了したかどうか
+/// </summary>
 bool SceneSelect::IsLoaded() const
 {
 	return true;
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void SceneSelect::Init()
 {
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
 }
 
+/// <summary>
+/// 終了
+/// </summary>
 void SceneSelect::End()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void SceneSelect::Update()
 {
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void SceneSelect::Draw()
 {
 #ifdef _DEBUG
@@ -63,6 +87,9 @@ void SceneSelect::Draw()
 #endif
 }
 
+/// <summary>
+/// 次のシーンを選択する更新処理
+/// </summary>
 void SceneSelect::SelectNextSceneUpdate()
 {
 	//上を入力したら
@@ -98,25 +125,25 @@ void SceneSelect::SelectNextSceneUpdate()
 	{
 		if (m_destinationScene == eDestination::StageSelect)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneStageSelect>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
 			EndThisScene();
 			return;
 		}
 		else if(m_destinationScene == eDestination::Strengthen)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneStrengthen>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStrengthen>());
 			EndThisScene(true);
 			return;
 		}
 		else if (m_destinationScene == eDestination::Option)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneOption>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
 			EndThisScene(true);
 			return;
 		}
 		else if (m_destinationScene == eDestination::Ranking)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneRanking>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneRanking>());
 			EndThisScene(true);
 			return;
 		}
@@ -130,7 +157,7 @@ void SceneSelect::SelectNextSceneUpdate()
 	//Bボタンを押したらタイトルに戻る
 	if (Input::GetInstance().IsTriggered("CANCEL"))
 	{
-		SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
+		SceneManager::GetInstance().SetNextScene(std::make_shared<SceneTitle>());
 		EndThisScene();
 		return;
 	}

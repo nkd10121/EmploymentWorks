@@ -11,7 +11,6 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	ScenePause();
-
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -21,7 +20,6 @@ public:
 	/// //リソースのロード開始
 	/// </summary>
 	virtual void StartLoad()override;
-
 	/// <summary>
 	/// リソースのロードが終了したかどうか
 	/// </summary>
@@ -32,17 +30,14 @@ public:
 	/// 初期化
 	/// </summary>
 	virtual void Init() override;
-
 	/// <summary>
 	/// 終了
 	/// </summary>
 	virtual void End() override;
-
 	/// <summary>
 	/// 更新
 	/// </summary>
 	virtual void Update() override;
-
 	/// <summary>
 	/// 描画
 	/// </summary>

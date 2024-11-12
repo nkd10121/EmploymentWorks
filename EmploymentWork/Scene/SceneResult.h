@@ -43,19 +43,17 @@ public:
 	/// 次のシーンを選択する更新処理
 	/// </summary>
 	virtual void SelectNextSceneUpdate()override;
-
 private:
 	//遷移先列挙型
 	enum eDestination : int
 	{
 		Start,
 
-		Title,			//タイトル
+		InGame,			//インゲーム(次のステージ)
+		ScoreDetail,	//スコア詳細
+		Strengthen,		//強化
+		Ranking,		//ランキング
 		Select,			//セレクト
-		StageSelect,	//ステージセレクト
-		InGame,			//インゲーム
-		Pause,			//ポーズ
-		Option,			//オプション
 
 		Last,
 	};

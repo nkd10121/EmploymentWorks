@@ -48,7 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	//最初にタイトルシーンに遷移する
-	SceneManager::GetInstance().ChangeScene(std::make_shared<SceneDebug>());
+	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneDebug>());
 
 	while (ProcessMessage() == 0)
 	{

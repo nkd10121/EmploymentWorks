@@ -42,6 +42,9 @@ SceneBase::SceneBase(std::string name) :
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SceneBase::~SceneBase()
 {
 
@@ -58,6 +61,9 @@ void SceneBase::EndThisScene(bool isPushScene)
 	StartFadeOut();
 }
 
+/// <summary>
+/// リソースの仕分けとロード開始をする
+/// </summary>
 void SceneBase::AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data)
 {
 	for (auto& d : data)

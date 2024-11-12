@@ -1,14 +1,16 @@
 ﻿#include "ScenePause.h"
 #include "Game.h"
-#include "SceneTitle.h"
+#include "SceneSelect.h"
 #include "SceneGame.h"
 
 namespace
 {
+#ifdef _DEBUG
 	/*テキスト描画関係*/
 	constexpr int kTextX = 64;			//テキスト描画X座標
 	constexpr int kTextY = 32;			//テキスト描画Y座標
 	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
+#endif
 }
 
 /// <summary>
@@ -86,10 +88,13 @@ void ScenePause::Draw()
 
 	DrawString(kTextX, kTextY, "ゲームに戻る", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval, "リスタート", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 2, "タイトルに戻る", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 2, "セレクトに戻る", 0xffffff);
 #endif
 }
 
+/// <summary>
+/// 次のシーンを選択する更新処理
+/// </summary>
 void ScenePause::SelectNextSceneUpdate()
 {
 	//上を入力したら
@@ -133,14 +138,14 @@ void ScenePause::SelectNextSceneUpdate()
 		//ゲームシーンに遷移する
 		else if (m_destinationScene == eDestination::ReStart)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneGame>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
 			EndThisScene();
 			return;
 		}
 		//ポーズシーンを上に表示する
 		else if (m_destinationScene == eDestination::Title)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneTitle>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneSelect>());
 			EndThisScene();
 			return;
 		}

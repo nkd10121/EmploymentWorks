@@ -3,10 +3,12 @@
 
 namespace
 {
+#ifdef _DEBUG
 	/*テキスト描画関係*/
 	constexpr int kTextX = 64;			//テキスト描画X座標
 	constexpr int kTextY = 32;			//テキスト描画Y座標
 	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
+#endif
 }
 
 /// <summary>
@@ -89,6 +91,9 @@ void SceneTitle::Draw()
 #endif
 }
 
+/// <summary>
+/// 次のシーンを選択する更新処理
+/// </summary>
 void SceneTitle::SelectNextSceneUpdate()
 {
 	//上を入力したら
@@ -125,7 +130,7 @@ void SceneTitle::SelectNextSceneUpdate()
 		//ゲームシーンに遷移する
 		if (m_destinationScene == eDestination::Select)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneSelect>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneSelect>());
 			EndThisScene();
 			return;
 		}

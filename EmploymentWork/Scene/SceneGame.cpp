@@ -18,8 +18,6 @@
 
 namespace
 {
-	//ポーションモデルのパス
-	const std::string kPortionPath = "data/model/object/portion/bottle_red.mv1";
 }
 
 /// <summary>
@@ -281,6 +279,11 @@ void SceneGame::Draw()
 #endif
 }
 
+/// <summary>
+/// オブジェクトを追加する
+/// ほかのクラスからゲームシーンで管理したいオブジェクトを追加するときに使用する
+/// </summary>
+/// <param name="pAddObject"></param>
 void SceneGame::AddObject(std::shared_ptr<ObjectBase> pAddObject)
 {
 	m_pObjects.emplace_back(pAddObject);

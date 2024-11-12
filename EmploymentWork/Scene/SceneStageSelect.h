@@ -1,5 +1,9 @@
 ﻿#pragma once
 #include "SceneBase.h"
+
+/// <summary>
+/// ステージセレクトシーン
+/// </summary>
 class SceneStageSelect : public SceneBase
 {
 public:
