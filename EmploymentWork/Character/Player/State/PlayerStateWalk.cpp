@@ -8,7 +8,6 @@
 namespace
 {
 	/*アナログスティックによる移動関連*/
-	constexpr float kMaxSpeed = 0.2f;			//プレイヤーの最大速度
 	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定最小範囲
 	constexpr float kAnalogRangeMax = 0.8f;		//アナログスティックの入力判定最大範囲
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大

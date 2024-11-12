@@ -44,6 +44,11 @@ public:
 	/// </summary>
 	/// <param name="own">所有者</param>
 	StateBase(std::shared_ptr<CharacterBase> own);
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	virtual void Init()abstract;
 	/// <summary>
 	/// 更新
 	/// </summary>

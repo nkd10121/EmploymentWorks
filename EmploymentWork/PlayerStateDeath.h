@@ -1,17 +1,13 @@
 ﻿#pragma once
 #include "StateBase.h"
-
-/// <summary>
-/// プレイヤーの待機状態
-/// </summary>
-class PlayerStateIdle : public StateBase
+class PlayerStateDeath : public StateBase
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="own">持ち主のポインタ</param>
-	PlayerStateIdle(std::shared_ptr<CharacterBase> own);
+	/// <param name="own"></param>
+	PlayerStateDeath(std::shared_ptr<CharacterBase> own);
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -21,3 +17,4 @@ public:
 	/// </summary>
 	virtual void Update() override;
 };
+

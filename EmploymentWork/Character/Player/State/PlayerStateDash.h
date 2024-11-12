@@ -15,7 +15,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init();
+	void Init()override;
 	/// <summary>
 	/// 更新
 	/// </summary>

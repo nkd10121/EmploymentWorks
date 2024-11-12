@@ -97,5 +97,7 @@ private:
 	std::shared_ptr<StateBase> m_pState;	//Stateパターン
 
 	int m_attackButtonPushCount;
+
+	bool m_isDeath;
 };
 

@@ -1,11 +1,14 @@
 ﻿#include "Player.h"
 #include "Input.h"
 #include "MyLib.h"
-#include "PlayerStateIdle.h"
-#include "LoadCSV.h"
-#include "HealPortion.h"
 
+#include "PlayerStateIdle.h"
+#include "PlayerStateDeath.h"
+
+#include "HealPortion.h"
 #include "Shot.h"
+
+#include "LoadCSV.h"
 #include "SceneGame.h"
 #include "ModelManager.h"
 #include "TrapManager.h"
@@ -51,7 +54,8 @@ Player::Player() :
 	m_rot(),
 	m_cameraAngle(0.0f),
 	m_angle(0.0f),
-	m_attackButtonPushCount(0)
+	m_attackButtonPushCount(0),
+	m_isDeath(false)
 {
 	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
@@ -87,8 +91,7 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 
 	m_pState = std::make_shared<PlayerStateIdle>(std::dynamic_pointer_cast<Player>(shared_from_this()));
 	m_pState->SetNextState(m_pState);
-	auto state = std::dynamic_pointer_cast<PlayerStateIdle>(m_pState);
-	state->Init();
+	m_pState->Init();
 
 	//プレイヤーの初期位置設定
 	rigidbody->Init(true);
@@ -151,12 +154,17 @@ void Player::Update(SceneGame* pScene)
 		MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
 	}
 
-	//カメラの座標からプレイヤーを回転させる方向を計算する
-	m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
-	m_rot = Vec3(0.0f, m_angle, 0.0f);
 
-	//プレイヤーを回転させる
-	MV1SetRotationXYZ(m_modelHandle, m_rot.ToVECTOR());
+	if (!m_isDeath)
+	{
+		//カメラの座標からプレイヤーを回転させる方向を計算する
+		m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
+		m_rot = Vec3(0.0f, m_angle, 0.0f);
+
+		//プレイヤーを回転させる
+		MV1SetRotationXYZ(m_modelHandle, m_rot.ToVECTOR());
+	}
+
 
 	if (Input::GetInstance().GetIsPushedTriggerButton(true))
 	{
@@ -200,6 +208,19 @@ void Player::Update(SceneGame* pScene)
 	if (Input::GetInstance().IsTriggered("Y"))
 	{
 		TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection,0);
+	}
+
+	if (Input::GetInstance().IsTriggered("X"))
+	{
+		m_status.hp -= 10;
+	}
+
+	printf("プレイヤーHP:%d\n", m_status.hp);
+
+	if (m_status.hp <= 0 && !m_isDeath)
+	{
+		m_isDeath = true;
+		m_pState->SetNextState(std::make_shared<PlayerStateDeath>(std::dynamic_pointer_cast<Player>(shared_from_this())));
 	}
 }
 
