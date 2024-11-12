@@ -33,6 +33,13 @@ PlayerStateJump::PlayerStateJump(std::shared_ptr<CharacterBase> own) :
 }
 
 /// <summary>
+/// デストラクタ
+/// </summary>
+PlayerStateJump::~PlayerStateJump()
+{
+}
+
+/// <summary>
 /// 初期化
 /// </summary>
 void PlayerStateJump::Init()
@@ -115,6 +122,7 @@ void PlayerStateJump::LoopUpdate()
 #endif
 		//ステージモデルの削除
 		MV1DeleteModel(stageModel);
+
 	}
 
 	//ジャンプフレームを更新する

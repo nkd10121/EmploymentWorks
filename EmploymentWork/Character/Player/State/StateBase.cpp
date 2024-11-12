@@ -26,6 +26,13 @@ StateBase::StateBase(std::shared_ptr<CharacterBase> own):
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
+StateBase::~StateBase()
+{
+}
+
 #ifdef _DEBUG	//デバッグ描画
 /// <summary>
 /// 現在のステートのデバッグ描画

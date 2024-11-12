@@ -13,6 +13,11 @@ public:
 	/// <param name="own">持ち主のポインタ</param>
 	PlayerStateDash(std::shared_ptr<CharacterBase> own);
 	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~PlayerStateDash()override;
+
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Init()override;

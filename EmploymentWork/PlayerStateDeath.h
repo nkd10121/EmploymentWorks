@@ -9,6 +9,11 @@ public:
 	/// <param name="own"></param>
 	PlayerStateDeath(std::shared_ptr<CharacterBase> own);
 	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~PlayerStateDeath()override;
+
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Init()override;

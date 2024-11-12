@@ -13,6 +13,10 @@ PlayerStateDeath::PlayerStateDeath(std::shared_ptr<CharacterBase> own):
 	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "DEATH_A"));
 }
 
+PlayerStateDeath::~PlayerStateDeath()
+{
+}
+
 void PlayerStateDeath::Init()
 {
 }

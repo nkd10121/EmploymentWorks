@@ -15,6 +15,11 @@ public:
 	/// <param name="own"></param>
 	PlayerStateWalk(std::shared_ptr<CharacterBase> own);
 	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~PlayerStateWalk()override;
+
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Init()override;

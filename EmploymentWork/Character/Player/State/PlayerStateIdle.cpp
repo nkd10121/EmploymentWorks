@@ -13,6 +13,13 @@ PlayerStateIdle::PlayerStateIdle(std::shared_ptr<CharacterBase> own):
 }
 
 /// <summary>
+/// デストラクタ
+/// </summary>
+PlayerStateIdle::~PlayerStateIdle()
+{
+}
+
+/// <summary>
 /// 初期化
 /// </summary>
 void PlayerStateIdle::Init()
@@ -43,7 +50,7 @@ void PlayerStateIdle::Update()
 	}
 
 	//持っているキャラクターベースクラスをプレイヤークラスにキャストする(ダウンキャスト)
-	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
+	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
 
 	//プレイヤーの速度を0にする(重力の影響を受けながら)
 	auto prevVel = own->GetRigidbody()->GetVelocity();

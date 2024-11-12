@@ -30,6 +30,13 @@ PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 }
 
 /// <summary>
+/// デストラクタ
+/// </summary>
+PlayerStateWalk::~PlayerStateWalk()
+{
+}
+
+/// <summary>
 /// 初期化
 /// </summary>
 void PlayerStateWalk::Init()
@@ -45,7 +52,7 @@ void PlayerStateWalk::Update()
 	if (!CheckPlayer())	return;
 
 	//ダウンキャスト
-	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
+	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
 
 	//左スティックが入力されていなかったらStateをIdleにする
 	if (Input::GetInstance().GetInputStick(false).first == 0.0f &&

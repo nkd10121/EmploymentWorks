@@ -25,6 +25,13 @@ PlayerStateDash::PlayerStateDash(std::shared_ptr<CharacterBase> own) :
 }
 
 /// <summary>
+/// デストラクタ
+/// </summary>
+PlayerStateDash::~PlayerStateDash()
+{
+}
+
+/// <summary>
 /// 初期化
 /// </summary>
 void PlayerStateDash::Init()
@@ -40,7 +47,7 @@ void PlayerStateDash::Update()
 	if (!CheckPlayer())	return;
 
 	//持っているキャラクターベースクラスをプレイヤークラスにキャストする(ダウンキャスト)
-	auto own = dynamic_cast<Player*>(m_pOwn.lock().get());
+	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
 
 	//コントローラーの左スティックの入力を取得
 	auto input = Input::GetInstance().GetInputStick(false);
