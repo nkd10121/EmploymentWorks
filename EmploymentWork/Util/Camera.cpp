@@ -205,7 +205,7 @@ void Camera::Update()
 		}
 
 		//長さを補正する強さにする(そのままの値だとカメラがめり込んでしまうため少し縮める)
-		auto fixPower = maxLength * 0.9f;
+		auto fixPower = maxLength * 0.8f;
 
 		//注視座標からカメラ座標に向かう方向ベクトルを作る
 		auto aimPosToCameraPos = m_cameraPos - m_aimPos;
