@@ -26,7 +26,7 @@ public:
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~SceneBase() {}
+	virtual ~SceneBase();
 
 public:	/*派生クラスに継承する必要のある処理*/
 	/// <summary>
@@ -84,7 +84,7 @@ protected:
 	/// <summary>
 	/// 現在のシーンを終了させる
 	/// </summary>
-	void EndThisScene();
+	void EndThisScene(bool isPushScene = false);
 
 	/// <summary>
 	/// リソースの仕分けとロード開始をする
@@ -128,6 +128,12 @@ public:	/*継承を行わない処理	SceneManagerから呼び出すのはこっ
 	/// <returns></returns>
 	const bool GetIsGameEnd()const { return m_isGameEnd; }
 
+	/// <summary>
+	/// 次のシーンがPushなのかどうかを取得
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsPushNextScene()const { return m_isPushNextScene; }
+
 private:	/*フェード関係*/
 
 	/// <summary>
@@ -145,17 +151,16 @@ private:	/*フェード関係*/
 	/// </summary>
 	void DrawLoading() const;
 
-protected:
+public:
 	/// <summary>
 	/// フェードイン開始
 	/// </summary>
 	void StartFadeIn();
+protected:
 	/// <summary>
 	/// フェードアウト開始
 	/// </summary>
 	void StartFadeOut();
-
-	const bool GetIsFading()const;
 
 	/// <summary>
 	/// フェードインをスキップする
@@ -175,7 +180,8 @@ protected:
 
 private:
 	bool m_isInit;			//初期化処理終了判定
-	bool m_isThisSceneEnd;	//次のシーンに遷移する
+	bool m_isThisSceneEnd;	//現在のシーンが終了したかどうか
+	bool m_isPushNextScene;	//次のシーンをpushするか
 	bool m_isGameEnd;		//ゲームを終了するかどうか
 
 	// フェード関連処理

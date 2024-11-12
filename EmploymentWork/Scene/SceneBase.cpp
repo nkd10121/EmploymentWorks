@@ -29,6 +29,7 @@ namespace
 SceneBase::SceneBase(std::string name) :
 	m_isInit(false),
 	m_isThisSceneEnd(false),
+	m_isPushNextScene(false),
 	m_isGameEnd(false),
 	m_fadeAlpha(kBrightMax),
 	m_fadeSpeed(0),
@@ -41,12 +42,19 @@ SceneBase::SceneBase(std::string name) :
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
-void SceneBase::EndThisScene()
+SceneBase::~SceneBase()
 {
+
+}
+
+void SceneBase::EndThisScene(bool isPushScene)
+{
+	if (isPushScene)
+	{
+		m_isPushNextScene = isPushScene;
+	}
 	m_isThisSceneEnd = true;
+
 	StartFadeOut();
 }
 
@@ -225,12 +233,17 @@ bool SceneBase::IsSceneEnd()
 	// まだフェードアウト終わってない
 	if (m_fadeAlpha < kBrightMax)	return false;
 
+	if (m_isPushNextScene)
+	{
+		m_isThisSceneEnd = false;
+	}
 
 	ModelManager::GetInstance().Clear();
 	SoundManager::GetInstance().Clear();
 	EffectManager::GetInstance().Clear();
 	MapManager::GetInstance().DeleteModel();
 	TrapManager::GetInstance().Clear();
+
 	return true;
 }
 
@@ -291,6 +304,7 @@ void SceneBase::DrawLoading() const
 void SceneBase::StartFadeIn()
 {
 	m_fadeSpeed = -kFadeSpeed;
+	m_isPushNextScene = false;
 }
 
 /// <summary>
@@ -299,11 +313,7 @@ void SceneBase::StartFadeIn()
 void SceneBase::StartFadeOut()
 {
 	m_fadeSpeed = kFadeSpeed;
-}
 
-const bool SceneBase::GetIsFading() const
-{
-	return (m_fadeAlpha < kBrightMax && m_fadeAlpha > kBrightMin);
 }
 
 /// <summary>

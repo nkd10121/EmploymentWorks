@@ -104,20 +104,20 @@ void SceneSelect::SelectNextSceneUpdate()
 		}
 		else if(m_destinationScene == eDestination::Strengthen)
 		{
-			SceneManager::GetInstance().PushScene(std::make_shared<SceneStrengthen>());
-			EndThisScene();
+			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneStrengthen>());
+			EndThisScene(true);
 			return;
 		}
 		else if (m_destinationScene == eDestination::Option)
 		{
-			SceneManager::GetInstance().PushScene(std::make_shared<SceneOption>());
-			EndThisScene();
+			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneOption>());
+			EndThisScene(true);
 			return;
 		}
 		else if (m_destinationScene == eDestination::Ranking)
 		{
-			SceneManager::GetInstance().PushScene(std::make_shared<SceneRanking>());
-			EndThisScene();
+			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneRanking>());
+			EndThisScene(true);
 			return;
 		}
 		else if (m_destinationScene == eDestination::Quit)

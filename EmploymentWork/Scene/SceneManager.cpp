@@ -43,19 +43,43 @@ bool SceneManager::Update()
 
 	if (m_pScene.back()->IsSceneEnd())
 	{
-		for (auto& s : m_pScene)
+		//次に遷移するシーンが決まっている時
+		if (m_pNextScene != nullptr)
 		{
-			s->End();
+			if (m_pScene.back()->GetIsPushNextScene())
+			{
+				//末尾に追加
+				m_pScene.push_back(m_pNextScene);
+				m_pNextScene.reset();
+				m_pNextScene = nullptr;
+
+				m_pScene.back()->StartLoad();
+			}
+			else
+			{
+				for (auto& s : m_pScene)
+				{
+					s->End();
+				}
+
+				//シーンをリセット
+				m_pScene.clear();
+				//末尾に追加
+				m_pScene.push_back(m_pNextScene);
+				m_pNextScene.reset();
+				m_pNextScene = nullptr;
+
+				m_pScene.back()->StartLoad();
+			}
+		}
+		//次に遷移するシーンが決まっていない時
+		else
+		{
+			PopScene();
+
+			m_pScene.back()->StartFadeIn();
 		}
 
-		//シーンをリセット
-		m_pScene.clear();
-		//末尾に追加
-		m_pScene.push_back(m_pNextScene);
-		m_pNextScene.reset();
-		m_pNextScene = nullptr;
-
-		m_pScene.back()->StartLoad();
 	}
 
 	//基本終了しない

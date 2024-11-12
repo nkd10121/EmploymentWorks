@@ -48,7 +48,7 @@ void SceneOption::SelectNextSceneUpdate()
 	//Bボタンを押したら元のシーンに戻る
 	if (Input::GetInstance().IsTriggered("CANCEL"))
 	{
-		SceneManager::GetInstance().PopScene();
+		EndThisScene();
 		return;
 	}
 }
