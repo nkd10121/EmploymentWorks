@@ -20,6 +20,8 @@ bool SceneStrengthen::IsLoaded() const
 
 void SceneStrengthen::Init()
 {
+	//フェードアウトをスキップする
+	//SkipFadeOut();
 }
 
 void SceneStrengthen::End()
@@ -33,10 +35,16 @@ void SceneStrengthen::Update()
 void SceneStrengthen::Draw()
 {
 #ifdef _DEBUG
-	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
+	DrawFormatString(0, 32, 0xffffff, "%s", GetNowSceneName());
 #endif
 }
 
 void SceneStrengthen::SelectNextSceneUpdate()
 {
+	//Bボタンを押したら元のシーンに戻る
+	if (Input::GetInstance().IsTriggered("CANCEL"))
+	{
+		SceneManager::GetInstance().PopScene();
+		return;
+	}
 }

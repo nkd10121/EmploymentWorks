@@ -20,6 +20,8 @@ bool SceneRanking::IsLoaded() const
 
 void SceneRanking::Init()
 {
+	//フェードアウトをスキップする
+	//SkipFadeOut();
 }
 
 void SceneRanking::End()
@@ -33,10 +35,16 @@ void SceneRanking::Update()
 void SceneRanking::Draw()
 {
 #ifdef _DEBUG
-	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
+	DrawFormatString(0, 32, 0xffffff, "%s", GetNowSceneName());
 #endif
 }
 
 void SceneRanking::SelectNextSceneUpdate()
 {
+	//Bボタンを押したら元のシーンに戻る
+	if (Input::GetInstance().IsTriggered("CANCEL"))
+	{
+		SceneManager::GetInstance().PopScene();
+		return;
+	}
 }

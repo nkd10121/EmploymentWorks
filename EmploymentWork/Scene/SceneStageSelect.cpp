@@ -1,5 +1,7 @@
 ﻿#include "SceneStageSelect.h"
+
 #include "SceneGame.h"
+#include "SceneSelect.h"
 
 SceneStageSelect::SceneStageSelect():
 	SceneBase("SCENE_STAGESELECT")
@@ -45,6 +47,14 @@ void SceneStageSelect::SelectNextSceneUpdate()
 	{
 		//ゲームシーンに遷移する
 		SceneManager::GetInstance().ChangeScene(std::make_shared<SceneGame>());
+		EndThisScene();
+		return;
+	}
+
+	//Bボタンを押したらセレクトシーンに戻る
+	if (Input::GetInstance().IsTriggered("CANCEL"))
+	{
+		SceneManager::GetInstance().ChangeScene(std::make_shared<SceneSelect>());
 		EndThisScene();
 		return;
 	}

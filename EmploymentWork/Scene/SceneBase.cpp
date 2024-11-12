@@ -28,7 +28,8 @@ namespace
 /// </summary>
 SceneBase::SceneBase(std::string name) :
 	m_isInit(false),
-	m_isEnd(false),
+	m_isThisSceneEnd(false),
+	m_isGameEnd(false),
 	m_fadeAlpha(kBrightMax),
 	m_fadeSpeed(0),
 	m_fadeColor(0x000000),
@@ -45,7 +46,7 @@ SceneBase::SceneBase(std::string name) :
 /// </summary>
 void SceneBase::EndThisScene()
 {
-	m_isEnd = true;
+	m_isThisSceneEnd = true;
 	StartFadeOut();
 }
 
@@ -220,7 +221,7 @@ void SceneBase::DrawAll()
 bool SceneBase::IsSceneEnd()
 {
 	// そもそも終わると言っていない
-	if (!m_isEnd)	return false;
+	if (!m_isThisSceneEnd)	return false;
 	// まだフェードアウト終わってない
 	if (m_fadeAlpha < kBrightMax)	return false;
 
@@ -298,6 +299,11 @@ void SceneBase::StartFadeIn()
 void SceneBase::StartFadeOut()
 {
 	m_fadeSpeed = kFadeSpeed;
+}
+
+const bool SceneBase::GetIsFading() const
+{
+	return (m_fadeAlpha < kBrightMax && m_fadeAlpha > kBrightMin);
 }
 
 /// <summary>

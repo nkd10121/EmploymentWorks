@@ -15,7 +15,7 @@ void SceneResult::StartLoad()
 
 bool SceneResult::IsLoaded() const
 {
-	return false;
+	return true;
 }
 
 void SceneResult::Init()

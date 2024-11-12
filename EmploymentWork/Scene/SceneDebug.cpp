@@ -172,11 +172,29 @@ void SceneDebug::SelectNextSceneUpdate()
 			EndThisScene();
 			return;
 		}
+		//強化シーンに遷移する
+		else if (m_destinationScene == eDestination::Strengthen)
+		{
+			SceneManager::GetInstance().PushScene(std::make_shared<SceneStrengthen>());
+			return;
+		}
+		//強化シーンに遷移する
+		else if (m_destinationScene == eDestination::Ranking)
+		{
+			SceneManager::GetInstance().PushScene(std::make_shared<SceneRanking>());
+			return;
+		}
 		//ゲームシーンに遷移する
 		else if (m_destinationScene == eDestination::InGame)
 		{
 			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneGame>());
 			EndThisScene();
+			return;
+		}
+		//ゲームシーンに遷移する
+		else if (m_destinationScene == eDestination::Result)
+		{
+			SceneManager::GetInstance().PushScene(std::make_shared<SceneResult>());
 			return;
 		}
 		//ポーズシーンを上に表示する
@@ -188,7 +206,7 @@ void SceneDebug::SelectNextSceneUpdate()
 		//オプションシーンに遷移する
 		else if (m_destinationScene == eDestination::Option)
 		{
-			SceneManager::GetInstance().ChangeScene(std::make_shared<SceneOption>());
+			SceneManager::GetInstance().PushScene(std::make_shared<SceneOption>());
 			return;
 		}
 	}

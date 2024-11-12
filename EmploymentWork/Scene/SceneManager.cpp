@@ -36,6 +36,11 @@ bool SceneManager::Update()
 	//末尾のみ実行
 	m_pScene.back()->UpdateAll();
 
+	if (m_pScene.back()->GetIsGameEnd())
+	{
+		return true;
+	}
+
 	if (m_pScene.back()->IsSceneEnd())
 	{
 		for (auto& s : m_pScene)
@@ -84,11 +89,6 @@ void SceneManager::ChangeScene(std::shared_ptr<SceneBase> nextScene)
 	else
 	{
 		m_pNextScene = nextScene;
-
-		//既に一つ以上あれば末尾を入れ替える
-		//m_pScene.back()->EndAll();
-		//m_pScene.back() = nextScene;
-		//m_pScene.back()->StartLoad();
 	}
 }
 

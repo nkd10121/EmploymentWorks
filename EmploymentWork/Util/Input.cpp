@@ -43,7 +43,7 @@ Input::Input():
 	m_commandTable["INPUT_DASH"] = { PadCheckMask::B };
 
 	m_commandTable["OK"] = { PadCheckMask::A };
-	m_commandTable["CANSEL"] = { PadCheckMask::B };
+	m_commandTable["CANCEL"] = { PadCheckMask::B };
 
 	m_commandTable["X"] = { PadCheckMask::X };
 	m_commandTable["Y"] = { PadCheckMask::Y };

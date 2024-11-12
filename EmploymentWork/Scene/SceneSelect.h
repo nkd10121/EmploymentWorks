@@ -55,7 +55,6 @@ private:
 		Option,			//オプション
 		Ranking,		//ランキング
 		Quit,			//やめる
-		Return,			//戻る
 
 		Last,
 	};

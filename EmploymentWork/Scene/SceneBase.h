@@ -116,6 +116,18 @@ public:	/*継承を行わない処理	SceneManagerから呼び出すのはこっ
 	/// <returns>true : 終了した, false : そもそも終了する予定がない or フェード中</returns>
 	bool IsSceneEnd();
 
+	/// <summary>
+	/// ゲームを終了する
+	/// </summary>
+	/// <returns></returns>
+	const void SetIsGameEnd() { m_isGameEnd = true; }
+
+	/// <summary>
+	/// ゲームを終了するかどうかを取得
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsGameEnd()const { return m_isGameEnd; }
+
 private:	/*フェード関係*/
 
 	/// <summary>
@@ -133,6 +145,7 @@ private:	/*フェード関係*/
 	/// </summary>
 	void DrawLoading() const;
 
+protected:
 	/// <summary>
 	/// フェードイン開始
 	/// </summary>
@@ -140,11 +153,10 @@ private:	/*フェード関係*/
 	/// <summary>
 	/// フェードアウト開始
 	/// </summary>
-	void StartFadeOut();	
+	void StartFadeOut();
 
+	const bool GetIsFading()const;
 
-
-protected:
 	/// <summary>
 	/// フェードインをスキップする
 	/// </summary>
@@ -162,8 +174,9 @@ protected:
 	const char* GetNowSceneName()const { return m_sceneName.c_str(); }
 
 private:
-	bool m_isInit;	//初期化処理終了判定
-	bool m_isEnd;	//次のシーンに遷移する
+	bool m_isInit;			//初期化処理終了判定
+	bool m_isThisSceneEnd;	//次のシーンに遷移する
+	bool m_isGameEnd;		//ゲームを終了するかどうか
 
 	// フェード関連処理
 	int m_fadeAlpha;	//フェードのアルファ値

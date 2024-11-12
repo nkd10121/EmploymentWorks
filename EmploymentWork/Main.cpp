@@ -59,7 +59,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Effekseer_Sync3DSetting();
 
 		//シーンの更新
-		SceneManager::GetInstance().Update();
+		if (SceneManager::GetInstance().Update())	break;
+
 		//シーンの描画
 		SceneManager::GetInstance().Draw();
 
