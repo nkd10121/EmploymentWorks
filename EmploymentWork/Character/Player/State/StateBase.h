@@ -74,7 +74,7 @@ public:
 	//virtual int OnDamage(std::shared_ptr<MyLib::Collidable> collider) abstract;
 
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	/// <summary>
 	/// 現在のステートのデバッグ描画
 	/// </summary>

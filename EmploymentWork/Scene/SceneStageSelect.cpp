@@ -59,7 +59,7 @@ void SceneStageSelect::Update()
 /// </summary>
 void SceneStageSelect::Draw()
 {
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 #endif
 }

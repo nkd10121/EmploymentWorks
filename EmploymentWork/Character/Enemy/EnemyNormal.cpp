@@ -9,7 +9,7 @@ namespace
 	/*当たり判定用のカプセル関係*/
 	constexpr float kCollisionCapsuleSize = 3.0f;	//カプセルの大きさ
 	constexpr float kCollisionCapsuleRadius = 2.0f;	//カプセルの半径
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	constexpr int kCollisionCapsuleDivNum = 10;		//カプセルの分割数
 #endif
 
@@ -143,7 +143,7 @@ void EnemyNormal::Draw()
 	//モデルを描画
 	MV1DrawModel(m_modelHandle);
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	//ステートパターンの確認
 	m_pState->DebugDrawState(128, 32);
 #endif

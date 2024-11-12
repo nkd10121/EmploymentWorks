@@ -185,7 +185,7 @@ void SceneBase::DrawAll()
 	Draw();
 	DrawFade();
 	DrawLoading();
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 #ifdef TRUE
 	m_drawTime = GetNowHiPerformanceCount() - start;
 

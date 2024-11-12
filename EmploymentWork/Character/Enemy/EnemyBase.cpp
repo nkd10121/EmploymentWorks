@@ -60,7 +60,7 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 			EffectManager::GetInstance().CreateEffect("E_ENEMYHIT",rigidbody->GetPos());
 			//当たった弾の終了処理を呼ぶ
 			col->End();
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 
 #endif
 		}

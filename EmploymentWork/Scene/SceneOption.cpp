@@ -62,7 +62,7 @@ void SceneOption::Update()
 /// </summary>
 void SceneOption::Draw()
 {
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 32, 0xffffff, "%s", GetNowSceneName());
 #endif
 }

@@ -116,7 +116,7 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 
 		m_hp--;
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 		printf("クリスタルにダメージが入りました。\n");
 #endif
 	}

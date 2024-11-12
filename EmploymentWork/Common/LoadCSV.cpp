@@ -105,7 +105,7 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 		}
 	}
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	//情報を取得できなかった時、エラーを吐くようにする
 	//取得できなかった理由想定
 	//①キャラクター名がスペルミスや大文字小文字の違いで異なる
@@ -271,7 +271,7 @@ void LoadCSV::GetCrossbowLocationData(int idx, Vec3& pos, Vec3& rot)
 		index++;
 	}
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	assert(0 && "クロスボウのロケーション情報の取得に失敗しました。");
 #endif
 

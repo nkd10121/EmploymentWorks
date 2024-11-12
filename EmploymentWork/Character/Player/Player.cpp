@@ -214,7 +214,7 @@ void Player::Draw()
 	//クロスボウモデルの描画
 	MV1DrawModel(m_crossbowHandle);
 
-#ifdef _DEBUG	//デバッグ描画
+#ifdef _DEBUG	//デバッグ描画	//デバッグ描画
 	//向いてる方向の線
 	auto target = m_pos + m_cameraDirection * 1000.0f;
 	DrawLine3D(m_pos.ToVECTOR(), target.ToVECTOR(), 0x00ff00);
@@ -276,24 +276,24 @@ void Player::UpdateModelPos()
 /// </summary>
 void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 {
-	//#ifdef _DEBUG
+	//#ifdef _DEBUG	//デバッグ描画
 	//	std::string message = "プレイヤーが";
 	//#endif
 	//	auto tag = colider->GetTag();
 	//	switch (tag)
 	//	{
 	//	case GameObjectTag::Enemy:
-	//#ifdef _DEBUG
+	//#ifdef _DEBUG	//デバッグ描画
 	//		message += "敵";
 	//#endif
 	//		break;
 	//	case GameObjectTag::Portion:
-	//#ifdef _DEBUG
+	//#ifdef _DEBUG	//デバッグ描画
 	//		message += "ポーション";
 	//#endif
 	//		break;
 	//	}
-	//#ifdef _DEBUG
+	//#ifdef _DEBUG	//デバッグ描画
 	//	message += "と当たった！\n";
 	//	printf(message.c_str());
 	//#endif
@@ -304,19 +304,19 @@ void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 /// </summary>
 void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	std::string message = "プレイヤーが";
 #endif
 	auto tag = colider->GetTag();
 	switch (tag)
 	{
 	case GameObjectTag::Enemy:
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 		message += "敵";
 #endif
 		break;
 	case GameObjectTag::Portion:
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 		message += "ポーション";
 #endif
 		//HPが減っているときのみ回復処理を行う
@@ -338,7 +338,7 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 		}
 		break;
 	}
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	message += "と当たった！\n";
 	printf(message.c_str());
 #endif

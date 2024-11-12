@@ -33,7 +33,7 @@ void SoundManager::Load(std::string id, std::string path, bool isBGM, bool isEte
 			if (bgm->path == path)
 			{
 				//何もしない
-#ifdef _DEBUG 
+#ifdef _DEBUG	//デバッグ描画 
 				//念のためエラーを吐くようにする
 				assert(0 && "そのサウンドはすでにロードされています");
 #endif
@@ -61,7 +61,7 @@ void SoundManager::Load(std::string id, std::string path, bool isBGM, bool isEte
 			if (se->path == path)
 			{
 				//何もしない
-#ifdef _DEBUG 
+#ifdef _DEBUG	//デバッグ描画 
 				//指定したパスのサウンドデータがすでにロードされていたらエラーを吐くようにする
 				assert(0 && "そのサウンドはすでにロードされています");
 #endif
@@ -143,7 +143,7 @@ void SoundManager::PlayBGM(std::string id, bool isFromStart)
 	}
 
 	//ここまできたらなにかしらの理由でサウンドを流すのを失敗している
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	assert(0 && "BGMを流すのに失敗しました。");
 	//指定したIDがスペルミスしているか、ロードできていないかが原因
 #endif
@@ -167,7 +167,7 @@ void SoundManager::PlaySE(std::string id)
 	}
 
 	//ここまできたらなにかしらの理由でサウンドを流すのを失敗している
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	assert(0 && "SEを流すのに失敗しました。");
 	//指定したIDがスペルミスしているか、ロードできていないかが原因
 #endif
@@ -236,7 +236,7 @@ bool SoundManager::isPlayingSound(std::string id)
 		}
 	}
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	assert(0 && "指定したIDは存在しません。");
 #endif
 	return false;

@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;			// エラーが起きたら直ちに終了
 	}
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	AllocConsole();                                        // コンソール
 	FILE* out = 0; freopen_s(&out, "CON", "w", stdout); // stdout
 	FILE* in = 0; freopen_s(&in, "CON", "r", stdin);   // stdin
@@ -85,7 +85,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Effkseer_End();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	// コンソール解放
 	fclose(out); fclose(in); FreeConsole();
 #endif

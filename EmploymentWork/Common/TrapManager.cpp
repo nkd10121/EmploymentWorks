@@ -36,7 +36,7 @@ void TrapManager::Update()
 
 void TrapManager::Draw()
 {
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	for (auto& pos : m_traps)
 	{
 		if (pos->isPlaced)

@@ -8,7 +8,7 @@
 
 #include "LoadCSV.h"
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 // 処理負荷計測
 #define DISP_PROCESS
 #endif
@@ -69,7 +69,7 @@ public:	/*派生クラスに継承する必要のある処理*/
 	/// </summary>
 	virtual void SelectNextSceneUpdate() {};
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	// デバッグ表示(最前面表示)
 	virtual void drawDebug() {}
 #endif

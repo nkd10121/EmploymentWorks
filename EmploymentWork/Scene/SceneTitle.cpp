@@ -3,7 +3,7 @@
 
 namespace
 {
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	/*テキスト描画関係*/
 	constexpr int kTextX = 64;			//テキスト描画X座標
 	constexpr int kTextY = 32;			//テキスト描画Y座標
@@ -82,7 +82,7 @@ void SceneTitle::Update()
 /// </summary>
 void SceneTitle::Draw()
 {
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);

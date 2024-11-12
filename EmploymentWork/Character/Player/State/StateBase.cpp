@@ -26,7 +26,7 @@ StateBase::StateBase(std::shared_ptr<CharacterBase> own):
 {
 }
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 /// <summary>
 /// 現在のステートのデバッグ描画
 /// </summary>
@@ -143,7 +143,7 @@ bool StateBase::CheckPlayer()
 {
 	if (m_pOwn.lock()->GetTag() != GameObjectTag::Player)
 	{
-//#ifdef _DEBUG
+//#ifdef _DEBUG	//デバッグ描画
 //		assert(0 && "持ち主がプレイヤーではありません");
 //#endif
 		return false;
@@ -156,7 +156,7 @@ bool StateBase::CheakEnemy()
 {
 	if (m_pOwn.lock()->GetTag() != GameObjectTag::Enemy)
 	{
-//#ifdef _DEBUG
+//#ifdef _DEBUG	//デバッグ描画
 //		assert(0 && "持ち主が敵ではありません");
 //#endif
 		return false;

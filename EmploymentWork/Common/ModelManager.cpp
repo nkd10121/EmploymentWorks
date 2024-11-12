@@ -32,7 +32,7 @@ void ModelManager::Load(std::string id, std::string path, bool isEternal)
 	{
 		if (h.path == path)
 		{
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 			//指定したパスのモデルがすでにロードされていたらエラーを吐くようにする
 			assert(0 && "そのモデルはすでにロードされています");
 #endif
@@ -50,7 +50,7 @@ void ModelManager::Load(std::string id, std::string path, bool isEternal)
 
 	m_handles.emplace_back(add);
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	//モデルのロードに失敗していたらエラーを吐くようにする
 	assert(add.handle != -1 && "モデルのロードに失敗しました");
 #endif
@@ -72,7 +72,7 @@ int ModelManager::GetModelHandle(std::string id)
 	}
 
 	//ここまで来たということはロードされていなかった
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	//念のためassertを仕込んでおく
 	assert(0 && "指定したモデルIDはロードされていません");
 #endif

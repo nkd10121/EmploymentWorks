@@ -109,7 +109,7 @@ void PlayerStateJump::LoopUpdate()
 			m_updateFunc = &PlayerStateJump::DownUpdate;
 		}
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 		//カプセルの描画
 		DrawCapsule3D(modelBottomPos.ToVECTOR(), underPos.ToVECTOR(), 2, 5, 0xcccccc, 0xcccccc, false);
 #endif

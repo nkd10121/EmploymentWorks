@@ -108,7 +108,7 @@ void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 	//もし追加しようとしているエフェクトの名前のハンドルがなければ終わる
 	if (handle == -1)
 	{
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 		assert(0 && "指定したIDのエフェクトは存在しません");
 #endif
 		return;

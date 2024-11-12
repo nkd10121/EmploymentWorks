@@ -19,7 +19,7 @@ void MyLib::DebugDraw::Clear()
 /// </summary>
 void MyLib::DebugDraw::Draw3D()
 {
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	//球体の描画情報リストにある情報分描画する
 	for (auto& sphere : m_sphereInfo)
 	{

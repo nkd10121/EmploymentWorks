@@ -141,7 +141,7 @@ void SceneGame::End()
 /// </summary>
 void SceneGame::Update()
 {
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	MyLib::DebugDraw::Clear();
 #endif
 	////Xボタンを押したらタイトル画面に戻るように
@@ -241,7 +241,7 @@ void SceneGame::Draw()
 	MapManager::GetInstance().Draw();
 	MV1DrawModel(m_stageModel);
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	TrapManager::GetInstance().Draw();
 	MyLib::DebugDraw::Draw3D();
 #endif
@@ -264,7 +264,7 @@ void SceneGame::Draw()
 		object->Draw();
 	}
 
-#ifdef _DEBUG
+#ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 
 	//クロスヘアの描画
