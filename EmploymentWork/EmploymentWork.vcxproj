@@ -48,7 +48,7 @@
     <ClCompile Include="Scene\SceneOption.cpp" />
     <ClCompile Include="Scene\SceneRanking.cpp" />
     <ClCompile Include="Scene\SceneResult.cpp" />
-    <ClCompile Include="Scene\SceneSelect.cpp" />
+    <ClCompile Include="Scene\SceneMainMenu.cpp" />
     <ClCompile Include="Scene\SceneStageSelect.cpp" />
     <ClCompile Include="Scene\SceneStrengthen.cpp" />
     <ClCompile Include="Scene\SceneDebug.cpp" />
@@ -97,7 +97,7 @@
     <ClInclude Include="Scene\SceneOption.h" />
     <ClInclude Include="Scene\SceneRanking.h" />
     <ClInclude Include="Scene\SceneResult.h" />
-    <ClInclude Include="Scene\SceneSelect.h" />
+    <ClInclude Include="Scene\SceneMainMenu.h" />
     <ClInclude Include="Scene\SceneStageSelect.h" />
     <ClInclude Include="Scene\SceneStrengthen.h" />
     <ClInclude Include="Scene\SceneDebug.h" />

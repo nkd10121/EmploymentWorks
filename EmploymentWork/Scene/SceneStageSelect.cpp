@@ -1,7 +1,7 @@
 ﻿#include "SceneStageSelect.h"
 
 #include "SceneGame.h"
-#include "SceneSelect.h"
+#include "SceneMainMenu.h"
 
 /// <summary>
 /// コンストラクタ
@@ -81,7 +81,7 @@ void SceneStageSelect::SelectNextSceneUpdate()
 	//Bボタンを押したらセレクトシーンに戻る
 	if (Input::GetInstance().IsTriggered("CANCEL"))
 	{
-		SceneManager::GetInstance().SetNextScene(std::make_shared<SceneSelect>());
+		SceneManager::GetInstance().SetNextScene(std::make_shared<SceneMainMenu>());
 		EndThisScene();
 		return;
 	}

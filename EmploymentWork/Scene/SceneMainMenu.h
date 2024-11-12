@@ -4,17 +4,17 @@
 /// <summary>
 /// メインメニュー画面
 /// </summary>
-class SceneSelect : public SceneBase
+class SceneMainMenu : public SceneBase
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	SceneSelect();
+	SceneMainMenu();
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~SceneSelect();
+	virtual ~SceneMainMenu();
 
 	/// <summary>
 	/// //リソースのロード開始

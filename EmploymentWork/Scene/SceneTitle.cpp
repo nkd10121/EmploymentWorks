@@ -1,5 +1,5 @@
 ﻿#include "SceneTitle.h"
-#include "SceneSelect.h"
+#include "SceneMainMenu.h"
 
 namespace
 {
@@ -130,7 +130,7 @@ void SceneTitle::SelectNextSceneUpdate()
 		//ゲームシーンに遷移する
 		if (m_destinationScene == eDestination::Select)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneSelect>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneMainMenu>());
 			EndThisScene();
 			return;
 		}

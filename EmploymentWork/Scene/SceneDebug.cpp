@@ -1,7 +1,7 @@
 ﻿#include "SceneDebug.h"
 
 #include "SceneTitle.h"
-#include "SceneSelect.h"
+#include "SceneMainMenu.h"
 #include "SceneStageSelect.h"
 #include "SceneStrengthen.h"
 #include "SceneRanking.h"
@@ -18,7 +18,7 @@ namespace
 	const std::string kSceneName[] =
 	{
 		"SceneTitle",
-		"SceneSelect",
+		"SceneMainMenu",
 		"SceneStageSelect",
 		"SceneStrengthen",
 		"SceneRanking",
@@ -164,7 +164,7 @@ void SceneDebug::SelectNextSceneUpdate()
 		//セレクトシーンに遷移する
 		else if (m_destinationScene == eDestination::Select)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneSelect>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneMainMenu>());
 			EndThisScene();
 			return;
 		}

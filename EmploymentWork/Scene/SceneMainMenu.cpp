@@ -1,4 +1,4 @@
-﻿#include "SceneSelect.h"
+﻿#include "SceneMainMenu.h"
 
 #include "SceneTitle.h"
 #include "SceneStageSelect.h"
@@ -19,29 +19,29 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-SceneSelect::SceneSelect() :
-	SceneBase("SCENE_SELECT")
+SceneMainMenu::SceneMainMenu() :
+	SceneBase("SCENE_MAINMENU")
 {
 }
 
 /// <summary>
 /// デストラクタ
 /// </summary>
-SceneSelect::~SceneSelect()
+SceneMainMenu::~SceneMainMenu()
 {
 }
 
 /// <summary>
 /// //リソースのロード開始
 /// </summary>
-void SceneSelect::StartLoad()
+void SceneMainMenu::StartLoad()
 {
 }
 
 /// <summary>
 /// リソースのロードが終了したかどうか
 /// </summary>
-bool SceneSelect::IsLoaded() const
+bool SceneMainMenu::IsLoaded() const
 {
 	return true;
 }
@@ -49,7 +49,7 @@ bool SceneSelect::IsLoaded() const
 /// <summary>
 /// 初期化
 /// </summary>
-void SceneSelect::Init()
+void SceneMainMenu::Init()
 {
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
 }
@@ -57,21 +57,21 @@ void SceneSelect::Init()
 /// <summary>
 /// 終了
 /// </summary>
-void SceneSelect::End()
+void SceneMainMenu::End()
 {
 }
 
 /// <summary>
 /// 更新
 /// </summary>
-void SceneSelect::Update()
+void SceneMainMenu::Update()
 {
 }
 
 /// <summary>
 /// 描画
 /// </summary>
-void SceneSelect::Draw()
+void SceneMainMenu::Draw()
 {
 #ifdef _DEBUG
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
@@ -90,7 +90,7 @@ void SceneSelect::Draw()
 /// <summary>
 /// 次のシーンを選択する更新処理
 /// </summary>
-void SceneSelect::SelectNextSceneUpdate()
+void SceneMainMenu::SelectNextSceneUpdate()
 {
 	//上を入力したら
 	if (Input::GetInstance().IsTriggered("UP"))

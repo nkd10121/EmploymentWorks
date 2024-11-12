@@ -207,7 +207,7 @@
     <ClCompile Include="Scene\SceneResult.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SceneSelect.cpp">
+    <ClCompile Include="Scene\SceneMainMenu.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene\SceneStageSelect.cpp">
@@ -347,7 +347,7 @@
     <ClInclude Include="Scene\SceneResult.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SceneSelect.h">
+    <ClInclude Include="Scene\SceneMainMenu.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SceneStageSelect.h">

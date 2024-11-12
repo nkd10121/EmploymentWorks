@@ -3,7 +3,7 @@
 #include "SceneGame.h"
 #include "SceneStrengthen.h"
 #include "SceneRanking.h"
-#include "SceneSelect.h"
+#include "SceneMainMenu.h"
 
 namespace
 {
@@ -82,7 +82,7 @@ void SceneResult::Draw()
 	DrawString(kTextX, kTextY + kTextYInterval, "スコア詳細へ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 2, "強化へ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 3, "ランキングへ", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 4, "セレクトに戻る", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 4, "メインメニューに戻る", 0xffffff);
 #endif
 }
 
@@ -151,7 +151,7 @@ void SceneResult::SelectNextSceneUpdate()
 		//セレクトシーンに遷移する
 		else if (m_destinationScene == eDestination::Select)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneSelect>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneMainMenu>());
 			EndThisScene();
 			return;
 		}
