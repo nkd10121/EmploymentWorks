@@ -330,6 +330,8 @@ void MyLib::Physics::CheckColide()
 							{
 								for (auto& col : chacked.second)
 								{
+									if (!isNewPair)break;
+
 									if (col == colA)
 									{
 										isNewPair = false;

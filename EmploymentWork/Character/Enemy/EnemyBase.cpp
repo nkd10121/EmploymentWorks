@@ -26,6 +26,11 @@ EnemyBase::~EnemyBase()
 	MV1DeleteModel(m_modelHandle);
 }
 
+void EnemyBase::SetPos(Vec3 pos)
+{
+	m_drawPos = pos;
+}
+
 /// <summary>
 /// ほかのオブジェクトと衝突したときに呼ばれる
 /// </summary>

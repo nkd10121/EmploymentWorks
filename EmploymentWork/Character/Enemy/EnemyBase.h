@@ -42,6 +42,8 @@ public:
 	/// </summary>
 	virtual void Draw() {};
 
+	void SetPos(Vec3 pos);
+
 	/// <summary>
 	/// 終了(他から呼ぶ)
 	/// </summary>
