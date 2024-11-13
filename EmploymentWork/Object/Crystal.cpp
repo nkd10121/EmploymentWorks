@@ -112,7 +112,7 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 	if (colider->GetTag() == GameObjectTag::Enemy)
 	{
 		EnemyBase* col = dynamic_cast<EnemyBase*>(colider.get());
-		col->End();
+		//col->End();
 
 		m_hp--;
 

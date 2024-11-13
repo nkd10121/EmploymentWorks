@@ -60,9 +60,9 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 
 	//座標を仮決定
 	//TODO:モデルの座標を設定する部分が作れたら削除する
-	m_drawPos.x = static_cast<float>(GetRand(20) - 10);
+	m_drawPos.x = static_cast<float>(GetRand(80) - 40);
 	m_drawPos.y = 8.0f;
-	m_drawPos.z = static_cast<float>(GetRand(20) - 10);
+	m_drawPos.z = static_cast<float>(GetRand(80) - 40);
 
 	//物理データの初期化
 	rigidbody->Init(true);

@@ -111,8 +111,12 @@ void SceneGame::Init()
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
 	//DEBUG:敵を生成
-	m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
-	m_pEnemies.back()->Init(m_pPhysics);
+	for (int i = 0; i < 40; i++)
+	{
+		m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
+		m_pEnemies.back()->Init(m_pPhysics);
+	}
+
 
 
 

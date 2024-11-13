@@ -9,7 +9,8 @@
 #include "TrapManager.h"
 
 //軽量化できてるか比較用
-#define weight_reduction true
+//いろいろ試してみたがこれをtrueにした方が処理時間が増えていた…
+#define weight_reduction false
 
 namespace
 {
@@ -268,7 +269,8 @@ void MyLib::Physics::Update()
 /// </summary>
 void MyLib::Physics::CheckColide()
 {
-	std::vector<OnCollideInfoData> onCollideInfo;
+	int checkNum = 0;
+
 	// 衝突通知、ポジション補正
 	bool	doCheck = true;
 	int		checkCount = 0;	// チェック回数
@@ -279,7 +281,8 @@ void MyLib::Physics::CheckColide()
 
 #if weight_reduction
 		//すでに当たり判定のチェックを試したペアじゃないか確認するための変数
-		std::list<std::pair<std::shared_ptr<MyLib::Collidable>, std::shared_ptr<MyLib::Collidable>>> checkedPair;
+		std::map<std::shared_ptr<MyLib::ColliderBase>, std::list<std::shared_ptr<MyLib::ColliderBase>>> checkedPair;
+		//std::list<std::pair<std::shared_ptr<MyLib::Collidable>, std::shared_ptr<MyLib::Collidable>>> checkedPair;
 #endif
 
 		// 2重ループで全オブジェクト当たり判定
@@ -292,35 +295,63 @@ void MyLib::Physics::CheckColide()
 				if (objA == objB)
 					continue;
 
-#if weight_reduction
-				//最初は新しいペアという認識でいく
-				bool isNewPair = true;
-				//当たり判定チェック済みペアの中に同じ組み合わせのペアが存在しないかチェック
-				for (auto& chacked : checkedPair)
-				{
-					//もし同じ組み合わせのペアが見つかったらこのペアは新しいペアじゃない
-					if (chacked.first == objB && chacked.second == objA)
-					{
-						isNewPair = false;
-					}
-				}
-				//新しいペアじゃないなら早期リターン
-				if (!isNewPair)
-				{
-					continue;
-				}
-
-				//ここに来たということは新しいペア
-				//今回のペアをチェック済みペアとして登録する
-				checkedPair.emplace_back(std::make_pair(objA, objB));
-
-#endif
-
 				for (const auto& colA : objA->m_colliders)
 				{
 					for (const auto& colB : objB->m_colliders)
 					{
+#if true
+						//オブジェクト間の距離が一定以上であればそもそも計算しない
+						//MEMO:処理が軽くなるか今のところ分かっていない。たくさんオブジェクトが出るようになれば変わるのかな。
+						//これは結構効果ありそう
+						auto le = (Abs(objA->rigidbody->GetNextPos() - objB->rigidbody->GetNextPos())).Length();
+						if (le >= 10.0f)
+						{
+#ifdef _DEBUG
+							//printf("当たり判定計算省略\n");
+#endif
+							continue;
+						}
+#ifdef _DEBUG
+						else
+						{
+							//printf("オブジェクト間の距離:%f\n", le);
+						}
+#endif
+#endif
+
+#if weight_reduction
+						//最初は新しいペアという認識でいく
+						bool isNewPair = true;
+						//当たり判定チェック済みペアの中に同じ組み合わせのペアが存在しないかチェック
+						for (auto& chacked : checkedPair)
+						{
+							//もし同じ組み合わせのペアが見つかったらこのペアは新しいペアじゃない
+							if (chacked.first == colB)
+							{
+								for (auto& col : chacked.second)
+								{
+									if (col == colA)
+									{
+										isNewPair = false;
+									}
+								}
+
+							}
+						}
+						//新しいペアじゃないなら早期リターン
+						if (!isNewPair)
+						{
+							continue;
+						}
+						//ここに来たということは新しいペア
+						//今回のペアをチェック済みペアとして登録する
+						checkedPair[colA].emplace_back(colB);
+#endif
+
+						checkNum++;
+
 						if (!IsCollide(objA->rigidbody, objB->rigidbody, colA.get(), colB.get())) continue;
+
 
 						bool isTrigger = colA->IsTrigger() || colB->IsTrigger();
 
@@ -373,6 +404,8 @@ void MyLib::Physics::CheckColide()
 			break;
 		}
 	}
+
+	printf("チェック回数:%d\n",checkNum);
 }
 
 /// <summary>
@@ -385,24 +418,8 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 	auto kindA = colliderA->GetKind();
 	auto kindB = colliderB->GetKind();
 
-#if weight_reduction
-	//オブジェクト間の距離が一定以上であればそもそも計算しない
-	//MEMO:処理が軽くなるか今のところ分かっていない。たくさんオブジェクトが出るようになれば変わるのかな。
-	auto le = (Abs(rigidA->GetNextPos() - rigidB->GetNextPos())).Length();
-	if (le >= 25.0f)
-	{
-#ifdef _DEBUG
-		printf("当たり判定計算省略\n");
-#endif
-		return false;
-	}
-#ifdef _DEBUG
-	else
-	{
-		printf("オブジェクト間の距離:%f\n", le);
-	}
-#endif
-#endif
+
+
 
 	if (kindA == MyLib::ColliderBase::Kind::Sphere && kindB == MyLib::ColliderBase::Kind::Sphere)
 	{

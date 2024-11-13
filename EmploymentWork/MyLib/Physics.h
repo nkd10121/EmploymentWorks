@@ -174,8 +174,8 @@ private:
 	// 線分とポリゴンとの当たり判定の結果を代入する構造体
 	HITRESULT_LINE m_lineRes{};
 
-
-	std::map<int,Vec3> test;
+	/*デバッグ用*/
+	int m_checkCount = 0;
 };
 
 }
