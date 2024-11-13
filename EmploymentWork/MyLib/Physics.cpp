@@ -125,8 +125,6 @@ void MyLib::Physics::Update()
 	m_newTirrigerInfo.clear();
 	m_onCollideInfo.clear();
 
-	Vec3 debug;
-
 	// 移動
 	for (auto& item : m_collidables)
 	{
@@ -145,12 +143,6 @@ void MyLib::Physics::Update()
 				velocity = Vec3(velocity.x, kMaxGravityAccel, velocity.z);
 			}
 		}
-
-		if (item->GetTag() == GameObjectTag::Player)
-		{
-			debug = velocity;
-		}
-
 		auto nextPos = pos + velocity;
 
 		item->rigidbody->SetVelocity(velocity);
@@ -268,8 +260,6 @@ void MyLib::Physics::Update()
 			info.own->OnTriggerExit(info.send);
 		}
 	}
-
-	DrawFormatString(0, 64, 0xff0000, "%f,%f,%f", debug.x, debug.y, debug.z);
 }
 
 /// <summary>

@@ -45,7 +45,7 @@
     <ClCompile Include="MyLib\Rigidbody.cpp" />
     <ClCompile Include="Character\Player\State\PlayerStateJump.cpp" />
     <ClCompile Include="Character\Player\State\PlayerStateDash.cpp" />
-    <ClCompile Include="PlayerStateDeath.cpp" />
+    <ClCompile Include="Character\Player\State\PlayerStateDeath.cpp" />
     <ClCompile Include="Scene\SceneOption.cpp" />
     <ClCompile Include="Scene\SceneRanking.cpp" />
     <ClCompile Include="Scene\SceneResult.cpp" />
@@ -95,7 +95,7 @@
     <ClInclude Include="MyLib\Rigidbody.h" />
     <ClInclude Include="Character\Player\State\PlayerStateJump.h" />
     <ClInclude Include="Character\Player\State\PlayerStateDash.h" />
-    <ClInclude Include="PlayerStateDeath.h" />
+    <ClInclude Include="Character\Player\State\PlayerStateDeath.h" />
     <ClInclude Include="Scene\SceneOption.h" />
     <ClInclude Include="Scene\SceneRanking.h" />
     <ClInclude Include="Scene\SceneResult.h" />

@@ -8,7 +8,10 @@
 #include "LoadCSV.h"
 #include <memory>
 
+#ifdef _DEBUG
 #include "SceneDebug.h"
+#endif
+#include "SceneTitle.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -47,8 +50,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
+#ifdef _DEBUG
 	//最初にタイトルシーンに遷移する
 	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneDebug>());
+#else
+	//最初にタイトルシーンに遷移する
+	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneTitle>());
+#endif
 
 	while (ProcessMessage() == 0)
 	{

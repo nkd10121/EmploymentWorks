@@ -9,8 +9,8 @@ namespace
 	/*当たり判定用のカプセル関係*/
 	constexpr float kCollisionCapsuleSize = 3.0f;	//カプセルの大きさ
 	constexpr float kCollisionCapsuleRadius = 2.0f;	//カプセルの半径
-#ifdef _DEBUG	//デバッグ描画
 	constexpr int kCollisionCapsuleDivNum = 10;		//カプセルの分割数
+#ifdef _DEBUG	//デバッグ描画
 #endif
 
 	/*モデル関係*/

@@ -214,8 +214,9 @@ void Player::Update(SceneGame* pScene)
 		m_status.hp -= 10;
 	}
 
+#ifdef _DEBUG
 	printf("プレイヤーHP:%d\n", m_status.hp);
-
+#endif
 	if (m_status.hp <= 0 && !m_isDeath)
 	{
 		m_isDeath = true;

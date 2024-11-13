@@ -111,8 +111,9 @@ void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
 
 	float defaultLength = 100.0f;
 
+#ifdef _DEBUG
 	DrawCube3D(start.ToVECTOR(), end.ToVECTOR(), 0xff0000, 0xff0000, false);
-
+#endif
 	//startとendを始点終点とした四角形との当たり判定をまずとる
 
 	auto hit = CheckHitBoundingBoxAndPoints(start, end, m_traps);
