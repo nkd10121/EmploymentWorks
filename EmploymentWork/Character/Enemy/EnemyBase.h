@@ -69,8 +69,7 @@ public:
 protected:
 	EnemyKind kind;		//種類
 	bool m_isExist;		//存在フラグ
-
-	int m_modelHandle;	//モデルハンドル
+	bool m_isStartDeathAnimation;	//死亡アニメーションを開始するか
 
 	Vec3 m_drawPos;		//描画座標
 

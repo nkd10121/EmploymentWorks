@@ -166,24 +166,30 @@ void Player::Update(SceneGame* pScene)
 	}
 
 
+	//ZLボタンを押している
 	if (Input::GetInstance().GetIsPushedTriggerButton(true))
 	{
+		//一定間隔で向いている方向に弾を撃つ
 		if (m_attackButtonPushCount % 20 == 0)
 		{
 			std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
 			shot->Init(m_pPhysics.lock());
 			shot->Set(m_pos, m_cameraDirection, m_status.atk);
 
+			//弾の管理をゲームシーンに任せる
 			pScene->AddObject(shot);
 		}
 
+		//押しているカウントを更新
 		m_attackButtonPushCount++;
 	}
 	else
 	{
+		//押していないときは0にする
 		m_attackButtonPushCount = 0;
 	}
 
+	//スロットの選択
 	if (Input::GetInstance().IsTriggered("RB"))
 	{
 
@@ -193,6 +199,8 @@ void Player::Update(SceneGame* pScene)
 
 	}
 
+
+	//足元座標を計算
 	auto bottomPos = m_pos;
 	bottomPos.y -= kCollisionCapsuleSize + kCollisionCapsuleRadius;
 	if (m_cameraDirection.y < 0.0f)
@@ -203,13 +211,14 @@ void Player::Update(SceneGame* pScene)
 	{
 		bottomPos.y -= 1.0f;
 	}
-
+	//足元座標を使ってトラップ設置位置の選択と設置
 	TrapManager::GetInstance().SelectPoint(bottomPos, m_cameraDirection);
 	if (Input::GetInstance().IsTriggered("Y"))
 	{
 		TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection,0);
 	}
 
+	//DEBUG:自決用
 	if (Input::GetInstance().IsTriggered("X"))
 	{
 		m_status.hp -= 10;
@@ -218,21 +227,28 @@ void Player::Update(SceneGame* pScene)
 #ifdef _DEBUG
 	printf("プレイヤーHP:%d\n", m_status.hp);
 #endif
+	//HPが0以下かつ死亡アニメーションを開始していなかったら
 	if (m_status.hp <= 0 && !m_isStartDeathAnimation)
 	{
+		//当たり判定を削除して
 		Collidable::Finalize(m_pPhysics.lock());
 
+		//死亡アニメーションを開始する
 		m_isStartDeathAnimation = true;
 
+		//現在のステートを強制的に死亡にする
 		m_pState = std::make_shared<PlayerStateDeath>(std::dynamic_pointer_cast<Player>(shared_from_this()));
 		m_pState->SetNextKind(StateBase::StateKind::Death);
 		m_pState->Init();
 	}
 
+	//死亡アニメーションが始まっていて
 	if (m_isStartDeathAnimation)
 	{
+		//死亡アニメーションが終了したら
 		if (GetAnimEnd())
 		{
+			//完全に死亡したものとする
 			m_isDeath = true;
 		}
 	}

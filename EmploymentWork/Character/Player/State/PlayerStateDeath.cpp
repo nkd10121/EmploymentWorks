@@ -10,7 +10,7 @@ PlayerStateDeath::PlayerStateDeath(std::shared_ptr<CharacterBase> own):
 	m_nowState = StateKind::Death;
 
 	//アニメーションを変える
-	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "DEATH_A"));
+	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "DEATH_A"));
 }
 
 PlayerStateDeath::~PlayerStateDeath()

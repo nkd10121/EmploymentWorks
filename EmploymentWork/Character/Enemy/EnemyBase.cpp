@@ -11,7 +11,7 @@ EnemyBase::EnemyBase():
 	CharacterBase(Collidable::Priority::Middle, GameObjectTag::Enemy),
 	kind(),
 	m_isExist(false),
-	m_modelHandle(-1),
+	m_isStartDeathAnimation(false),
 	m_drawPos(),
 	m_hitObjectTag()
 {

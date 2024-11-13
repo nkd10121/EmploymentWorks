@@ -111,12 +111,12 @@ void SceneGame::Init()
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
 	//DEBUG:敵を生成
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 6; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < 6; j++)
 		{
 			m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
-			m_pEnemies.back()->SetPos(Vec3(-48.0f + 12 * i,8.0f, -48.0f + 12 * j));
+			m_pEnemies.back()->SetPos(Vec3(-48.0f + 16 * i,8.0f, -48.0f + 16 * j));
 			m_pEnemies.back()->Init(m_pPhysics);
 		}
 	}
@@ -194,10 +194,6 @@ void SceneGame::Update()
 	for (auto& enemy : m_pEnemies)
 	{
 		enemy->Update();
-		if (!enemy->GetIsExist())
-		{
-			enemy->Finalize();
-		}
 	}
 	//isExistがfalseのオブジェクトを削除
 	{

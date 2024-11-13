@@ -1,5 +1,6 @@
 ﻿#include "EnemyNormal.h"
 #include "EnemyStateIdle.h"
+#include "EnemyStateDeath.h"
 
 #include "LoadCSV.h"
 #include "ModelManager.h"
@@ -15,6 +16,12 @@ namespace
 
 	/*モデル関係*/
 	constexpr float kModelScale = 0.018f;		//モデルサイズ
+
+	/*アニメーション関係*/
+	constexpr float kAnimChangeFrame = 10.0f;							//アニメーションの切り替えにかかるフレーム数
+	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;		//1フレーム当たりのアニメーション切り替えが進む速さ
+	constexpr float kAnimBlendRateMax = 1.0f;							//アニメーションブレンド率の最大
+
 }
 
 /// <summary>
@@ -29,10 +36,8 @@ EnemyNormal::EnemyNormal():
 	sphereCol->m_radius = kCollisionCapsuleRadius;		
 	sphereCol->m_size = kCollisionCapsuleSize;
 
-	//モデルハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_ENEMYNORMAL");
-	//モデルのサイズを変更
-	MV1SetScale(m_modelHandle,VGet(kModelScale, kModelScale, kModelScale));
+	//キャラクター名を設定
+	m_characterName = "EnemyNormal";
 }
 
 /// <summary>
@@ -62,6 +67,16 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 	rigidbody->Init(true);
 	rigidbody->SetPos(m_drawPos);
 	rigidbody->SetNextPos(rigidbody->GetPos());
+
+	//モデルハンドルを取得
+	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_ENEMYNORMAL");
+	//モデルのサイズを変更
+	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
+
+	//待機アニメーションを設定
+	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "IDLE"));
+	m_preAnimIdx = 0;
+	m_nowAnimIdx = 0;
 
 	//プレイヤーのステータス取得
 	m_status = LoadCSV::GetInstance().LoadStatus("EnemyNormal");
@@ -99,10 +114,42 @@ void EnemyNormal::Update()
 	//ステートの更新
 	m_pState->Update();
 
-	//HPが0になったら自身を削除する
-	if (m_status.hp <= 0)
+	//アニメーションが終了したかどうかを取得
+	m_isAnimationFinish = UpdateAnim(m_currentAnimNo);
+
+	//アニメーションの切り替え
+	if (m_prevAnimNo != -1)
 	{
-		m_isExist = false;
+		//フレームでアニメーションを切り替える
+		m_animBlendRate += kAnimChangeRateSpeed;
+		if (m_animBlendRate >= kAnimBlendRateMax)
+		{
+			m_animBlendRate = kAnimBlendRateMax;
+		}
+
+		//アニメーションのブレンド率を設定する
+		MV1SetAttachAnimBlendRate(m_modelHandle, m_prevAnimNo, kAnimBlendRateMax - m_animBlendRate);
+		MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
+	}
+
+	//HPが0になったら自身を削除する
+	if (m_status.hp <= 0 && !m_isStartDeathAnimation)
+	{
+		Finalize();
+
+		m_isStartDeathAnimation = true;
+
+		m_pState = std::make_shared<EnemyStateDeath>(std::dynamic_pointer_cast<EnemyNormal>(shared_from_this()));
+		m_pState->SetNextKind(StateBase::StateKind::Death);
+		m_pState->Init();
+	}
+
+	if (m_isStartDeathAnimation)
+	{
+		if (GetAnimEnd())
+		{
+			m_isExist = false;
+		}
 	}
 
 	//モデルの描画座標を設定
@@ -126,11 +173,6 @@ void EnemyNormal::Draw()
 	//FIX:Drawのなかで座標を変更しているのはどうなの？
 	rigidbody->SetPos(rigidbody->GetNextPos());
 	m_drawPos = rigidbody->GetPos();
-
-	//プレイヤー想定のカプセル
-	VECTOR low = VGet(m_drawPos.x, m_drawPos.y - kCollisionCapsuleSize, m_drawPos.z);
-	VECTOR high = VGet(m_drawPos.x, m_drawPos.y + kCollisionCapsuleSize, m_drawPos.z);
-	DrawCapsule3D(low, high, kCollisionCapsuleRadius, kCollisionCapsuleDivNum, 0xffffff, 0xffffff, false);
 
 	//モデルを描画
 	MV1DrawModel(m_modelHandle);

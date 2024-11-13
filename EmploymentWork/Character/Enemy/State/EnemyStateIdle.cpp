@@ -30,10 +30,7 @@ void EnemyStateIdle::Update()
 	//2秒経過したら歩き状態にする
 	if (temp_frame >= 120)
 	{
-		std::shared_ptr<EnemyStateWalk> pNext = std::make_shared<EnemyStateWalk>(m_pOwn.lock());
-		pNext->Init();
-		m_nextState = StateKind::Walk;
-
+		ChangeState(StateKind::Walk);
 		return;
 	}
 
