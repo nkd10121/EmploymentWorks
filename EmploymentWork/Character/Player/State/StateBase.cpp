@@ -33,7 +33,6 @@ StateBase::~StateBase()
 {
 }
 
-#ifdef _DEBUG	//デバッグ描画
 std::shared_ptr<StateBase> StateBase::GetNextScenePointer()
 {
 	std::shared_ptr<StateBase> ret;
@@ -72,6 +71,7 @@ std::shared_ptr<StateBase> StateBase::GetNextScenePointer()
 	}
 }
 
+#ifdef _DEBUG	//デバッグ描画
 /// <summary>
 /// 現在のステートのデバッグ描画
 /// </summary>
@@ -162,9 +162,6 @@ void StateBase::ChangeState(StateKind kind)
 		}
 		else if (kind == StateKind::Dash)
 		{
-			std::shared_ptr<PlayerStateDash> pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
-			pNext->Init();
-
 			m_nextState = kind;
 
 			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "RUN_FORWARD"));
@@ -172,9 +169,6 @@ void StateBase::ChangeState(StateKind kind)
 		}
 		else if (kind == StateKind::Jump)
 		{
-			std::shared_ptr<PlayerStateJump> pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
-			pNext->Init();
-
 			m_nextState = kind;
 
 			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "JUMP_UP"),0.75f);
