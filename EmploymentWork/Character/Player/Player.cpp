@@ -55,6 +55,7 @@ Player::Player() :
 	m_cameraAngle(0.0f),
 	m_angle(0.0f),
 	m_attackButtonPushCount(0),
+	m_isStartDeathAnimation(false),
 	m_isDeath(false)
 {
 	//当たり判定の生成
@@ -154,7 +155,7 @@ void Player::Update(SceneGame* pScene)
 	}
 
 
-	if (!m_isDeath)
+	if (!m_isStartDeathAnimation)
 	{
 		//カメラの座標からプレイヤーを回転させる方向を計算する
 		m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
@@ -217,13 +218,30 @@ void Player::Update(SceneGame* pScene)
 #ifdef _DEBUG
 	printf("プレイヤーHP:%d\n", m_status.hp);
 #endif
-	if (m_status.hp <= 0 && !m_isDeath)
+	if (m_status.hp <= 0 && !m_isStartDeathAnimation)
 	{
-		m_isDeath = true;
+		Collidable::Finalize(m_pPhysics.lock());
+
+		m_isStartDeathAnimation = true;
 
 		m_pState = std::make_shared<PlayerStateDeath>(std::dynamic_pointer_cast<Player>(shared_from_this()));
 		m_pState->SetNextKind(StateBase::StateKind::Death);
 		m_pState->Init();
+	}
+
+	if (m_isStartDeathAnimation)
+	{
+		if (GetAnimEnd())
+		{
+			m_isDeath = true;
+		}
+	}
+
+	//バグなどで地面をすり抜けて落下時の対策
+	if (m_pos.y <= -100.0f)
+	{
+		Collidable::Finalize(m_pPhysics.lock());
+		m_isDeath = true;
 	}
 }
 

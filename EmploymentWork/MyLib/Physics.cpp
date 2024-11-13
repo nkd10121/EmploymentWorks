@@ -8,7 +8,8 @@
 #include "ModelManager.h"
 #include "TrapManager.h"
 
-//using namespace MyLib;
+//軽量化できてるか比較用
+#define weight_reduction true
 
 namespace
 {
@@ -276,8 +277,10 @@ void MyLib::Physics::CheckColide()
 		doCheck = false;
 		++checkCount;
 
+#if weight_reduction
 		//すでに当たり判定のチェックを試したペアじゃないか確認するための変数
 		std::list<std::pair<std::shared_ptr<MyLib::Collidable>, std::shared_ptr<MyLib::Collidable>>> checkedPair;
+#endif
 
 		// 2重ループで全オブジェクト当たり判定
 		// 中で同一オブジェクトじゃないか、すでにチェックしたペアと同じ組み合わせの当たり判定チェックをしていないか、比較するオブジェクト間の距離が一定距離以上じゃないか　判別したうえで計算している
@@ -289,6 +292,7 @@ void MyLib::Physics::CheckColide()
 				if (objA == objB)
 					continue;
 
+#if weight_reduction
 				//最初は新しいペアという認識でいく
 				bool isNewPair = true;
 				//当たり判定チェック済みペアの中に同じ組み合わせのペアが存在しないかチェック
@@ -309,6 +313,8 @@ void MyLib::Physics::CheckColide()
 				//ここに来たということは新しいペア
 				//今回のペアをチェック済みペアとして登録する
 				checkedPair.emplace_back(std::make_pair(objA, objB));
+
+#endif
 
 				for (const auto& colA : objA->m_colliders)
 				{
@@ -379,6 +385,7 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 	auto kindA = colliderA->GetKind();
 	auto kindB = colliderB->GetKind();
 
+#if weight_reduction
 	//オブジェクト間の距離が一定以上であればそもそも計算しない
 	//MEMO:処理が軽くなるか今のところ分かっていない。たくさんオブジェクトが出るようになれば変わるのかな。
 	auto le = (Abs(rigidA->GetNextPos() - rigidB->GetNextPos())).Length();
@@ -394,6 +401,7 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 	{
 		printf("オブジェクト間の距離:%f\n", le);
 	}
+#endif
 #endif
 
 	if (kindA == MyLib::ColliderBase::Kind::Sphere && kindB == MyLib::ColliderBase::Kind::Sphere)
@@ -530,7 +538,7 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 		//正規化して方向ベクトルにする
 		nearPosToNearPos = nearPosToNearPos.Normalize();
 		//離す距離を計算(カプセルと級の半径を足した距離+余分)
-		auto awayDist = colA->m_radius + colB->m_radius + 0.1f;
+		auto awayDist = colA->m_radius + colB->m_radius + 0.2f;
 		//最近接点の修正座標を計算
 		auto fixedNearPos = nearPosOnALine + nearPosToNearPos * awayDist;
 
@@ -538,6 +546,7 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 		auto nearPosToCenterB = colBCenter - nearPosOnBLine;
 
 		auto fixedPos = fixedNearPos + nearPosToCenterB;
+		fixedPos.y = secondaryRigid->GetPos().y;
 		//修正座標を設定
 		secondaryRigid->SetNextPos(fixedPos);
 	}

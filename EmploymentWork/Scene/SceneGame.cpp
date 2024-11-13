@@ -110,9 +110,9 @@ void SceneGame::Init()
 	m_pObjects.back()->Init(m_pPhysics);
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
-	////DEBUG:敵を生成
-	//m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
-	//m_pEnemies.back()->Init(m_pPhysics);
+	//DEBUG:敵を生成
+	m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
+	m_pEnemies.back()->Init(m_pPhysics);
 
 
 
@@ -175,6 +175,12 @@ void SceneGame::Update()
 	//プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
 	m_pPlayer->Update(this);
+	if (m_pPlayer->GetIsDeath())
+	{
+		//プレイヤーの生成
+		m_pPlayer = std::make_shared<Player>();
+		m_pPlayer->Init(m_pPhysics);
+	}
 
 	//敵の更新
 	for (auto& enemy : m_pEnemies)

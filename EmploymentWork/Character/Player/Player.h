@@ -67,6 +67,11 @@ public:
 	/// <returns>当たり判定のカプセルの半径</returns>
 	const float GetCollisionRadius()const { return m_collisionRadius; }
 
+	/// <summary>
+	/// プレイヤーが死亡したかどうかを取得
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsDeath()const { return m_isDeath; }
 
 	/// <summary>
 	/// 押し出し処理を行うオブジェクトと衝突したとき
@@ -98,6 +103,7 @@ private:
 
 	int m_attackButtonPushCount;
 
+	bool m_isStartDeathAnimation;
 	bool m_isDeath;
 };
 

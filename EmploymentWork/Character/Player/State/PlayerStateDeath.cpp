@@ -23,4 +23,10 @@ void PlayerStateDeath::Init()
 
 void PlayerStateDeath::Update()
 {
+	//持っているキャラクターベースクラスをプレイヤークラスにキャストする(ダウンキャスト)
+	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
+
+	//プレイヤーの速度を0にする(重力の影響を受けながら)
+	auto prevVel = own->GetRigidbody()->GetVelocity();
+	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 }
