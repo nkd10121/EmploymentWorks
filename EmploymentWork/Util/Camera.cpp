@@ -178,14 +178,13 @@ void Camera::Update()
 #else
 	// ステージと注視座標からカメラ座標の線分の当たり判定をとる
 	auto hitDim = MV1CollCheck_LineDim(m_stageHandle, -1, m_aimPos.ToVECTOR(), m_cameraPos.ToVECTOR());
-	// 検出した周囲のポリゴン情報を開放する
-	MV1CollResultPolyDimTerminate(hitDim);
+
 
 	//ステージと線分が当たっていたら
 	if (hitDim.HitNum > 0)
 	{
 		//注視座標と1個目の当たった座標の距離を計算する
-		float maxLength = (Vec3(hitDim.Dim[0].HitPosition) - m_aimPos).Length();
+		float minLength = (Vec3(hitDim.Dim[0].HitPosition) - m_aimPos).Length();
 
 		//もし当たった数が2個以上ある場合
 		if (hitDim.HitNum > 1)
@@ -196,16 +195,19 @@ void Camera::Update()
 				//注視座標と当たった座標の距離を計算する
 				auto length = (Vec3(hitDim.Dim[i].HitPosition) - m_aimPos).Length();
 
-				//もし今までの距離より長ければ保存する
-				if (maxLength < length)
+				//もし今までの距離より短ければ保存する
+				if (minLength > length)
 				{
-					maxLength = length;
+					minLength = length;
 				}
 			}
 		}
 
+		// 検出した周囲のポリゴン情報を開放する
+		MV1CollResultPolyDimTerminate(hitDim);
+
 		//長さを補正する強さにする(そのままの値だとカメラがめり込んでしまうため少し縮める)
-		auto fixPower = maxLength * 0.8f;
+		auto fixPower = minLength * 0.8f;
 
 		//注視座標からカメラ座標に向かう方向ベクトルを作る
 		auto aimPosToCameraPos = m_cameraPos - m_aimPos;
