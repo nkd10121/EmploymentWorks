@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "CharacterBase.h"
-#include "StateBase.h"
 
 /// <summary>
 /// 敵の基底クラス
@@ -61,6 +60,11 @@ public:
 	virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
 
 	/// <summary>
+	/// 3Dモデルの座標更新
+	/// </summary>
+	virtual void UpdateModelPos() {};
+
+	/// <summary>
 	/// 存在フラグを取得
 	/// </summary>
 	/// <returns>存在フラグ</returns>
@@ -74,7 +78,4 @@ protected:
 	Vec3 m_drawPos;		//描画座標
 
 	GameObjectTag m_hitObjectTag;	//あったオブジェクトタグ
-
-	std::shared_ptr<StateBase> m_pState;	//Stateパターン
-
 };

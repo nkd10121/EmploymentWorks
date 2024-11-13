@@ -229,6 +229,11 @@ void SceneGame::Update()
 	//モデル座標の更新
 	m_pPlayer->UpdateModelPos();
 
+	for (auto& enemy : m_pEnemies)
+	{
+		enemy->UpdateModelPos();
+	}
+
 	//カメラの更新
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
 	m_pCamera->Update();

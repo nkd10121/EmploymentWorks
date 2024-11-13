@@ -4,6 +4,8 @@
 #include <memory>
 #include <string>
 
+#include "StateBase.h"
+
 /// <summary>
 /// ゲーム内のキャラクターの基底クラス
 /// </summary>
@@ -37,7 +39,6 @@ public:
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
 	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider) = 0;
-
 
 	/// <summary>
 	/// 自身の現在のHPを取得
@@ -74,6 +75,16 @@ public:
 	/// </summary>
 	/// <returns>キャラクター名</returns>
 	const std::string GetCharacterName()const { return m_characterName; }
+public:		/*継承先のクラスで呼ぶ関数*/
+	/// <summary>
+	/// 前のフレームとStateを比較して違うStateだったら変更する
+	/// </summary>
+	void ChangeState();
+
+	/// <summary>
+	/// アニメーションの切り替え
+	/// </summary>
+	void AnimationBlend();
 public:
 	/// <summary>
 	/// アニメーションの更新
@@ -112,5 +123,8 @@ protected:
 
 	float m_animSpeed;			//アニメーション再生速度
 	bool m_isAnimationFinish;	//アニメーションが終わったかどうか
+
+	std::shared_ptr<StateBase> m_pState;	//Stateパターン
+
 };
 

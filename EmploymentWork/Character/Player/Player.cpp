@@ -86,10 +86,13 @@ Player::~Player()
 /// </summary>
 void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 {
+	//物理クラスを取得
 	m_pPhysics = physics;
 
+	//当たり判定の初期化
 	Collidable::Init(physics);
 
+	//ステートパターンの初期化
 	m_pState = std::make_shared<PlayerStateIdle>(std::dynamic_pointer_cast<Player>(shared_from_this()));
 	m_pState->SetNextKind(StateBase::StateKind::Idle);
 	m_pState->Init();
@@ -105,12 +108,12 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 
 	//待機アニメーションを設定
-	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx("Player", "IDLE"));
+	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "IDLE"));
 	m_preAnimIdx = 0;
 	m_nowAnimIdx = 0;
 
 	//プレイヤーのステータス取得
-	m_status = LoadCSV::GetInstance().LoadStatus("Player");
+	m_status = LoadCSV::GetInstance().LoadStatus(m_characterName.c_str());
 	//最大HPを設定しておく
 	m_hpMax = m_status.hp;
 
@@ -118,8 +121,6 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	m_crossbowHandle = ModelManager::GetInstance().GetModelHandle("M_CROSSBOW");
 	//スケールの変更
 	MV1SetScale(m_crossbowHandle, VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
-
-
 }
 
 /// <summary>
@@ -127,34 +128,17 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 /// </summary>
 void Player::Update(SceneGame* pScene)
 {
-	//前のフレームとStateを比較して違うStateだったら
-	if (m_pState->GetNextKind() != m_pState->GetKind())
-	{
-		//Stateを変更する
-		m_pState = m_pState->GetNextScenePointer();
-	}
-
+	//ステータスの変更
+	ChangeState();
 	//ステートの更新
 	m_pState->Update();
 
+	//アニメーションの更新
 	m_isAnimationFinish = UpdateAnim(m_currentAnimNo);
+	//アニメーションブレンド
+	AnimationBlend();
 
-	//アニメーションの切り替え
-	if (m_prevAnimNo != -1)
-	{
-		//フレームでアニメーションを切り替える
-		m_animBlendRate += kAnimChangeRateSpeed;
-		if (m_animBlendRate >= kAnimBlendRateMax)
-		{
-			m_animBlendRate = kAnimBlendRateMax;
-		}
-
-		//アニメーションのブレンド率を設定する
-		MV1SetAttachAnimBlendRate(m_modelHandle, m_prevAnimNo, kAnimBlendRateMax - m_animBlendRate);
-		MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
-	}
-
-
+	//死んでいなかったらカメラが向いている方向を正面とする
 	if (!m_isStartDeathAnimation)
 	{
 		//カメラの座標からプレイヤーを回転させる方向を計算する
@@ -308,24 +292,34 @@ void Player::UpdateModelPos()
 	Vec3 preLocalPos;
 	Vec3 preLocalRot;
 
+	//直前のアニメーションと現在のアニメーションのクロスボウのローカル座標とローカル回転を取得
 	LoadCSV::GetInstance().GetCrossbowLocationData(m_nowAnimIdx, nowLocalPos, nowLocalRot);
 	LoadCSV::GetInstance().GetCrossbowLocationData(m_preAnimIdx, preLocalPos, preLocalRot);
 
+	//直前のアニメーションと現在のアニメーションとアニメーションブレンド率からローカル回転を計算する
 	auto weaponRot = preLocalRot + (nowLocalRot - preLocalRot) * m_animBlendRate;
 
+	//floatからそれぞれの軸回転行列を取得する
 	auto xMat = MGetRotX(weaponRot.x);
 	auto yMat = MGetRotY(weaponRot.y);
 	auto zMat = MGetRotZ(weaponRot.z);
 
+	//ローカル座標を座標行列にする
 	auto posM = MGetTranslate(nowLocalPos.ToVECTOR());
+	//アタッチフレームの座標にローカル座標を足してクロスボウのワールド座標を計算
 	posM = MMult(posM, weaponFrameMat);
 
+	//回転行列を計算
 	auto rotM = MMult(MMult(xMat, yMat), zMat);
+	//回転行列と座標行列を合わせる
 	auto setM = MMult(rotM, posM);
 
+	//拡大行列を計算
 	auto scaM = MGetScale(VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
+	//回転行列と座標行列を合わせた行列に拡大行列を掛けて最終的なクロスボウに設定する行列を計算する
 	setM = MMult(scaM, setM);
 
+	//クロスボウモデルに行列を設定する
 	MV1SetMatrix(m_crossbowHandle, setM);
 }
 

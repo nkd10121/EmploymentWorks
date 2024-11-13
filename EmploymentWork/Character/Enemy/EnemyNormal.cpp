@@ -7,7 +7,6 @@
 
 namespace
 {
-	/*当たり判定用のカプセル関係*/
 	constexpr float kCollisionCapsuleSize = 3.0f;	//カプセルの大きさ
 	constexpr float kCollisionCapsuleRadius = 2.0f;	//カプセルの半径
 	constexpr int kCollisionCapsuleDivNum = 10;		//カプセルの分割数
@@ -17,10 +16,6 @@ namespace
 	/*モデル関係*/
 	constexpr float kModelScale = 0.018f;		//モデルサイズ
 
-	/*アニメーション関係*/
-	constexpr float kAnimChangeFrame = 10.0f;							//アニメーションの切り替えにかかるフレーム数
-	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;		//1フレーム当たりのアニメーション切り替えが進む速さ
-	constexpr float kAnimBlendRateMax = 1.0f;							//アニメーションブレンド率の最大
 
 }
 
@@ -79,7 +74,7 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 	m_nowAnimIdx = 0;
 
 	//プレイヤーのステータス取得
-	m_status = LoadCSV::GetInstance().LoadStatus("EnemyNormal");
+	m_status = LoadCSV::GetInstance().LoadStatus(m_characterName.c_str());
 	//最大HPを設定しておく
 	m_hpMax = m_status.hp;
 
@@ -104,58 +99,41 @@ void EnemyNormal::Update()
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
 
-	//前のフレームとStateを比較して違うStateだったら
-	if (m_pState->GetNextKind() != m_pState->GetKind())
-	{
-		//Stateを変更する
-		m_pState = m_pState->GetNextScenePointer();
-	}
-
+	//ステータスの変更
+	ChangeState();
 	//ステートの更新
 	m_pState->Update();
 
-	//アニメーションが終了したかどうかを取得
+	//アニメーションの更新
 	m_isAnimationFinish = UpdateAnim(m_currentAnimNo);
-
-	//アニメーションの切り替え
-	if (m_prevAnimNo != -1)
-	{
-		//フレームでアニメーションを切り替える
-		m_animBlendRate += kAnimChangeRateSpeed;
-		if (m_animBlendRate >= kAnimBlendRateMax)
-		{
-			m_animBlendRate = kAnimBlendRateMax;
-		}
-
-		//アニメーションのブレンド率を設定する
-		MV1SetAttachAnimBlendRate(m_modelHandle, m_prevAnimNo, kAnimBlendRateMax - m_animBlendRate);
-		MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
-	}
+	//アニメーションブレンド
+	AnimationBlend();
 
 	//HPが0になったら自身を削除する
 	if (m_status.hp <= 0 && !m_isStartDeathAnimation)
 	{
+		//当たり判定を削除
 		Finalize();
 
+		//死亡アニメーションを開始する
 		m_isStartDeathAnimation = true;
 
-		m_pState = std::make_shared<EnemyStateDeath>(std::dynamic_pointer_cast<EnemyNormal>(shared_from_this()));
+		//現在のステートを強制的に死亡にする
+		m_pState = std::make_shared<EnemyStateDeath>(std::dynamic_pointer_cast<EnemyBase>(shared_from_this()));
 		m_pState->SetNextKind(StateBase::StateKind::Death);
 		m_pState->Init();
 	}
 
+	//死亡アニメーションが始まっていて
 	if (m_isStartDeathAnimation)
 	{
+		//死亡アニメーションが終了したら
 		if (GetAnimEnd())
 		{
+			//完全に死亡したものとする
 			m_isExist = false;
 		}
 	}
-
-	//モデルの描画座標を設定
-	auto modelSetPos = m_drawPos;
-	modelSetPos.y -= kCollisionCapsuleSize + kCollisionCapsuleRadius;
-	MV1SetPosition(m_modelHandle, modelSetPos.ToVECTOR());
 
 	//速度を0にする(重力の影響を受けながら)
 	auto prevVel = rigidbody->GetVelocity();
@@ -170,10 +148,6 @@ void EnemyNormal::Draw()
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
 
-	//FIX:Drawのなかで座標を変更しているのはどうなの？
-	rigidbody->SetPos(rigidbody->GetNextPos());
-	m_drawPos = rigidbody->GetPos();
-
 	//モデルを描画
 	MV1DrawModel(m_modelHandle);
 
@@ -181,5 +155,13 @@ void EnemyNormal::Draw()
 	//ステートパターンの確認
 	m_pState->DebugDrawState(128, 32);
 #endif
+}
+
+void EnemyNormal::UpdateModelPos()
+{
+	rigidbody->SetPos(rigidbody->GetNextPos());
+	m_drawPos = rigidbody->GetPos();
+	m_drawPos.y -= kCollisionCapsuleRadius + kCollisionCapsuleSize;
+	MV1SetPosition(m_modelHandle, m_drawPos.ToVECTOR());
 }
 

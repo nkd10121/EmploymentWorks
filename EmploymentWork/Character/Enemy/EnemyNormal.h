@@ -34,5 +34,10 @@ public:
 	/// 描画
 	/// </summary>
 	virtual void Draw();
+
+	/// <summary>
+	/// 3Dモデルの座標更新
+	/// </summary>
+	virtual void UpdateModelPos()override;
 };
 

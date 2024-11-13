@@ -1,5 +1,14 @@
 ﻿#include "CharacterBase.h"
 
+namespace
+{
+	/*アニメーション関係*/
+	constexpr float kAnimChangeFrame = 10.0f;							//アニメーションの切り替えにかかるフレーム数
+	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;		//1フレーム当たりのアニメーション切り替えが進む速さ
+	constexpr float kAnimBlendRateMax = 1.0f;							//アニメーションブレンド率の最大
+
+}
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -27,6 +36,39 @@ CharacterBase::~CharacterBase()
 {
 	//基底クラスで削除しておく
 	MV1DeleteModel(m_modelHandle);
+}
+
+/// <summary>
+/// 前のフレームとStateを比較して違うStateだったら変更する
+/// </summary>
+void CharacterBase::ChangeState()
+{
+	//前のフレームとStateを比較して違うStateだったら
+	if (m_pState->GetNextKind() != m_pState->GetKind())
+	{
+		//Stateを変更する
+		m_pState = m_pState->GetNextScenePointer();
+	}
+}
+
+/// <summary>
+/// アニメーションの切り替え
+/// </summary>
+void CharacterBase::AnimationBlend()
+{
+	if (m_prevAnimNo != -1)
+	{
+		//フレームでアニメーションを切り替える
+		m_animBlendRate += kAnimChangeRateSpeed;
+		if (m_animBlendRate >= kAnimBlendRateMax)
+		{
+			m_animBlendRate = kAnimBlendRateMax;
+		}
+
+		//アニメーションのブレンド率を設定する
+		MV1SetAttachAnimBlendRate(m_modelHandle, m_prevAnimNo, kAnimBlendRateMax - m_animBlendRate);
+		MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
+	}
 }
 
 /// <summary>
