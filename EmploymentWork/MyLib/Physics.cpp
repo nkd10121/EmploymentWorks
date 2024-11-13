@@ -276,10 +276,11 @@ void MyLib::Physics::CheckColide()
 		doCheck = false;
 		++checkCount;
 
+		//すでに当たり判定のチェックを試したペアじゃないか確認するための変数
 		std::list<std::pair<std::shared_ptr<MyLib::Collidable>, std::shared_ptr<MyLib::Collidable>>> checkedPair;
 
 		// 2重ループで全オブジェクト当たり判定
-		// FIXME: 重いので近いオブジェクト同士のみ当たり判定するなど工夫がいる
+		// 中で同一オブジェクトじゃないか、すでにチェックしたペアと同じ組み合わせの当たり判定チェックをしていないか、比較するオブジェクト間の距離が一定距離以上じゃないか　判別したうえで計算している
 		for (const auto& objA : m_collidables)
 		{
 			for (const auto& objB : m_collidables)
@@ -288,20 +289,25 @@ void MyLib::Physics::CheckColide()
 				if (objA == objB)
 					continue;
 
+				//最初は新しいペアという認識でいく
 				bool isNewPair = true;
-
+				//当たり判定チェック済みペアの中に同じ組み合わせのペアが存在しないかチェック
 				for (auto& chacked : checkedPair)
 				{
+					//もし同じ組み合わせのペアが見つかったらこのペアは新しいペアじゃない
 					if (chacked.first == objB && chacked.second == objA)
 					{
 						isNewPair = false;
 					}
 				}
-
+				//新しいペアじゃないなら早期リターン
 				if (!isNewPair)
 				{
 					continue;
 				}
+
+				//ここに来たということは新しいペア
+				//今回のペアをチェック済みペアとして登録する
 				checkedPair.emplace_back(std::make_pair(objA, objB));
 
 				for (const auto& colA : objA->m_colliders)
@@ -373,7 +379,8 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 	auto kindA = colliderA->GetKind();
 	auto kindB = colliderB->GetKind();
 
-
+	//オブジェクト間の距離が一定以上であればそもそも計算しない
+	//MEMO:処理が軽くなるか今のところ分かっていない。たくさんオブジェクトが出るようになれば変わるのかな。
 	auto le = (Abs(rigidA->GetNextPos() - rigidB->GetNextPos())).Length();
 	if (le >= 25.0f)
 	{
