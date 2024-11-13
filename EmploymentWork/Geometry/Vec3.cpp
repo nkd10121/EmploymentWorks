@@ -184,3 +184,25 @@ Vec3 Cross(const Vec3& item1, const Vec3& item2)
 	ret.z = item1.x * item2.y - item1.y * item2.x;
 	return ret;
 }
+
+Vec3 Abs(const Vec3& item)
+{
+	Vec3 ret = item;
+
+	if (ret.x < 0.0f)
+	{
+		ret.x = -ret.x;
+	}
+
+	if (ret.y < 0.0f)
+	{
+		ret.y = -ret.y;
+	}
+
+	if (ret.z < 0.0f)
+	{
+		ret.z = -ret.z;
+	}
+
+	return ret;
+}

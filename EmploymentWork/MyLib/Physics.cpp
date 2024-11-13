@@ -276,6 +276,8 @@ void MyLib::Physics::CheckColide()
 		doCheck = false;
 		++checkCount;
 
+		std::list<std::pair<std::shared_ptr<MyLib::Collidable>, std::shared_ptr<MyLib::Collidable>>> checkedPair;
+
 		// 2重ループで全オブジェクト当たり判定
 		// FIXME: 重いので近いオブジェクト同士のみ当たり判定するなど工夫がいる
 		for (const auto& objA : m_collidables)
@@ -285,6 +287,22 @@ void MyLib::Physics::CheckColide()
 				//同一オブジェクトなら早期リターン
 				if (objA == objB)
 					continue;
+
+				bool isNewPair = true;
+
+				for (auto& chacked : checkedPair)
+				{
+					if (chacked.first == objB && chacked.second == objA)
+					{
+						isNewPair = false;
+					}
+				}
+
+				if (!isNewPair)
+				{
+					continue;
+				}
+				checkedPair.emplace_back(std::make_pair(objA, objB));
 
 				for (const auto& colA : objA->m_colliders)
 				{
@@ -354,6 +372,22 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 
 	auto kindA = colliderA->GetKind();
 	auto kindB = colliderB->GetKind();
+
+
+	auto le = (Abs(rigidA->GetNextPos() - rigidB->GetNextPos())).Length();
+	if (le >= 25.0f)
+	{
+#ifdef _DEBUG
+		printf("当たり判定計算省略\n");
+#endif
+		return false;
+	}
+#ifdef _DEBUG
+	else
+	{
+		printf("オブジェクト間の距離:%f\n", le);
+	}
+#endif
 
 	if (kindA == MyLib::ColliderBase::Kind::Sphere && kindB == MyLib::ColliderBase::Kind::Sphere)
 	{
