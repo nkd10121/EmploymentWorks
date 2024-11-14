@@ -19,11 +19,6 @@ public:
 	/// <param name="physics">物理クラス</param>
 	void Init(std::shared_ptr<MyLib::Physics> physics)override;
 	/// <summary>
-	/// 当たり判定を削除
-	/// </summary>
-	/// <param name="physics">物理クラス</param>
-	void Finalize(std::shared_ptr<MyLib::Physics> physics) override;
-	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update()override;

@@ -1,4 +1,5 @@
-﻿#include <cassert>
+﻿#include "Physics.h"
+#include <cassert>
 #include "MyLib.h"
 #include "DxLib.h"
 #include "MathHelp.h"
@@ -11,6 +12,8 @@
 //軽量化できてるか比較用
 //いろいろ試してみたがこれをtrueにした方が処理時間が増えていた…
 #define weight_reduction false
+
+MyLib::Physics* MyLib::Physics::m_instance = nullptr;
 
 namespace
 {

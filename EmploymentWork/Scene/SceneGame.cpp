@@ -85,8 +85,6 @@ void SceneGame::Init()
 	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
 	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
 
-	//物理クラスの生成
-	m_pPhysics = std::make_shared<MyLib::Physics>();
 
 	//プレイヤーの生成
 	m_pPlayer = std::make_shared<Player>();
@@ -139,7 +137,7 @@ void SceneGame::End()
 	//ポーションの解放
 	for (auto& object : m_pObjects)
 	{
-		object->Finalize(m_pPhysics);
+		object->Finalize();
 	}
 	m_pObjects.clear();
 }
@@ -211,7 +209,7 @@ void SceneGame::Update()
 
 		if (!object->GetIsExist())
 		{
-			object->Finalize(m_pPhysics);
+			object->Finalize();
 		}
 	}
 	//isExistがfalseのオブジェクトを削除
@@ -224,7 +222,7 @@ void SceneGame::Update()
 	}
 
 	//物理更新
-	m_pPhysics->Update();
+	MyLib::Physics::GetInstance().Update();
 
 	//モデル座標の更新
 	m_pPlayer->UpdateModelPos();

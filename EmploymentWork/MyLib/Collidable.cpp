@@ -17,21 +17,16 @@ MyLib::Collidable::Collidable(Priority priority, GameObjectTag tag) :
 MyLib::Collidable::~Collidable()
 {
 }
-
-/// <summary>
-/// 初期化(自身に当たり判定を追加)
-/// </summary>
-void MyLib::Collidable::Init(std::shared_ptr<MyLib::Physics> physics)
+void MyLib::Collidable::OnEntryPhysics()
 {
-	physics->Entry(shared_from_this());	// 物理情報に自身を登録
+	auto& physics = MyLib::Physics::GetInstance();
+	physics.Entry(shared_from_this());
 }
 
-/// <summary>
-/// 終了(自身の当たり判定を削除)
-/// </summary>
-void MyLib::Collidable::Finalize(std::shared_ptr<MyLib::Physics> physics)
+void MyLib::Collidable::OnExistPhysics()
 {
-	physics->Exit(shared_from_this());	// 物理情報登録解除
+	auto& physics = MyLib::Physics::GetInstance();
+	physics.Exit(shared_from_this());
 }
 
 /// <summary>

@@ -37,16 +37,6 @@ namespace MyLib
 		/// デストラクタ
 		/// </summary>
 		virtual ~Collidable();
-		/// <summary>
-		/// 初期化(自身に当たり判定を追加)
-		/// </summary>
-		/// <param name="physics">物理クラスポインタ</param>
-		virtual void Init(std::shared_ptr<MyLib::Physics> physics);
-		/// <summary>
-		/// 終了(自身の当たり判定を削除)
-		/// </summary>
-		/// <param name="physics">物理クラスポインタ</param>
-		virtual void Finalize(std::shared_ptr<MyLib::Physics> physics);
 
 		//当たり判定関数
 		virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider) {}
@@ -68,6 +58,14 @@ namespace MyLib
 		Priority GetPriority() const { return priority; }
 
 	protected:
+		/// <summary>
+		/// Physicsに登録する
+		/// </summary>
+		void OnEntryPhysics();
+		/// <summary>
+		/// Physicsから削除する
+		/// </summary>
+		void OnExistPhysics();
 		/// <summary>
 		/// 当たり判定を追加
 		/// </summary>

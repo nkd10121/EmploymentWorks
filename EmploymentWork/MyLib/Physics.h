@@ -1,15 +1,17 @@
-﻿// 2024 Takeru Yui All Rights Reserved.
-#pragma once
+﻿#pragma once
 #include "Vec3.h"
 
 #include <list>
 #include <vector>
 #include <unordered_map>
+#include <memory>
 #include <map>
 
 namespace MyLib {
 
 class Collidable;
+class ColliderBase;
+class Rigidbody;
 
 namespace ColInfo
 {
@@ -48,7 +50,7 @@ private:
 
 	using SendCollideInfo = std::unordered_map<std::shared_ptr<Collidable>, std::list<std::shared_ptr<Collidable>>>;
 
-public:
+private:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
@@ -58,6 +60,36 @@ public:
 	/// </summary>
 	~Physics();
 
+	static Physics* m_instance;	//インスタンス
+	void operator= (const Physics&) = delete;
+public:
+
+	/// <summary>
+	/// インスタンスを取得
+	/// PhysicsはGetInstance()を通した参照からしか利用できない
+	/// </summary>
+	/// <returns>インスタンス</returns>
+	static Physics& GetInstance()
+	{
+		if (!m_instance)
+		{
+			m_instance = new Physics;
+		}
+
+		return *m_instance;
+	}
+
+	/// <summary>
+	/// 削除
+	/// これをし忘れると普通にメモリリーク
+	/// </summary>
+	static void Destroy()
+	{
+		delete m_instance;
+		m_instance = nullptr;
+	}
+
+public:
 	/// <summary>
 	/// 衝突物の登録
 	/// </summary>

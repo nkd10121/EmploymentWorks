@@ -48,7 +48,7 @@ Crystal::~Crystal()
 void Crystal::Init(std::shared_ptr<MyLib::Physics> physics)
 {
 	//当たり判定の初期化
-	Collidable::Init(physics);
+	OnEntryPhysics();
 	//物理クラスの初期化
 	rigidbody->Init();
 

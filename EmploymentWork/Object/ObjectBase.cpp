@@ -20,6 +20,11 @@ ObjectBase::~ObjectBase()
 	MV1DeleteModel(m_modelHandle);
 }
 
+void ObjectBase::Finalize()
+{
+	OnExistPhysics();
+}
+
 /// <summary>
 /// 座標を設定
 /// </summary>

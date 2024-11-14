@@ -25,6 +25,8 @@ public:
 	/// 初期化
 	/// </summary>
 	virtual void Init(std::shared_ptr<MyLib::Physics> physics) {};
+
+	virtual void Finalize();
 	/// <summary>
 	/// 更新
 	/// </summary>

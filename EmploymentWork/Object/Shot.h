@@ -23,11 +23,6 @@ public:
 	/// <param name="physics">物理クラスポインタ</param>
 	void Init(std::shared_ptr<MyLib::Physics> physics)override;
 	/// <summary>
-	/// 当たり判定を削除
-	/// </summary>
-	/// <param name="physics">物理クラスポインタ</param>
-	void Finalize(std::shared_ptr<MyLib::Physics> physics) override;
-	/// <summary>
 	/// 生成座標と向きと攻撃力を設定
 	/// </summary>
 	/// <param name="pos">生成座標</param>

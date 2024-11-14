@@ -41,7 +41,7 @@ Shot::~Shot()
 void Shot::Init(std::shared_ptr<MyLib::Physics> physics)
 {
 	//当たり判定の初期化
-	Collidable::Init(physics);
+	OnEntryPhysics();
 	//物理クラスの初期化
 	rigidbody->Init();
 
@@ -54,14 +54,6 @@ void Shot::Init(std::shared_ptr<MyLib::Physics> physics)
 
 	//存在フラグをtrueにする
 	m_isExist = true;
-}
-
-/// <summary>
-/// 当たり判定を削除
-/// </summary>
-void Shot::Finalize(std::shared_ptr<MyLib::Physics> physics)
-{
-	Collidable::Finalize(physics);
 }
 
 /// <summary>

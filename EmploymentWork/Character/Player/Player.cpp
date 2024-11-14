@@ -90,7 +90,7 @@ void Player::Init(std::shared_ptr<MyLib::Physics> physics)
 	m_pPhysics = physics;
 
 	//当たり判定の初期化
-	Collidable::Init(physics);
+	OnEntryPhysics();
 
 	//ステートパターンの初期化
 	m_pState = std::make_shared<PlayerStateIdle>(std::dynamic_pointer_cast<Player>(shared_from_this()));
@@ -215,7 +215,7 @@ void Player::Update(SceneGame* pScene)
 	if (m_status.hp <= 0 && !m_isStartDeathAnimation)
 	{
 		//当たり判定を削除して
-		Collidable::Finalize(m_pPhysics.lock());
+		Collidable::OnExistPhysics();
 
 		//死亡アニメーションを開始する
 		m_isStartDeathAnimation = true;
@@ -240,7 +240,7 @@ void Player::Update(SceneGame* pScene)
 	//バグなどで地面をすり抜けて落下時の対策
 	if (m_pos.y <= -100.0f)
 	{
-		Collidable::Finalize(m_pPhysics.lock());
+		Collidable::OnExistPhysics();(m_pPhysics.lock());
 		m_isDeath = true;
 	}
 }

@@ -50,7 +50,7 @@ HealPortion::~HealPortion()
 /// </summary>
 void HealPortion::Init(std::shared_ptr<MyLib::Physics> physics)
 {
-	Collidable::Init(physics);
+	OnEntryPhysics();
 
 	//物理挙動の初期化
 	rigidbody->Init();
@@ -62,14 +62,6 @@ void HealPortion::Init(std::shared_ptr<MyLib::Physics> physics)
 
 	//存在フラグをtrueにする
 	m_isExist = true;
-}
-
-/// <summary>
-/// 当たり判定を削除
-/// </summary>
-void HealPortion::Finalize(std::shared_ptr<MyLib::Physics> physics)
-{
-	Collidable::Finalize(physics);
 }
 
 /// <summary>

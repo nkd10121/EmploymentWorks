@@ -61,7 +61,7 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 	m_pPhysics = physics;
 
 	//当たり判定の初期化
-	Collidable::Init(physics);
+	OnEntryPhysics();
 
 	//ステートパターンの初期化
 	m_pState = std::make_shared<EnemyStateIdle>(std::dynamic_pointer_cast<EnemyNormal>(shared_from_this()));
@@ -98,7 +98,7 @@ void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
 void EnemyNormal::Finalize()
 {
 	//当たり判定の削除
-	Collidable::Finalize(m_pPhysics.lock());
+	Collidable::OnExistPhysics();
 }
 
 /// <summary>
