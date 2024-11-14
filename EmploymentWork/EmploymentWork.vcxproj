@@ -58,7 +58,7 @@
     <ClCompile Include="Character\Player\State\StateBase.cpp" />
     <ClCompile Include="Object\Shot.cpp" />
     <ClCompile Include="Common\TrapManager.cpp" />
-    <ClCompile Include="SwarmEnemy.cpp" />
+    <ClCompile Include="Character\Enemy\SwarmEnemy.cpp" />
     <ClCompile Include="Util\Camera.cpp" />
     <ClCompile Include="Util\Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -110,7 +110,7 @@
     <ClInclude Include="Character\Player\State\StateBase.h" />
     <ClInclude Include="Object\Shot.h" />
     <ClInclude Include="Common\TrapManager.h" />
-    <ClInclude Include="SwarmEnemy.h" />
+    <ClInclude Include="Character\Enemy\SwarmEnemy.h" />
     <ClInclude Include="Util\Camera.h" />
     <ClInclude Include="Util\Game.h" />
     <ClInclude Include="Util\Input.h" />
