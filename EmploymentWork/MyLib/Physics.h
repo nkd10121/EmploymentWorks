@@ -95,6 +95,8 @@ public:
 	}
 
 public:
+	void SetStageCollisionModel(int handle);
+
 	/// <summary>
 	/// 衝突物の登録
 	/// </summary>
@@ -111,7 +113,9 @@ public:
 	/// </summary>
 	void Update();
 
-
+	/// <summary>
+	/// データのクリア
+	/// </summary>
 	void Clear();
 
 private:

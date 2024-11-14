@@ -40,9 +40,7 @@ namespace
 /// </summary>
 MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollisionHandle*/)
 {
-	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
-	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
-	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
+
 
 	//for (float x = -400.0f; x < 400.0f; x += 8.0f)
 	//{
@@ -68,7 +66,14 @@ MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollision
 /// </summary>
 MyLib::Physics::~Physics()
 {
-	MV1DeleteModel(m_stageCollisionHandle);
+
+}
+
+void MyLib::Physics::SetStageCollisionModel(int handle)
+{
+	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
+	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
+	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 }
 
 /// <summary>
@@ -266,6 +271,7 @@ void MyLib::Physics::Update()
 
 void MyLib::Physics::Clear()
 {
+	MV1DeleteModel(m_stageCollisionHandle);
 
 	m_collidables.clear();
 	m_onCollideInfo.clear();

@@ -94,6 +94,8 @@ void SceneGame::Init()
 	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
 	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
 
+	//ステージの当たり判定を設定
+	MyLib::Physics::GetInstance().SetStageCollisionModel(m_stageModel);
 
 	//プレイヤーの生成
 	m_pPlayer = std::make_shared<Player>();
