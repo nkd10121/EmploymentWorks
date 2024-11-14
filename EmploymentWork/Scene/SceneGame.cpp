@@ -120,7 +120,7 @@ void SceneGame::Init()
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
 	//DEBUG:敵を生成
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
 
@@ -137,9 +137,6 @@ void SceneGame::Init()
 		addSwarm->SetUp();
 		m_pEnemies.emplace_back(addSwarm);
 	}
-
-
-
 
 	TrapManager::GetInstance().SetUp();
 }

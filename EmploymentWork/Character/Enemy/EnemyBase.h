@@ -60,6 +60,11 @@ public:
 	virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
 
 	/// <summary>
+	/// 索敵判定の作成
+	/// </summary>
+	virtual void CreateSearchCollision() {};
+
+	/// <summary>
 	/// 3Dモデルの座標更新
 	/// </summary>
 	virtual void UpdateModelPos() {};

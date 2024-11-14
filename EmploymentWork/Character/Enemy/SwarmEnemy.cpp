@@ -5,6 +5,7 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 	m_isExistMember(false),
 	m_swarmCenterPos(),
 	m_swarmRadius(0.0f),
+	m_isInPlayer(false),
 	m_memberColor(color)
 {
 	//物理データの初期化
@@ -57,12 +58,16 @@ void SwarmEnemy::Update()
 		}
 	}
 
-	if (m_swarmRadius != maxLength)
+	if (!m_isInPlayer)
 	{
-		m_swarmRadius = maxLength;
-		auto cupsuleCol = dynamic_cast<MyLib::ColliderSphere*>(Collidable::GetCollider().back().get());			//キャスト
-		cupsuleCol->SetRadius(m_swarmRadius);
+		if (m_swarmRadius != maxLength)
+		{
+			m_swarmRadius = maxLength;
+			auto cupsuleCol = dynamic_cast<MyLib::ColliderSphere*>(Collidable::GetCollider(MyLib::ColliderBase::CollisionTag::Search).get());			//キャスト
+			cupsuleCol->SetRadius(m_swarmRadius);
+		}
 	}
+
 
 
 	//isExistがfalseのオブジェクトを削除
@@ -150,20 +155,20 @@ void SwarmEnemy::AddSwarm(std::shared_ptr<EnemyBase> add)
 	m_swarm.emplace_back(add);
 }
 
-void SwarmEnemy::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
-{
-	auto tag = colider->GetTag();
-	if (tag == GameObjectTag::Player)
-	{
-		Collidable::OnExistPhysics();
-	}
-}
-
 void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
 	auto tag = colider->GetTag();
 	if (tag == GameObjectTag::Player)
 	{
+		//当たり判定を消す
 		Collidable::OnExistPhysics();
+
+		//プレイヤーがいる判定にする
+		m_isInPlayer = true;
+
+		for (auto& enemy : m_swarm)
+		{
+			enemy->CreateSearchCollision();
+		}
 	}
 }

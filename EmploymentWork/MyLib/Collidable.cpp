@@ -33,7 +33,7 @@ void MyLib::Collidable::OnExistPhysics()
 /// <summary>
 /// 当たり判定を追加
 /// </summary>
-std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const ColliderBase::Kind& kind, bool isTrigger)
+std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const ColliderBase::Kind& kind, bool isTrigger, ColliderBase::CollisionTag collisionTag)
 {
 	std::shared_ptr<ColliderBase> add;
 
@@ -51,8 +51,26 @@ std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const Collid
 		assert(0 && "指定された種類の当たり判定を追加できませんでした");
 	}
 
-	//当たり判定を追加する
-	m_colliders.emplace_back(add);
+	Collide addInfo;
+	addInfo.collide = add;
+	addInfo.collideTag = collisionTag;
 
+	//当たり判定を追加する
+	m_colliders.emplace_back(addInfo);
 	return add;
+}
+
+std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::GetCollider(ColliderBase::CollisionTag collisionTag)
+{
+	std::shared_ptr<MyLib::ColliderBase> ret;
+
+	for (auto& col : m_colliders)
+	{
+		if (col.collideTag == collisionTag)
+		{
+			ret = col.collide;
+		}
+	}
+
+	return ret;
 }

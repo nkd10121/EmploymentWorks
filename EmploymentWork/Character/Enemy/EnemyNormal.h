@@ -36,8 +36,19 @@ public:
 	virtual void Draw();
 
 	/// <summary>
+	/// 索敵判定を生成する
+	/// </summary>
+	void CreateSearchCollision()override;
+
+	/// <summary>
 	/// 3Dモデルの座標更新
 	/// </summary>
 	virtual void UpdateModelPos()override;
+
+	/// <summary>
+	/// 押し出し処理を行わないオブジェクトと衝突したとき
+	/// </summary>
+	/// <param name="colider">衝突したオブジェクト</param>
+	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
 };
 

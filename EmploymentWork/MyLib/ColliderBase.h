@@ -1,47 +1,54 @@
-#pragma once
+ï»¿#pragma once
 #include <unordered_map>
 #include "Vec3.h"
 
 namespace MyLib
 {
 	/// <summary>
-	/// “–‚½‚è”»’è‚Ìƒf[ƒ^Šî’êƒNƒ‰ƒX
+	/// å½“ãŸã‚Šåˆ¤å®šã®ãƒ‡ãƒ¼ã‚¿åŸºåº•ã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class ColliderBase abstract
 	{
 	public:
-		// “–‚½‚è”»’èí•Ê
+		// å½“ãŸã‚Šåˆ¤å®šç¨®åˆ¥
 		enum class Kind
 		{
-			Sphere,		//‹…
-			Cupsule,	//ƒJƒvƒZƒ‹
+			Sphere,		//çƒ
+			Cupsule,	//ã‚«ãƒ—ã‚»ãƒ«
+		};
+
+		enum class CollisionTag
+		{
+			Normal,
+			Search,
+			Head
 		};
 
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
-		/// <param name="kind">“–‚½‚è”»’èí•Ê</param>
-		/// <param name="isTrigger">ˆÊ’u•â³‚ğ‚·‚é‚©‚Ç‚¤‚©@false : ‚µ‚È‚¢, true : ‚·‚é</param>
+		/// <param name="kind">å½“ãŸã‚Šåˆ¤å®šç¨®åˆ¥</param>
+		/// <param name="isTrigger">ä½ç½®è£œæ­£ã‚’ã™ã‚‹ã‹ã©ã†ã‹ã€€false : ã—ãªã„, true : ã™ã‚‹</param>
 		ColliderBase(Kind kind, bool isTrigger);
 		/// <summary>
-		/// ƒfƒXƒgƒ‰ƒNƒ^
+		/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		virtual ~ColliderBase() {}
 
 		/// <summary>
-		/// “–‚½‚è”»’è‚Ìí•Êæ“¾
+		/// å½“ãŸã‚Šåˆ¤å®šã®ç¨®åˆ¥å–å¾—
 		/// </summary>
-		/// <returns>“–‚½‚è”»’è‚Ìí•Ê</returns>
+		/// <returns>å½“ãŸã‚Šåˆ¤å®šã®ç¨®åˆ¥</returns>
 		Kind GetKind() const { return kind; }
 
 		/// <summary>
-		/// ƒgƒŠƒK[‚©‚Ç‚¤‚©‚ğæ“¾
+		/// ãƒˆãƒªã‚¬ãƒ¼ã‹ã©ã†ã‹ã‚’å–å¾—
 		/// </summary>
-		/// <returns>ƒgƒŠƒK[ƒtƒ‰ƒO</returns>
+		/// <returns>ãƒˆãƒªã‚¬ãƒ¼ãƒ•ãƒ©ã‚°</returns>
 		bool IsTrigger() const { return isTrigger; }
 
 	private:
-		Kind kind;		//“–‚½‚è”»’èí•Ê
-		bool isTrigger;	//ƒgƒŠƒK[ƒtƒ‰ƒO
+		Kind kind;		//å½“ãŸã‚Šåˆ¤å®šç¨®åˆ¥
+		bool isTrigger;	//ãƒˆãƒªã‚¬ãƒ¼ãƒ•ãƒ©ã‚°
 	};
 }

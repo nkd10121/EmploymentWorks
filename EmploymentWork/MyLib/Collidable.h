@@ -16,6 +16,11 @@ namespace MyLib
 	{
 		friend Physics;
 	public:
+		struct Collide
+		{
+			std::shared_ptr<ColliderBase> collide;
+			ColliderBase::CollisionTag collideTag;
+		};
 
 		// 位置補正の優先度の判別に使う
 		enum class Priority : int
@@ -72,15 +77,15 @@ namespace MyLib
 		/// <param name="kind">当たり判定の種類</param>
 		/// <param name="isTrigger">押し出し判定をしないかどうか</param>
 		/// <returns>自身</returns>
-		std::shared_ptr<ColliderBase> AddCollider(const ColliderBase::Kind& kind, bool isTrigger);
+		std::shared_ptr<ColliderBase> AddCollider(const ColliderBase::Kind& kind, bool isTrigger,ColliderBase::CollisionTag collisionTag = ColliderBase::CollisionTag::Normal);
 
-		std::list<std::shared_ptr<ColliderBase>> GetCollider() { return m_colliders; }
+		std::shared_ptr<ColliderBase> GetCollider(ColliderBase::CollisionTag collisionTag);
 
 	protected:
 		// 物理データ
 		std::shared_ptr<Rigidbody> rigidbody;
 		//当たり判定情報
-		std::list<std::shared_ptr<ColliderBase>> m_colliders;
+		std::list<Collide> m_colliders;
 
 	private:
 		//タグ

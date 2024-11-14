@@ -33,12 +33,7 @@ EnemyNormal::EnemyNormal():
 		cupsuleCol->m_size = kCollisionCapsuleSize;			//カプセルの大きさ
 	}
 
-	{
-		////当たり判定の作成
-		//auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
-		//auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-		//sphereCol->m_radius = kCollisionCapsuleRadius*6;
-	}
+
 
 
 	//キャラクター名を設定
@@ -164,11 +159,24 @@ void EnemyNormal::Draw()
 #endif
 }
 
+void EnemyNormal::CreateSearchCollision()
+{
+	//当たり判定の作成
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
+	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+	sphereCol->m_radius = kCollisionCapsuleRadius*6;
+}
+
 void EnemyNormal::UpdateModelPos()
 {
 	rigidbody->SetPos(rigidbody->GetNextPos());
 	m_drawPos = rigidbody->GetPos();
 	m_drawPos.y -= kCollisionCapsuleRadius + kCollisionCapsuleSize;
 	MV1SetPosition(m_modelHandle, m_drawPos.ToVECTOR());
+}
+
+void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
+{
+	int a = 0;
 }
 

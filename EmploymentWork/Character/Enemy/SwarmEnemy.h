@@ -38,7 +38,6 @@ public:
 	/// <returns>構成メンバーが存在するかどうか</returns>
 	const bool GetIsExistMember()const { return m_isExistMember; }
 
-	void OnCollideEnter(const std::shared_ptr<Collidable>& colider)override;
 	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
 
 private:
@@ -48,6 +47,7 @@ private:
 	Vec3 m_swarmCenterPos;	//群れ全体の中心座標
 	float m_swarmRadius;	//群れ全体の半径
 
+	bool m_isInPlayer;		//プレイヤーが当たり判定内に入っているかどうか
 
 	unsigned int m_memberColor;	//DEBUG用。誰がどの群れなのか見たい
 };
