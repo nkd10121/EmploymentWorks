@@ -16,10 +16,15 @@ public:
 	SwarmEnemy(unsigned int color);
 	~SwarmEnemy();
 
+	void Finalize();
 	void Update();
 	void Draw();
-
 	void UpdateModelPos();
+
+	/// <summary>
+	/// 群れメンバーを追加しきった後に呼ぶ関数
+	/// </summary>
+	void SetUp();
 
 	/// <summary>
 	/// 構成メンバーを追加
@@ -33,10 +38,16 @@ public:
 	/// <returns>構成メンバーが存在するかどうか</returns>
 	const bool GetIsExistMember()const { return m_isExistMember; }
 
+	void OnCollideEnter(const std::shared_ptr<Collidable>& colider)override;
+	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
+
 private:
 	std::list<std::shared_ptr<EnemyBase>> m_swarm;	//群れの構成員
-
 	bool m_isExistMember;		//メンバーが存在するかどうか
+
+	Vec3 m_swarmCenterPos;	//群れ全体の中心座標
+	float m_swarmRadius;	//群れ全体の半径
+
 
 	unsigned int m_memberColor;	//DEBUG用。誰がどの群れなのか見たい
 };

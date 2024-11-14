@@ -8,7 +8,6 @@ ObjectBase::ObjectBase(Priority priority, GameObjectTag tag):
 	m_modelHandle(-1),
 	m_isExist(false)
 {
-	rigidbody = std::make_shared<MyLib::Rigidbody>();
 }
 
 /// <summary>

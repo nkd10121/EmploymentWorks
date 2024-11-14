@@ -9,6 +9,7 @@ MyLib::Collidable::Collidable(Priority priority, GameObjectTag tag) :
 	priority(priority),
 	tag(tag)
 {
+	rigidbody = std::make_shared<MyLib::Rigidbody>();
 }
 
 /// <summary>

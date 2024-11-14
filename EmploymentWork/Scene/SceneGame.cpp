@@ -118,7 +118,7 @@ void SceneGame::Init()
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
 	//DEBUG:敵を生成
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
 
@@ -131,6 +131,8 @@ void SceneGame::Init()
 			addSwarm->AddSwarm(add);
 
 		}
+
+		addSwarm->SetUp();
 		m_pEnemies.emplace_back(addSwarm);
 	}
 
@@ -151,12 +153,21 @@ void SceneGame::End()
 
 	m_pPlayer->Finalize();
 
+	for (auto& enemy : m_pEnemies)
+	{
+		enemy->Finalize();
+	}
+	m_pEnemies.clear();
+
 	//ポーションの解放
 	for (auto& object : m_pObjects)
 	{
 		object->Finalize();
 	}
 	m_pObjects.clear();
+
+	MyLib::Physics::GetInstance().Clear();
+
 }
 
 /// <summary>

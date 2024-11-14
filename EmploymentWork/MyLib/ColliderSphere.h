@@ -1,21 +1,26 @@
-#pragma once
+ï»¿#pragma once
 #include "ColliderBase.h"
 
 namespace MyLib
 {
 	/// <summary>
-	/// ‹ŒŒ^‚Ì“–‚½‚è”»’è
+	/// æ—§å‹ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
 	class ColliderSphere : public ColliderBase
 	{
 	public:
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
-		/// <param name="isTrigger">ƒgƒŠƒK[‚©‚Ç‚¤‚©</param>
+		/// <param name="isTrigger">ãƒˆãƒªã‚¬ãƒ¼ã‹ã©ã†ã‹</param>
 		ColliderSphere(bool isTrigger);
 
+		/// <summary>
+		/// åŠå¾„ã‚’è¨­å®š
+		/// </summary>
+		/// <param name="radius"></param>
+		void SetRadius(float radius) { m_radius = radius; }
 	public:
-		float m_radius;	//”¼Œa
+		float m_radius;	//åŠå¾„
 	};
 }

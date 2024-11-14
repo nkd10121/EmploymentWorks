@@ -74,6 +74,8 @@ namespace MyLib
 		/// <returns>自身</returns>
 		std::shared_ptr<ColliderBase> AddCollider(const ColliderBase::Kind& kind, bool isTrigger);
 
+		std::list<std::shared_ptr<ColliderBase>> GetCollider() { return m_colliders; }
+
 	protected:
 		// 物理データ
 		std::shared_ptr<Rigidbody> rigidbody;

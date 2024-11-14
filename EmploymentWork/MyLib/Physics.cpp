@@ -69,15 +69,6 @@ MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollision
 MyLib::Physics::~Physics()
 {
 	MV1DeleteModel(m_stageCollisionHandle);
-
-	m_collidables.clear();
-	m_onCollideInfo.clear();
-
-	m_newCollideInfo.clear();
-	m_preCollideInfo.clear();
-	m_newTirrigerInfo.clear();
-	m_preTirrigerInfo.clear();
-
 }
 
 /// <summary>
@@ -273,6 +264,18 @@ void MyLib::Physics::Update()
 	}
 }
 
+void MyLib::Physics::Clear()
+{
+
+	m_collidables.clear();
+	m_onCollideInfo.clear();
+
+	m_newCollideInfo.clear();
+	m_preCollideInfo.clear();
+	m_newTirrigerInfo.clear();
+	m_preTirrigerInfo.clear();
+}
+
 /// <summary>
 /// 当たり判定チェック
 /// </summary>
@@ -313,7 +316,7 @@ void MyLib::Physics::CheckColide()
 						//MEMO:処理が軽くなるか今のところ分かっていない。たくさんオブジェクトが出るようになれば変わるのかな。
 						//これは結構効果ありそう
 						auto le = (Abs(objA->rigidbody->GetNextPos() - objB->rigidbody->GetNextPos())).Length();
-						if (le >= 10.0f)
+						if (le >= 50.0f)
 						{
 #ifdef _DEBUG
 							//printf("当たり判定計算省略\n");

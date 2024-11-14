@@ -11,7 +11,8 @@ namespace
 	/// <summary>
 	/// csvデータの,で文字列を分割する
 	/// </summary>
-	/// <param name="input">取得した情報文字列</param>
+	/// <param name="input">取得した情報文字列</param>.
+	/// 
 	/// <param name="delimiter">区切る文字</param>
 	/// <returns>区切る文字で取得した情報文字列を区切った文字列配列</returns>
 	std::vector<std::string> Split(std::string& input, char delimiter)

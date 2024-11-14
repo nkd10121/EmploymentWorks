@@ -89,6 +89,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Input::GetInstance().Destroy();
 	ModelManager::GetInstance().Destroy();
 	LoadCSV::GetInstance().Destroy();
+	MyLib::Physics::GetInstance().Destroy();
 
 	Effkseer_End();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理

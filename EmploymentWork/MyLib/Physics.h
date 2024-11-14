@@ -61,8 +61,13 @@ private:
 	~Physics();
 
 	static Physics* m_instance;	//インスタンス
-	void operator= (const Physics&) = delete;
 public:
+	//コピーコンストラクタから実体の生成ができてしまうため
+	//コピーコンストラクタを禁止する
+	Physics(const Physics&) = delete;
+	Physics& operator=(const Physics&) = delete;
+	Physics(Physics&&) = delete;
+	Physics& operator= (const Physics&&) = delete;
 
 	/// <summary>
 	/// インスタンスを取得
@@ -104,7 +109,10 @@ public:
 	/// <summary>
 	/// 更新（登録オブジェクトの物理移動、衝突通知）
 	/// </summary>
-	void Update();	
+	void Update();
+
+
+	void Clear();
 
 private:
 	/// <summary>
