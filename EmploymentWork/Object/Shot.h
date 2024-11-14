@@ -21,7 +21,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="physics">物理クラスポインタ</param>
-	void Init(std::shared_ptr<MyLib::Physics> physics)override;
+	void Init()override;
 	/// <summary>
 	/// 生成座標と向きと攻撃力を設定
 	/// </summary>

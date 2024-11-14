@@ -84,11 +84,8 @@ Player::~Player()
 /// <summary>
 /// 初期化
 /// </summary>
-void Player::Init(std::shared_ptr<MyLib::Physics> physics)
+void Player::Init()
 {
-	//物理クラスを取得
-	m_pPhysics = physics;
-
 	//当たり判定の初期化
 	OnEntryPhysics();
 
@@ -157,7 +154,7 @@ void Player::Update(SceneGame* pScene)
 		if (m_attackButtonPushCount % 20 == 0)
 		{
 			std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
-			shot->Init(m_pPhysics.lock());
+			shot->Init();
 			shot->Set(m_pos, m_cameraDirection, m_status.atk);
 
 			//弾の管理をゲームシーンに任せる
@@ -240,7 +237,7 @@ void Player::Update(SceneGame* pScene)
 	//バグなどで地面をすり抜けて落下時の対策
 	if (m_pos.y <= -100.0f)
 	{
-		Collidable::OnExistPhysics();(m_pPhysics.lock());
+		Collidable::OnExistPhysics();
 		m_isDeath = true;
 	}
 }

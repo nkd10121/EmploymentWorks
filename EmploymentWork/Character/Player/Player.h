@@ -23,7 +23,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="physics">物理クラスポインタ</param>
-	void Init(std::shared_ptr<MyLib::Physics> physics);
+	void Init();
 	/// <summary>
 	/// 更新
 	/// </summary>

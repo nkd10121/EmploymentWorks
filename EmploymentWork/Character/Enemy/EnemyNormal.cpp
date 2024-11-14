@@ -55,11 +55,8 @@ EnemyNormal::~EnemyNormal()
 /// <summary>
 /// 初期化
 /// </summary>
-void EnemyNormal::Init(std::shared_ptr<MyLib::Physics> physics)
+void EnemyNormal::Init()
 {
-	//物理クラスを取得
-	m_pPhysics = physics;
-
 	//当たり判定の初期化
 	OnEntryPhysics();
 

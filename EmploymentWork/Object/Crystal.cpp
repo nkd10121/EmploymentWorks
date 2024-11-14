@@ -45,7 +45,7 @@ Crystal::~Crystal()
 /// <summary>
 /// 初期化
 /// </summary>
-void Crystal::Init(std::shared_ptr<MyLib::Physics> physics)
+void Crystal::Init()
 {
 	//当たり判定の初期化
 	OnEntryPhysics();

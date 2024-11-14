@@ -20,7 +20,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="physics">物理クラスポインタ</param>
-	virtual void Init(std::shared_ptr<MyLib::Physics> physics);
+	virtual void Init()override;
 	/// <summary>
 	/// 終了
 	/// </summary>

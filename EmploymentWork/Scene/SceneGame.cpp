@@ -88,7 +88,7 @@ void SceneGame::Init()
 
 	//プレイヤーの生成
 	m_pPlayer = std::make_shared<Player>();
-	m_pPlayer->Init(m_pPhysics);
+	m_pPlayer->Init();
 
 	//カメラの生成
 	m_pCamera = std::make_shared<Camera>();
@@ -96,7 +96,7 @@ void SceneGame::Init()
 
 	//クリスタルの生成
 	m_pCrystal = std::make_shared<Crystal>(10);
-	m_pCrystal->Init(m_pPhysics);
+	m_pCrystal->Init();
 	m_pCrystal->Set(Vec3(0.0f,0.0f,10.0f));
 
 	//ステージ情報をロード
@@ -105,7 +105,7 @@ void SceneGame::Init()
 
 	//DEBUG:ポーションを生成
 	m_pObjects.emplace_back(std::make_shared<HealPortion>());
-	m_pObjects.back()->Init(m_pPhysics);
+	m_pObjects.back()->Init();
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
 	//DEBUG:敵を生成
@@ -115,7 +115,7 @@ void SceneGame::Init()
 		{
 			m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
 			m_pEnemies.back()->SetPos(Vec3(-48.0f + 16 * i,8.0f, -48.0f + 16 * j));
-			m_pEnemies.back()->Init(m_pPhysics);
+			m_pEnemies.back()->Init();
 		}
 	}
 
@@ -185,7 +185,7 @@ void SceneGame::Update()
 	{
 		//プレイヤーの生成
 		m_pPlayer = std::make_shared<Player>();
-		m_pPlayer->Init(m_pPhysics);
+		m_pPlayer->Init();
 	}
 
 	//敵の更新

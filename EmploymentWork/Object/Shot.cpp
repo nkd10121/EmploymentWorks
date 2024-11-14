@@ -38,7 +38,7 @@ Shot::~Shot()
 /// <summary>
 /// 初期化
 /// </summary>
-void Shot::Init(std::shared_ptr<MyLib::Physics> physics)
+void Shot::Init()
 {
 	//当たり判定の初期化
 	OnEntryPhysics();

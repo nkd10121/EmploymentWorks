@@ -24,7 +24,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	virtual void Init(std::shared_ptr<MyLib::Physics> physics) {};
+	virtual void Init() {};
 
 	virtual void Finalize();
 	/// <summary>

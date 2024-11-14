@@ -107,8 +107,6 @@ protected:
 	Status m_status;	//ステータス
 	int m_hpMax;
 
-	std::weak_ptr<MyLib::Physics> m_pPhysics;	
-
 	/*アニメーション関係*/
 	std::map<std::string, int> m_animIdx;
 	int m_equipAnimNo;			//1つ前ののアニメーション

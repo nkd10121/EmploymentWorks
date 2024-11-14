@@ -48,7 +48,7 @@ HealPortion::~HealPortion()
 /// <summary>
 /// 初期化
 /// </summary>
-void HealPortion::Init(std::shared_ptr<MyLib::Physics> physics)
+void HealPortion::Init()
 {
 	OnEntryPhysics();
 
