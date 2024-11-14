@@ -45,7 +45,6 @@ private:
 	{
 		std::shared_ptr<Collidable> own;	//自分自身
 		std::shared_ptr<Collidable> send;	//当たった相手
-		Collidable::Collide colide;			//当たった判定
 		eOnCollideInfoKind kind;			//種類
 	};
 

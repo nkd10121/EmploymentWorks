@@ -85,7 +85,7 @@ namespace MyLib
 		// 物理データ
 		std::shared_ptr<Rigidbody> rigidbody;
 		//当たり判定情報
-		std::list<Collide> m_colliders;
+		std::vector<Collide> m_colliders;
 
 	private:
 		//タグ

@@ -177,6 +177,6 @@ void EnemyNormal::UpdateModelPos()
 
 void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
 {
-	int a = 0;
+	auto te = Collidable::m_colliders;
 }
 
