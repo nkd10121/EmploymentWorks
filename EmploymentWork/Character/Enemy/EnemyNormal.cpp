@@ -25,11 +25,21 @@ namespace
 EnemyNormal::EnemyNormal():
 	EnemyBase()
 {
-	//当たり判定の作成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
-	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
-	sphereCol->m_radius = kCollisionCapsuleRadius;		
-	sphereCol->m_size = kCollisionCapsuleSize;
+	{
+		//当たり判定の作成
+		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);	//追加
+		auto cupsuleCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());			//キャスト
+		cupsuleCol->m_radius = kCollisionCapsuleRadius;		//カプセルの半径
+		cupsuleCol->m_size = kCollisionCapsuleSize;			//カプセルの大きさ
+	}
+
+	{
+		//当たり判定の作成
+		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
+		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+		sphereCol->m_radius = kCollisionCapsuleRadius*6;
+	}
+
 
 	//キャラクター名を設定
 	m_characterName = "EnemyNormal";

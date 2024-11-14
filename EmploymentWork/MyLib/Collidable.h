@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "GameObjectTag.h"
 #include <List>
 #include <memory>
@@ -10,45 +10,45 @@ namespace MyLib
 	class ColliderBase;
 
 	/// <summary>
-	/// “–‚½‚è”»’èƒNƒ‰ƒX
+	/// å½“ãŸã‚Šåˆ¤å®šã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class Collidable : public std::enable_shared_from_this<Collidable>
 	{
 		friend Physics;
 	public:
 
-		// ˆÊ’u•â³‚Ì—Dæ“x‚Ì”»•Ê‚Ég‚¤
+		// ä½ç½®è£œæ­£ã®å„ªå…ˆåº¦ã®åˆ¤åˆ¥ã«ä½¿ã†
 		enum class Priority : int
 		{
-			Low,		// ’á
-			Middle,		// ’†
-			High,		// ‚
-			Static,		// “®‚©‚È‚¢iÅ‚j
+			Low,		// ä½
+			Middle,		// ä¸­
+			High,		// é«˜
+			Static,		// å‹•ã‹ãªã„ï¼ˆæœ€é«˜ï¼‰
 		};
 
 	public:
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
-		/// <param name="priority">—Dæ“x</param>
-		/// <param name="tag">ƒ^ƒO</param>
+		/// <param name="priority">å„ªå…ˆåº¦</param>
+		/// <param name="tag">ã‚¿ã‚°</param>
 		Collidable(Priority priority, GameObjectTag tag);
 		/// <summary>
-		/// ƒfƒXƒgƒ‰ƒNƒ^
+		/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		virtual ~Collidable();
 		/// <summary>
-		/// ‰Šú‰»(©g‚É“–‚½‚è”»’è‚ğ’Ç‰Á)
+		/// åˆæœŸåŒ–(è‡ªèº«ã«å½“ãŸã‚Šåˆ¤å®šã‚’è¿½åŠ )
 		/// </summary>
-		/// <param name="physics">•¨—ƒNƒ‰ƒXƒ|ƒCƒ“ƒ^</param>
+		/// <param name="physics">ç‰©ç†ã‚¯ãƒ©ã‚¹ãƒã‚¤ãƒ³ã‚¿</param>
 		virtual void Init(std::shared_ptr<MyLib::Physics> physics);
 		/// <summary>
-		/// I—¹(©g‚Ì“–‚½‚è”»’è‚ğíœ)
+		/// çµ‚äº†(è‡ªèº«ã®å½“ãŸã‚Šåˆ¤å®šã‚’å‰Šé™¤)
 		/// </summary>
-		/// <param name="physics">•¨—ƒNƒ‰ƒXƒ|ƒCƒ“ƒ^</param>
+		/// <param name="physics">ç‰©ç†ã‚¯ãƒ©ã‚¹ãƒã‚¤ãƒ³ã‚¿</param>
 		virtual void Finalize(std::shared_ptr<MyLib::Physics> physics);
 
-		//“–‚½‚è”»’èŠÖ”
+		//å½“ãŸã‚Šåˆ¤å®šé–¢æ•°
 		virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider) {}
 		virtual void OnCollideStay(const std::shared_ptr<Collidable>& colider) {}
 		virtual void OnCollideExit(const std::shared_ptr<Collidable>& colider) {}
@@ -57,35 +57,35 @@ namespace MyLib
 		virtual void OnTriggerExit(const std::shared_ptr<Collidable>& colider) {}
 
 		/// <summary>
-		/// ƒ^ƒO‚ğæ“¾
+		/// ã‚¿ã‚°ã‚’å–å¾—
 		/// </summary>
-		/// <returns>ƒ^ƒO</returns>
+		/// <returns>ã‚¿ã‚°</returns>
 		GameObjectTag GetTag() const { return tag; }
 		/// <summary>
-		/// —Dæ“x‚ğæ“¾
+		/// å„ªå…ˆåº¦ã‚’å–å¾—
 		/// </summary>
-		/// <returns>—Dæ“x</returns>
+		/// <returns>å„ªå…ˆåº¦</returns>
 		Priority GetPriority() const { return priority; }
 
 	protected:
 		/// <summary>
-		/// “–‚½‚è”»’è‚ğ’Ç‰Á
+		/// å½“ãŸã‚Šåˆ¤å®šã‚’è¿½åŠ 
 		/// </summary>
-		/// <param name="kind">“–‚½‚è”»’è‚Ìí—Ş</param>
-		/// <param name="isTrigger">‰Ÿ‚µo‚µ”»’è‚ğ‚·‚é‚©‚Ç‚¤‚©</param>
-		/// <returns>©g</returns>
+		/// <param name="kind">å½“ãŸã‚Šåˆ¤å®šã®ç¨®é¡</param>
+		/// <param name="isTrigger">æŠ¼ã—å‡ºã—åˆ¤å®šã‚’ã—ãªã„ã‹ã©ã†ã‹</param>
+		/// <returns>è‡ªèº«</returns>
 		std::shared_ptr<ColliderBase> AddCollider(const ColliderBase::Kind& kind, bool isTrigger);
 
 	protected:
-		// •¨—ƒf[ƒ^
+		// ç‰©ç†ãƒ‡ãƒ¼ã‚¿
 		std::shared_ptr<Rigidbody> rigidbody;
-		//“–‚½‚è”»’èî•ñ
+		//å½“ãŸã‚Šåˆ¤å®šæƒ…å ±
 		std::list<std::shared_ptr<ColliderBase>> m_colliders;
 
 	private:
-		//ƒ^ƒO
+		//ã‚¿ã‚°
 		GameObjectTag tag;
-		//—Dæ“x
+		//å„ªå…ˆåº¦
 		Priority priority;
 	};
 }

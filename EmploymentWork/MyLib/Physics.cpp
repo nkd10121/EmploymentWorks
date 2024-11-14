@@ -190,11 +190,17 @@ void MyLib::Physics::Update()
 
 			for (auto& col : item->m_colliders)
 			{
-				rad = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
-				size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+				if (col->GetKind() == ColliderBase::Kind::Cupsule)
+				{
+					rad = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
+					size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
 
-				modelHandle = m_stageCollisionHandle;
-
+					modelHandle = m_stageCollisionHandle;
+				}
+				else
+				{
+					continue;
+				}
 				//if (item->GetTag() == GameObjectTag::Player)
 				//{
 				//	modelHandle = m_stageCollisionHandle;
@@ -815,8 +821,11 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 	float size = 0.0f;
 	for (auto& col : col->m_colliders)
 	{
-		radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
-		size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+		if (col->GetKind() == ColliderBase::Kind::Cupsule)
+		{
+			radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
+			size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+		}
 	}
 
 	// 壁ポリゴンがない場合は何もしない
@@ -935,8 +944,11 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 	float size = 0.0f;
 	for (auto& col : col->m_colliders)
 	{
-		radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
-		size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+		if (col->GetKind() == ColliderBase::Kind::Cupsule)
+		{
+			radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
+			size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+		}
 	}
 
 	auto capsuleCenterPos = col->rigidbody->GetNextPosVECTOR();
@@ -1176,8 +1188,11 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 	float size = 0.0f;
 	for (auto& col : col->m_colliders)
 	{
-		radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
-		size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+		if (col->GetKind() == ColliderBase::Kind::Cupsule)
+		{
+			radius = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_radius;
+			size = dynamic_cast<MyLib::ColliderCupsule*> (col.get())->m_size;
+		}
 	}
 
 	// 床ポリゴンとの当たり判定処理
