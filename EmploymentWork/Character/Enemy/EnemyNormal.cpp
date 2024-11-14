@@ -34,10 +34,10 @@ EnemyNormal::EnemyNormal():
 	}
 
 	{
-		//当たり判定の作成
-		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
-		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-		sphereCol->m_radius = kCollisionCapsuleRadius*6;
+		////当たり判定の作成
+		//auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
+		//auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+		//sphereCol->m_radius = kCollisionCapsuleRadius*6;
 	}
 
 

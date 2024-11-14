@@ -121,6 +121,14 @@ void Player::Init()
 }
 
 /// <summary>
+/// 終了処理
+/// </summary>
+void Player::Finalize()
+{
+	Collidable::OnExistPhysics();
+}
+
+/// <summary>
 /// 更新
 /// </summary>
 void Player::Update(SceneGame* pScene)

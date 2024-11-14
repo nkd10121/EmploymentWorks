@@ -25,6 +25,10 @@ public:
 	/// <param name="physics">物理クラスポインタ</param>
 	void Init();
 	/// <summary>
+	/// 終了
+	/// </summary>
+	void Finalize();
+	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update(SceneGame* pScene);

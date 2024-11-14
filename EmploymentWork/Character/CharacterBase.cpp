@@ -36,6 +36,7 @@ CharacterBase::~CharacterBase()
 {
 	//基底クラスで削除しておく
 	MV1DeleteModel(m_modelHandle);
+
 }
 
 /// <summary>

@@ -13,11 +13,20 @@
 #include "LoadCSV.h"
 #include "Game.h"
 
-#include "EnemyBase.h"
+#include "SwarmEnemy.h"
 #include "EnemyNormal.h"
 
 namespace
 {
+	const unsigned int kColor[6]
+	{
+		0xffffff,
+		0x000000,
+		0xff0000,
+		0x00ff00,
+		0x0000ff,
+		0xffff00
+	};
 }
 
 /// <summary>
@@ -111,12 +120,18 @@ void SceneGame::Init()
 	//DEBUG:敵を生成
 	for (int i = 0; i < 6; i++)
 	{
+		auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
+
 		for (int j = 0; j < 6; j++)
 		{
-			m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
-			m_pEnemies.back()->SetPos(Vec3(-48.0f + 16 * i,8.0f, -48.0f + 16 * j));
-			m_pEnemies.back()->Init();
+			auto add = std::make_shared<EnemyNormal>();
+			add->SetPos(Vec3(-48.0f + 16 * i,8.0f, -48.0f + 16 * j));
+			add->Init();
+
+			addSwarm->AddSwarm(add);
+
 		}
+		m_pEnemies.emplace_back(addSwarm);
 	}
 
 
@@ -133,6 +148,8 @@ void SceneGame::End()
 	//TODO:ここでリソースの開放をする
 
 	MV1DeleteModel(m_stageModel);
+
+	m_pPlayer->Finalize();
 
 	//ポーションの解放
 	for (auto& object : m_pObjects)
@@ -197,7 +214,7 @@ void SceneGame::Update()
 	{
 		auto it = std::remove_if(m_pEnemies.begin(), m_pEnemies.end(), [](auto& v)
 			{
-				return v->GetIsExist() == false;
+				return v->GetIsExistMember() == false;
 			});
 		m_pEnemies.erase(it, m_pEnemies.end());
 	}
