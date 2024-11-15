@@ -41,24 +41,6 @@ namespace
 MyLib::Physics::Physics(/*int normalStageCollisionHandle,int enemyStageCollisionHandle*/)
 {
 
-
-	//for (float x = -400.0f; x < 400.0f; x += 8.0f)
-	//{
-	//	for (float z = -400.0f; z < 400.0f; z += 8.0f)
-	//	{
-	//		auto hit = MV1CollCheck_LineDim(m_stageCollisionHandle, -1, VGet(x, 100, z), VGet(x, 0, z));
-	//		if (hit.HitNum > 0)
-	//		{
-	//			for (int i = 0; i < hit.HitNum; i++)
-	//			{
-	//				TrapManager::GetInstance().AddTrapPos(Vec3(hit.Dim[i].HitPosition));
-	//			}
-	//		}
-	//	}
-	//}
-
-	//m_stageCollisionHandle = normalStageCollisionHandle;
-	//m_enemyCollisionHandle = enemyStageCollisionHandle;
 }
 
 /// <summary>
@@ -313,9 +295,9 @@ void MyLib::Physics::CheckColide()
 				if (objA == objB)
 					continue;
 
-				for (const auto& colA : objA->m_colliders)
+				for (int i = 0;i < objA->m_colliders.size();i++)
 				{
-					for (const auto& colB : objB->m_colliders)
+					for (int j = 0;j < objB->m_colliders.size();j++)
 					{
 #if true
 						//オブジェクト間の距離が一定以上であればそもそも計算しない
@@ -370,10 +352,10 @@ void MyLib::Physics::CheckColide()
 
 						checkNum++;
 
-						if (!IsCollide(objA->rigidbody, objB->rigidbody, colA.collide.get(), colB.collide.get())) continue;
+						if (!IsCollide(objA->rigidbody, objB->rigidbody, objA->m_colliders[i].collide.get(), objB->m_colliders[j].collide.get())) continue;
 
 
-						bool isTrigger = colA.collide->IsTrigger() || colB.collide->IsTrigger();
+						bool isTrigger = objA->m_colliders[i].collide->IsTrigger() || objB->m_colliders[j].collide->IsTrigger();
 
 						if (isTrigger)
 						{
@@ -395,14 +377,14 @@ void MyLib::Physics::CheckColide()
 							break;
 						}
 
-						auto primaryCollider = colA;
-						auto secondaryCollider = colB;
+						auto primaryCollider = objA->m_colliders[i];
+						auto secondaryCollider = objB->m_colliders[j];
 						if (objA->priority < objB->priority)
 						{
 							primary = objB;
 							secondary = objA;
-							primaryCollider = colB;
-							secondaryCollider = colA;
+							primaryCollider = objB->m_colliders[j];
+							secondaryCollider = objA->m_colliders[i];
 						}
 
 						FixNextPosition(primary->rigidbody, secondary->rigidbody, primaryCollider.collide.get(), secondaryCollider.collide.get());
