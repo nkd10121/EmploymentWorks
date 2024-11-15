@@ -43,12 +43,22 @@ private:
 	//なにかと当たったオブジェクトの情報
 	struct OnCollideInfoData
 	{
-		std::shared_ptr<Collidable> own;	//自分自身
-		std::shared_ptr<Collidable> send;	//当たった相手
+		std::weak_ptr<Collidable> own;	//自分自身
+		std::weak_ptr<Collidable> send;	//当たった相手
+		int colIndex;
 		eOnCollideInfoKind kind;			//種類
 	};
 
-	using SendCollideInfo = std::unordered_map<std::shared_ptr<Collidable>, std::list<std::shared_ptr<Collidable>>>;
+	struct SendInfo
+	{
+		std::weak_ptr<Collidable> own;
+		std::weak_ptr<Collidable> send;
+		int ownColIndex;
+		int sendColIndex;
+	};
+
+	//using SendCollideInfo = std::unordered_map<std::shared_ptr<Collidable>, std::list<std::shared_ptr<Collidable>>>;
+	using SendCollideInfo = std::list<SendInfo>;
 
 private:
 	/// <summary>
@@ -119,6 +129,8 @@ public:
 	void Clear();
 
 private:
+	std::vector<std::shared_ptr<Collidable>> GetCollisionList() const;
+
 	/// <summary>
 	/// 当たり判定チェック
 	/// </summary>
@@ -138,7 +150,7 @@ private:
 	/// <param name="objA">オブジェクトA</param>
 	/// <param name="objB">オブジェクトB</param>
 	/// <param name="info">登録する配列</param>
-	void AddNewCollideInfo(const std::shared_ptr<Collidable>& objA, const std::shared_ptr<Collidable>& objB, SendCollideInfo& info);
+	void AddNewCollideInfo(const std::weak_ptr<Collidable>& objA, const std::weak_ptr<Collidable>& objB, int colIndexA, int colIndexB, SendCollideInfo& info);
 	/// <summary>
 	/// 移動予定の座標を修正する
 	/// </summary>
@@ -160,7 +172,7 @@ private:
 	/// <param name="own">自身</param>
 	/// <param name="send">衝突した相手</param>
 	/// <param name="kind">当たり判定の種類</param>
-	void AddOnCollideInfo(const std::shared_ptr<Collidable>& own, const std::shared_ptr<Collidable>& send, eOnCollideInfoKind kind);
+	void AddOnCollideInfo(const SendInfo& info, eOnCollideInfoKind kind);
 	/// <summary>
 	/// 最終的な位置を決定する
 	/// </summary>
@@ -189,7 +201,7 @@ private:
 	void FixNowPositionWithFloor(std::shared_ptr<Collidable>& col);
 
 private:
-	std::list<std::shared_ptr<Collidable>> m_collidables;	//登録されたCollidableのリスト
+	std::vector<std::shared_ptr<Collidable>> m_collidables;	//登録されたCollidableのリスト
 	std::list<OnCollideInfoData> m_onCollideInfo;			//衝突したオブジェクトのリスト
 
 	SendCollideInfo m_newCollideInfo;	//衝突したオブジェクトのリスト

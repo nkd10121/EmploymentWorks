@@ -1,7 +1,10 @@
 ﻿#include "EnemyNormal.h"
 #include "EnemyStateIdle.h"
 #include "EnemyStateDeath.h"
+#include "Shot.h"
 
+#include "SoundManager.h"
+#include "EffectManager.h"
 #include "LoadCSV.h"
 #include "ModelManager.h"
 
@@ -22,7 +25,7 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-EnemyNormal::EnemyNormal():
+EnemyNormal::EnemyNormal() :
 	EnemyBase()
 {
 	{
@@ -162,9 +165,14 @@ void EnemyNormal::Draw()
 void EnemyNormal::CreateSearchCollision()
 {
 	//当たり判定の作成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-	sphereCol->m_radius = kCollisionCapsuleRadius*6;
+	sphereCol->m_radius = kCollisionCapsuleRadius * 6;
+}
+
+void EnemyNormal::DeleteSearchCollision()
+{
+	Collidable::DeleteCollider(Collidable::GetCollider(MyLib::ColliderBase::CollisionTag::Search));
 }
 
 void EnemyNormal::UpdateModelPos()
@@ -175,8 +183,61 @@ void EnemyNormal::UpdateModelPos()
 	MV1SetPosition(m_modelHandle, m_drawPos.ToVECTOR());
 }
 
-void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
+void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
 {
-	auto te = Collidable::m_colliders;
+	//当たったオブジェクトのタグを取得する
+	m_hitObjectTag = colider->GetTag();
+
+	if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Normal)
+	{
+		//当たったオブジェクトがプレイヤーが撃った弾なら
+		if (m_hitObjectTag == GameObjectTag::PlayerShot)
+		{
+			printf("敵と弾が当たった!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+
+			{
+				//弾の攻撃力分自身のHPを減らす(防御力と調整しながら)
+				Shot* col = dynamic_cast<Shot*>(colider.get());
+				auto damage = col->GetAtk() - m_status.def;
+				if (damage > 0)
+				{
+					m_status.hp -= damage;
+				}
+
+				//敵ヒットSEを流す
+				SoundManager::GetInstance().PlaySE("S_ENEMYHIT");
+				//敵ヒットエフェクトを出す
+				EffectManager::GetInstance().CreateEffect("E_ENEMYHIT", rigidbody->GetPos());
+				//当たった弾の終了処理を呼ぶ
+				col->End();
+#ifdef _DEBUG	//デバッグ描画
+
+#endif
+			}
+		}
+	}
+	else if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
+	{
+		//当たったオブジェクトがプレイヤーが撃った弾なら
+		if (m_hitObjectTag == GameObjectTag::Player)
+		{
+			m_isSearchInPlayer = true;
+		}
+	}
+}
+
+void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex)
+{
+	//当たったオブジェクトのタグを取得する
+	m_hitObjectTag = colider->GetTag();
+
+	//当たったオブジェクトがプレイヤーが撃った弾なら
+	if (m_hitObjectTag == GameObjectTag::Player)
+	{
+		if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
+		{
+			m_isSearchInPlayer = false;
+		}
+	}
 }
 

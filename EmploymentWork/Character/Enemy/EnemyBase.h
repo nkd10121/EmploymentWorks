@@ -52,17 +52,19 @@ public:
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
-	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider);
+	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 	/// <summary>
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
-	virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
+	virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 
 	/// <summary>
 	/// 索敵判定の作成
 	/// </summary>
 	virtual void CreateSearchCollision() {};
+
+	virtual void DeleteSearchCollision() {};
 
 	/// <summary>
 	/// 3Dモデルの座標更新
@@ -75,12 +77,24 @@ public:
 	/// <returns>存在フラグ</returns>
 	const bool GetIsExist()const { return m_isExist; }
 
+	/// <summary>
+	/// 死亡アニメーションを開始しているかどうかを取得
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsStartDeathAnim()const { return m_isStartDeathAnimation; }
+
+
+	const bool GetIsSearchInPlayer()const { return m_isSearchInPlayer; }
+
+
 protected:
 	EnemyKind kind;		//種類
 	bool m_isExist;		//存在フラグ
 	bool m_isStartDeathAnimation;	//死亡アニメーションを開始するか
 
 	Vec3 m_drawPos;		//描画座標
+
+	bool m_isSearchInPlayer;
 
 	GameObjectTag m_hitObjectTag;	//あったオブジェクトタグ
 };

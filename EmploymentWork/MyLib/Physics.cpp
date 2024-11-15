@@ -84,10 +84,11 @@ void MyLib::Physics::Entry(std::shared_ptr<Collidable> collidable)
 /// <param name="collidable">削除する当たり判定</param>
 void MyLib::Physics::Exit(std::shared_ptr<Collidable> collidable)
 {
-	bool found = (std::find(m_collidables.begin(), m_collidables.end(), collidable) != m_collidables.end());
-	if (found)
+	auto it = std::find(m_collidables.begin(), m_collidables.end(), collidable);
+	// 登録済みなら削除
+	if (it != m_collidables.end())
 	{
-		m_collidables.remove(collidable);
+		m_collidables.erase(it);
 	}
 	// 登録されてなかったらエラー
 	else
@@ -224,29 +225,36 @@ void MyLib::Physics::Update()
 
 	for (const auto& info : m_onCollideInfo)
 	{
-		if (info.kind == eOnCollideInfoKind::CollideEnter)
+
+		if (!info.own.expired() && !info.send.expired())
 		{
-			info.own->OnCollideEnter(info.send);
-		}
-		else if (info.kind == eOnCollideInfoKind::CollideStay)
-		{
-			info.own->OnCollideStay(info.send);
-		}
-		else if (info.kind == eOnCollideInfoKind::CollideExit)
-		{
-			info.own->OnCollideExit(info.send);
-		}
-		else if (info.kind == eOnCollideInfoKind::TriggerEnter)
-		{
-			info.own->OnTriggerEnter(info.send);
-		}
-		else if (info.kind == eOnCollideInfoKind::TriggerStay)
-		{
-			info.own->OnTriggerStay(info.send);
-		}
-		else if (info.kind == eOnCollideInfoKind::TriggerExit)
-		{
-			info.own->OnTriggerExit(info.send);
+			if (info.own.lock()->m_colliders.size() != 0)
+			{
+				if (info.kind == eOnCollideInfoKind::CollideEnter)
+				{
+					info.own.lock()->OnCollideEnter(info.send.lock(), info.colIndex);
+				}
+				else if (info.kind == eOnCollideInfoKind::CollideStay)
+				{
+					info.own.lock()->OnCollideStay(info.send.lock(), info.colIndex);
+				}
+				else if (info.kind == eOnCollideInfoKind::CollideExit)
+				{
+					info.own.lock()->OnCollideExit(info.send.lock(), info.colIndex);
+				}
+				else if (info.kind == eOnCollideInfoKind::TriggerEnter)
+				{
+					info.own.lock()->OnTriggerEnter(info.send.lock(), info.colIndex);
+				}
+				else if (info.kind == eOnCollideInfoKind::TriggerStay)
+				{
+					info.own.lock()->OnTriggerStay(info.send.lock(), info.colIndex);
+				}
+				else if (info.kind == eOnCollideInfoKind::TriggerExit)
+				{
+					info.own.lock()->OnTriggerExit(info.send.lock(), info.colIndex);
+				}
+			}
 		}
 	}
 }
@@ -264,11 +272,101 @@ void MyLib::Physics::Clear()
 	m_preTirrigerInfo.clear();
 }
 
+std::vector<std::shared_ptr<MyLib::Collidable>> MyLib::Physics::GetCollisionList() const
+{
+	std::vector<std::shared_ptr<Collidable>> ret;
+
+	for (int i = 0; i < m_collidables.size(); i++)
+	{
+		for (int j = i + 1; j < m_collidables.size(); j++)
+		{
+			auto& obj1 = m_collidables[i];
+			auto& obj2 = m_collidables[j];
+
+			if (obj1->GetTag() != GameObjectTag::Player && obj2->GetTag() == GameObjectTag::SwarmEnemy)
+			{
+				continue;
+			}
+
+			if (obj1->GetTag() == GameObjectTag::Player && obj2->GetTag() == GameObjectTag::SwarmEnemy)
+			{
+				// 判定リストに追加
+				ret.push_back(obj1);
+				ret.push_back(obj2);
+				continue;
+			}
+
+			// 移動しないオブジェクト同士なら判定しない
+			if (obj1->GetPriority() == Collidable::Priority::Static && obj2->GetPriority() == Collidable::Priority::Static) continue;
+
+			bool isAdd = false;
+			for (auto& col1 : obj1->m_colliders)
+			{
+				float lengthA = 0.0f;
+				if (col1.collide->GetKind() == ColliderBase::Kind::Cupsule)
+				{
+					auto colA = dynamic_cast<MyLib::ColliderCupsule*>(col1.collide.get());
+					lengthA = colA->m_radius + colA->m_size;
+				}
+				else if (col1.collide->GetKind() == ColliderBase::Kind::Sphere)
+				{
+					auto colA = dynamic_cast<MyLib::ColliderSphere*>(col1.collide.get());
+					lengthA = colA->m_radius;
+				}
+
+				for (auto& col2 : obj2->m_colliders)
+				{
+					float lengthB = 0.0f;
+					if (col2.collide->GetKind() == ColliderBase::Kind::Cupsule)
+					{
+						auto colB = dynamic_cast<MyLib::ColliderCupsule*>(col2.collide.get());
+						lengthB = colB->m_radius + colB->m_size;
+					}
+					else if (col2.collide->GetKind() == ColliderBase::Kind::Sphere)
+					{
+						auto colB = dynamic_cast<MyLib::ColliderSphere*>(col2.collide.get());
+						lengthB = colB->m_radius;
+					}
+
+					const auto& pos1 = obj1->rigidbody->GetNextPos();
+					const auto& pos2 = obj2->rigidbody->GetNextPos();
+
+					float maxDistance = 10.0f * 10.0f;
+
+					//もし規定距離より比較する二つの大きさの合計が大きければ問答無用で追加する
+					if (maxDistance < lengthA + lengthB)
+					{
+						// 判定リストに追加
+						ret.push_back(obj1);
+						ret.push_back(obj2);
+						isAdd = true;
+						break;
+					}
+
+					if ((pos1 - pos2).SqLength() < maxDistance)
+					{
+						// 判定リストに追加
+						ret.push_back(obj1);
+						ret.push_back(obj2);
+						isAdd = true;
+						break;
+					}
+				}
+				if (isAdd) break;
+			}
+		}
+	}
+
+
+	return ret;
+}
+
 /// <summary>
 /// 当たり判定チェック
 /// </summary>
 void MyLib::Physics::CheckColide()
 {
+#if false
 	int checkNum = 0;
 
 	// 衝突通知、ポジション補正
@@ -295,29 +393,43 @@ void MyLib::Physics::CheckColide()
 				if (objA == objB)
 					continue;
 
-				for (int i = 0;i < objA->m_colliders.size();i++)
+				for (int i = 0; i < objA->m_colliders.size(); i++)
 				{
-					for (int j = 0;j < objB->m_colliders.size();j++)
+					for (int j = 0; j < objB->m_colliders.size(); j++)
 					{
-#if true
-						//オブジェクト間の距離が一定以上であればそもそも計算しない
-						//MEMO:処理が軽くなるか今のところ分かっていない。たくさんオブジェクトが出るようになれば変わるのかな。
-						//これは結構効果ありそう
-						auto le = (Abs(objA->rigidbody->GetNextPos() - objB->rigidbody->GetNextPos())).Length();
-						if (le >= 50.0f)
+						auto& colA = objA->m_colliders.at(i);
+						auto& colB = objB->m_colliders.at(j);
+
+						// 優先度に合わせて変数を変更
+						auto primary = objA;
+						auto secondary = objB;
+						auto primaryCollider = colA;
+						auto secondaryCollider = colB;
+						auto index = i;
+						// Aの方が優先度低い場合
+						if (objA->GetPriority() < objB->GetPriority())
 						{
-#ifdef _DEBUG
-							//printf("当たり判定計算省略\n");
-#endif
-							continue;
+							primary = objB;
+							secondary = objA;
+							primaryCollider = colB;
+							secondaryCollider = colA;
+							index = j;
 						}
-#ifdef _DEBUG
-						else
+						// 優先度が変わらない場合
+						else if (objA->GetPriority() == objB->GetPriority())
 						{
-							//printf("オブジェクト間の距離:%f\n", le);
+							// 速度の速い方を優先度が高いことにする
+							if (objA->rigidbody->GetVelocity().SqLength() < objB->rigidbody->GetVelocity().SqLength())
+							{
+								primary = objB;
+								secondary = objA;
+								primaryCollider = colB;
+								secondaryCollider = colA;
+								index = j;
+							}
 						}
-#endif
-#endif
+
+
 
 #if weight_reduction
 						//最初は新しいペアという認識でいく
@@ -354,38 +466,35 @@ void MyLib::Physics::CheckColide()
 
 						if (!IsCollide(objA->rigidbody, objB->rigidbody, objA->m_colliders[i].collide.get(), objB->m_colliders[j].collide.get())) continue;
 
-
 						bool isTrigger = objA->m_colliders[i].collide->IsTrigger() || objB->m_colliders[j].collide->IsTrigger();
 
 						if (isTrigger)
 						{
-							AddNewCollideInfo(objA, objB, m_newTirrigerInfo);
+							AddNewCollideInfo(objA, objB, i, j, m_newTirrigerInfo);
+							continue;
 						}
 						else
 						{
-							AddNewCollideInfo(objA, objB, m_newCollideInfo);
+							AddNewCollideInfo(objA, objB, i, j, m_newCollideInfo);
 						}
 
-						// Triggerの場合は位置補正はしない
-						if (isTrigger) continue;
+						//auto primary = objA;
+						//auto secondary = objB;
 
-						auto primary = objA;
-						auto secondary = objB;
+						//if (primary == secondary)
+						//{
+						//	break;
+						//}
 
-						if (primary == secondary)
-						{
-							break;
-						}
-
-						auto primaryCollider = objA->m_colliders[i];
-						auto secondaryCollider = objB->m_colliders[j];
-						if (objA->priority < objB->priority)
-						{
-							primary = objB;
-							secondary = objA;
-							primaryCollider = objB->m_colliders[j];
-							secondaryCollider = objA->m_colliders[i];
-						}
+						//auto primaryCollider = objA->m_colliders[i];
+						//auto secondaryCollider = objB->m_colliders[j];
+						//if (objA->priority < objB->priority)
+						//{
+						//	primary = objB;
+						//	secondary = objA;
+						//	primaryCollider = objB->m_colliders[j];
+						//	secondaryCollider = objA->m_colliders[i];
+						//}
 
 						FixNextPosition(primary->rigidbody, secondary->rigidbody, primaryCollider.collide.get(), secondaryCollider.collide.get());
 						// 位置補正をしたらもう一度初めから行う
@@ -407,7 +516,97 @@ void MyLib::Physics::CheckColide()
 		}
 	}
 
-	printf("チェック回数:%d\n",checkNum);
+	printf("チェック回数:%d\n", checkNum);
+
+#else 
+	// 判定リスト取得
+	const auto& checkColliders = GetCollisionList();
+	// 判定リストはペアになっているので半分の数だけ繰り返す
+	int colNum = static_cast<int>(checkColliders.size() * 0.5f);
+
+	// 衝突通知、ポジション補正
+	int		checkCount = 0;	// チェック回数
+	while (true)
+	{
+		bool isNoHit = true;
+
+		for (int i = 0; i < colNum; ++i)
+		{
+			auto objA = checkColliders[i * 2];
+			auto objB = checkColliders[i * 2 + 1];
+
+			for (int i = 0; i < objA->m_colliders.size(); i++)
+			{
+				for (int j = 0; j < objB->m_colliders.size(); j++)
+				{
+					auto& colA = objA->m_colliders.at(i);
+					auto& colB = objB->m_colliders.at(j);
+
+					// 優先度に合わせて変数を変更
+					auto primary = objA;
+					auto secondary = objB;
+					auto primaryCollider = colA;
+					auto secondaryCollider = colB;
+					auto index = i;
+					// Aの方が優先度低い場合
+					if (objA->GetPriority() < objB->GetPriority())
+					{
+						primary = objB;
+						secondary = objA;
+						primaryCollider = colB;
+						secondaryCollider = colA;
+						index = j;
+					}
+					// 優先度が変わらない場合
+					else if (objA->GetPriority() == objB->GetPriority())
+					{
+						// 速度の速い方を優先度が高いことにする
+						if (objA->rigidbody->GetVelocity().SqLength() < objB->rigidbody->GetVelocity().SqLength())
+						{
+							primary = objB;
+							secondary = objA;
+							primaryCollider = colB;
+							secondaryCollider = colA;
+							index = j;
+						}
+					}
+
+					if (!IsCollide(objA->rigidbody, objB->rigidbody, objA->m_colliders[i].collide.get(), objB->m_colliders[j].collide.get())) continue;
+
+					bool isTrigger = objA->m_colliders[i].collide->IsTrigger() || objB->m_colliders[j].collide->IsTrigger();
+
+					if (isTrigger)
+					{
+						AddNewCollideInfo(objA, objB, i, j, m_newTirrigerInfo);
+						continue;
+					}
+					else
+					{
+						AddNewCollideInfo(objA, objB, i, j, m_newCollideInfo);
+					}
+
+					FixNextPosition(primary->rigidbody, secondary->rigidbody, primaryCollider.collide.get(), secondaryCollider.collide.get());
+					// 位置補正をしたらもう一度初めから行う
+					isNoHit = false;
+					break;
+				}
+			}
+		}
+
+		// 判定回数増加
+		checkCount++;
+		// 当たっていなければ終了
+		if (isNoHit) break;
+		// 最大回数確認したら修正がうまく出来ていなくても終了する
+		if (checkCount > 800) break;
+	}
+
+#ifdef _DEBUG
+	printf("試行回数:%d\n", checkCount);
+#endif
+
+
+#endif
 }
 
 /// <summary>
@@ -482,29 +681,16 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 /// <summary>
 /// 当たったオブジェクトのペアを登録する
 /// </summary>
-void MyLib::Physics::AddNewCollideInfo(const std::shared_ptr<Collidable>& objA, const std::shared_ptr<Collidable>& objB, SendCollideInfo& info)
+void MyLib::Physics::AddNewCollideInfo(const std::weak_ptr<Collidable>& objA, const std::weak_ptr<Collidable>& objB, int colIndexA, int colIndexB, SendCollideInfo& info)
 {
-	bool isParentA = info.find(objA) != info.end();
-	bool isParentB = info.find(objB) != info.end();
-	if (isParentA || isParentB)
+	// 既に追加されている通知リストにあれば追加しない
+	for (auto& inf : info)
 	{
-		std::shared_ptr<Collidable> parent = objA;
-		std::shared_ptr<Collidable> child = objB;
-		if (isParentB)
-		{
-			parent = objB;
-			child = objA;
-		}
-		bool isChild = std::find(info[parent].begin(), info[parent].end(), child) != info[parent].end();
-		if (!isChild)
-		{
-			info[parent].emplace_back(child);
-		}
+		if (inf.own.lock() == objA.lock() && inf.send.lock() == objB.lock() && inf.ownColIndex == colIndexA && inf.sendColIndex == colIndexB) return;
+		if (inf.own.lock() == objB.lock() && inf.send.lock() == objA.lock() && inf.ownColIndex == colIndexB && inf.sendColIndex == colIndexA) return;
 	}
-	else
-	{
-		info[objA].emplace_back(objB);
-	}
+
+	info.emplace_back(SendInfo{ objA, objB, colIndexA, colIndexB });
 }
 
 /// <summary>
@@ -612,6 +798,7 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 /// </summary>
 void MyLib::Physics::CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCollideInfo& newSendInfo, bool isTrigger)
 {
+#if false
 	for (auto& parent : newSendInfo)
 	{
 		// 以前の情報に親として登録されているか
@@ -691,18 +878,69 @@ void MyLib::Physics::CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCo
 			}
 		}
 	}
+#else
+	// 1つ前に通知リストが当たったか
+	auto isPreExist = preSendInfo.size() != 0;
+
+	for (auto& info : newSendInfo)
+	{
+		bool isEntry = false;
+
+		// 1つ前に通知リストがあった場合
+		if (isPreExist)
+		{
+			bool isEnter = true;
+			// 1つ前の通知リストをすべて回す
+			auto it = preSendInfo.begin();
+			for (; it != preSendInfo.end(); ++it)
+			{
+				// 通知リストが存在した場合は当たった時の通知を呼ばないようにする
+				if (it->own.lock() == info.own.lock() && it->send.lock() == info.send.lock()) isEnter = false;
+				if (it->own.lock() == info.send.lock() && it->send.lock() == info.own.lock()) isEnter = false;
+				if (!isEnter) break;
+			}
+			if (isEnter)
+			{
+				// 当たった時の通知を追加
+				if (isTrigger) AddOnCollideInfo(info, eOnCollideInfoKind::TriggerEnter);
+				else           AddOnCollideInfo(info, eOnCollideInfoKind::CollideEnter);
+			}
+			else
+			{
+				// 一つ前の通知リストから今回存在する通知のものを削除する
+				preSendInfo.erase(it);
+			}
+		}
+		// 1つ前に通知リストがなかった場合
+		else
+		{
+			// 当たった時の通知を追加
+			if (isTrigger) AddOnCollideInfo(info, eOnCollideInfoKind::TriggerEnter);
+			else           AddOnCollideInfo(info, eOnCollideInfoKind::CollideEnter);
+		}
+
+		// 当たっている状態の通知を追加
+		if (isTrigger) AddOnCollideInfo(info, eOnCollideInfoKind::TriggerStay);
+		else           AddOnCollideInfo(info, eOnCollideInfoKind::CollideStay);
+	}
+
+	// 上で削除されずに残った1つ前の通知リストは今回抜けているため
+	// 離れた時の通知を追加
+	for (auto& info : preSendInfo)
+	{
+		if (isTrigger) AddOnCollideInfo(info, eOnCollideInfoKind::TriggerExit);
+		else           AddOnCollideInfo(info, eOnCollideInfoKind::CollideExit);
+	}
+#endif
 }
 
 /// <summary>
 /// 衝突通知を飛ばす配列に追加する
 /// </summary>
-void MyLib::Physics::AddOnCollideInfo(const std::shared_ptr<Collidable>& own, const std::shared_ptr<Collidable>& send, eOnCollideInfoKind kind)
+void MyLib::Physics::AddOnCollideInfo(const SendInfo& info, eOnCollideInfoKind kind)
 {
-	OnCollideInfoData addInfo;
-	addInfo.own = own;
-	addInfo.send = send;
-	addInfo.kind = kind;
-	m_onCollideInfo.emplace_back(addInfo);
+	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.own, info.send, info.ownColIndex, kind });
+	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.send, info.own, info.sendColIndex, kind });
 }
 
 /// <summary>

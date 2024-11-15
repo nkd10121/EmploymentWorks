@@ -106,7 +106,7 @@ void Crystal::Set(const Vec3& pos)
 /// <summary>
 /// ほかのオブジェクトと衝突したときに呼ばれる
 /// </summary>
-void Crystal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
+void Crystal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
 {
 	//当たったオブジェクトが敵なら自身のHPを減らす
 	if (colider->GetTag() == GameObjectTag::Enemy)

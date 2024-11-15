@@ -28,6 +28,8 @@ void MyLib::Collidable::OnExistPhysics()
 {
 	auto& physics = MyLib::Physics::GetInstance();
 	physics.Exit(shared_from_this());
+
+	m_colliders.clear();
 }
 
 /// <summary>
@@ -60,15 +62,21 @@ std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const Collid
 	return add;
 }
 
-std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::GetCollider(ColliderBase::CollisionTag collisionTag)
+void MyLib::Collidable::DeleteCollider(Collide col)
 {
-	std::shared_ptr<MyLib::ColliderBase> ret;
+	auto newEnd = remove(m_colliders.begin(), m_colliders.end(), col);
+	m_colliders.erase(newEnd, m_colliders.end());
+}
+
+MyLib::Collidable::Collide MyLib::Collidable::GetCollider(ColliderBase::CollisionTag collisionTag)
+{
+	Collide ret;
 
 	for (auto& col : m_colliders)
 	{
 		if (col.collideTag == collisionTag)
 		{
-			ret = col.collide;
+			ret = col;
 		}
 	}
 

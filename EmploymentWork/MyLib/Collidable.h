@@ -20,6 +20,10 @@ namespace MyLib
 		{
 			std::shared_ptr<ColliderBase> collide;
 			ColliderBase::CollisionTag collideTag;
+
+			bool operator==(const Collide& other) const {
+				return this->collide == other.collide;
+			}
 		};
 
 		// 位置補正の優先度の判別に使う
@@ -44,12 +48,12 @@ namespace MyLib
 		virtual ~Collidable();
 
 		//当たり判定関数
-		virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider) {}
-		virtual void OnCollideStay(const std::shared_ptr<Collidable>& colider) {}
-		virtual void OnCollideExit(const std::shared_ptr<Collidable>& colider) {}
-		virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider) {}
-		virtual void OnTriggerStay(const std::shared_ptr<Collidable>& colider) {}
-		virtual void OnTriggerExit(const std::shared_ptr<Collidable>& colider) {}
+		virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider,int colIndex) {}
+		virtual void OnCollideStay(const std::shared_ptr<Collidable>& colider, int colIndex) {}
+		virtual void OnCollideExit(const std::shared_ptr<Collidable>& colider, int colIndex) {}
+		virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex) {}
+		virtual void OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex) {}
+		virtual void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex) {}
 
 		/// <summary>
 		/// タグを取得
@@ -79,7 +83,9 @@ namespace MyLib
 		/// <returns>自身</returns>
 		std::shared_ptr<ColliderBase> AddCollider(const ColliderBase::Kind& kind, bool isTrigger,ColliderBase::CollisionTag collisionTag = ColliderBase::CollisionTag::Normal);
 
-		std::shared_ptr<ColliderBase> GetCollider(ColliderBase::CollisionTag collisionTag);
+		void DeleteCollider(MyLib::Collidable::Collide col);
+
+		Collide GetCollider(ColliderBase::CollisionTag collisionTag);
 
 	protected:
 		// 物理データ

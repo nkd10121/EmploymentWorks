@@ -38,7 +38,8 @@ public:
 	/// <returns>構成メンバーが存在するかどうか</returns>
 	const bool GetIsExistMember()const { return m_isExistMember; }
 
-	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
+	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
+	void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 
 private:
 	std::list<std::shared_ptr<EnemyBase>> m_swarm;	//群れの構成員
@@ -50,5 +51,7 @@ private:
 	bool m_isInPlayer;		//プレイヤーが当たり判定内に入っているかどうか
 
 	unsigned int m_memberColor;	//DEBUG用。誰がどの群れなのか見たい
+
+	int frame;
 };
 

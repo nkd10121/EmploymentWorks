@@ -37,7 +37,7 @@ public:
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
-	virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
+	virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 
 	/// <summary>
 	/// 破壊されたかどうかを取得する

@@ -48,7 +48,7 @@ namespace
 /// </summary>
 Player::Player() :
 	CharacterBase(Collidable::Priority::High, GameObjectTag::Player),
-	m_pos(Vec3(0.0f, kCollisionCapsuleRadius + kCollisionCapsuleSize *5, 0.0f)),
+	m_pos(Vec3(0.0f, kCollisionCapsuleRadius + kCollisionCapsuleSize *8, 0.0f)),
 	temp_moveVec(),
 	m_cameraDirection(),
 	m_rot(),
@@ -331,7 +331,7 @@ void Player::UpdateModelPos()
 /// <summary>
 /// 押し出し処理を行うオブジェクトと衝突したとき
 /// </summary>
-void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
+void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
 {
 	//#ifdef _DEBUG	//デバッグ描画
 	//	std::string message = "プレイヤーが";
@@ -359,7 +359,7 @@ void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider)
 /// <summary>
 /// 押し出し処理を行わないオブジェクトと衝突したとき
 /// </summary>
-void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider)
+void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
 {
 #ifdef _DEBUG	//デバッグ描画
 	std::string message = "プレイヤーが";

@@ -80,12 +80,12 @@ public:
 	/// 押し出し処理を行うオブジェクトと衝突したとき
 	/// </summary>
 	/// <param name="colider">衝突したオブジェクト</param>
-	void OnCollideEnter(const std::shared_ptr<Collidable>& colider)override;
+	void OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 	/// <summary>
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
 	/// <param name="colider">衝突したオブジェクト</param>
-	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider)override;
+	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 
 private:
 	int m_crossbowHandle;
