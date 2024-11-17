@@ -120,7 +120,7 @@ void SceneGame::Init()
 	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
 	//DEBUG:敵を生成
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
 

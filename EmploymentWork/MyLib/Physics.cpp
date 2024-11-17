@@ -895,8 +895,8 @@ void MyLib::Physics::CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCo
 			for (; it != preSendInfo.end(); ++it)
 			{
 				// 通知リストが存在した場合は当たった時の通知を呼ばないようにする
-				if (it->own.lock() == info.own.lock() && it->send.lock() == info.send.lock()) isEnter = false;
-				if (it->own.lock() == info.send.lock() && it->send.lock() == info.own.lock()) isEnter = false;
+				if (it->own.lock() == info.own.lock() && it->send.lock() == info.send.lock() && it->ownColIndex == info.ownColIndex) isEnter = false;
+				if (it->own.lock() == info.send.lock() && it->send.lock() == info.own.lock() && it->ownColIndex == info.ownColIndex) isEnter = false;
 				if (!isEnter) break;
 			}
 			if (isEnter)

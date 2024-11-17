@@ -31,9 +31,9 @@ EnemyNormal::EnemyNormal() :
 	{
 		//当たり判定の作成
 		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);	//追加
-		auto cupsuleCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());			//キャスト
-		cupsuleCol->m_radius = kCollisionCapsuleRadius;		//カプセルの半径
-		cupsuleCol->m_size = kCollisionCapsuleSize;			//カプセルの大きさ
+		auto capsuleCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());			//キャスト
+		capsuleCol->m_radius = kCollisionCapsuleRadius;		//カプセルの半径
+		capsuleCol->m_size = kCollisionCapsuleSize;			//カプセルの大きさ
 	}
 
 
