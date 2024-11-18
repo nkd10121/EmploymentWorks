@@ -1,6 +1,8 @@
 ﻿#include "EnemyNormal.h"
 #include "EnemyStateIdle.h"
 #include "EnemyStateDeath.h"
+
+#include "Player.h"
 #include "Shot.h"
 
 #include "SoundManager.h"
@@ -140,6 +142,16 @@ void EnemyNormal::Update()
 		}
 	}
 
+	if (m_isSearchInPlayer)
+	{
+		//atan2を使用して向いている角度を取得
+		auto pos = rigidbody->GetPos();
+		auto angle = atan2(m_playerPos.x - pos.x, m_playerPos.z - pos.z);
+		auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
+		//移動方向に体を回転させる
+		MV1SetRotationXYZ(m_modelHandle, rotation);
+	}
+
 	//速度を0にする(重力の影響を受けながら)
 	auto prevVel = rigidbody->GetVelocity();
 	rigidbody->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
@@ -218,10 +230,20 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 	}
 	else if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
 	{
-		//当たったオブジェクトがプレイヤーが撃った弾なら
-		if (m_hitObjectTag == GameObjectTag::Player)
+		m_isSearchInPlayer = true;
+	}
+}
+
+void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex)
+{
+	//当たったオブジェクトがプレイヤーのとき
+	if (m_hitObjectTag == GameObjectTag::Player)
+	{
+		//当たったコリジョンが索敵の時
+		if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
 		{
-			m_isSearchInPlayer = true;
+			Player* col = dynamic_cast<Player*>(colider.get());
+			m_playerPos = col->GetRigidbody()->GetPos();
 		}
 	}
 }
@@ -231,9 +253,10 @@ void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int 
 	//当たったオブジェクトのタグを取得する
 	m_hitObjectTag = colider->GetTag();
 
-	//当たったオブジェクトがプレイヤーが撃った弾なら
+	//当たったオブジェクトがプレイヤーのとき
 	if (m_hitObjectTag == GameObjectTag::Player)
 	{
+		//当たったコリジョンが索敵の時
 		if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
 		{
 			m_isSearchInPlayer = false;

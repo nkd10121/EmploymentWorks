@@ -53,6 +53,10 @@ public:
 	/// <param name="colider">衝突したオブジェクト</param>
 	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 
+	void OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 	void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex)override;
+
+private:
+	Vec3 m_playerPos;
 };
 
