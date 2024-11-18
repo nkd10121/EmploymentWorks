@@ -1009,8 +1009,11 @@ void MyLib::Physics::CheckWallAndFloor(std::shared_ptr<Collidable>& col)
 			float size = 0.0f;
 			for (auto& col : col->m_colliders)
 			{
-				radius = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_radius;
-				size = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_size;
+				if (col.collideTag == MyLib::ColliderBase::CollisionTag::Normal)
+				{
+					radius = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_radius;
+					size = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_size;
+				}
 			}
 
 			// 壁ポリゴンと判断された場合でも、プレイヤーのＹ座標より高いポリゴンのみ当たり判定を行う
@@ -1411,7 +1414,7 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 		auto set = col->rigidbody->GetNextPos();
 		set.y = polyMaxPosY.y + size + radius;
 		col->rigidbody->SetNextPos(set);
-	}
+}
 #else
 	//床ポリゴンがない場合は何もしない
 	if (m_floorNum == 0) return;
