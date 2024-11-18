@@ -75,7 +75,7 @@ void SwarmEnemy::Update()
 	}
 	if (m_swarmRadius != maxLength)
 	{
-		m_swarmRadius = maxLength + maxLength * kCollisionRadiusMag;
+		m_swarmRadius = maxLength + m_maxSearchCollisionRadius;
 		auto cupsuleCol = dynamic_cast<MyLib::ColliderSphere*>(Collidable::m_colliders.back().collide.get());			//キャスト
 		cupsuleCol->SetRadius(m_swarmRadius);
 	}
@@ -150,6 +150,11 @@ void SwarmEnemy::SetUp()
 	for (auto& enemy : m_swarm)
 	{
 		addPos += enemy->GetRigidbody()->GetPos();
+
+		if (m_maxSearchCollisionRadius < enemy->GetSearchCollisionRadius())
+		{
+			m_maxSearchCollisionRadius = enemy->GetSearchCollisionRadius();
+		}
 	}
 	//中心座標の決定
 	m_swarmCenterPos = addPos / m_swarm.size();
@@ -165,7 +170,7 @@ void SwarmEnemy::SetUp()
 			maxLength = length;
 		}
 	}
-	m_swarmRadius = maxLength + maxLength * kCollisionRadiusMag;
+	m_swarmRadius = maxLength + m_maxSearchCollisionRadius;
 
 	{
 		//当たり判定の作成

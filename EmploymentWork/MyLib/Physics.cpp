@@ -331,7 +331,7 @@ std::vector<std::shared_ptr<MyLib::Collidable>> MyLib::Physics::GetCollisionList
 					const auto& pos1 = obj1->rigidbody->GetNextPos();
 					const auto& pos2 = obj2->rigidbody->GetNextPos();
 
-					float maxDistance = 10.0f * 10.0f;
+					float maxDistance = 40.0f * 40.0f;
 
 					//もし規定距離より比較する二つの大きさの合計が大きければ問答無用で追加する
 					if (maxDistance < lengthA + lengthB)
@@ -528,6 +528,9 @@ void MyLib::Physics::CheckColide()
 	int		checkCount = 0;	// チェック回数
 	while (true)
 	{
+		// 判定回数増加
+		checkCount++;
+
 		bool isNoHit = true;
 
 		for (int i = 0; i < colNum; ++i)
@@ -593,8 +596,6 @@ void MyLib::Physics::CheckColide()
 			}
 		}
 
-		// 判定回数増加
-		checkCount++;
 		// 当たっていなければ終了
 		if (isNoHit) break;
 		// 最大回数確認したら修正がうまく出来ていなくても終了する

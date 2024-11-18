@@ -85,7 +85,9 @@ public:
 
 
 	const bool GetIsSearchInPlayer()const { return m_isSearchInPlayer; }
+	const Vec3 GetPlayerPos()const { return m_playerPos; }
 
+	virtual const float GetSearchCollisionRadius()const = 0;
 
 protected:
 	EnemyKind kind;		//種類
@@ -94,7 +96,8 @@ protected:
 
 	Vec3 m_drawPos;		//描画座標
 
-	bool m_isSearchInPlayer;
+	bool m_isSearchInPlayer;		//索敵範囲内にプレイヤーがいるか
+	Vec3 m_playerPos;				//プレイヤーの座標
 
 	GameObjectTag m_hitObjectTag;	//あったオブジェクトタグ
 };

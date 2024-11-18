@@ -47,6 +47,7 @@ private:
 
 	Vec3 m_swarmCenterPos;	//群れ全体の中心座標
 	float m_swarmRadius;	//群れ全体の半径
+	float m_maxSearchCollisionRadius;		//群れの個体の中で一番大きい索敵範囲
 
 	bool m_isInPlayer;		//プレイヤーが当たり判定内に入っているかどうか
 

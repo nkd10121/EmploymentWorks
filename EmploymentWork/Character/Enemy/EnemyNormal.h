@@ -47,6 +47,8 @@ public:
 	/// </summary>
 	virtual void UpdateModelPos()override;
 
+	virtual const float GetSearchCollisionRadius()const override;
+
 	/// <summary>
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
@@ -56,7 +58,5 @@ public:
 	void OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 	void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex)override;
 
-private:
-	Vec3 m_playerPos;
 };
 

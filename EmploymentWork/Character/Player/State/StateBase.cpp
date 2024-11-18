@@ -102,190 +102,188 @@ std::shared_ptr<StateBase> StateBase::GetNextScenePointer()
 }
 
 #ifdef _DEBUG	//デバッグ描画
-	/// <summary>
-	/// 現在のステートのデバッグ描画
-	/// </summary>
-	void StateBase::DebugDrawState(int x, int y)
+/// <summary>
+/// 現在のステートのデバッグ描画
+/// </summary>
+void StateBase::DebugDrawState(int x, int y)
+{
+	std::string own = "null";
+
+	switch (m_pOwn.lock()->GetTag())
 	{
-		std::string own = "null";
-
-		switch (m_pOwn.lock()->GetTag())
-		{
-		case GameObjectTag::Player:
-			own = "Player";
-			break;
-		case GameObjectTag::Enemy:
-			own = "Enemy";
-			break;
-		default:
-			own = "null";
-			break;
-		}
-
-		std::string state = "null";
-
-		switch (m_nowState)
-		{
-		case StateBase::StateKind::Idle:
-			state = "Idle";
-			break;
-		case StateBase::StateKind::Walk:
-			state = "Walk";
-			break;
-		case StateBase::StateKind::Dash:
-			state = "Dash";
-			break;
-		case StateBase::StateKind::Jump:
-			state = "Jump";
-			break;
-		case StateBase::StateKind::Attack:
-			state = "Attack";
-			break;
-		case StateBase::StateKind::OnHit:
-			state = "OnHit";
-			break;
-		case StateBase::StateKind::Death:
-			state = "Death";
-			break;
-		default:
-			state = "null";
-			break;
-		}
-
-		DrawFormatString(x, y, 0xffffff, "%s:%s", own.c_str(), state.c_str());
+	case GameObjectTag::Player:
+		own = "Player";
+		break;
+	case GameObjectTag::Enemy:
+		own = "Enemy";
+		break;
+	default:
+		own = "null";
+		break;
 	}
+
+	std::string state = "null";
+
+	switch (m_nowState)
+	{
+	case StateBase::StateKind::Idle:
+		state = "Idle";
+		break;
+	case StateBase::StateKind::Walk:
+		state = "Walk";
+		break;
+	case StateBase::StateKind::Dash:
+		state = "Dash";
+		break;
+	case StateBase::StateKind::Jump:
+		state = "Jump";
+		break;
+	case StateBase::StateKind::Attack:
+		state = "Attack";
+		break;
+	case StateBase::StateKind::OnHit:
+		state = "OnHit";
+		break;
+	case StateBase::StateKind::Death:
+		state = "Death";
+		break;
+	default:
+		state = "null";
+		break;
+	}
+
+	DrawFormatString(x, y, 0xffffff, "%s:%s", own.c_str(), state.c_str());
+}
 #endif
 
-	void StateBase::ChangeState(StateKind kind)
+void StateBase::ChangeState(StateKind kind)
+{
+	//タグを取得
+	auto tag = m_pOwn.lock()->GetTag();
+
+	//タグから持ち主がプレイヤーか敵かを判断して処理を分ける
+	if (tag == GameObjectTag::Player)
 	{
-		//タグを取得
-		auto tag = m_pOwn.lock()->GetTag();
-
-		//タグから持ち主がプレイヤーか敵かを判断して処理を分ける
-		if (tag == GameObjectTag::Player)
+		//持ち主の名前を取得(アニメーション番号を取得するために今後必要)
+		auto name = m_pOwn.lock()->GetCharacterName();
+		if (kind == StateKind::Idle)
 		{
-			//持ち主の名前を取得(アニメーション番号を取得するために今後必要)
-			auto name = m_pOwn.lock()->GetCharacterName();
-			if (kind == StateKind::Idle)
-			{
-				//std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-				//pNext->Init();
+			//std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
+			//pNext->Init();
 
-				m_nextState = kind;
+			m_nextState = kind;
 
-				m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "IDLE"));
-				return;
-			}
-			else if (kind == StateKind::Walk)
-			{
-				std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
-				pNext->Init();
-
-				m_nextState = kind;
-
-				//左スティックの入力に応じてアニメーションを変更する
-				auto input = Input::GetInstance().GetInputStick(false);
-				auto dir = GetDirection(input.first, -input.second);
-				auto animName = pNext->GetWalkAnimName(dir);
-				m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, animName), PlayerAnim::kWalkAnimSpeed);
-				return;
-			}
-			else if (kind == StateKind::Dash)
-			{
-				m_nextState = kind;
-
-				m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "RUN_FORWARD"));
-				return;
-			}
-			else if (kind == StateKind::Jump)
-			{
-				m_nextState = kind;
-
-				m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "JUMP_UP"), 0.75f);
-				return;
-			}
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "IDLE"));
+			return;
 		}
-		else
+		else if (kind == StateKind::Walk)
 		{
-			//持ち主の名前を取得(アニメーション番号を取得するために今後必要)
-			auto name = m_pOwn.lock()->GetCharacterName();
+			std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
+			pNext->Init();
 
-			if (kind == StateKind::Idle)
-			{
-				m_nextState = kind;
+			m_nextState = kind;
 
-				m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "IDLE"));
-				return;
-			}
-			else if (kind == StateKind::Walk)
-			{
-				m_nextState = kind;
+			//左スティックの入力に応じてアニメーションを変更する
+			auto input = Input::GetInstance().GetInputStick(false);
+			auto dir = GetDirection(input.first, -input.second);
+			auto animName = pNext->GetWalkAnimName(dir);
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, animName), PlayerAnim::kWalkAnimSpeed);
+			return;
+		}
+		else if (kind == StateKind::Dash)
+		{
+			m_nextState = kind;
 
-				m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "WALK_FORWARD"));
-				return;
-			}
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "RUN_FORWARD"));
+			return;
+		}
+		else if (kind == StateKind::Jump)
+		{
+			m_nextState = kind;
+
+			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "JUMP_UP"), 0.75f);
+			return;
 		}
 	}
-
-	/// <summary>
-	/// 持ち主がプレイヤーかどうかを判断する
-	/// </summary>
-	bool StateBase::CheckPlayer()
+	else
 	{
-		if (m_pOwn.lock()->GetTag() != GameObjectTag::Player)
+		//持ち主の名前を取得(アニメーション番号を取得するために今後必要)
+		auto name = m_pOwn.lock()->GetCharacterName();
+
+		if (kind == StateKind::Idle)
 		{
-			//#ifdef _DEBUG	//デバッグ描画
-			//		assert(0 && "持ち主がプレイヤーではありません");
-			//#endif
-			return false;
+			m_nextState = kind;
+
+			return;
 		}
-
-		return true;
-	}
-
-	bool StateBase::CheakEnemy()
-	{
-		if (m_pOwn.lock()->GetTag() != GameObjectTag::Enemy)
+		else if (kind == StateKind::Walk)
 		{
-			//#ifdef _DEBUG	//デバッグ描画
-			//		assert(0 && "持ち主が敵ではありません");
-			//#endif
-			return false;
+			m_nextState = kind;
+
+			return;
 		}
-
-		return true;
 	}
+}
 
-	const StateBase::eDir StateBase::GetDirection(float x, float y) const
+/// <summary>
+/// 持ち主がプレイヤーかどうかを判断する
+/// </summary>
+bool StateBase::CheckPlayer()
+{
+	if (m_pOwn.lock()->GetTag() != GameObjectTag::Player)
 	{
-		auto angle = atan2(y, x);
-		if (angle < 0) {
-			angle = angle + 2 * DX_PI_F;
-		}
-		angle = floor(angle * 360 / (2 * DX_PI_F));
-
-		if (23 <= angle && angle <= 67) {
-			return eDir::ForwardRight;
-		}
-		else if (68 <= angle && angle <= 112) {
-			return eDir::Forward;
-		}
-		else if (113 <= angle && angle <= 157) {
-			return eDir::ForwardLeft;
-		}
-		else if (158 <= angle && angle <= 202) {
-			return eDir::Left;
-		}
-		else if (203 <= angle && angle <= 247) {
-			return eDir::BackLeft;
-		}
-		else if (248 <= angle && angle <= 292) {
-			return eDir::Back;
-		}
-		else if (293 <= angle && angle <= 337) {
-			return eDir::BackRight;
-		}
-		else {
-			return eDir::Right;
-		}
+		//#ifdef _DEBUG	//デバッグ描画
+		//		assert(0 && "持ち主がプレイヤーではありません");
+		//#endif
+		return false;
 	}
+
+	return true;
+}
+
+bool StateBase::CheakEnemy()
+{
+	if (m_pOwn.lock()->GetTag() != GameObjectTag::Enemy)
+	{
+		//#ifdef _DEBUG	//デバッグ描画
+		//		assert(0 && "持ち主が敵ではありません");
+		//#endif
+		return false;
+	}
+
+	return true;
+}
+
+const StateBase::eDir StateBase::GetDirection(float x, float y) const
+{
+	auto angle = atan2(y, x);
+	if (angle < 0) {
+		angle = angle + 2 * DX_PI_F;
+	}
+	angle = floor(angle * 360 / (2 * DX_PI_F));
+
+	if (23 <= angle && angle <= 67) {
+		return eDir::ForwardRight;
+	}
+	else if (68 <= angle && angle <= 112) {
+		return eDir::Forward;
+	}
+	else if (113 <= angle && angle <= 157) {
+		return eDir::ForwardLeft;
+	}
+	else if (158 <= angle && angle <= 202) {
+		return eDir::Left;
+	}
+	else if (203 <= angle && angle <= 247) {
+		return eDir::BackLeft;
+	}
+	else if (248 <= angle && angle <= 292) {
+		return eDir::Back;
+	}
+	else if (293 <= angle && angle <= 337) {
+		return eDir::BackRight;
+	}
+	else {
+		return eDir::Right;
+	}
+}

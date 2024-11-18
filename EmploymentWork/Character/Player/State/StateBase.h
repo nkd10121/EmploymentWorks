@@ -95,7 +95,7 @@ public:
 	/// </summary>
 	/// <param name="x">x座標</param>
 	/// <param name="y">y座標</param>
-	void DebugDrawState(int x,int y);
+	void DebugDrawState(int x, int y);
 #endif
 
 protected:
@@ -129,5 +129,5 @@ protected:
 
 	StateKind m_nowState;	//現在のステート
 	StateKind m_nextState;	//現在のステート
-};
 
+};
