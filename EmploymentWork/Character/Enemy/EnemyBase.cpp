@@ -6,7 +6,7 @@
 /// コンストラクタ
 /// </summary>
 EnemyBase::EnemyBase() :
-	CharacterBase(Collidable::Priority::Middle, GameObjectTag::Enemy),
+	CharacterBase(Collidable::Priority::High, GameObjectTag::Enemy),
 	kind(),
 	m_isExist(false),
 	m_isStartDeathAnimation(false),

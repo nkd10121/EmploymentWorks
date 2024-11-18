@@ -66,6 +66,11 @@ public:
 	/// <returns></returns>
 	const float GetNowAnimEndFrame()const { return MV1GetAttachAnimTotalTime(m_modelHandle, m_currentAnimNo); }
 	/// <summary>
+	/// 現在再生中のアニメーションの現在フレームを取得
+	/// </summary>
+	/// <returns></returns>
+	const float GetAnimNowFrame()const { return MV1GetAttachAnimTime(m_modelHandle, m_currentAnimNo); }
+	/// <summary>
 	/// 現在再生中のアニメーションが終了したかどうか
 	/// </summary>
 	/// <returns></returns>

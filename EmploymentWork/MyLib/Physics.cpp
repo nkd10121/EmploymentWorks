@@ -283,12 +283,14 @@ std::vector<std::shared_ptr<MyLib::Collidable>> MyLib::Physics::GetCollisionList
 			auto& obj1 = m_collidables[i];
 			auto& obj2 = m_collidables[j];
 
-			if (obj1->GetTag() != GameObjectTag::Player && obj2->GetTag() == GameObjectTag::SwarmEnemy)
+			if (obj1->GetTag() != GameObjectTag::Player && obj2->GetTag() == GameObjectTag::SwarmEnemy || 
+				obj1->GetTag() != GameObjectTag::SwarmEnemy && obj2->GetTag() == GameObjectTag::Player)
 			{
 				continue;
 			}
 
-			if (obj1->GetTag() == GameObjectTag::Player && obj2->GetTag() == GameObjectTag::SwarmEnemy)
+			if (obj1->GetTag() == GameObjectTag::Player && obj2->GetTag() == GameObjectTag::SwarmEnemy||
+				obj1->GetTag() == GameObjectTag::SwarmEnemy && obj2->GetTag() == GameObjectTag::Player)
 			{
 				// 判定リストに追加
 				ret.push_back(obj1);

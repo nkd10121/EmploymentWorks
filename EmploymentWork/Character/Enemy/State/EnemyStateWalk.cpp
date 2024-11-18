@@ -40,6 +40,12 @@ void EnemyStateWalk::Update()
 
 	auto playerPos = own->GetPlayerPos();
 	auto moveVec = playerPos - own->GetRigidbody()->GetPos();
+
+	if (moveVec.Length() <= 6.0f)
+	{
+		ChangeState(StateBase::StateKind::Attack);
+	}
+
 	moveVec = moveVec.Normalize() * own->GetMoveSpeed();
 
 	//直前のY方向の移動速度と入力された移動速度を合わせて移動速度を決定する

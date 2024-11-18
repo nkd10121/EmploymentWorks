@@ -10,6 +10,7 @@
 
 #include "EnemyStateIdle.h"
 #include "EnemyStateWalk.h"
+#include "EnemyStateAttack.h"
 
 #include "LoadCSV.h"
 #include "Input.h"
@@ -93,6 +94,14 @@ std::shared_ptr<StateBase> StateBase::GetNextStatePointer()
 		else if (m_nextState == StateKind::Walk)
 		{
 			ret = std::make_shared<EnemyStateWalk>(m_pOwn.lock());
+			ret->Init();
+			ret->SetNextKind(m_nextState);
+
+			return ret;
+		}
+		else if (m_nextState == StateKind::Attack)
+		{
+			ret = std::make_shared<EnemyStateAttack>(m_pOwn.lock());
 			ret->Init();
 			ret->SetNextKind(m_nextState);
 
@@ -222,6 +231,12 @@ void StateBase::ChangeState(StateKind kind)
 			return;
 		}
 		else if (kind == StateKind::Walk)
+		{
+			m_nextState = kind;
+
+			return;
+		}
+		else if (kind == StateKind::Attack)
 		{
 			m_nextState = kind;
 

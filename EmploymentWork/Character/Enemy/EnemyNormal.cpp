@@ -269,8 +269,11 @@ void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int 
 		//当たったコリジョンが索敵の時
 		if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
 		{
-			m_pState->SetNextKind(StateBase::StateKind::Idle);
 			m_isSearchInPlayer = false;
+			if (m_pState->GetKind() != StateBase::StateKind::Attack)
+			{
+				m_pState->SetNextKind(StateBase::StateKind::Idle);
+			}
 		}
 	}
 }
