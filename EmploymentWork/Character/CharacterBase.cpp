@@ -47,7 +47,7 @@ void CharacterBase::ChangeState()
 	if (m_pState->GetNextKind() != m_pState->GetKind())
 	{
 		//Stateを変更する
-		m_pState = m_pState->GetNextScenePointer();
+		m_pState = m_pState->GetNextStatePointer();
 	}
 }
 

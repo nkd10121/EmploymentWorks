@@ -131,9 +131,9 @@ void SceneBase::UpdateAll()
 	std::time_t t = std::chrono::system_clock::to_time_t(now);
 
 	//現在時刻を表示
-	printf("現在時刻 : %d", (t / 3600 + 9) % 24);//時
-	printf(":%d", t / 60 % 60);//分
-	printf(":%d\n", t % 60);//秒
+	printf("現在時刻 : %d", (static_cast<int>(t) / 3600 + 9) % 24);//時
+	printf(":%d", static_cast<int>(t) / 60 % 60);//分
+	printf(":%d\n", static_cast<int>(t) % 60);//秒
 #endif
 	//継承先のシーンのリソースのロードが終わっているか確認
 	if (!IsLoaded())
@@ -202,8 +202,8 @@ void SceneBase::DrawAll()
 	width = static_cast<int>(Game::kWindowWidth * rate);
 	DrawBox(40 + 2, Game::kWindowHeight - 16, 40 + 2 + width, Game::kWindowHeight, 0xff0000, true);
 
-	printf("更新処理時間:%d\n",m_updateTime);
-	printf("描画処理時間:%d\n", m_drawTime);
+	printf("更新処理時間:%lld\n",m_updateTime);
+	printf("描画処理時間:%lld\n", m_drawTime);
 
 	//float rate = static_cast<float>(m_updateTime + m_drawTime) / 16666.6f;
 	//int width = static_cast<int>(Game::kWindowWidth * rate);

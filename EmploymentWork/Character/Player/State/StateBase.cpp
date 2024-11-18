@@ -36,7 +36,7 @@ StateBase::~StateBase()
 {
 }
 
-std::shared_ptr<StateBase> StateBase::GetNextScenePointer()
+std::shared_ptr<StateBase> StateBase::GetNextStatePointer()
 {
 	std::shared_ptr<StateBase> ret;
 
@@ -99,6 +99,11 @@ std::shared_ptr<StateBase> StateBase::GetNextScenePointer()
 			return ret;
 		}
 	}
+
+#ifdef _DEBUG
+	assert(0 && "次のステートのポインタがnullです");
+#endif
+	return ret;
 }
 
 #ifdef _DEBUG	//デバッグ描画

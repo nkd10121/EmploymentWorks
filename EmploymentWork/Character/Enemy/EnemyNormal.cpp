@@ -205,8 +205,6 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 		//当たったオブジェクトがプレイヤーが撃った弾なら
 		if (m_hitObjectTag == GameObjectTag::PlayerShot)
 		{
-			printf("敵と弾が当たった!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-
 			{
 				//弾の攻撃力分自身のHPを減らす(防御力と調整しながら)
 				Shot* col = dynamic_cast<Shot*>(colider.get());

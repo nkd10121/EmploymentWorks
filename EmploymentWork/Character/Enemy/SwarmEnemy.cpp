@@ -59,7 +59,7 @@ void SwarmEnemy::Update()
 		addPos += p;
 	}
 	//中心座標の決定
-	m_swarmCenterPos = addPos / m_swarm.size();
+	m_swarmCenterPos = addPos / static_cast<float>(m_swarm.size());
 	rigidbody->SetPos(m_swarmCenterPos);
 
 	float maxLength = 0.0f;
@@ -157,7 +157,7 @@ void SwarmEnemy::SetUp()
 		}
 	}
 	//中心座標の決定
-	m_swarmCenterPos = addPos / m_swarm.size();
+	m_swarmCenterPos = addPos / static_cast<float>(m_swarm.size());
 
 	float maxLength = 0.0f;
 

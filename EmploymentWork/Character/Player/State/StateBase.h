@@ -73,7 +73,7 @@ public:
 	/// 次のシーンのポインタを取得
 	/// </summary>
 	/// <returns></returns>
-	std::shared_ptr<StateBase> GetNextScenePointer();
+	std::shared_ptr<StateBase> GetNextStatePointer();
 
 	/// <summary>
 	/// 遷移予定のStateを設定する
