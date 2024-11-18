@@ -170,7 +170,7 @@ void SwarmEnemy::SetUp()
 			maxLength = length;
 		}
 	}
-	m_swarmRadius = maxLength + m_maxSearchCollisionRadius;
+	m_swarmRadius = maxLength + m_maxSearchCollisionRadius + m_maxSearchCollisionRadius * 0.2f;
 
 	{
 		//当たり判定の作成
