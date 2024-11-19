@@ -37,6 +37,10 @@ EnemyNormal::EnemyNormal() :
 		auto capsuleCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());			//キャスト
 		capsuleCol->m_radius = kCollisionCapsuleRadius;		//カプセルの半径
 		capsuleCol->m_size = kCollisionCapsuleSize;			//カプセルの大きさ
+
+		auto pos = m_drawPos;
+		pos.y += 12.0f;
+		capsuleCol->SetPos(pos);			//カプセルの大きさ
 	}
 
 	//キャラクター名を設定
