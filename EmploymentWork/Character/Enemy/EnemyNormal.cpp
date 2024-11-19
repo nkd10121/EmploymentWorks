@@ -140,14 +140,9 @@ void EnemyNormal::Update()
 		}
 	}
 
-	if (m_isSearchInPlayer)
+	if (m_isSearchInPlayer && m_pState->GetKind() != StateBase::StateKind::Attack)
 	{
-		auto pos = rigidbody->GetPos();
-		//atan2を使用して向いている角度を取得
-		auto angle = atan2(m_playerPos.x - pos.x, m_playerPos.z - pos.z);
-		auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
-		//移動方向に体を回転させる
-		MV1SetRotationXYZ(m_modelHandle, rotation);
+
 	}
 
 }

@@ -34,8 +34,40 @@ void EnemyStateAttack::Update()
 	auto prevVel = own->GetRigidbody()->GetVelocity();
 	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 
-	if (m_pOwn.lock()->GetNowAnimEndFrame() / 3 <= m_pOwn.lock()->GetAnimNowFrame())
+	auto frame = m_pOwn.lock()->GetAnimNowFrame();
+	//アニメーション上で攻撃が一回終了した時
+	if (static_cast<int>(frame) % static_cast <int>(40.0f) == 0)
 	{
-		ChangeState(StateKind::Walk);
+		//索敵範囲内にプレイヤーがいて
+		if (own->GetIsSearchInPlayer())
+		{
+			auto playerPos = own->GetPlayerPos();
+			auto moveVec = playerPos - own->GetRigidbody()->GetPos();
+
+			//プレイヤーとの距離が一定距離以下の時は攻撃
+			if (moveVec.Length() <= 6.0f)
+			{
+				//atan2を使用して向いている角度を取得
+				auto angle = atan2(moveVec.x, moveVec.z);
+				auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
+				//移動方向に体を回転させる
+				own->SetModelRotation(rotation);
+
+				ChangeState(StateBase::StateKind::Attack);
+				return;
+			}
+			//離れていたら歩きに遷移する
+			else
+			{
+				ChangeState(StateKind::Walk);
+				return;
+			}
+		}
+		//索敵範囲内にプレイヤーがいなかったら待機にする
+		else
+		{
+			ChangeState(StateKind::Idle);
+			return;
+		}
 	}
 }

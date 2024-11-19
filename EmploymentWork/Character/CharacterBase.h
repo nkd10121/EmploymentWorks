@@ -80,7 +80,7 @@ public:
 	/// </summary>
 	/// <returns>キャラクター名</returns>
 	const std::string GetCharacterName()const { return m_characterName; }
-public:		/*継承先のクラスで呼ぶ関数*/
+protected:		/*継承先のクラスで呼ぶ関数*/
 	/// <summary>
 	/// 前のフレームとStateを比較して違うStateだったら変更する
 	/// </summary>

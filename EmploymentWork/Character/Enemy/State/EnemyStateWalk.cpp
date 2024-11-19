@@ -37,16 +37,28 @@ void EnemyStateWalk::Update()
 
 	//ダウンキャスト
 	auto own = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
+	Vec3 moveVec;
 
-	auto playerPos = own->GetPlayerPos();
-	auto moveVec = playerPos - own->GetRigidbody()->GetPos();
-
-	if (moveVec.Length() <= 6.0f)
+	if (own->GetIsSearchInPlayer())
 	{
-		ChangeState(StateBase::StateKind::Attack);
+		auto playerPos = own->GetPlayerPos();
+		moveVec = playerPos - own->GetRigidbody()->GetPos();
+
+		if (moveVec.Length() <= 6.0f)
+		{
+			ChangeState(StateBase::StateKind::Attack);
+			return;
+		}
+
+		moveVec = moveVec.Normalize() * own->GetMoveSpeed();
 	}
 
-	moveVec = moveVec.Normalize() * own->GetMoveSpeed();
+	auto pos = m_pOwn.lock()->GetRigidbody()->GetPos();
+	//atan2を使用して向いている角度を取得
+	auto angle = atan2(moveVec.x, moveVec.z);
+	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
+	//移動方向に体を回転させる
+	own->SetModelRotation(rotation);
 
 	//直前のY方向の移動速度と入力された移動速度を合わせて移動速度を決定する
 	Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
