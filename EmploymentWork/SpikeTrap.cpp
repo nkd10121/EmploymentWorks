@@ -16,7 +16,7 @@ SpikeTrap::SpikeTrap():
 	m_spikeModel(-1)
 {
 	//当たり判定の生成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true);
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true,MyLib::ColliderBase::CollisionTag::Search);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
 }
