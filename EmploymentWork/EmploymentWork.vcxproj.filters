@@ -222,8 +222,8 @@
     <ClCompile Include="Character\Enemy\SwarmEnemy.cpp">
       <Filter>ソース ファイル\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyStateAttack.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp">
+      <Filter>ソース ファイル\Character\Enemy\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -377,8 +377,8 @@
     <ClInclude Include="Character\Enemy\SwarmEnemy.h">
       <Filter>ヘッダー ファイル\Character\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyStateAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
+      <Filter>ヘッダー ファイル\Character\Enemy\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
