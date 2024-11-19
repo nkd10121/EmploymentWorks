@@ -59,6 +59,30 @@ public:
 	/// <param name="pAddObject"></param>
 	void AddObject(std::shared_ptr<ObjectBase> pAddObject);
 
+	//状態遷移のためのメンバ関数
+	using UpdateFunc_t = void (SceneGame::*)();
+	using DrawFunc_t = void (SceneGame::*)();
+	UpdateFunc_t m_updateFunc;
+	DrawFunc_t m_drawFunc;
+	/*状態関数*/
+	/// <summary>
+	/// ゲームの更新
+	/// </summary>
+	void UpdateGame();
+	/// <summary>
+	/// トラップ選択画面の更新
+	/// </summary>
+	void UpdateTrapSelect();
+
+	/// <summary>
+	/// 通常描画
+	/// </summary>
+	void DrawNormal();
+	/// <summary>
+	/// トラップ選択画面の描画
+	/// </summary>
+	void DrawTrapSelect();
+
 private:
 	std::shared_ptr<Player> m_pPlayer;			//プレイヤーポインタ
 	std::shared_ptr<Camera> m_pCamera;			//カメラポインタ
@@ -69,5 +93,7 @@ private:
 
 	int m_stageModel;	//モデルハンドル(仮)
 
+private:
+	int m_nowCursor;
 };
 
