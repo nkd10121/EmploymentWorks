@@ -52,6 +52,13 @@ void SwarmEnemy::Update()
 		m_swarm.erase(it, m_swarm.end());
 	}
 
+	//もし、構成メンバーが1人もいなかったらメンバーが存在しないことにする
+	if (m_swarm.size() == 0)
+	{
+		m_isExistMember = false;
+		Collidable::OnExistPhysics();
+		return;
+	}
 
 	Vec3 addPos;
 	for (auto& p : pos)
@@ -79,41 +86,6 @@ void SwarmEnemy::Update()
 		auto cupsuleCol = dynamic_cast<MyLib::ColliderSphere*>(Collidable::m_colliders.back().collide.get());			//キャスト
 		cupsuleCol->SetRadius(m_swarmRadius);
 	}
-
-
-	if (m_isInPlayer)
-	{
-		frame++;
-
-		//if (frame >= 60)
-		{
-			//bool isInPlayer = false;
-
-			//for (auto& enemy : m_swarm)
-			//{
-			//	if (enemy->GetIsSearchInPlayer())
-			//	{
-			//		isInPlayer = true;
-			//	}
-			//}
-
-			//if (!isInPlayer)
-			//{
-			//	//SetUp();
-			//	m_isInPlayer = false;
-
-
-		}
-
-	}
-	else
-	{
-		frame = 0;
-	}
-
-
-	//もし、構成メンバーが1人もいなかったらメンバーが存在しないことにする
-	if (m_swarm.size() == 0)	m_isExistMember = false;
 }
 
 void SwarmEnemy::Draw()
@@ -127,7 +99,6 @@ void SwarmEnemy::Draw()
 		auto pos = enemy->GetRigidbody()->GetPosVECTOR();
 		pos.y += 6.0f;
 		DrawSphere3D(pos, 1, 8, m_memberColor, m_memberColor, true);
-
 
 		DrawSphere3D(m_swarmCenterPos.ToVECTOR(), 4, 12, m_memberColor, m_memberColor, true);
 #endif
