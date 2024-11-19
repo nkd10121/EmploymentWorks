@@ -3,7 +3,7 @@
 #include <memory>
 #include <list>
 
-//#include "TrapBase.h"
+#include "TrapBase.h"
 
 class TrapManager
 {
@@ -78,7 +78,9 @@ public:
 	//デバッグ用
 	void SelectPoint(Vec3 playerPos, Vec3 targetPos);
 private:
-	std::list<std::shared_ptr<Trap>> m_traps;
+	std::list<std::shared_ptr<Trap>> m_trapPoss;
+
+	std::list<std::shared_ptr<TrapBase>> m_traps;
 
 	//デバッグ用
 	std::shared_ptr<Trap> debugTrap;

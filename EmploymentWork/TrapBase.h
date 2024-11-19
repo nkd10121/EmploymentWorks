@@ -1,22 +1,28 @@
 ﻿#pragma once
 #include "ObjectBase.h"
 
-class HealPortion : public ObjectBase
+class TrapBase : public ObjectBase
 {
+	public:
+	//ステータス構造体
+	struct Status
+	{
+		int atk;
+		float searchRange;
+		float atkRange;
+		int coolTime;
+		int cost;
+	};
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	HealPortion();
+	TrapBase(GameObjectTag tag);
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	virtual ~HealPortion();
+	virtual ~TrapBase();
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Init()override;
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -42,10 +48,10 @@ public:
 	/// </summary>
 	void End();
 
-private:
-	int m_effectCreateFrame;	//フレーム数
+protected:
+	Status status;
+	int m_attack;
+	int m_isExist;	//存在フラグ
 
-	float m_angle;	//角度
-	float m_posOffsetY;	//動き幅
 };
 

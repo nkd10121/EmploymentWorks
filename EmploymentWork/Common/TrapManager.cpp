@@ -1,6 +1,8 @@
 ﻿#include "TrapManager.h"
 #include "MathHelp.h"
 
+#include "SpikeTrap.h"
+
 TrapManager* TrapManager::m_instance = nullptr;
 
 TrapManager::TrapManager()
@@ -27,17 +29,26 @@ void TrapManager::AddTrapPos(Vec3 pos)
 	add->isPlaced = false;
 	add->pos = pos;
 	add->neighborTraps.clear();
-	m_traps.emplace_back(add);
+	m_trapPoss.emplace_back(add);
 }
 
 void TrapManager::Update()
 {
+	for (auto& trap : m_traps)
+	{
+		trap->Update();
+	}
 }
 
 void TrapManager::Draw()
 {
+	for (auto& trap : m_traps)
+	{
+		trap->Draw();
+	}
+
 #ifdef _DEBUG	//デバッグ描画
-	for (auto& pos : m_traps)
+	for (auto& pos : m_trapPoss)
 	{
 		if (pos->isPlaced)
 		{
@@ -66,9 +77,9 @@ void TrapManager::Draw()
 
 void TrapManager::SetUp()
 {
-	for (auto& trap : m_traps)
+	for (auto& trap : m_trapPoss)
 	{
-		for (auto& temp : m_traps)
+		for (auto& temp : m_trapPoss)
 		{
 			if (abs((trap->pos - temp->pos).Length()) > 0.0f && abs((trap->pos - temp->pos).Length()) < 12.0f)
 			{
@@ -80,11 +91,11 @@ void TrapManager::SetUp()
 
 void TrapManager::Clear()
 {
-	for (auto& trap : m_traps)
+	for (auto& trap : m_trapPoss)
 	{
 		trap->neighborTraps.clear();
 	}
-	m_traps.clear();
+	m_trapPoss.clear();
 }
 
 void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
@@ -93,6 +104,14 @@ void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
 	{
 		auto& sa = debugTrap;
 		sa->isPlaced = true;
+
+		if (slot == 0)
+		{
+			auto add = std::make_shared<SpikeTrap>();
+			add->Init(debugTrap->pos);
+
+			m_traps.emplace_back(add);
+		}
 
 
 		for (auto& trap : debugTrap->neighborTraps)
@@ -116,7 +135,7 @@ void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
 #endif
 	//startとendを始点終点とした四角形との当たり判定をまずとる
 
-	auto hit = CheckHitBoundingBoxAndPoints(start, end, m_traps);
+	auto hit = CheckHitBoundingBoxAndPoints(start, end, m_trapPoss);
 
 	//設置可能なトラップの座標分回す
 	for (auto& trap : hit)

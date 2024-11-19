@@ -225,6 +225,12 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp">
       <Filter>ソース ファイル\Character\Enemy\State</Filter>
     </ClCompile>
+    <ClCompile Include="TrapBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikeTrap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene\SceneBase.h">
@@ -379,6 +385,12 @@
     </ClInclude>
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
       <Filter>ヘッダー ファイル\Character\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="TrapBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SpikeTrap.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

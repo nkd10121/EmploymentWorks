@@ -201,12 +201,12 @@ void Player::Update(SceneGame* pScene)
 		bottomPos.y -= 1.0f;
 	}
 
-	////足元座標を使ってトラップ設置位置の選択と設置
-	//TrapManager::GetInstance().SelectPoint(bottomPos, m_cameraDirection);
-	//if (Input::GetInstance().IsTriggered("Y"))
-	//{
-	//	TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection,0);
-	//}
+	//足元座標を使ってトラップ設置位置の選択と設置
+	TrapManager::GetInstance().SelectPoint(bottomPos, m_cameraDirection);
+	if (Input::GetInstance().IsTriggered("Y"))
+	{
+		TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection,0);
+	}
 
 	//DEBUG:自決用
 	if (Input::GetInstance().IsTriggered("X"))
