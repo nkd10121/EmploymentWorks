@@ -25,6 +25,7 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateWalk.cpp" />
     <ClCompile Include="Character\Enemy\State\EnemyStateDeath.cpp" />
     <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp" />
+    <ClCompile Include="LocalPos.cpp" />
     <ClCompile Include="Object\Crystal.cpp" />
     <ClCompile Include="Character\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Character\Enemy\EnemyNormal.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="Character\Enemy\State\EnemyStateWalk.h" />
     <ClInclude Include="Character\Enemy\State\EnemyStateDeath.h" />
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h" />
+    <ClInclude Include="LocalPos.h" />
     <ClInclude Include="Object\Crystal.h" />
     <ClInclude Include="Character\Enemy\EnemyBase.h" />
     <ClInclude Include="Character\Enemy\EnemyNormal.h" />
