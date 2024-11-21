@@ -76,6 +76,9 @@
     <Filter Include="ヘッダー ファイル\Character\Enemy\State">
       <UniqueIdentifier>{b08059a0-a727-4463-b303-308288558ef8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Object\Trap">
+      <UniqueIdentifier>{db0ce6a8-c858-4634-8b85-f94c27ddbaf3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -225,14 +228,14 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp">
       <Filter>ソース ファイル\Character\Enemy\State</Filter>
     </ClCompile>
-    <ClCompile Include="TrapBase.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="MyLib\LocalPos.cpp">
+      <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="SpikeTrap.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Trap\SpikeTrap.cpp">
+      <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
-    <ClCompile Include="LocalPos.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Trap\TrapBase.cpp">
+      <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,14 +392,14 @@
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
       <Filter>ヘッダー ファイル\Character\Enemy\State</Filter>
     </ClInclude>
-    <ClInclude Include="TrapBase.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="MyLib\LocalPos.h">
+      <Filter>ヘッダー ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="SpikeTrap.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Object\Trap\SpikeTrap.h">
+      <Filter>ヘッダー ファイル\Object\Trap</Filter>
     </ClInclude>
-    <ClInclude Include="LocalPos.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Object\Trap\TrapBase.h">
+      <Filter>ヘッダー ファイル\Object\Trap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

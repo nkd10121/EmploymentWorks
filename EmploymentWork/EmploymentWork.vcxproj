@@ -25,7 +25,7 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateWalk.cpp" />
     <ClCompile Include="Character\Enemy\State\EnemyStateDeath.cpp" />
     <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp" />
-    <ClCompile Include="LocalPos.cpp" />
+    <ClCompile Include="MyLib\LocalPos.cpp" />
     <ClCompile Include="Object\Crystal.cpp" />
     <ClCompile Include="Character\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Character\Enemy\EnemyNormal.cpp" />
@@ -61,8 +61,8 @@
     <ClCompile Include="Object\Shot.cpp" />
     <ClCompile Include="Common\TrapManager.cpp" />
     <ClCompile Include="Character\Enemy\SwarmEnemy.cpp" />
-    <ClCompile Include="SpikeTrap.cpp" />
-    <ClCompile Include="TrapBase.cpp" />
+    <ClCompile Include="Object\Trap\SpikeTrap.cpp" />
+    <ClCompile Include="Object\Trap\TrapBase.cpp" />
     <ClCompile Include="Util\Camera.cpp" />
     <ClCompile Include="Util\Input.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -79,7 +79,7 @@
     <ClInclude Include="Character\Enemy\State\EnemyStateWalk.h" />
     <ClInclude Include="Character\Enemy\State\EnemyStateDeath.h" />
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h" />
-    <ClInclude Include="LocalPos.h" />
+    <ClInclude Include="MyLib\LocalPos.h" />
     <ClInclude Include="Object\Crystal.h" />
     <ClInclude Include="Character\Enemy\EnemyBase.h" />
     <ClInclude Include="Character\Enemy\EnemyNormal.h" />
@@ -117,8 +117,8 @@
     <ClInclude Include="Object\Shot.h" />
     <ClInclude Include="Common\TrapManager.h" />
     <ClInclude Include="Character\Enemy\SwarmEnemy.h" />
-    <ClInclude Include="SpikeTrap.h" />
-    <ClInclude Include="TrapBase.h" />
+    <ClInclude Include="Object\Trap\SpikeTrap.h" />
+    <ClInclude Include="Object\Trap\TrapBase.h" />
     <ClInclude Include="Util\Camera.h" />
     <ClInclude Include="Util\Game.h" />
     <ClInclude Include="Util\Input.h" />
@@ -220,14 +220,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -238,7 +238,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -247,7 +247,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
