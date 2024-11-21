@@ -96,6 +96,8 @@ void TrapManager::Clear()
 		trap->neighborTraps.clear();
 	}
 	m_trapPoss.clear();
+
+	m_traps.clear();
 }
 
 void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
