@@ -91,6 +91,9 @@ public:
 
 	const void SetModelRotation(Vec3 rot)const;
 
+	const void CreateAttackCollision();
+	const void DeleteAttackCollision();
+
 protected:
 	EnemyKind kind;		//種類
 	bool m_isExist;		//存在フラグ

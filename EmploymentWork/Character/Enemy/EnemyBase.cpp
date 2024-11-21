@@ -52,3 +52,20 @@ const void EnemyBase::SetModelRotation(Vec3 rot) const
 	MyLib::Collidable::Collide col = GetCollider(MyLib::ColliderBase::CollisionTag::Head);
 	col.collide->localPos.SetFrontPos(m_playerPos);
 }
+
+const void EnemyBase::CreateAttackCollision()
+{
+	//当たり判定の作成
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
+	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+	sphereCol->m_radius = 4.0f;
+
+	sphereCol->localPos.centerPos = rigidbody->GetPos();
+
+	return void();
+}
+
+const void EnemyBase::DeleteAttackCollision()
+{
+	return void();
+}
