@@ -68,7 +68,7 @@ void MyLib::Collidable::DeleteCollider(Collide col)
 	m_colliders.erase(newEnd, m_colliders.end());
 }
 
-MyLib::Collidable::Collide MyLib::Collidable::GetCollider(ColliderBase::CollisionTag collisionTag)
+const MyLib::Collidable::Collide MyLib::Collidable::GetCollider(ColliderBase::CollisionTag collisionTag)const
 {
 	Collide ret;
 

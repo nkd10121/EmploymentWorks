@@ -60,6 +60,7 @@ void EnemyStateWalk::Update()
 	//移動方向に体を回転させる
 	own->SetModelRotation(rotation);
 
+
 	//直前のY方向の移動速度と入力された移動速度を合わせて移動速度を決定する
 	Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
 	Vec3 newVelocity = Vec3(moveVec.x, prevVelocity.y, moveVec.z);

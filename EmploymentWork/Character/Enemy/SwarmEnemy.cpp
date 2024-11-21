@@ -82,7 +82,7 @@ void SwarmEnemy::Update()
 	}
 	if (m_swarmRadius != maxLength)
 	{
-		m_swarmRadius = maxLength + m_maxSearchCollisionRadius;
+		m_swarmRadius = maxLength + m_maxSearchCollisionRadius + m_maxSearchCollisionRadius * 0.2f;
 		auto cupsuleCol = dynamic_cast<MyLib::ColliderSphere*>(Collidable::m_colliders.back().collide.get());			//キャスト
 		cupsuleCol->SetRadius(m_swarmRadius);
 	}
@@ -100,7 +100,7 @@ void SwarmEnemy::Draw()
 		pos.y += 6.0f;
 		DrawSphere3D(pos, 1, 8, m_memberColor, m_memberColor, true);
 
-		DrawSphere3D(m_swarmCenterPos.ToVECTOR(), 4, 12, m_memberColor, m_memberColor, true);
+		//DrawSphere3D(m_swarmCenterPos.ToVECTOR(), 4, 12, m_memberColor, m_memberColor, true);
 #endif
 	}
 }

@@ -23,6 +23,8 @@ namespace
 
 	/*当たり判定関係*/
 	constexpr float kSearchCollisionRadius = kCollisionCapsuleRadius * 10;
+
+	const char* kAttachFrameName = "Head";
 }
 
 /// <summary>
@@ -31,17 +33,7 @@ namespace
 EnemyNormal::EnemyNormal() :
 	EnemyBase()
 {
-	{
-		//当たり判定の作成
-		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);	//追加
-		auto capsuleCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());			//キャスト
-		capsuleCol->m_radius = kCollisionCapsuleRadius;		//カプセルの半径
-		capsuleCol->m_size = kCollisionCapsuleSize;			//カプセルの大きさ
 
-		auto pos = m_drawPos;
-		pos.y += 12.0f;
-		capsuleCol->SetPos(pos);			//カプセルの大きさ
-	}
 
 	//キャラクター名を設定
 	m_characterName = "EnemyNormal";
@@ -76,6 +68,7 @@ void EnemyNormal::Init()
 	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_ENEMYNORMAL");
 	//モデルのサイズを変更
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
+	MV1SetPosition(m_modelHandle,m_drawPos.ToVECTOR());
 
 	//待機アニメーションを設定
 	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "IDLE"));
@@ -86,6 +79,33 @@ void EnemyNormal::Init()
 	m_status = LoadCSV::GetInstance().LoadStatus(m_characterName.c_str());
 	//最大HPを設定しておく
 	m_hpMax = m_status.hp;
+
+	{
+		//当たり判定の作成
+		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);	//追加
+		auto capsuleCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());			//キャスト
+		capsuleCol->m_radius = kCollisionCapsuleRadius;		//カプセルの半径
+		capsuleCol->m_size = kCollisionCapsuleSize;			//カプセルの大きさ
+
+	}
+
+	{
+		//当たり判定の作成
+		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Head);	//追加
+		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());			//キャスト
+		sphereCol->m_radius = 2.0f;		//カプセルの半径
+
+		auto attachFrameNum = MV1SearchFrame(m_modelHandle, kAttachFrameName);
+		auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, attachFrameNum);
+		auto pos = Vec3(mat.m[3][0], mat.m[3][1], mat.m[3][2]);
+
+		auto modelCenterPos = rigidbody->GetPos();
+
+		auto vec = pos - modelCenterPos;
+		vec.y *= 0.55f;
+
+		sphereCol->SetOffsetPos(vec);
+	}
 
 	//存在フラグをtrueにする
 	m_isExist = true;
@@ -148,6 +168,8 @@ void EnemyNormal::Update()
 	{
 
 	}
+
+
 
 }
 
@@ -234,6 +256,33 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 			m_isSearchInPlayer = true;
 		}
 	}
+	else if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Head)
+	{
+		//当たったオブジェクトがプレイヤーが撃った弾なら
+		if (m_hitObjectTag == GameObjectTag::PlayerShot)
+		{
+			{
+				//弾の攻撃力分自身のHPを減らす(防御力と調整しながら)
+				Shot* col = dynamic_cast<Shot*>(colider.get());
+				auto damage = col->GetAtk() - m_status.def;
+				if (damage > 0)
+				{
+					m_status.hp -= damage*2;
+				}
+
+				//敵ヒットSEを流す
+				SoundManager::GetInstance().PlaySE("S_ENEMYHIT");
+				//敵ヒットエフェクトを出す
+				//EffectManager::GetInstance().CreateEffect("E_ENEMYHIT", rigidbody->GetPos());
+				//当たった弾の終了処理を呼ぶ
+				col->End();
+#ifdef _DEBUG	//デバッグ描画
+
+#endif
+			}
+		}
+	}
+	
 }
 
 void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex)

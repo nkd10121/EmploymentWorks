@@ -89,7 +89,8 @@ public:
 
 	virtual const float GetSearchCollisionRadius()const = 0;
 
-	const void SetModelRotation(Vec3 rot)const { MV1SetRotationXYZ(m_modelHandle, rot.ToVECTOR()); }
+	const void SetModelRotation(Vec3 rot)const;
+
 protected:
 	EnemyKind kind;		//種類
 	bool m_isExist;		//存在フラグ

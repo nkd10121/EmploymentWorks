@@ -131,32 +131,38 @@ void MyLib::Physics::Update()
 
 		item->rigidbody->SetVelocity(velocity);
 
+		// 予定ポジション設定
+		item->rigidbody->SetNextPos(nextPos);
+
 		// もともとの情報、予定情報をデバッグ表示
 #if _DEBUG
 
 		for (const auto& collider : item->m_colliders)
 		{
+			auto colPos = collider.collide->GetWorldPos();
+			collider.collide->SetCenterPos(nextPos);
+			auto colNextPos = collider.collide->GetWorldPos();
+
 			auto kind = collider.collide->GetKind();
 			if (kind == ColliderBase::Kind::Sphere)
 			{
 				auto sphereData = dynamic_cast<MyLib::ColliderSphere*> (collider.collide.get());
 				auto radius = sphereData->m_radius;
-				MyLib::DebugDraw::AddDrawSphere(pos, radius, kBeforeFixInfoColor);
-				MyLib::DebugDraw::AddDrawSphere(nextPos, radius, kAimInfoColor);
+				MyLib::DebugDraw::AddDrawSphere(colPos, radius, kBeforeFixInfoColor);
+				MyLib::DebugDraw::AddDrawSphere(colNextPos, radius, kAimInfoColor);
 			}
 			else if (kind == ColliderBase::Kind::Cupsule)
 			{
 				auto cupsuleData = dynamic_cast<MyLib::ColliderCupsule*> (collider.collide.get());
 				auto size = cupsuleData->m_size;
 				auto radius = cupsuleData->m_radius;
-				MyLib::DebugDraw::AddDrawCupsule(pos, size, radius, kBeforeFixInfoColor);
-				MyLib::DebugDraw::AddDrawCupsule(nextPos, size, radius, kAimInfoColor);
+				MyLib::DebugDraw::AddDrawCupsule(colPos, size, radius, kBeforeFixInfoColor);
+				MyLib::DebugDraw::AddDrawCupsule(colNextPos, size, radius, kAimInfoColor);
 			}
 		}
 
 #endif
-		// 予定ポジション設定
-		item->rigidbody->SetNextPos(nextPos);
+
 	}
 
 	// 当たり判定チェック（nextPos指定）
@@ -530,8 +536,7 @@ void MyLib::Physics::CheckColide()
 	int		checkCount = 0;	// チェック回数
 	while (true)
 	{
-		// 判定回数増加
-		checkCount++;
+
 
 		bool isNoHit = true;
 
@@ -544,6 +549,9 @@ void MyLib::Physics::CheckColide()
 			{
 				for (int j = 0; j < objB->m_colliders.size(); j++)
 				{
+					// 判定回数増加
+					checkCount++;
+
 					auto& colA = objA->m_colliders.at(i);
 					auto& colB = objB->m_colliders.at(j);
 
@@ -622,15 +630,12 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 	auto kindA = colliderA->GetKind();
 	auto kindB = colliderB->GetKind();
 
-
-
-
 	if (kindA == MyLib::ColliderBase::Kind::Sphere && kindB == MyLib::ColliderBase::Kind::Sphere)
 	{
 		auto colA = dynamic_cast<MyLib::ColliderSphere*>(colliderA);
 		auto colB = dynamic_cast<MyLib::ColliderSphere*>(colliderB);
 
-		auto atob = rigidA->GetNextPos() - rigidB->GetNextPos();
+		auto atob = colA->GetWorldPos() - colB->GetWorldPos();
 		auto atobLength = atob.Length();
 
 		// お互いの距離が、それぞれの半径を足したものより小さければ当たる
@@ -644,11 +649,11 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 		auto colB = dynamic_cast<MyLib::ColliderCupsule*>(colliderB);
 
 		//二つのカプセルの直線部分同士の最近点間の距離が二つの判定を足した距離と比較する
-		auto colACenter = rigidA->GetNextPos();
+		auto colACenter = colA->GetWorldPos();
 		auto colAPos1 = VGet(colACenter.x, colACenter.y + colA->m_size, colACenter.z);
 		auto colAPos2 = VGet(colACenter.x, colACenter.y - colA->m_size, colACenter.z);
 
-		auto colBCenter = rigidB->GetNextPos();
+		auto colBCenter = colB->GetWorldPos();
 		auto colBPos1 = VGet(colBCenter.x, colBCenter.y + colB->m_size, colBCenter.z);
 		auto colBPos2 = VGet(colBCenter.x, colBCenter.y - colB->m_size, colBCenter.z);
 
@@ -664,14 +669,14 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 		auto colB = dynamic_cast<MyLib::ColliderSphere*>(colliderB);
 
 		//カプセルの情報を取得
-		auto cupsuleCenterPos = rigidA->GetNextPos();
+		auto cupsuleCenterPos = colA->GetWorldPos();
 		auto cupsuleSize = colA->m_size;
 
 		auto cupsulePos1 = VGet(cupsuleCenterPos.x, cupsuleCenterPos.y + cupsuleSize, cupsuleCenterPos.z);
 		auto cupsulePos2 = VGet(cupsuleCenterPos.x, cupsuleCenterPos.y - cupsuleSize, cupsuleCenterPos.z);
 
 		//球の情報を取得
-		auto sphereCenterPos = rigidB->GetNextPos();
+		auto sphereCenterPos = colB->GetWorldPos();
 		//カプセルの線分と球の中心座標の距離がカプセルの半径と球の半径を足した値より長いか短いかで判断する
 		auto length = Segment_Point_MinLength(cupsulePos1, cupsulePos2, sphereCenterPos.ToVECTOR());
 
@@ -717,6 +722,7 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 		auto fixedPos = primaryRigid->GetNextPos() + primaryToNewSecondaryPos;
 		fixedPos.y = secondaryRigid->GetPos().y;
 		secondaryRigid->SetNextPos(fixedPos);
+		secondaryCollider->SetCenterPos(fixedPos);
 	}
 
 	//カプセルとカプセルの補正
@@ -757,6 +763,7 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 		fixedPos.y = secondaryRigid->GetPos().y;
 		//修正座標を設定
 		secondaryRigid->SetNextPos(fixedPos);
+		secondaryCollider->SetCenterPos(fixedPos);
 	}
 
 	//カプセルと球の補正
@@ -786,6 +793,7 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 		fixedPos.y = secondaryRigid->GetPos().y;
 		//修正座標を設定
 		secondaryRigid->SetNextPos(fixedPos);
+		secondaryCollider->SetCenterPos(fixedPos);
 	}
 
 	//球とカプセルの補正

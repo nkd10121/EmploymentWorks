@@ -7,7 +7,6 @@ public:
 	Vec3 centerPos;		//基準とする中心座標
 	Vec3 localPos;		//中心座標からの相対座標
 
-private:
 	Vec3 centerRotVec;		//中心座標の回転ベクトル
 
 public:

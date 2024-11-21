@@ -85,7 +85,8 @@ namespace MyLib
 
 		void DeleteCollider(MyLib::Collidable::Collide col);
 
-		Collide GetCollider(ColliderBase::CollisionTag collisionTag);
+	public:
+		const Collide GetCollider(ColliderBase::CollisionTag collisionTag)const;
 
 	protected:
 		// 物理データ

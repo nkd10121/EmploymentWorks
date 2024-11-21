@@ -45,3 +45,10 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int c
 {
 
 }
+
+const void EnemyBase::SetModelRotation(Vec3 rot) const
+{
+	MV1SetRotationXYZ(m_modelHandle, rot.ToVECTOR());
+	MyLib::Collidable::Collide col = GetCollider(MyLib::ColliderBase::CollisionTag::Head);
+	col.collide->localPos.SetFrontPos(m_playerPos);
+}

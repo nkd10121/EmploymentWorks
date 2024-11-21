@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <unordered_map>
 #include "Vec3.h"
+#include "LocalPos.h"
 
 namespace MyLib
 {
@@ -37,18 +38,6 @@ namespace MyLib
 		virtual ~ColliderBase() {}
 
 		/// <summary>
-		/// 当たり判定の中心座標を設定
-		/// </summary>
-		/// <param name="pos"></param>
-		void SetPos(Vec3 pos) { centerPos = pos; }
-
-		/// <summary>
-		/// 当たり判定の中心座標を取得
-		/// </summary>
-		/// <returns></returns>
-		const Vec3 GetPos()const { return centerPos; }
-
-		/// <summary>
 		/// 当たり判定の種別取得
 		/// </summary>
 		/// <returns>当たり判定の種別</returns>
@@ -60,8 +49,16 @@ namespace MyLib
 		/// <returns>トリガーフラグ</returns>
 		bool IsTrigger() const { return isTrigger; }
 
+		const void SetCenterPos(Vec3 pos);
+
+		const void SetOffsetPos(Vec3 pos);
+
+		const Vec3 GetWorldPos() { return localPos.GetWorldPos();}
+
+	public:
+		LocalPos localPos;		//中心座標からの相対座標
+								//体の中心座標が当たり判定の中心座標なら(0,0,0)
 	private:
-		Vec3 centerPos;		//中心座標
 
 		Kind kind;		//当たり判定種別
 		bool isTrigger;	//トリガーフラグ
