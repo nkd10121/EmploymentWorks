@@ -332,7 +332,7 @@ void Player::UpdateModelPos()
 /// <summary>
 /// 押し出し処理を行うオブジェクトと衝突したとき
 /// </summary>
-void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
+void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 	//#ifdef _DEBUG	//デバッグ描画
 	//	std::string message = "プレイヤーが";
@@ -360,7 +360,7 @@ void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colI
 /// <summary>
 /// 押し出し処理を行わないオブジェクトと衝突したとき
 /// </summary>
-void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
+void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 #ifdef _DEBUG	//デバッグ描画
 	std::string message = "プレイヤーが";

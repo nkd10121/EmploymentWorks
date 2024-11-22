@@ -38,7 +38,7 @@ public:
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
-	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override {};
+	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)override {};
 
 	/// <summary>
 	/// 自身の現在のHPを取得

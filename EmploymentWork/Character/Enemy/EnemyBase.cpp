@@ -33,7 +33,7 @@ void EnemyBase::SetPos(Vec3 pos)
 /// <summary>
 /// ほかのオブジェクトと衝突したときに呼ばれる
 /// </summary>
-void EnemyBase::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
+void EnemyBase::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 
 }
@@ -41,7 +41,7 @@ void EnemyBase::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int c
 /// <summary>
 /// ほかのオブジェクトと衝突したときに呼ばれる
 /// </summary>
-void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
+void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 
 }
@@ -49,10 +49,10 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int c
 const void EnemyBase::SetModelRotation(Vec3 rot) const
 {
 	MV1SetRotationXYZ(m_modelHandle, rot.ToVECTOR());
-	MyLib::Collidable::Collide col = GetCollider(MyLib::ColliderBase::CollisionTag::Head);
-	if (col.collide != nullptr)
+	auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Head);
+	if (col != nullptr)
 	{
-		col.collide->localPos.SetFrontPos(m_playerPos);
+		col->collide->localPos.SetFrontPos(m_playerPos);
 	}
 }
 
@@ -85,7 +85,7 @@ const bool EnemyBase::CheckIsExistCollisionTag(MyLib::ColliderBase::CollisionTag
 	//存在するならtrue,しなかったらfalse
 	for (auto& col : m_colliders)
 	{
-		if (col.collideTag == tag)
+		if (col->collideTag == tag)
 		{
 			return true;
 		}

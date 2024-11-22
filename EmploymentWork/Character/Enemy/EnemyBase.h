@@ -52,12 +52,12 @@ public:
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
-	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
+	virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)override;
 	/// <summary>
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
-	virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
+	virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)override;
 
 	/// <summary>
 	/// 索敵判定の作成

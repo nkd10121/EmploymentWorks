@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Vec3.h"
+#include "MyLib.h"
 
 #include <list>
 #include <vector>
@@ -46,6 +47,7 @@ private:
 		std::weak_ptr<Collidable> own;	//自分自身
 		std::weak_ptr<Collidable> send;	//当たった相手
 		int colIndex;
+		std::shared_ptr<MyLib::Collidable::Collide> ownCol;
 		eOnCollideInfoKind kind;			//種類
 	};
 
@@ -55,6 +57,8 @@ private:
 		std::weak_ptr<Collidable> send;
 		int ownColIndex;
 		int sendColIndex;
+
+		std::shared_ptr<MyLib::Collidable::Collide> ownCol;
 	};
 
 	//using SendCollideInfo = std::unordered_map<std::shared_ptr<Collidable>, std::list<std::shared_ptr<Collidable>>>;

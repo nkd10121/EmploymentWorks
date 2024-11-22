@@ -57,6 +57,7 @@ void EnemyStateAttack::Update()
 				//移動方向に体を回転させる
 				own->SetModelRotation(rotation);
 
+				own->CreateAttackCollision();
 				ChangeState(StateBase::StateKind::Attack);
 				return;
 			}

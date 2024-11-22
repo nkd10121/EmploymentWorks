@@ -175,7 +175,7 @@ void EnemyNormal::Update()
 #ifdef _DEBUG
 	for (auto& col : m_colliders)
 	{
-		switch (col.collideTag)
+		switch (col->collideTag)
 		{
 		case MyLib::ColliderBase::CollisionTag::Normal:
 			printf("通常の当たり判定\n");
@@ -243,7 +243,7 @@ const float EnemyNormal::GetSearchCollisionRadius() const
 	return  kSearchCollisionRadius;
 }
 
-void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
+void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 	//#ifdef _DEBUG
 	//	printf("敵の");
@@ -300,7 +300,7 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 		//当たったオブジェクトのタグを取得する
 	m_hitObjectTag = colider->GetTag();
 
-	if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Normal)
+	if (Collidable::m_colliders[colIndex]->collideTag == MyLib::ColliderBase::CollisionTag::Normal)
 	{
 		//当たったオブジェクトがプレイヤーが撃った弾なら
 		if (m_hitObjectTag == GameObjectTag::PlayerShot)
@@ -326,7 +326,7 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 			}
 		}
 	}
-	else if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
+	else if (Collidable::m_colliders[colIndex]->collideTag == MyLib::ColliderBase::CollisionTag::Search)
 	{
 		//当たったオブジェクトがプレイヤーが撃った弾なら
 		if (m_hitObjectTag == GameObjectTag::Player)
@@ -335,7 +335,7 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 			m_pState->SetNextKind(StateBase::StateKind::Walk);
 		}
 	}
-	else if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Head)
+	else if (Collidable::m_colliders[colIndex]->collideTag == MyLib::ColliderBase::CollisionTag::Head)
 	{
 		//当たったオブジェクトがプレイヤーが撃った弾なら
 		if (m_hitObjectTag == GameObjectTag::PlayerShot)
@@ -363,7 +363,7 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 	}
 }
 
-void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex)
+void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 	//当たったオブジェクトのタグを取得する
 	m_hitObjectTag = colider->GetTag();
@@ -372,7 +372,7 @@ void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collidable>& colider, int 
 	if (m_hitObjectTag == GameObjectTag::Player)
 	{
 		//当たったコリジョンが索敵の時
-		if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
+		if (Collidable::m_colliders[colIndex]->collideTag == MyLib::ColliderBase::CollisionTag::Search)
 		{
 			Player* col = dynamic_cast<Player*>(colider.get());
 			m_playerPos = col->GetRigidbody()->GetPos();
@@ -380,18 +380,18 @@ void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collidable>& colider, int 
 	}
 }
 
-void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex)
+void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 	//当たったオブジェクトのタグを取得する
 	m_hitObjectTag = colider->GetTag();
 
-	if (!CheckIsExistCollisionTag(Collidable::m_colliders[colIndex].collideTag))return;
+	if (!CheckIsExistCollisionTag(ownCol->collideTag))return;
 
 	//当たったオブジェクトがプレイヤーのとき
 	if (m_hitObjectTag == GameObjectTag::Player)
 	{
 		//当たったコリジョンが索敵の時
-		if (Collidable::m_colliders[colIndex].collideTag == MyLib::ColliderBase::CollisionTag::Search)
+		if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Search)
 		{
 			if (m_pState->GetKind() != StateBase::StateKind::Attack)
 			{

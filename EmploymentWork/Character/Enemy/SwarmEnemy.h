@@ -38,8 +38,8 @@ public:
 	/// <returns>構成メンバーが存在するかどうか</returns>
 	const bool GetIsExistMember()const { return m_isExistMember; }
 
-	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
-	void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex)override;
+	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)override;
+	void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)override;
 
 private:
 	std::list<std::shared_ptr<EnemyBase>> m_swarm;	//群れの構成員

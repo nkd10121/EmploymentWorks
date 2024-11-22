@@ -91,7 +91,7 @@ void SwarmEnemy::Update()
 	if (m_swarmRadius != maxLength)
 	{
 		m_swarmRadius = maxLength + m_maxSearchCollisionRadius + m_maxSearchCollisionRadius * 0.2f;
-		auto cupsuleCol = dynamic_cast<MyLib::ColliderSphere*>(Collidable::m_colliders.back().collide.get());			//キャスト
+		auto cupsuleCol = dynamic_cast<MyLib::ColliderSphere*>(Collidable::m_colliders.back()->collide.get());			//キャスト
 		cupsuleCol->SetRadius(m_swarmRadius);
 	}
 }
@@ -172,7 +172,7 @@ void SwarmEnemy::AddSwarm(std::shared_ptr<EnemyBase> add)
 	m_swarm.emplace_back(add);
 }
 
-void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)
+void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 	auto tag = colider->GetTag();
 	if (tag == GameObjectTag::Player)
@@ -190,7 +190,7 @@ void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int 
 	}
 }
 
-void SwarmEnemy::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex)
+void SwarmEnemy::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
 {
 	auto tag = colider->GetTag();
 	if (tag == GameObjectTag::Player)

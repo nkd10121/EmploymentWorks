@@ -51,12 +51,12 @@ namespace MyLib
 		virtual ~Collidable();
 
 		//当たり判定関数
-		virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider,int colIndex) {}
-		virtual void OnCollideStay(const std::shared_ptr<Collidable>& colider, int colIndex) {}
-		virtual void OnCollideExit(const std::shared_ptr<Collidable>& colider, int colIndex) {}
-		virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex) {}
-		virtual void OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex) {}
-		virtual void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex) {}
+		virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider,int colIndex,const std::shared_ptr<Collide>& ownCol) {}
+		virtual void OnCollideStay(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
+		virtual void OnCollideExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
+		virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
+		virtual void OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
+		virtual void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
 
 		/// <summary>
 		/// タグを取得
@@ -97,7 +97,7 @@ namespace MyLib
 		/// 指定した当たり判定の削除申請を出す
 		/// </summary>
 		/// <param name="col"></param>
-		void DeleteRequestCollider(MyLib::Collidable::Collide col);
+		void DeleteRequestCollider(std::shared_ptr<MyLib::Collidable::Collide> col);
 
 		/// <summary>
 		/// 削除申請が出されている当たり判定を削除する
@@ -105,13 +105,13 @@ namespace MyLib
 		void DeleteCollider();
 
 	public:
-		const Collide GetCollider(ColliderBase::CollisionTag collisionTag)const;
+		const std::shared_ptr<Collide> GetCollider(ColliderBase::CollisionTag collisionTag)const;
 
 	protected:
 		// 物理データ
 		std::shared_ptr<Rigidbody> rigidbody;
 		//当たり判定情報
-		std::vector<Collide> m_colliders;
+		std::vector<std::shared_ptr<Collide>> m_colliders;
 
 
 

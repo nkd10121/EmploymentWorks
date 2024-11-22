@@ -53,10 +53,10 @@ public:
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
 	/// <param name="colider">衝突したオブジェクト</param>
-	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex)override;
+	void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)override;
 
-	void OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex)override;
-	void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex)override;
+	void OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)override;
+	void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)override;
 
 };
 

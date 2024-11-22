@@ -139,21 +139,21 @@ void MyLib::Physics::Update()
 
 		for (const auto& collider : item->m_colliders)
 		{
-			auto colPos = collider.collide->GetWorldPos();
-			collider.collide->SetCenterPos(nextPos);
-			auto colNextPos = collider.collide->GetWorldPos();
+			auto colPos = collider->collide->GetWorldPos();
+			collider->collide->SetCenterPos(nextPos);
+			auto colNextPos = collider->collide->GetWorldPos();
 
-			auto kind = collider.collide->GetKind();
+			auto kind = collider->collide->GetKind();
 			if (kind == ColliderBase::Kind::Sphere)
 			{
-				auto sphereData = dynamic_cast<MyLib::ColliderSphere*> (collider.collide.get());
+				auto sphereData = dynamic_cast<MyLib::ColliderSphere*> (collider->collide.get());
 				auto radius = sphereData->m_radius;
 				MyLib::DebugDraw::AddDrawSphere(colPos, radius, kBeforeFixInfoColor);
 				MyLib::DebugDraw::AddDrawSphere(colNextPos, radius, kAimInfoColor);
 			}
 			else if (kind == ColliderBase::Kind::Cupsule)
 			{
-				auto cupsuleData = dynamic_cast<MyLib::ColliderCupsule*> (collider.collide.get());
+				auto cupsuleData = dynamic_cast<MyLib::ColliderCupsule*> (collider->collide.get());
 				auto size = cupsuleData->m_size;
 				auto radius = cupsuleData->m_radius;
 				MyLib::DebugDraw::AddDrawCupsule(colPos, size, radius, kBeforeFixInfoColor);
@@ -178,10 +178,10 @@ void MyLib::Physics::Update()
 
 			for (auto& col : item->m_colliders)
 			{
-				if (col.collide->GetKind() == ColliderBase::Kind::Cupsule)
+				if (col->collide->GetKind() == ColliderBase::Kind::Cupsule)
 				{
-					rad = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_radius;
-					size = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_size;
+					rad = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_radius;
+					size = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_size;
 
 					modelHandle = m_stageCollisionHandle;
 				}
@@ -238,27 +238,27 @@ void MyLib::Physics::Update()
 			{
 				if (info.kind == eOnCollideInfoKind::CollideEnter)
 				{
-					info.own.lock()->OnCollideEnter(info.send.lock(), info.colIndex);
+					info.own.lock()->OnCollideEnter(info.send.lock(), info.colIndex,info.ownCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::CollideStay)
 				{
-					info.own.lock()->OnCollideStay(info.send.lock(), info.colIndex);
+					info.own.lock()->OnCollideStay(info.send.lock(), info.colIndex, info.ownCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::CollideExit)
 				{
-					info.own.lock()->OnCollideExit(info.send.lock(), info.colIndex);
+					info.own.lock()->OnCollideExit(info.send.lock(), info.colIndex, info.ownCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::TriggerEnter)
 				{
-					info.own.lock()->OnTriggerEnter(info.send.lock(), info.colIndex);
+					info.own.lock()->OnTriggerEnter(info.send.lock(), info.colIndex, info.ownCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::TriggerStay)
 				{
-					info.own.lock()->OnTriggerStay(info.send.lock(), info.colIndex);
+					info.own.lock()->OnTriggerStay(info.send.lock(), info.colIndex, info.ownCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::TriggerExit)
 				{
-					info.own.lock()->OnTriggerExit(info.send.lock(), info.colIndex);
+					info.own.lock()->OnTriggerExit(info.send.lock(), info.colIndex, info.ownCol);
 				}
 			}
 		}
@@ -307,28 +307,28 @@ std::vector<std::shared_ptr<MyLib::Collidable>> MyLib::Physics::GetCollisionList
 			for (auto& col1 : obj1->m_colliders)
 			{
 				float lengthA = 0.0f;
-				if (col1.collide->GetKind() == ColliderBase::Kind::Cupsule)
+				if (col1->collide->GetKind() == ColliderBase::Kind::Cupsule)
 				{
-					auto colA = dynamic_cast<MyLib::ColliderCupsule*>(col1.collide.get());
+					auto colA = dynamic_cast<MyLib::ColliderCupsule*>(col1->collide.get());
 					lengthA = colA->m_radius + colA->m_size;
 				}
-				else if (col1.collide->GetKind() == ColliderBase::Kind::Sphere)
+				else if (col1->collide->GetKind() == ColliderBase::Kind::Sphere)
 				{
-					auto colA = dynamic_cast<MyLib::ColliderSphere*>(col1.collide.get());
+					auto colA = dynamic_cast<MyLib::ColliderSphere*>(col1->collide.get());
 					lengthA = colA->m_radius;
 				}
 
 				for (auto& col2 : obj2->m_colliders)
 				{
 					float lengthB = 0.0f;
-					if (col2.collide->GetKind() == ColliderBase::Kind::Cupsule)
+					if (col2->collide->GetKind() == ColliderBase::Kind::Cupsule)
 					{
-						auto colB = dynamic_cast<MyLib::ColliderCupsule*>(col2.collide.get());
+						auto colB = dynamic_cast<MyLib::ColliderCupsule*>(col2->collide.get());
 						lengthB = colB->m_radius + colB->m_size;
 					}
-					else if (col2.collide->GetKind() == ColliderBase::Kind::Sphere)
+					else if (col2->collide->GetKind() == ColliderBase::Kind::Sphere)
 					{
-						auto colB = dynamic_cast<MyLib::ColliderSphere*>(col2.collide.get());
+						auto colB = dynamic_cast<MyLib::ColliderSphere*>(col2->collide.get());
 						lengthB = colB->m_radius;
 					}
 
@@ -470,7 +470,7 @@ void MyLib::Physics::CheckColide()
 
 						if (!IsCollide(objA->rigidbody, objB->rigidbody, objA->m_colliders[i].collide.get(), objB->m_colliders[j].collide.get())) continue;
 
-						bool isTrigger = objA->m_colliders[i].collide->IsTrigger() || objB->m_colliders[j].collide->IsTrigger();
+						bool isTrigger = objA->m_colliders[i]->collide->IsTrigger() || objB->m_colliders[j]->collide->IsTrigger();
 
 						if (isTrigger)
 						{
@@ -580,9 +580,9 @@ void MyLib::Physics::CheckColide()
 						}
 					}
 
-					if (!IsCollide(objA->rigidbody, objB->rigidbody, objA->m_colliders[i].collide.get(), objB->m_colliders[j].collide.get())) continue;
+					if (!IsCollide(objA->rigidbody, objB->rigidbody, objA->m_colliders[i]->collide.get(), objB->m_colliders[j]->collide.get())) continue;
 
-					bool isTrigger = objA->m_colliders[i].collide->IsTrigger() || objB->m_colliders[j].collide->IsTrigger();
+					bool isTrigger = objA->m_colliders[i]->collide->IsTrigger() || objB->m_colliders[j]->collide->IsTrigger();
 
 					if (isTrigger)
 					{
@@ -594,7 +594,7 @@ void MyLib::Physics::CheckColide()
 						AddNewCollideInfo(objA, objB, i, j, m_newCollideInfo);
 					}
 
-					FixNextPosition(primary->rigidbody, secondary->rigidbody, primaryCollider.collide.get(), secondaryCollider.collide.get());
+					FixNextPosition(primary->rigidbody, secondary->rigidbody, primaryCollider->collide.get(), secondaryCollider->collide.get());
 					// 位置補正をしたらもう一度初めから行う
 					isNoHit = false;
 					break;
@@ -687,6 +687,8 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 /// </summary>
 void MyLib::Physics::AddNewCollideInfo(const std::weak_ptr<Collidable>& objA, const std::weak_ptr<Collidable>& objB, int colIndexA, int colIndexB, SendCollideInfo& info)
 {
+	auto col = objA.lock()->m_colliders[colIndexA];
+
 	// 既に追加されている通知リストにあれば追加しない
 	for (auto& inf : info)
 	{
@@ -694,7 +696,14 @@ void MyLib::Physics::AddNewCollideInfo(const std::weak_ptr<Collidable>& objA, co
 		if (inf.own.lock() == objB.lock() && inf.send.lock() == objA.lock() && inf.ownColIndex == colIndexB && inf.sendColIndex == colIndexA) return;
 	}
 
-	info.emplace_back(SendInfo{ objA, objB, colIndexA, colIndexB });
+	SendInfo add;
+	add.own = objA;
+	add.send = objB;
+	add.ownColIndex = colIndexA;
+	add.sendColIndex = colIndexB;
+	add.ownCol = col;
+	
+	info.emplace_back(add);
 }
 
 /// <summary>
@@ -946,8 +955,8 @@ void MyLib::Physics::CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCo
 /// </summary>
 void MyLib::Physics::AddOnCollideInfo(const SendInfo& info, eOnCollideInfoKind kind)
 {
-	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.own, info.send, info.ownColIndex, kind });
-	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.send, info.own, info.sendColIndex, kind });
+	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.own, info.send, info.ownColIndex,info.ownCol, kind });
+	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.send, info.own, info.sendColIndex,info.ownCol, kind });
 }
 
 /// <summary>
@@ -1016,10 +1025,10 @@ void MyLib::Physics::CheckWallAndFloor(std::shared_ptr<Collidable>& col)
 			float size = 0.0f;
 			for (auto& col : col->m_colliders)
 			{
-				if (col.collideTag == MyLib::ColliderBase::CollisionTag::Normal)
+				if (col->collideTag == MyLib::ColliderBase::CollisionTag::Normal)
 				{
-					radius = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_radius;
-					size = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_size;
+					radius = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_radius;
+					size = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_size;
 				}
 			}
 
@@ -1063,10 +1072,10 @@ void MyLib::Physics::FixPositionWithWall(std::shared_ptr<Collidable>& col)
 	float size = 0.0f;
 	for (auto& col : col->m_colliders)
 	{
-		if (col.collide->GetKind() == ColliderBase::Kind::Cupsule)
+		if (col->collide->GetKind() == ColliderBase::Kind::Cupsule)
 		{
-			radius = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_radius;
-			size = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_size;
+			radius = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_radius;
+			size = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_size;
 		}
 	}
 
@@ -1186,10 +1195,10 @@ void MyLib::Physics::FixPositionWithWallInternal(std::shared_ptr<Collidable>& co
 	float size = 0.0f;
 	for (auto& col : col->m_colliders)
 	{
-		if (col.collide->GetKind() == ColliderBase::Kind::Cupsule)
+		if (col->collide->GetKind() == ColliderBase::Kind::Cupsule)
 		{
-			radius = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_radius;
-			size = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_size;
+			radius = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_radius;
+			size = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_size;
 		}
 	}
 
@@ -1430,10 +1439,10 @@ void MyLib::Physics::FixNowPositionWithFloor(std::shared_ptr<Collidable>& col)
 	float size = 0.0f;
 	for (auto& col : col->m_colliders)
 	{
-		if (col.collide->GetKind() == ColliderBase::Kind::Cupsule)
+		if (col->collide->GetKind() == ColliderBase::Kind::Cupsule)
 		{
-			radius = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_radius;
-			size = dynamic_cast<MyLib::ColliderCupsule*> (col.collide.get())->m_size;
+			radius = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_radius;
+			size = dynamic_cast<MyLib::ColliderCupsule*> (col->collide.get())->m_size;
 		}
 	}
 

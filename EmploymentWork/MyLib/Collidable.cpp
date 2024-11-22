@@ -91,22 +91,22 @@ std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const Collid
 		assert(0 && "指定された種類の当たり判定を追加できませんでした");
 	}
 
-	Collide addInfo;
-	addInfo.collide = add;
-	addInfo.collideTag = collisionTag;
+	std::shared_ptr<Collide>addInfo = std::make_shared<Collide>();
+	addInfo->collide = add;
+	addInfo->collideTag = collisionTag;
 
 	//当たり判定を追加する
 	m_colliders.emplace_back(addInfo);
 	return add;
 }
 
-void MyLib::Collidable::DeleteRequestCollider(Collide col)
+void MyLib::Collidable::DeleteRequestCollider(std::shared_ptr<Collide> col)
 {
 	for (auto& c : m_colliders)
 	{
 		if (c == col)
 		{
-			c.isDelete = true;
+			c->isDelete = true;
 		}
 	}
 
@@ -118,18 +118,18 @@ void MyLib::Collidable::DeleteCollider()
 {
 	auto it = std::remove_if(m_colliders.begin(), m_colliders.end(), [](auto& v)
 	{
-	return v.isDelete == true;
+	return v->isDelete == true;
 	});
 	m_colliders.erase(it, m_colliders.end());
 }
 
-const MyLib::Collidable::Collide MyLib::Collidable::GetCollider(ColliderBase::CollisionTag collisionTag)const
+const std::shared_ptr<MyLib::Collidable::Collide> MyLib::Collidable::GetCollider(ColliderBase::CollisionTag collisionTag)const
 {
-	Collide ret;
+	std::shared_ptr<Collide>ret;
 
 	for (auto& col : m_colliders)
 	{
-		if (col.collideTag == collisionTag)
+		if (col->collideTag == collisionTag)
 		{
 			ret = col;
 		}
