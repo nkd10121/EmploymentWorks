@@ -95,6 +95,14 @@ public:
 	const void DeleteAttackCollision();
 
 protected:
+	/// <summary>
+	/// 指定した当たり判定タグが存在するかチェック
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	const bool CheckIsExistCollisionTag(MyLib::ColliderBase::CollisionTag tag)const;
+
+protected:
 	EnemyKind kind;		//種類
 	bool m_isExist;		//存在フラグ
 	bool m_isStartDeathAnimation;	//死亡アニメーションを開始するか
@@ -105,4 +113,6 @@ protected:
 	Vec3 m_playerPos;				//プレイヤーの座標
 
 	GameObjectTag m_hitObjectTag;	//あったオブジェクトタグ
+
+	bool m_isAttack;
 };

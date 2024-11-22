@@ -50,11 +50,16 @@ const void EnemyBase::SetModelRotation(Vec3 rot) const
 {
 	MV1SetRotationXYZ(m_modelHandle, rot.ToVECTOR());
 	MyLib::Collidable::Collide col = GetCollider(MyLib::ColliderBase::CollisionTag::Head);
-	col.collide->localPos.SetFrontPos(m_playerPos);
+	if (col.collide != nullptr)
+	{
+		col.collide->localPos.SetFrontPos(m_playerPos);
+	}
 }
 
 const void EnemyBase::CreateAttackCollision()
 {
+	m_isAttack = true;
+
 	//当たり判定の作成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
@@ -67,5 +72,23 @@ const void EnemyBase::CreateAttackCollision()
 
 const void EnemyBase::DeleteAttackCollision()
 {
+	m_isAttack = false;
+
+	auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
+	Collidable::DeleteCollider(col);
+
 	return void();
+}
+
+const bool EnemyBase::CheckIsExistCollisionTag(MyLib::ColliderBase::CollisionTag tag) const
+{
+	//存在するならtrue,しなかったらfalse
+	for (auto& col : m_colliders)
+	{
+		if (col.collideTag == tag)
+		{
+			return true;
+		}
+	}
+	return false;
 }

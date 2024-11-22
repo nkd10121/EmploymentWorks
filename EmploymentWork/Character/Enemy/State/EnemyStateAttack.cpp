@@ -21,6 +21,8 @@ EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
 /// </summary>
 void EnemyStateAttack::Init()
 {
+	auto own = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
+	own->CreateAttackCollision();
 }
 
 /// <summary>
@@ -36,8 +38,10 @@ void EnemyStateAttack::Update()
 
 	auto frame = m_pOwn.lock()->GetAnimNowFrame();
 	//アニメーション上で攻撃が一回終了した時
-	if (static_cast<int>(frame) % static_cast <int>(40.0f) == 0)
+	if (static_cast<int>(frame) % static_cast <int>(40.0f) == 0 && frame >= 1)
 	{
+		own->DeleteAttackCollision();
+
 		//索敵範囲内にプレイヤーがいて
 		if (own->GetIsSearchInPlayer())
 		{
