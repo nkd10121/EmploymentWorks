@@ -66,6 +66,13 @@ namespace MyLib
 		/// <returns>優先度</returns>
 		Priority GetPriority() const { return priority; }
 
+		//当たり判定を無視（スルー）するタグの追加/削除
+		void AddThroughTag(GameObjectTag tag);
+		void RemoveThroughTag(GameObjectTag tag);
+
+		//当たり判定を無視（スルー）する対象かどうか
+		bool IsThroughTarget(const std::shared_ptr<Collidable> target) const;
+
 	protected:
 		/// <summary>
 		/// Physicsに登録する
@@ -85,6 +92,8 @@ namespace MyLib
 
 		void DeleteCollider(MyLib::Collidable::Collide col);
 
+
+
 	public:
 		const Collide GetCollider(ColliderBase::CollisionTag collisionTag)const;
 
@@ -99,5 +108,8 @@ namespace MyLib
 		GameObjectTag tag;
 		//優先度
 		Priority priority;
+
+		// 当たり判定を無視（スルー）するタグのリスト
+		std::list<GameObjectTag> throughTags;
 	};
 }

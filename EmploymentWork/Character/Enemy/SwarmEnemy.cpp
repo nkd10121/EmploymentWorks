@@ -16,6 +16,14 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 {
 	//物理データの初期化
 	rigidbody->Init();
+
+	//当たり判定を無視するオブジェクトタグを設定
+	//TODO:このオブジェクトはプレイヤーとプレイヤーが撃った矢以外のすべてを無視するようにする
+	AddThroughTag(GameObjectTag::Enemy);
+	AddThroughTag(GameObjectTag::SwarmEnemy);
+	AddThroughTag(GameObjectTag::Crystal);
+	AddThroughTag(GameObjectTag::Portion);
+	AddThroughTag(GameObjectTag::SpikeTrap);
 }
 
 SwarmEnemy::~SwarmEnemy()

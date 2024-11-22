@@ -33,8 +33,6 @@ namespace
 EnemyNormal::EnemyNormal() :
 	EnemyBase()
 {
-
-
 	//キャラクター名を設定
 	m_characterName = "EnemyNormal";
 }
@@ -79,6 +77,10 @@ void EnemyNormal::Init()
 	m_status = LoadCSV::GetInstance().LoadStatus(m_characterName.c_str());
 	//最大HPを設定しておく
 	m_hpMax = m_status.hp;
+
+	//当たり判定をとらないオブジェクトタグを設定
+	AddThroughTag(GameObjectTag::Portion);		//ポーション
+	AddThroughTag(GameObjectTag::SwarmEnemy);	//敵群れ
 
 	{
 		//当たり判定の作成
@@ -329,6 +331,7 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 		//当たったオブジェクトがプレイヤーが撃った弾なら
 		if (m_hitObjectTag == GameObjectTag::Player)
 		{
+			m_isSearchInPlayer = true;
 			m_pState->SetNextKind(StateBase::StateKind::Walk);
 		}
 	}
@@ -392,6 +395,7 @@ void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int 
 		{
 			if (m_pState->GetKind() != StateBase::StateKind::Attack)
 			{
+				m_isSearchInPlayer = false;
 				m_pState->SetNextKind(StateBase::StateKind::Idle);
 			}
 		}

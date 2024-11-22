@@ -39,7 +39,7 @@ void EnemyStateWalk::Update()
 	auto own = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
 	Vec3 moveVec;
 
-	//if (own->GetIsSearchInPlayer())
+	if (own->GetIsSearchInPlayer())
 	{
 		auto playerPos = own->GetPlayerPos();
 		moveVec = playerPos - own->GetRigidbody()->GetPos();

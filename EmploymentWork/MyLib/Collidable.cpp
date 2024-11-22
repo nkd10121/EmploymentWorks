@@ -18,6 +18,44 @@ MyLib::Collidable::Collidable(Priority priority, GameObjectTag tag) :
 MyLib::Collidable::~Collidable()
 {
 }
+
+void MyLib::Collidable::AddThroughTag(GameObjectTag tag)
+{
+	//当たり判定を無視するタグのリストに追加予定のタグが存在するかを確認
+	bool found = (std::find(throughTags.begin(), throughTags.end(), tag) != throughTags.end());
+	//リストの中に既に存在していたら警告を出す
+	if (found)
+	{
+		assert(0 && "指定タグは既に追加されています");
+	}
+	else //存在していなかったら追加する
+	{
+		throughTags.emplace_back(tag);
+	}
+}
+
+void MyLib::Collidable::RemoveThroughTag(GameObjectTag tag)
+{
+	//当たり判定を無視するタグのリストに追加予定のタグが存在するかを確認
+	bool found = (std::find(throughTags.begin(), throughTags.end(), tag) != throughTags.end());
+	//存在していなかったら警告を出す
+	if (!found)
+	{
+		assert(0 && "指定タグは存在しません");
+	}
+	else //存在していたら削除する
+	{
+		throughTags.remove(tag);
+	}
+}
+
+bool MyLib::Collidable::IsThroughTarget(const std::shared_ptr<Collidable> target) const
+{
+	//確認したい当たり判定のタグが無視するタグのリストに含まれているかどうか調べる
+	bool found = (std::find(throughTags.begin(), throughTags.end(), target->GetTag()) != throughTags.end());
+	return found;
+}
+
 void MyLib::Collidable::OnEntryPhysics()
 {
 	auto& physics = MyLib::Physics::GetInstance();
