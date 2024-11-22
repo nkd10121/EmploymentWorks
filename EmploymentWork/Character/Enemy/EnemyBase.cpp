@@ -75,7 +75,7 @@ const void EnemyBase::DeleteAttackCollision()
 	m_isAttack = false;
 
 	auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
-	Collidable::DeleteCollider(col);
+	Collidable::DeleteRequestCollider(col);
 
 	return void();
 }

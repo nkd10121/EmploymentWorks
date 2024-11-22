@@ -227,7 +227,7 @@ void EnemyNormal::CreateSearchCollision()
 
 void EnemyNormal::DeleteSearchCollision()
 {
-	Collidable::DeleteCollider(Collidable::GetCollider(MyLib::ColliderBase::CollisionTag::Search));
+	Collidable::DeleteRequestCollider(Collidable::GetCollider(MyLib::ColliderBase::CollisionTag::Search));
 }
 
 void EnemyNormal::UpdateModelPos()

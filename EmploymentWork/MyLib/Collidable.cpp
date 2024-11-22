@@ -100,10 +100,27 @@ std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const Collid
 	return add;
 }
 
-void MyLib::Collidable::DeleteCollider(Collide col)
+void MyLib::Collidable::DeleteRequestCollider(Collide col)
 {
-	auto newEnd = remove(m_colliders.begin(), m_colliders.end(), col);
-	m_colliders.erase(newEnd, m_colliders.end());
+	for (auto& c : m_colliders)
+	{
+		if (c == col)
+		{
+			c.isDelete = true;
+		}
+	}
+
+//	auto newEnd = remove(m_colliders.begin(), m_colliders.end(), col);
+//	m_colliders.erase(newEnd, m_colliders.end());
+}
+
+void MyLib::Collidable::DeleteCollider()
+{
+	auto it = std::remove_if(m_colliders.begin(), m_colliders.end(), [](auto& v)
+	{
+	return v.isDelete == true;
+	});
+	m_colliders.erase(it, m_colliders.end());
 }
 
 const MyLib::Collidable::Collide MyLib::Collidable::GetCollider(ColliderBase::CollisionTag collisionTag)const

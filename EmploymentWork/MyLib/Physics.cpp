@@ -263,6 +263,11 @@ void MyLib::Physics::Update()
 			}
 		}
 	}
+
+	for (auto& item : m_collidables)
+	{
+		item->DeleteCollider();
+	}
 }
 
 void MyLib::Physics::Clear()

@@ -21,8 +21,11 @@ namespace MyLib
 			std::shared_ptr<ColliderBase> collide;
 			ColliderBase::CollisionTag collideTag;
 
+			//削除する予定かどうか
+			bool isDelete = false;
+
 			bool operator==(const Collide& other) const {
-				return this->collide == other.collide;
+				return this->collide == other.collide && this->collideTag == other.collideTag;
 			}
 		};
 
@@ -90,9 +93,16 @@ namespace MyLib
 		/// <returns>自身</returns>
 		std::shared_ptr<ColliderBase> AddCollider(const ColliderBase::Kind& kind, bool isTrigger,ColliderBase::CollisionTag collisionTag = ColliderBase::CollisionTag::Normal);
 
-		void DeleteCollider(MyLib::Collidable::Collide col);
+		/// <summary>
+		/// 指定した当たり判定の削除申請を出す
+		/// </summary>
+		/// <param name="col"></param>
+		void DeleteRequestCollider(MyLib::Collidable::Collide col);
 
-
+		/// <summary>
+		/// 削除申請が出されている当たり判定を削除する
+		/// </summary>
+		void DeleteCollider();
 
 	public:
 		const Collide GetCollider(ColliderBase::CollisionTag collisionTag)const;
@@ -102,6 +112,8 @@ namespace MyLib
 		std::shared_ptr<Rigidbody> rigidbody;
 		//当たり判定情報
 		std::vector<Collide> m_colliders;
+
+
 
 	private:
 		//タグ
