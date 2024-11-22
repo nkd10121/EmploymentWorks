@@ -687,7 +687,8 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 /// </summary>
 void MyLib::Physics::AddNewCollideInfo(const std::weak_ptr<Collidable>& objA, const std::weak_ptr<Collidable>& objB, int colIndexA, int colIndexB, SendCollideInfo& info)
 {
-	auto col = objA.lock()->m_colliders[colIndexA];
+	auto colA = objA.lock()->m_colliders[colIndexA];
+	auto colB = objB.lock()->m_colliders[colIndexB];
 
 	// 既に追加されている通知リストにあれば追加しない
 	for (auto& inf : info)
@@ -701,7 +702,8 @@ void MyLib::Physics::AddNewCollideInfo(const std::weak_ptr<Collidable>& objA, co
 	add.send = objB;
 	add.ownColIndex = colIndexA;
 	add.sendColIndex = colIndexB;
-	add.ownCol = col;
+	add.ownCol = colA;
+	add.sendCol = colB;
 	
 	info.emplace_back(add);
 }
@@ -956,7 +958,7 @@ void MyLib::Physics::CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCo
 void MyLib::Physics::AddOnCollideInfo(const SendInfo& info, eOnCollideInfoKind kind)
 {
 	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.own, info.send, info.ownColIndex,info.ownCol, kind });
-	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.send, info.own, info.sendColIndex,info.ownCol, kind });
+	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.send, info.own, info.sendColIndex,info.sendCol, kind });
 }
 
 /// <summary>

@@ -59,6 +59,7 @@ private:
 		int sendColIndex;
 
 		std::shared_ptr<MyLib::Collidable::Collide> ownCol;
+		std::shared_ptr<MyLib::Collidable::Collide> sendCol;
 	};
 
 	//using SendCollideInfo = std::unordered_map<std::shared_ptr<Collidable>, std::list<std::shared_ptr<Collidable>>>;

@@ -91,23 +91,23 @@ void EnemyNormal::Init()
 
 	}
 
-	//{
-	//	//当たり判定の作成
-	//	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Head);	//追加
-	//	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());			//キャスト
-	//	sphereCol->m_radius = 2.0f;		//カプセルの半径
+	{
+		//当たり判定の作成
+		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Head);	//追加
+		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());			//キャスト
+		sphereCol->m_radius = 2.0f;		//カプセルの半径
 
-	//	auto attachFrameNum = MV1SearchFrame(m_modelHandle, kAttachFrameName);
-	//	auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, attachFrameNum);
-	//	auto pos = Vec3(mat.m[3][0], mat.m[3][1], mat.m[3][2]);
+		auto attachFrameNum = MV1SearchFrame(m_modelHandle, kAttachFrameName);
+		auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, attachFrameNum);
+		auto pos = Vec3(mat.m[3][0], mat.m[3][1], mat.m[3][2]);
 
-	//	auto modelCenterPos = rigidbody->GetPos();
+		auto modelCenterPos = rigidbody->GetPos();
 
-	//	auto vec = pos - modelCenterPos;
-	//	vec.y *= 0.55f;
+		auto vec = pos - modelCenterPos;
+		vec.y *= 0.55f;
 
-	//	sphereCol->SetOffsetPos(vec);
-	//}
+		sphereCol->SetOffsetPos(vec);
+	}
 
 	//存在フラグをtrueにする
 	m_isExist = true;
@@ -328,11 +328,14 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 	}
 	else if (Collidable::m_colliders[colIndex]->collideTag == MyLib::ColliderBase::CollisionTag::Search)
 	{
-		//当たったオブジェクトがプレイヤーが撃った弾なら
+		//当たったオブジェクトがプレイヤーがなら
 		if (m_hitObjectTag == GameObjectTag::Player)
 		{
 			m_isSearchInPlayer = true;
-			m_pState->SetNextKind(StateBase::StateKind::Walk);
+			if (m_pState->GetKind() != StateBase::StateKind::Attack)
+			{
+				m_pState->SetNextKind(StateBase::StateKind::Walk);
+			}
 		}
 	}
 	else if (Collidable::m_colliders[colIndex]->collideTag == MyLib::ColliderBase::CollisionTag::Head)
@@ -374,8 +377,11 @@ void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collidable>& colider, int 
 		//当たったコリジョンが索敵の時
 		if (Collidable::m_colliders[colIndex]->collideTag == MyLib::ColliderBase::CollisionTag::Search)
 		{
-			Player* col = dynamic_cast<Player*>(colider.get());
-			m_playerPos = col->GetRigidbody()->GetPos();
+			if (m_isSearchInPlayer)
+			{
+				Player* col = dynamic_cast<Player*>(colider.get());
+				m_playerPos = col->GetRigidbody()->GetPos();
+			}
 		}
 	}
 }
@@ -385,7 +391,7 @@ void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int 
 	//当たったオブジェクトのタグを取得する
 	m_hitObjectTag = colider->GetTag();
 
-	if (!CheckIsExistCollisionTag(ownCol->collideTag))return;
+	MyLib::Collidable::m_colliders;
 
 	//当たったオブジェクトがプレイヤーのとき
 	if (m_hitObjectTag == GameObjectTag::Player)
@@ -393,9 +399,9 @@ void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int 
 		//当たったコリジョンが索敵の時
 		if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Search)
 		{
+			m_isSearchInPlayer = false;
 			if (m_pState->GetKind() != StateBase::StateKind::Attack)
 			{
-				m_isSearchInPlayer = false;
 				m_pState->SetNextKind(StateBase::StateKind::Idle);
 			}
 		}
