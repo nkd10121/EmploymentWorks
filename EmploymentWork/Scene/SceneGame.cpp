@@ -109,19 +109,19 @@ void SceneGame::Init()
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init(m_stageModel);
 
-	//クリスタルの生成
-	m_pCrystal = std::make_shared<Crystal>(10);
-	m_pCrystal->Init();
-	m_pCrystal->Set(Vec3(0.0f, 0.0f, 10.0f));
+	////クリスタルの生成
+	//m_pCrystal = std::make_shared<Crystal>(10);
+	//m_pCrystal->Init();
+	//m_pCrystal->Set(Vec3(0.0f, 0.0f, 10.0f));
 
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("test");
 
-	//DEBUG:ポーションを生成
-	m_pObjects.emplace_back(std::make_shared<HealPortion>());
-	m_pObjects.back()->Init();
-	m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
+	////DEBUG:ポーションを生成
+	//m_pObjects.emplace_back(std::make_shared<HealPortion>());
+	//m_pObjects.back()->Init();
+	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
 	//DEBUG:敵を生成
 	for (int i = 0; i < 1; i++)
@@ -232,7 +232,7 @@ void SceneGame::Draw()
 	MyLib::DebugDraw::Draw3D();
 #endif
 
-	m_pCrystal->Draw();
+	//m_pCrystal->Draw();
 
 	EffectManager::GetInstance().Draw();
 
@@ -263,7 +263,7 @@ void SceneGame::Draw()
 	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xffffff, true);
 	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xffffff, true);
 
-	DrawFormatString(1120, 0, 0xbbbbbb, "クリスタルHP:%d", m_pCrystal->GetHp());
+	//DrawFormatString(1120, 0, 0xbbbbbb, "クリスタルHP:%d", m_pCrystal->GetHp());
 #endif
 }
 
@@ -279,11 +279,11 @@ void SceneGame::AddObject(std::shared_ptr<ObjectBase> pAddObject)
 
 void SceneGame::UpdateGame()
 {
-	m_pCrystal->Update();
-	if (m_pCrystal->GetIsBreak())
-	{
-		DrawFormatString(640, 0, 0xffff00, "ゲームオーバー");
-	}
+	//m_pCrystal->Update();
+	//if (m_pCrystal->GetIsBreak())
+	//{
+	//	DrawFormatString(640, 0, 0xffff00, "ゲームオーバー");
+	//}
 
 	//プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
