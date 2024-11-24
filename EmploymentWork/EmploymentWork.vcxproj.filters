@@ -191,7 +191,7 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp">
       <Filter>ソース ファイル\Character\Enemy\State</Filter>
     </ClCompile>
-    <ClCompile Include="MyLib\LocalPos.cpp">
+    <ClCompile Include="Geometry\LocalPos.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
     <ClCompile Include="Object\Trap\SpikeTrap.cpp">
@@ -289,7 +289,7 @@
     <ClInclude Include="Util\Input.h">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="MyLib\LocalPos.h">
+    <ClInclude Include="Geometry\LocalPos.h">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="MyLib\MyLib.h">
