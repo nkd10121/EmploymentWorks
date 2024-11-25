@@ -65,7 +65,10 @@ const void EnemyBase::CreateAttackCollision()
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = 4.0f;
 
-	sphereCol->localPos.centerPos = rigidbody->GetPos();
+	auto vec = m_playerPos - rigidbody->GetPos();
+	auto attackPos = Vec3(vec.x, 0.0f,vec.z);
+
+	sphereCol->localPos.localPos = attackPos;
 
 	return void();
 }
