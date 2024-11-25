@@ -318,11 +318,14 @@ void SceneBase::DrawLoading() const
 	if (!IsLoaded())
 	{
 		int x = Game::kWindowWidth - 128;
-		int y = Game::kWindowHeight - 16;
+		int y = Game::kWindowHeight - 32;
 		int num = 0;
+
+
 		for (auto& text : kLoadingText)
 		{
-			DrawFormatString(x + num*8, y - m_loadingFrame, 0xffffff, "%s",text.c_str());
+			float height = sinf(static_cast<float>(m_loadingFrame + num*2) / 6);
+			DrawFormatString(x + num*8, y - height*4, 0xffffff, "%s",text.c_str());
 			num++;
 		}
 
