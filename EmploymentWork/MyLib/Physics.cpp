@@ -338,7 +338,7 @@ std::vector<std::shared_ptr<MyLib::Collidable>> MyLib::Physics::GetCollisionList
 					float maxDistance = 40.0f * 40.0f;
 
 					//もし規定距離より比較する二つの大きさの合計が大きければ問答無用で追加する
-					if (maxDistance < lengthA + lengthB)
+					if (maxDistance < (lengthA + lengthB)* (lengthA + lengthB))
 					{
 						// 判定リストに追加
 						ret.push_back(obj1);

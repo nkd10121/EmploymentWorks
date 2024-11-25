@@ -56,7 +56,7 @@ void TrapManager::Draw()
 		}
 		else
 		{
-			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0x000000, 0x000000, false);
+			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
 		}
 	}
 
