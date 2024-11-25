@@ -15,4 +15,5 @@ SCENE_GAME,M_CROSSBOW,data/model/object/Crossbow,.mv1,0,
 SCENE_GAME,M_SPIKE,data/model/object/trap/spike,.mv1,0,
 SCENE_GAME,M_SPIKEFRAME,data/model/object/trap/spike_frame,.mv1,0,
 SCENE_GAME,E_ENEMYHIT,data/effect/enemy_hit,.efk,0,
+SCENE_GAME,E_ENEMYCRITICALHIT,data/effect/enemy_CriticalHit,.efk,0,
 SCENE_GAME,S_ENEMYHIT,data/sound/se/enemyHit,.mp3,0,0

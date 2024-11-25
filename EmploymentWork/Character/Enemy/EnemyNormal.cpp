@@ -355,7 +355,7 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int
 				//敵ヒットSEを流す
 				SoundManager::GetInstance().PlaySE("S_ENEMYHIT");
 				//敵ヒットエフェクトを出す
-				//EffectManager::GetInstance().CreateEffect("E_ENEMYHIT", rigidbody->GetPos());
+				EffectManager::GetInstance().CreateEffect("E_ENEMYCRITICALHIT", rigidbody->GetPos());
 				//当たった弾の終了処理を呼ぶ
 				col->End();
 #ifdef _DEBUG	//デバッグ描画
