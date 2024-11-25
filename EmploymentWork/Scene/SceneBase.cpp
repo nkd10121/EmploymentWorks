@@ -7,6 +7,8 @@
 #include "MapManager.h"
 #include "TrapManager.h"
 
+#include "SceneDebug.h"
+
 #include<chrono>
 #include<ctime>
 

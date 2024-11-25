@@ -372,6 +372,8 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colI
 #ifdef _DEBUG	//デバッグ描画
 		message += "敵";
 #endif
+		
+
 		break;
 	case GameObjectTag::Portion:
 #ifdef _DEBUG	//デバッグ描画
@@ -395,6 +397,7 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colI
 			//SoundManager::GetInstance().PlaySE("heal");
 		}
 		break;
+
 	}
 #ifdef _DEBUG	//デバッグ描画
 	message += "と当たった！\n";
