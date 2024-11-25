@@ -22,6 +22,7 @@ namespace
 	//明るさの最低
 	constexpr int kBrightMin = 0;
 
+	//ロード中に描画する文字列配列
 	const std::string kLoadingText[] =
 	{
 		"L",
@@ -65,6 +66,10 @@ SceneBase::~SceneBase()
 
 }
 
+/// <summary>
+/// 現在のシーンを終了する準備をする
+/// </summary>
+/// <param name="isPushScene"></param>
 void SceneBase::EndThisScene(bool isPushScene)
 {
 	if (isPushScene)
@@ -100,7 +105,7 @@ void SceneBase::AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data)
 		//エフェクトデータなら
 		else if (d.extension == ".efk")
 		{
-			//エフェクトのロードは非同期ロード対応してないっぽい
+			//MEMO:Effekseerのロードは非同期ロード対応してないらしいのでここは非同期ロードじゃない
 			SetUseASyncLoadFlag(false);
 			//エフェクトをロードする
 			auto path = d.path + d.extension;
@@ -134,6 +139,7 @@ void SceneBase::InitAll()
 void SceneBase::UpdateAll()
 {
 #ifdef DISP_PROCESS
+	//更新処理を始めた時点の値
 	LONGLONG start = GetNowHiPerformanceCount();
 
 	printf("---------------------------------------\n");
@@ -167,6 +173,7 @@ void SceneBase::UpdateAll()
 		m_isInit = true;
 	}
 
+	//フェードの更新
 	UpdateFade();
 	// 継承先のシーンの更新処理
 	Update();
@@ -174,6 +181,7 @@ void SceneBase::UpdateAll()
 	SelectNextSceneUpdate();
 
 #ifdef DISP_PROCESS
+	//更新処理を終えた時点の値
 	m_updateTime = GetNowHiPerformanceCount() - start;
 #endif
 }
@@ -184,10 +192,11 @@ void SceneBase::UpdateAll()
 void SceneBase::DrawAll()
 {
 #ifdef DISP_PROCESS
+	//描画処理を始めた時点の値
 	LONGLONG start = GetNowHiPerformanceCount();
 #endif
 
-#ifdef TRUE
+#ifdef TRUE	//グリッドを描画する
 	for (int x = -50; x <= 50; x += 10)
 	{
 		DrawLine3D(VGet(static_cast<float>(x), 0, -50), VGet(static_cast<float>(x), 0, 50), 0xffff00);
@@ -200,48 +209,34 @@ void SceneBase::DrawAll()
 
 	//継承先のシーンの描画処理
 	Draw();
+	//フェードの描画
 	DrawFade();
+	//ロード中画面の描画
 	DrawLoading();
 #ifdef _DEBUG	//デバッグ描画
 #ifdef TRUE
+	//描画処理を終えた時点の値
 	m_drawTime = GetNowHiPerformanceCount() - start;
 
 	// 説明 
 	DrawString(0, Game::kWindowHeight - 32, "処理:", 0xffffff, 0x000000);
 	DrawString(0, Game::kWindowHeight - 16, "描画:", 0xffffff, 0x000000);
 
-	// 処理バーの表示
+	/* 処理バーの描画 */
+
+	//更新時間バーの描画
 	float rate = static_cast<float>(m_updateTime) / 16666.6f;
 	int width = static_cast<int>(Game::kWindowWidth * rate);
 	DrawBox(40 + 2, Game::kWindowHeight - 32, 40 + 2 + width, Game::kWindowHeight - 16, 0x0000ff, true);
 
+	//描画時間バーの描画
 	rate = static_cast<float>(m_drawTime) / 16666.6f;
 	width = static_cast<int>(Game::kWindowWidth * rate);
 	DrawBox(40 + 2, Game::kWindowHeight - 16, 40 + 2 + width, Game::kWindowHeight, 0xff0000, true);
 
+	//テキストの描画
 	printf("更新処理時間:%lld\n",m_updateTime);
 	printf("描画処理時間:%lld\n", m_drawTime);
-
-	//float rate = static_cast<float>(m_updateTime + m_drawTime) / 16666.6f;
-	//int width = static_cast<int>(Game::kWindowWidth * rate);
-	//DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0xff0000, true);	// 処理+描画
-
-	//rate = static_cast<float>(m_updateTime) / 16666.6f;
-	//width = static_cast<int>(Game::kWindowWidth * rate);
-	//DrawBox(0, Game::kWindowHeight - 16, width, Game::kWindowHeight, 0x0000ff, true);	// 処理+描画の上から処理時間のみ描画
-#else
-	m_drawTime = GetNowHiPerformanceCount() - start;
-
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawBox(0, Game::kWindowHeight - 32 - 2, 84, Game::kWindowHeight, 0xffffff, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	// 処理バーの表示
-	// 説明
-	DrawString(0, Game::kWindowHeight - 32, "処理:", 0x0000ff, 0x000000);
-	DrawFormatString(40 + 2, Game::kWindowHeight - 32, 0x0000ff, "%d", m_updateTime);
-	DrawString(0, Game::kWindowHeight - 16, "描画:", 0xff0000, 0x000000);
-	DrawFormatString(40 + 2, Game::kWindowHeight - 16, 0xff0000, "%d", m_drawTime);
 #endif	//DISP_PROCESS
 #endif	//_DEBUG
 }
@@ -256,17 +251,21 @@ bool SceneBase::IsSceneEnd()
 	// まだフェードアウト終わってない
 	if (m_fadeAlpha < kBrightMax)	return false;
 
+
+	//次のシーンに遷移するわけではなく、上に描画するならやっぱり終わらないってする
 	if (m_isPushNextScene)
 	{
 		m_isThisSceneEnd = false;
 	}
 
+	//staticクラスのデータのリセット
 	ModelManager::GetInstance().Clear();
 	SoundManager::GetInstance().Clear();
 	EffectManager::GetInstance().Clear();
 	MapManager::GetInstance().DeleteModel();
 	TrapManager::GetInstance().Clear();
 
+	//ここまで来たらシーンを完全に終了する
 	return true;
 }
 
@@ -317,19 +316,23 @@ void SceneBase::DrawLoading() const
 {
 	if (!IsLoaded())
 	{
+		//描画座標
 		int x = Game::kWindowWidth - 128;
 		int y = Game::kWindowHeight - 32;
+		//for文の回数
 		int num = 0;
 
-
+		//文字列文まわす
 		for (auto& text : kLoadingText)
 		{
-			float height = sinf(static_cast<float>(m_loadingFrame + num*2) / 6);
-			DrawFormatString(x + num*8, y - height*4, 0xffffff, "%s",text.c_str());
+			//ロード中の経過フレームで高さを変える
+			float height = sinf(static_cast<float>(m_loadingFrame + num * 2) / 6);
+			//文字の描画
+			DrawFormatString(x + num * 8, y - static_cast<int>(height) * 4, 0xffffff, "%s", text.c_str());
+
+			//文字数を更新
 			num++;
 		}
-
-		//DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 16, 0xffffff, "Loading...");
 	}
 }
 

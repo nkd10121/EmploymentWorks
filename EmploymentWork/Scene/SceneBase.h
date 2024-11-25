@@ -192,7 +192,7 @@ private:
 	int m_fadeSpeed;	//フェード速度
 	unsigned int m_fadeColor;	//フェード時の色
 
-	std::string m_sceneName;
+	std::string m_sceneName;	//今のシーン名
 
 #ifdef DISP_PROCESS
 	/*処理負荷計測*/
