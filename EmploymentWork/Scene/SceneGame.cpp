@@ -346,11 +346,11 @@ void SceneGame::UpdateGame()
 	//エフェクトの更新
 	EffectManager::GetInstance().Update();
 
-	if (Input::GetInstance().IsTriggered("Y"))
-	{
-		m_updateFunc = &SceneGame::UpdateTrapSelect;
-		m_drawFunc = &SceneGame::DrawTrapSelect;
-	}
+	//if (Input::GetInstance().IsTriggered("Y"))
+	//{
+	//	m_updateFunc = &SceneGame::UpdateTrapSelect;
+	//	m_drawFunc = &SceneGame::DrawTrapSelect;
+	//}
 }
 
 void SceneGame::UpdateTrapSelect()
