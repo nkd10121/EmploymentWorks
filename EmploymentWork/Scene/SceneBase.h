@@ -184,6 +184,8 @@ private:
 	bool m_isPushNextScene;	//次のシーンをpushするか
 	bool m_isGameEnd;		//ゲームを終了するかどうか
 
+	int m_loadingFrame;		//ロードにかかったフレーム
+
 	// フェード関連処理
 	int m_fadeAlpha;	//フェードのアルファ値
 						//0:フェード中じゃない,0以上:フェード中

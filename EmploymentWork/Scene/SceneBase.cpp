@@ -21,6 +21,20 @@ namespace
 	constexpr int kBrightMax = 255;
 	//明るさの最低
 	constexpr int kBrightMin = 0;
+
+	const std::string kLoadingText[] =
+	{
+		"L",
+		"o",
+		"a",
+		"d",
+		"i",
+		"n",
+		"g",
+		".",
+		".",
+		".",
+	};
 }
 
 /// <summary>
@@ -31,6 +45,7 @@ SceneBase::SceneBase(std::string name) :
 	m_isThisSceneEnd(false),
 	m_isPushNextScene(false),
 	m_isGameEnd(false),
+	m_loadingFrame(0),
 	m_fadeAlpha(kBrightMax),
 	m_fadeSpeed(0),
 	m_fadeColor(0x000000),
@@ -135,10 +150,12 @@ void SceneBase::UpdateAll()
 	printf(":%d", static_cast<int>(t) / 60 % 60);//分
 	printf(":%d\n", static_cast<int>(t) % 60);//秒
 #endif
+
 	//継承先のシーンのリソースのロードが終わっているか確認
 	if (!IsLoaded())
 	{
 		//ロード中なら更新処理何も行わない
+		m_loadingFrame++;
 		return;
 	}
 
@@ -300,7 +317,16 @@ void SceneBase::DrawLoading() const
 {
 	if (!IsLoaded())
 	{
-		DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 16, 0xffffff, "Loading...");
+		int x = Game::kWindowWidth - 128;
+		int y = Game::kWindowHeight - 16;
+		int num = 0;
+		for (auto& text : kLoadingText)
+		{
+			DrawFormatString(x + num*8, y - m_loadingFrame, 0xffffff, "%s",text.c_str());
+			num++;
+		}
+
+		//DrawFormatString(Game::kWindowWidth - 128, Game::kWindowHeight - 16, 0xffffff, "Loading...");
 	}
 }
 
