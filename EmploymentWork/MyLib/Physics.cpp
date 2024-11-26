@@ -236,7 +236,6 @@ void MyLib::Physics::Update()
 
 	for (const auto& info : m_onCollideInfo)
 	{
-
 		if (!info.own.expired() && !info.send.expired())
 		{
 			if (info.own.lock()->m_colliders.size() != 0)
@@ -268,8 +267,6 @@ void MyLib::Physics::Update()
 			}
 		}
 	}
-
-
 }
 
 void MyLib::Physics::Clear()
