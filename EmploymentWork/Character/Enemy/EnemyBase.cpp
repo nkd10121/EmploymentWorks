@@ -33,7 +33,7 @@ void EnemyBase::SetPos(Vec3 pos)
 /// <summary>
 /// ほかのオブジェクトと衝突したときに呼ばれる
 /// </summary>
-void EnemyBase::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
+void EnemyBase::OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 
 }
@@ -41,7 +41,7 @@ void EnemyBase::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int c
 /// <summary>
 /// ほかのオブジェクトと衝突したときに呼ばれる
 /// </summary>
-void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
+void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 
 }

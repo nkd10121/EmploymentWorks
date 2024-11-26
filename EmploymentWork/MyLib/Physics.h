@@ -46,8 +46,9 @@ private:
 	{
 		std::weak_ptr<Collidable> own;	//自分自身
 		std::weak_ptr<Collidable> send;	//当たった相手
-		int colIndex;
+
 		std::shared_ptr<MyLib::Collidable::Collide> ownCol;
+		std::shared_ptr<MyLib::Collidable::Collide> sendCol;
 		eOnCollideInfoKind kind;			//種類
 	};
 
@@ -55,21 +56,12 @@ private:
 	{
 		std::weak_ptr<Collidable> own;
 		std::weak_ptr<Collidable> send;
+
 		int ownColIndex;
 		int sendColIndex;
 
 		std::shared_ptr<MyLib::Collidable::Collide> ownCol;
 		std::shared_ptr<MyLib::Collidable::Collide> sendCol;
-
-		bool operator==(const SendInfo& other) const
-		{
-			return this->own.lock() == other.own.lock() && this->send.lock() == other.send.lock() && this->ownColIndex == other.ownColIndex && this->sendColIndex == other.sendColIndex && this->ownCol == other.ownCol && this->sendCol == other.sendCol;
-		}
-
-		bool operator!=(const SendInfo& other) const
-		{
-			return this->own.lock() != other.own.lock() || this->send.lock() != other.send.lock() || this->ownColIndex != other.ownColIndex || this->sendColIndex != other.sendColIndex || this->ownCol != other.ownCol || this->sendCol != other.sendCol;
-		}
 	};
 
 	//using SendCollideInfo = std::unordered_map<std::shared_ptr<Collidable>, std::list<std::shared_ptr<Collidable>>>;

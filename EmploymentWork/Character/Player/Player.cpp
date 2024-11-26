@@ -332,7 +332,7 @@ void Player::UpdateModelPos()
 /// <summary>
 /// 押し出し処理を行うオブジェクトと衝突したとき
 /// </summary>
-void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
+void Player::OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 	//#ifdef _DEBUG	//デバッグ描画
 	//	std::string message = "プレイヤーが";
@@ -360,12 +360,12 @@ void Player::OnCollideEnter(const std::shared_ptr<Collidable>& colider, int colI
 /// <summary>
 /// 押し出し処理を行わないオブジェクトと衝突したとき
 /// </summary>
-void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
+void Player::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 #ifdef _DEBUG	//デバッグ描画
 	std::string message = "プレイヤーが";
 #endif
-	auto tag = colider->GetTag();
+	auto tag = send->GetTag();
 	switch (tag)
 	{
 	case GameObjectTag::Enemy:
@@ -386,7 +386,7 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colI
 			m_status.hp = m_hpMax;
 
 			//ポーションを削除する
-			HealPortion* col = dynamic_cast<HealPortion*>(colider.get());
+			HealPortion* col = dynamic_cast<HealPortion*>(send.get());
 			col->End();
 
 			//回復エフェクトを生成する

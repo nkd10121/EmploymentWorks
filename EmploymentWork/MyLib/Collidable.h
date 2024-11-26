@@ -51,12 +51,12 @@ namespace MyLib
 		virtual ~Collidable();
 
 		//当たり判定関数
-		virtual void OnCollideEnter(const std::shared_ptr<Collidable>& colider,int colIndex,const std::shared_ptr<Collide>& ownCol) {}
-		virtual void OnCollideStay(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
-		virtual void OnCollideExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
-		virtual void OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
-		virtual void OnTriggerStay(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
-		virtual void OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol) {}
+		virtual void OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send,const std::shared_ptr<Collide>& sendCol) {}
+		virtual void OnCollideStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol) {}
+		virtual void OnCollideExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol) {}
+		virtual void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol) {}
+		virtual void OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol) {}
+		virtual void OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol) {}
 
 		/// <summary>
 		/// タグを取得

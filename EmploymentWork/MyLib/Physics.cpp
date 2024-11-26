@@ -238,27 +238,27 @@ void MyLib::Physics::Update()
 			{
 				if (info.kind == eOnCollideInfoKind::CollideEnter)
 				{
-					info.own.lock()->OnCollideEnter(info.send.lock(), info.colIndex,info.ownCol);
+					info.own.lock()->OnCollideEnter(info.ownCol,info.send.lock(), info.sendCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::CollideStay)
 				{
-					info.own.lock()->OnCollideStay(info.send.lock(), info.colIndex, info.ownCol);
+					info.own.lock()->OnCollideStay(info.ownCol, info.send.lock(), info.sendCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::CollideExit)
 				{
-					info.own.lock()->OnCollideExit(info.send.lock(), info.colIndex, info.ownCol);
+					info.own.lock()->OnCollideExit(info.ownCol, info.send.lock(), info.sendCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::TriggerEnter)
 				{
-					info.own.lock()->OnTriggerEnter(info.send.lock(), info.colIndex, info.ownCol);
+					info.own.lock()->OnTriggerEnter(info.ownCol, info.send.lock(), info.sendCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::TriggerStay)
 				{
-					info.own.lock()->OnTriggerStay(info.send.lock(), info.colIndex, info.ownCol);
+					info.own.lock()->OnTriggerStay(info.ownCol, info.send.lock(), info.sendCol);
 				}
 				else if (info.kind == eOnCollideInfoKind::TriggerExit)
 				{
-					info.own.lock()->OnTriggerExit(info.send.lock(), info.colIndex, info.ownCol);
+					info.own.lock()->OnTriggerExit(info.ownCol, info.send.lock(), info.sendCol);
 				}
 			}
 		}
@@ -957,8 +957,8 @@ void MyLib::Physics::CheckSendOnCollideInfo(SendCollideInfo& preSendInfo, SendCo
 /// </summary>
 void MyLib::Physics::AddOnCollideInfo(const SendInfo& info, eOnCollideInfoKind kind)
 {
-	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.own, info.send, info.ownColIndex,info.ownCol, kind });
-	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.send, info.own, info.sendColIndex,info.sendCol, kind });
+	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.own,info.send,info.ownCol,info.sendCol, kind });
+	m_onCollideInfo.emplace_back(OnCollideInfoData{ info.send,info.own,info.sendCol,info.ownCol, kind });
 }
 
 /// <summary>

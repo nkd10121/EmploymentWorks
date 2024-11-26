@@ -172,9 +172,9 @@ void SwarmEnemy::AddSwarm(std::shared_ptr<EnemyBase> add)
 	m_swarm.emplace_back(add);
 }
 
-void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
+void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
-	auto tag = colider->GetTag();
+	auto tag = send->GetTag();
 	if (tag == GameObjectTag::Player)
 	{
 		if (!m_isInPlayer)
@@ -190,9 +190,9 @@ void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collidable>& colider, int 
 	}
 }
 
-void SwarmEnemy::OnTriggerExit(const std::shared_ptr<Collidable>& colider, int colIndex, const std::shared_ptr<Collide>& ownCol)
+void SwarmEnemy::OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
-	auto tag = colider->GetTag();
+	auto tag = send->GetTag();
 	if (tag == GameObjectTag::Player)
 	{
 		//プレイヤーがいる判定にする
