@@ -83,6 +83,11 @@ public:
 	/// <returns></returns>
 	const bool GetIsStartDeathAnim()const { return m_isStartDeathAnimation; }
 
+	/// <summary>
+	/// 攻撃力を取得
+	/// </summary>
+	/// <returns>攻撃力</returns>
+	const int GetAttackPower()const { return m_status.atk; }
 
 	const bool GetIsSearchInPlayer()const { return m_isSearchInPlayer; }
 	const Vec3 GetPlayerPos()const { return m_playerPos; }

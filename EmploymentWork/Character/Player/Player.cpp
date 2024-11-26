@@ -6,6 +6,7 @@
 #include "PlayerStateDeath.h"
 
 #include "HealPortion.h"
+#include "EnemyBase.h"
 #include "Shot.h"
 
 #include "LoadCSV.h"
@@ -362,45 +363,46 @@ void Player::OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std::s
 /// </summary>
 void Player::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
-#ifdef _DEBUG	//デバッグ描画
-	std::string message = "プレイヤーが";
-#endif
-	auto tag = send->GetTag();
-	switch (tag)
+	if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Normal)
 	{
-	case GameObjectTag::Enemy:
-#ifdef _DEBUG	//デバッグ描画
-		message += "敵";
-#endif
-		
-
-		break;
-	case GameObjectTag::Portion:
-#ifdef _DEBUG	//デバッグ描画
-		message += "ポーション";
-#endif
-		//HPが減っているときのみ回復処理を行う
-		//if (m_hpMax > m_status.hp)
+		if (send->GetTag() == GameObjectTag::Portion)
 		{
-			//HPを満タンまで回復させる
-			m_status.hp = m_hpMax;
+			//ポーションはそもそも一つのみの当たり判定の予定だから検索しない
+			
+			//HPが減っているときのみ回復処理を行う
+			if (m_hpMax > m_status.hp)
+			{
+				//HPを満タンまで回復させる
+				m_status.hp = m_hpMax;
 
-			//ポーションを削除する
-			HealPortion* col = dynamic_cast<HealPortion*>(send.get());
-			col->End();
+				//ポーションを削除する
+				HealPortion* col = dynamic_cast<HealPortion*>(send.get());
+				col->End();
 
-			//回復エフェクトを生成する
-			auto pos = rigidbody->GetPos();
-			//EffectManager::GetInstance().CreateEffect("Heal", pos);
+				//回復エフェクトを生成する
+				//auto pos = rigidbody->GetPos();
+				//EffectManager::GetInstance().CreateEffect("Heal", pos);
 
-			//回復SEを流す
-			//SoundManager::GetInstance().PlaySE("heal");
+				//回復SEを流す
+				//SoundManager::GetInstance().PlaySE("heal");
+			}
 		}
-		break;
+		//敵
+		else if (send->GetTag() == GameObjectTag::Enemy)
+		{
+			//敵の攻撃判定に当たったらダメージを受ける
+			if (sendCol->collideTag == MyLib::ColliderBase::CollisionTag::Attack)
+			{
+				//相手の攻撃力を取得
+				EnemyBase* col = dynamic_cast<EnemyBase*>(send.get());
+				//自身の防御力と敵の攻撃力からダメージを計算する
+				auto atk = col->GetAttackPower() - m_status.def;
+				//もし攻撃力が0以下なら何もせずに終える
+				if (atk <= 0) return;
 
+				//HPからダメージ分引く
+				m_status.hp -= atk;
+			}
+		}
 	}
-#ifdef _DEBUG	//デバッグ描画
-	message += "と当たった！\n";
-	printf(message.c_str());
-#endif
 }

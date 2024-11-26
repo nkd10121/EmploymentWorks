@@ -109,6 +109,11 @@ void MyLib::Physics::Update()
 	m_newTirrigerInfo.clear();
 	m_onCollideInfo.clear();
 
+	for (auto& item : m_collidables)
+	{
+		item->DeleteCollider();
+	}
+
 	// 移動
 	for (auto& item : m_collidables)
 	{
@@ -264,10 +269,7 @@ void MyLib::Physics::Update()
 		}
 	}
 
-	for (auto& item : m_collidables)
-	{
-		item->DeleteCollider();
-	}
+
 }
 
 void MyLib::Physics::Clear()
@@ -678,6 +680,25 @@ bool MyLib::Physics::IsCollide(std::shared_ptr<Rigidbody> rigidA, std::shared_pt
 
 		isCollide = length < colA->m_radius + colB->m_radius;
 	}
+	else if (kindA == MyLib::ColliderBase::Kind::Sphere && kindB == MyLib::ColliderBase::Kind::Cupsule)
+	{
+		auto sphere = dynamic_cast<MyLib::ColliderSphere*>(colliderA);
+		auto capsule = dynamic_cast<MyLib::ColliderCupsule*>(colliderB);
+
+		//カプセルの情報を取得
+		auto cupsuleCenterPos = capsule->GetWorldPos();
+		auto cupsuleSize = capsule->m_size;
+
+		auto cupsulePos1 = VGet(cupsuleCenterPos.x, cupsuleCenterPos.y + cupsuleSize, cupsuleCenterPos.z);
+		auto cupsulePos2 = VGet(cupsuleCenterPos.x, cupsuleCenterPos.y - cupsuleSize, cupsuleCenterPos.z);
+
+		//球の情報を取得
+		auto sphereCenterPos = sphere->GetWorldPos();
+		//カプセルの線分と球の中心座標の距離がカプセルの半径と球の半径を足した値より長いか短いかで判断する
+		auto length = Segment_Point_MinLength(cupsulePos1, cupsulePos2, sphereCenterPos.ToVECTOR());
+
+		isCollide = length < sphere->m_radius + capsule->m_radius;
+	}
 
 	return isCollide;
 }
@@ -693,8 +714,8 @@ void MyLib::Physics::AddNewCollideInfo(const std::weak_ptr<Collidable>& objA, co
 	// 既に追加されている通知リストにあれば追加しない
 	for (auto& inf : info)
 	{
-		if (inf.own.lock() == objA.lock() && inf.send.lock() == objB.lock() && inf.ownColIndex == colIndexA && inf.sendColIndex == colIndexB) return;
-		if (inf.own.lock() == objB.lock() && inf.send.lock() == objA.lock() && inf.ownColIndex == colIndexB && inf.sendColIndex == colIndexA) return;
+		if (inf.own.lock() == objA.lock() && inf.send.lock() == objB.lock() && inf.ownColIndex == colIndexA && inf.sendColIndex == colIndexB && inf.ownCol == colA && inf.sendCol == colB) return;
+		if (inf.own.lock() == objB.lock() && inf.send.lock() == objA.lock() && inf.ownColIndex == colIndexB && inf.sendColIndex == colIndexA && inf.ownCol == colB && inf.sendCol == colA) return;
 	}
 
 	SendInfo add;
