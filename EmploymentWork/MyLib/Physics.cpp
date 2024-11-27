@@ -708,6 +708,7 @@ void MyLib::Physics::AddNewCollideInfo(const std::weak_ptr<Collidable>& objA, co
 	auto colA = objA.lock()->m_colliders[colIndexA];
 	auto colB = objB.lock()->m_colliders[colIndexB];
 
+
 	// 既に追加されている通知リストにあれば追加しない
 	for (auto& inf : info)
 	{
