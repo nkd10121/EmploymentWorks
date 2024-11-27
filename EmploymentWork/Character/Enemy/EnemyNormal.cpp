@@ -84,7 +84,7 @@ void EnemyNormal::Init()
 	AddThroughTag(GameObjectTag::SwarmEnemy);	//敵群れ
 
 	{
-		//当たり判定の作成
+		//通常の当たり判定の作成
 		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);	//追加
 		auto capsuleCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());			//キャスト
 		capsuleCol->m_radius = kCollisionCapsuleRadius;		//カプセルの半径
@@ -93,7 +93,7 @@ void EnemyNormal::Init()
 	}
 
 	{
-		//当たり判定の作成
+		//ヘッドショット判定の作成
 		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Head);	//追加
 		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());			//キャスト
 		sphereCol->m_radius = 2.0f;		//カプセルの半径
@@ -165,13 +165,8 @@ void EnemyNormal::Update()
 		}
 	}
 
-	if (m_isSearchInPlayer && m_pState->GetKind() != StateBase::StateKind::Attack)
-	{
-
-	}
-
-
 #ifdef _DEBUG
+	//何の当たり判定を持っているかをデバッグ描画
 	for (auto& col : m_colliders)
 	{
 		switch (col->collideTag)
@@ -216,6 +211,9 @@ void EnemyNormal::Draw()
 #endif
 }
 
+/// <summary>
+/// 索敵判定を生成する
+/// </summary>
 void EnemyNormal::CreateSearchCollision()
 {
 	//当たり判定の作成
@@ -224,11 +222,17 @@ void EnemyNormal::CreateSearchCollision()
 	sphereCol->m_radius = kSearchCollisionRadius;
 }
 
+/// <summary>
+/// 索敵判定を削除する
+/// </summary>
 void EnemyNormal::DeleteSearchCollision()
 {
 	Collidable::DeleteRequestCollider(Collidable::GetCollider(MyLib::ColliderBase::CollisionTag::Search));
 }
 
+/// <summary>
+/// 3Dモデルの座標更新
+/// </summary>
 void EnemyNormal::UpdateModelPos()
 {
 	rigidbody->SetPos(rigidbody->GetNextPos());
@@ -237,11 +241,17 @@ void EnemyNormal::UpdateModelPos()
 	MV1SetPosition(m_modelHandle, m_drawPos.ToVECTOR());
 }
 
+/// <summary>
+/// 索敵判定の半径を取得
+/// </summary>
 const float EnemyNormal::GetSearchCollisionRadius() const
 {
 	return  kSearchCollisionRadius;
 }
 
+/// <summary>
+/// 押し出し処理を行わないオブジェクトと衝突したとき
+/// </summary>
 void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 	//当たったオブジェクトのタグを取得する
@@ -319,6 +329,9 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 	}
 }
 
+/// <summary>
+/// 押し出し処理を行わないオブジェクトと衝突しているとき
+/// </summary>
 void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 	//当たったオブジェクトのタグを取得する
@@ -339,6 +352,9 @@ void EnemyNormal::OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const st
 	}
 }
 
+/// <summary>
+/// 押し出し処理を行わないオブジェクトと衝突しなくなった時
+/// </summary>
 void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 	//当たったオブジェクトのタグを取得する
@@ -358,4 +374,3 @@ void EnemyNormal::OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const st
 		}
 	}
 }
-

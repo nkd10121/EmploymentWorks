@@ -39,7 +39,9 @@ public:
 	/// 索敵判定を生成する
 	/// </summary>
 	void CreateSearchCollision()override;
-
+	/// <summary>
+	/// 索敵判定を削除する
+	/// </summary>
 	void DeleteSearchCollision() override;
 
 	/// <summary>
@@ -47,6 +49,10 @@ public:
 	/// </summary>
 	virtual void UpdateModelPos()override;
 
+	/// <summary>
+	/// 索敵判定の半径を取得
+	/// </summary>
+	/// <returns></returns>
 	virtual const float GetSearchCollisionRadius()const override;
 
 	/// <summary>

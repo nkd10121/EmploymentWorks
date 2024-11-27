@@ -2,17 +2,22 @@
 
 namespace
 {
+	//索敵半径の差分倍率
 	constexpr float kCollisionRadiusMag = 0.3f;
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 SwarmEnemy::SwarmEnemy(unsigned int color) :
 	Collidable(Priority::Low, GameObjectTag::SwarmEnemy),
+	m_swarm(),
 	m_isExistMember(false),
 	m_swarmCenterPos(),
 	m_swarmRadius(0.0f),
+	m_maxSearchCollisionRadius(0.0f),
 	m_isInPlayer(false),
-	m_memberColor(color),
-	frame(0)
+	m_memberColor(color)
 {
 	//物理データの初期化
 	rigidbody->Init();
@@ -26,11 +31,17 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 	AddThroughTag(GameObjectTag::Trap);
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SwarmEnemy::~SwarmEnemy()
 {
 
 }
 
+/// <summary>
+/// 終了
+/// </summary>
 void SwarmEnemy::Finalize()
 {
 	for (auto& enemy : m_swarm)
@@ -41,6 +52,9 @@ void SwarmEnemy::Finalize()
 	m_swarm.clear();
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void SwarmEnemy::Update()
 {
 	std::list<Vec3> pos;
@@ -96,6 +110,9 @@ void SwarmEnemy::Update()
 	}
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void SwarmEnemy::Draw()
 {
 	//構成メンバーの描画
@@ -113,6 +130,9 @@ void SwarmEnemy::Draw()
 	}
 }
 
+/// <summary>
+/// 群れメンバーのモデル座標を更新
+/// </summary>
 void SwarmEnemy::UpdateModelPos()
 {
 	//構成メンバーの描画
@@ -122,6 +142,9 @@ void SwarmEnemy::UpdateModelPos()
 	}
 }
 
+/// <summary>
+/// 群れメンバーを追加しきった後に呼ぶ関数
+/// </summary>
 void SwarmEnemy::SetUp()
 {
 	//群れ全体の中心座標と半径を求めて当たり判定を生成する
@@ -164,6 +187,9 @@ void SwarmEnemy::SetUp()
 	}
 }
 
+/// <summary>
+/// 構成メンバーを追加
+/// </summary>
 void SwarmEnemy::AddSwarm(std::shared_ptr<EnemyBase> add)
 {
 	//構成メンバーが存在しないことになっていたら存在するようにする
@@ -172,6 +198,9 @@ void SwarmEnemy::AddSwarm(std::shared_ptr<EnemyBase> add)
 	m_swarm.emplace_back(add);
 }
 
+/// <summary>
+/// 押し出し処理を行わないオブジェクトと衝突したとき
+/// </summary>
 void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 	auto tag = send->GetTag();
@@ -190,6 +219,9 @@ void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const st
 	}
 }
 
+/// <summary>
+/// 押し出し処理を行わないオブジェクトと衝突しなくなった時
+/// </summary>
 void SwarmEnemy::OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 	auto tag = send->GetTag();

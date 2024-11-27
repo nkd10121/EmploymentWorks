@@ -14,11 +14,26 @@ public:
 	/// </summary>
 	/// <param name="color">デバッグ用色</param>
 	SwarmEnemy(unsigned int color);
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~SwarmEnemy();
 
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void Finalize();
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
+	/// <summary>
+	/// 群れメンバーのモデル座標を更新
+	/// </summary>
 	void UpdateModelPos();
 
 	/// <summary>
@@ -37,8 +52,13 @@ public:
 	/// </summary>
 	/// <returns>構成メンバーが存在するかどうか</returns>
 	const bool GetIsExistMember()const { return m_isExistMember; }
-
+	/// <summary>
+	/// 押し出し処理を行わないオブジェクトと衝突したとき
+	/// </summary>
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
+	/// <summary>
+	/// 押し出し処理を行わないオブジェクトと衝突しなくなった時
+	/// </summary>
 	void OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
 
@@ -53,7 +73,5 @@ private:
 	bool m_isInPlayer;		//プレイヤーが当たり判定内に入っているかどうか
 
 	unsigned int m_memberColor;	//DEBUG用。誰がどの群れなのか見たい
-
-	int frame;
 };
 

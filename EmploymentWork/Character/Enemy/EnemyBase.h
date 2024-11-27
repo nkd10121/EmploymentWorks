@@ -41,6 +41,10 @@ public:
 	/// </summary>
 	virtual void Draw() {};
 
+	/// <summary>
+	/// 座標を設定
+	/// </summary>
+	/// <param name="pos">設定したい座標</param>
 	void SetPos(Vec3 pos);
 
 	/// <summary>
@@ -60,13 +64,6 @@ public:
 	virtual void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
 	/// <summary>
-	/// 索敵判定の作成
-	/// </summary>
-	virtual void CreateSearchCollision() {};
-
-	virtual void DeleteSearchCollision() {};
-
-	/// <summary>
 	/// 3Dモデルの座標更新
 	/// </summary>
 	virtual void UpdateModelPos() {};
@@ -76,27 +73,54 @@ public:
 	/// </summary>
 	/// <returns>存在フラグ</returns>
 	const bool GetIsExist()const { return m_isExist; }
-
 	/// <summary>
 	/// 死亡アニメーションを開始しているかどうかを取得
 	/// </summary>
 	/// <returns></returns>
 	const bool GetIsStartDeathAnim()const { return m_isStartDeathAnimation; }
-
 	/// <summary>
 	/// 攻撃力を取得
 	/// </summary>
 	/// <returns>攻撃力</returns>
 	const int GetAttackPower()const { return m_status.atk; }
-
+	/// <summary>
+	/// 索敵判定内にプレイヤーが存在しているかを取得
+	/// </summary>
+	/// <returns>true:存在している,false:存在していない</returns>
 	const bool GetIsSearchInPlayer()const { return m_isSearchInPlayer; }
+	/// <summary>
+	/// プレイヤーの座標を取得
+	/// </summary>
+	/// <returns>プレイヤーの座標</returns>
 	const Vec3 GetPlayerPos()const { return m_playerPos; }
 
+	/// <summary>
+	/// 索敵判定の半径を取得
+	/// </summary>
+	/// <returns>索敵判定の半径</returns>
 	virtual const float GetSearchCollisionRadius()const = 0;
-
+	/// <summary>
+	/// モデルの向きを設定
+	/// </summary>
+	/// <param name="rot">向きベクトル</param>
 	const void SetModelRotation(Vec3 rot)const;
 
+	/// <summary>
+	/// 索敵判定の作成
+	/// </summary>
+	virtual void CreateSearchCollision() {};
+	/// <summary>
+	/// 索敵判定の削除
+	/// </summary>
+	virtual void DeleteSearchCollision() {};
+	/// <summary>
+	/// 攻撃判定を作成
+	/// </summary>
+	/// <param name="vec">攻撃判定を出す方向ベクトル</param>
 	const void CreateAttackCollision(Vec3 vec);
+	/// <summary>
+	/// 攻撃判定を削除
+	/// </summary>
 	const void DeleteAttackCollision();
 
 protected:
@@ -119,5 +143,5 @@ protected:
 
 	GameObjectTag m_hitObjectTag;	//あったオブジェクトタグ
 
-	bool m_isAttack;
+	bool m_isAttack;	//攻撃しているかどうか
 };
