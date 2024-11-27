@@ -1,40 +1,30 @@
-﻿#include "ModelManager.h"
+﻿#include "ImageManager.h"
 #include "DxLib.h"
 #include <cassert>
 
-ModelManager* ModelManager::m_instance = nullptr;
+ImageManager* ImageManager::m_instance = nullptr;
 
-namespace
-{
-}
-
-/// <summary>
-/// デストラクタ
-/// </summary>
-ModelManager::~ModelManager()
+ImageManager::~ImageManager()
 {
 	//持っているハンドルを全部Deleteする
 	for (auto& h : m_handles)
 	{
-		MV1DeleteModel(h.handle);
+		DeleteGraph(h.handle);
 	}
 
 	m_handles.clear();
 }
 
-/// <summary>
-/// 指定したパスをモデルをロードする
-/// </summary>
-void ModelManager::Load(std::string id, std::string path, bool isEternal)
+void ImageManager::Load(std::string id, std::string path, bool isEternal)
 {
 	//すでにロードされていたら何もしない
 	for (auto& h : m_handles)
 	{
-		if (h.path == path)
+		if (h.id == id)
 		{
 #ifdef _DEBUG	//デバッグ描画
 			//指定したパスのモデルがすでにロードされていたらエラーを吐くようにする
-			assert(0 && "そのモデルはすでにロードされています");
+			assert(0 && "その画像はすでにロードされています");
 #endif
 			return;
 		}
@@ -42,10 +32,9 @@ void ModelManager::Load(std::string id, std::string path, bool isEternal)
 
 	//ここに来たということはすでにロードされていなかった
 	//→新しくロードする必要がある
-	Model add;
-	add.handle = MV1LoadModel(path.c_str());
-	add.modelId = id;
-	add.path = path;
+	Image add;
+	add.handle = LoadGraph(path.c_str());
+	add.id = id;
 	add.isEternal = isEternal;
 
 	m_handles.emplace_back(add);
@@ -57,39 +46,33 @@ void ModelManager::Load(std::string id, std::string path, bool isEternal)
 	return;
 }
 
-/// <summary>
-/// モデルハンドルを取得する
-/// </summary>
-int ModelManager::GetModelHandle(std::string id)
+int ImageManager::GetHandle(std::string id)
 {
 	//ロードされていたら複製ハンドルを返す
 	for (auto& h : m_handles)
 	{
-		if (h.modelId == id)
+		if (h.id == id)
 		{
-			return MV1DuplicateModel(h.handle);
+			return h.handle;
 		}
 	}
 
 	//ここまで来たということはロードされていなかった
 #ifdef _DEBUG
 	//念のためassertを仕込んでおく
-	assert(0 && "指定したモデルIDはロードされていません");
+	assert(0 && "指定したIDはロードされていません");
 #endif
 	return -1;
 }
 
-/// <summary>
-/// 常駐フラグがfalseのハンドルを削除する
-/// </summary>
-void ModelManager::Clear()
+void ImageManager::Clear()
 {
 	//isEternalがfalseのハンドルをDeleteする
 	for (auto& h : m_handles)
 	{
 		if (!h.isEternal)
 		{
-			MV1DeleteModel(h.handle);
+			DeleteGraph(h.handle);
 		}
 	}
 
@@ -100,10 +83,7 @@ void ModelManager::Clear()
 	m_handles.erase(it, m_handles.end());
 }
 
-/// <summary>
-/// ハンドルが読み込まれているかどうか確認
-/// </summary>
-bool ModelManager::IsLoaded()
+bool ImageManager::IsLoaded()
 {
 	for (auto& h : m_handles)
 	{
