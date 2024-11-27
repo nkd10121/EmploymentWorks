@@ -42,6 +42,9 @@
     <Filter Include="ソース ファイル\Object\Trap">
       <UniqueIdentifier>{c11e7215-b23d-4744-9c14-5755d9928a9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Geometry">
+      <UniqueIdentifier>{c176987a-6b58-4c6c-b954-52996b9c4726}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -86,9 +89,6 @@
     <ClCompile Include="MyLib\Rigidbody.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Vec3.cpp">
-      <Filter>ソース ファイル\MyLib</Filter>
-    </ClCompile>
     <ClCompile Include="Util\Input.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
@@ -130,9 +130,6 @@
     </ClCompile>
     <ClCompile Include="Object\Shot.cpp">
       <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Geometry\MathHelp.cpp">
-      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
     <ClCompile Include="Object\Crystal.cpp">
       <Filter>ソース ファイル\Object</Filter>
@@ -191,9 +188,6 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp">
       <Filter>ソース ファイル\Character\Enemy\State</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\LocalPos.cpp">
-      <Filter>ソース ファイル\MyLib</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Trap\SpikeTrap.cpp">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
@@ -202,6 +196,18 @@
     </ClCompile>
     <ClCompile Include="Common\ImageManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\MathHelp.cpp">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Vec3.cpp">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\LocalPos.cpp">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Vec2.cpp">
+      <Filter>ソース ファイル\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,9 +265,6 @@
     <ClInclude Include="Common\MapManager.h">
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\MathHelp.h">
-      <Filter>ソース ファイル\Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\ModelManager.h">
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
@@ -292,9 +295,6 @@
     <ClInclude Include="Util\Input.h">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\LocalPos.h">
-      <Filter>ソース ファイル\MyLib</Filter>
-    </ClInclude>
     <ClInclude Include="MyLib\MyLib.h">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClInclude>
@@ -302,9 +302,6 @@
       <Filter>ソース ファイル\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="MyLib\Rigidbody.h">
-      <Filter>ソース ファイル\MyLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry\Vec3.h">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="Object\Trap\SpikeTrap.h">
@@ -369,6 +366,18 @@
     </ClInclude>
     <ClInclude Include="Common\ImageManager.h">
       <Filter>ソース ファイル\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\MathHelp.h">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Vec3.h">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\LocalPos.h">
+      <Filter>ソース ファイル\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Vec2.h">
+      <Filter>ソース ファイル\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
