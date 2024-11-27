@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CharacterBase.h"
+#include "TrapBase.h"
 
 class LoadCSV
 {
@@ -88,4 +89,6 @@ public:
 	/// <param name="pos"></param>
 	/// <param name="rot"></param>
 	void GetCrossbowLocationData(int idx, Vec3& pos, Vec3& rot);
+
+	TrapBase::Status LoadTrapStatus(const char* trapName);
 };

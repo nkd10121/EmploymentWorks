@@ -48,6 +48,12 @@ public:
 	/// </summary>
 	void End();
 
+	/// <summary>
+	/// 自身の攻撃力を取得
+	/// </summary>
+	/// <returns>攻撃力</returns>
+	const int GetAtk()const { return m_status.atk; }
+
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
 protected:

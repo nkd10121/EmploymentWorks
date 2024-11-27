@@ -1,6 +1,7 @@
 ﻿#include "SpikeTrap.h"
 
 #include "ModelManager.h"
+#include "LoadCSV.h"
 
 namespace
 {
@@ -23,6 +24,8 @@ SpikeTrap::SpikeTrap():
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true,MyLib::ColliderBase::CollisionTag::Search);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
+
+	m_status = LoadCSV::GetInstance().LoadTrapStatus("Spike");
 }
 
 
@@ -66,7 +69,16 @@ void SpikeTrap::Update()
 
 	if (m_isAttack)
 	{
-		if (m_attackCount < 30 && m_spikePos.y <= m_spikePosInit.y + 4.5f)
+		//攻撃用当たり判定を生成する
+		if (m_attackCount == 0)
+		{
+			//当たり判定の生成
+			auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
+			auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+			sphereCol->m_radius = kCollisionRadius;
+		}
+
+		if (m_attackCount < 30 && m_spikePos.y <= m_spikePosInit.y + 6.5f)
 		{
 			m_spikePos.y += kSpikeMoveSpeed;
 			MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
