@@ -330,7 +330,7 @@ void SceneBase::DrawLoading() const
 			//ロード中の経過フレームで高さを変える
 			float height = sinf(static_cast<float>(m_loadingFrame + num * 2) / 6);
 			//文字の描画
-			DrawFormatString(x + num * 8, y - static_cast<int>(height) * 4, 0xffffff, "%s", text.c_str());
+			DrawFormatString(x + num * 8, y - static_cast<int>(height * 4), 0xffffff, "%s", text.c_str());
 
 			//文字数を更新
 			num++;
