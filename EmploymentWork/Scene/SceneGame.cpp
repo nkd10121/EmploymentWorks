@@ -250,6 +250,7 @@ void SceneGame::Draw()
 		object->Draw();
 	}
 
+	//装備スロットの描画
 	for (int i = 0; i < 4; i++)
 	{
 		int x = 362 + i * 75;
@@ -257,7 +258,11 @@ void SceneGame::Draw()
 		DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
 	}
 
+	//現在選択しているスロット枠の描画
 	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 75 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 75 + 35, 655 + 35, 0xff0000, false);
+
+
+
 
 	(this->*m_drawFunc)();
 
