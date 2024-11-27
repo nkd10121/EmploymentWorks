@@ -200,8 +200,8 @@
     <ClCompile Include="Object\Trap\TrapBase.cpp">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Common\ImageManager.cpp">
+      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +367,8 @@
     <ClInclude Include="Util\Game.h">
       <Filter>ソース ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="Common\ImageManager.h">
+      <Filter>ソース ファイル\Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
