@@ -10,5 +10,5 @@ enum class GameObjectTag
 	Portion,		//回復ポーション
 	PlayerShot,		//プレイヤーの遠距離攻撃の弾
 
-	SpikeTrap,		//スパイクトラップ
+	Trap,		//トラップ
 };

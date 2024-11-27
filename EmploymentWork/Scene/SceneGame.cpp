@@ -227,8 +227,8 @@ void SceneGame::Draw()
 	MapManager::GetInstance().Draw();
 	MV1DrawModel(m_stageModel);
 
-#ifdef _DEBUG	//デバッグ描画
 	TrapManager::GetInstance().Draw();
+#ifdef _DEBUG	//デバッグ描画
 	MyLib::DebugDraw::Draw3D();
 #endif
 
@@ -327,6 +327,8 @@ void SceneGame::UpdateGame()
 			});
 		m_pObjects.erase(it, m_pObjects.end());
 	}
+
+	TrapManager::GetInstance().Update();
 
 	//物理更新
 	MyLib::Physics::GetInstance().Update();

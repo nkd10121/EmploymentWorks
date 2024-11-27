@@ -17,7 +17,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	TrapBase(GameObjectTag tag);
+	TrapBase();
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -48,10 +48,11 @@ public:
 	/// </summary>
 	void End();
 
-protected:
-	Status status;
-	int m_attack;
-	int m_isExist;	//存在フラグ
+	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
+protected:
+	Status m_status;
+	bool m_isExist;		//存在フラグ
+	bool m_isAttack;	//攻撃フラグ
 };
 

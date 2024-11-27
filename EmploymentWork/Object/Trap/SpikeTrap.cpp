@@ -7,13 +7,17 @@ namespace
 	//当たり判定の円の半径
 	constexpr float kCollisionRadius = 11.0f;
 
-
+	//モデルサイズ
 	constexpr float kModelScale = 0.08f;
+
+	constexpr float kSpikeMoveSpeed = 0.8f;
 }
 
 SpikeTrap::SpikeTrap():
-	TrapBase(GameObjectTag::SpikeTrap),
-	m_spikeModel(-1)
+	TrapBase(),
+	m_spikeModel(-1),
+	m_attackCount(0),
+	m_spikePos()
 {
 	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true,MyLib::ColliderBase::CollisionTag::Search);
@@ -38,6 +42,9 @@ void SpikeTrap::Init(Vec3 pos)
 	rigidbody->SetPos(pos);
 	rigidbody->SetNextPos(pos);
 
+	m_spikePos = pos;
+	m_spikePos.y -= 4.5f;
+	m_spikePosInit = m_spikePos;
 
 	//モデルのハンドルを取得
 	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_SPIKEFRAME");
@@ -45,7 +52,7 @@ void SpikeTrap::Init(Vec3 pos)
 	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
 	m_spikeModel = ModelManager::GetInstance().GetModelHandle("M_SPIKE");
 	MV1SetScale(m_spikeModel, VECTOR(kModelScale, kModelScale, kModelScale));
-	MV1SetPosition(m_spikeModel, pos.ToVECTOR());
+	MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
 
 	//存在フラグをtrueにする
 	m_isExist = true;
@@ -54,7 +61,36 @@ void SpikeTrap::Init(Vec3 pos)
 
 void SpikeTrap::Update()
 {
+	//存在していない状態なら何もさせない
+	if (!m_isExist)return;
 
+	if (m_isAttack)
+	{
+		if (m_attackCount < 30 && m_spikePos.y <= m_spikePosInit.y + 4.5f)
+		{
+			m_spikePos.y += kSpikeMoveSpeed;
+			MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
+		}
+
+		if (m_attackCount > 30 && m_spikePos.y >= m_spikePosInit.y)
+		{
+			m_spikePos.y -= kSpikeMoveSpeed;
+			MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
+		}
+
+		if (m_attackCount > 60)
+		{
+			m_isAttack = false;
+			m_spikePos = m_spikePosInit;
+			MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
+		}
+
+		m_attackCount++;
+	}
+	else
+	{
+		m_attackCount = 0;
+	}
 }
 
 

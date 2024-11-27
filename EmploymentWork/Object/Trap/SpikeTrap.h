@@ -27,6 +27,10 @@ public:
 	void Draw()override;
 
 private:
-	int m_spikeModel;
+	int m_spikeModel;	//スパイクモデルのハンドル
+	int m_attackCount;	//攻撃カウント
+
+	Vec3 m_spikePos;	//スパイクモデルの座標	
+	Vec3 m_spikePosInit;	//スパイクモデルの初期座標	
 };
 

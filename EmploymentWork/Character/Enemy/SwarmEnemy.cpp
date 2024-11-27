@@ -23,7 +23,7 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 	AddThroughTag(GameObjectTag::SwarmEnemy);
 	AddThroughTag(GameObjectTag::Crystal);
 	AddThroughTag(GameObjectTag::Portion);
-	AddThroughTag(GameObjectTag::SpikeTrap);
+	AddThroughTag(GameObjectTag::Trap);
 }
 
 SwarmEnemy::~SwarmEnemy()
