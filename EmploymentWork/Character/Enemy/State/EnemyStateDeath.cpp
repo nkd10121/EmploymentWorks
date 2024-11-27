@@ -2,6 +2,10 @@
 #include "CharacterBase.h"
 
 #include "LoadCSV.h"
+
+/// <summary>
+/// コンストラクタ
+/// </summary>
 EnemyStateDeath::EnemyStateDeath(std::shared_ptr<CharacterBase> own):
 	StateBase(own)
 {
@@ -12,10 +16,16 @@ EnemyStateDeath::EnemyStateDeath(std::shared_ptr<CharacterBase> own):
 	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "DEATH_A"));
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void EnemyStateDeath::Init()
 {
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void EnemyStateDeath::Update()
 {
 }

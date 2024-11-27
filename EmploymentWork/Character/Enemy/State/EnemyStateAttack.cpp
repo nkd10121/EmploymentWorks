@@ -7,6 +7,11 @@
 
 namespace
 {
+	/// <summary>
+	/// 攻撃アニメーションが1回終わったかどうか
+	/// </summary>
+	/// <param name="num">アニメーションの再生フレーム</param>
+	/// <returns></returns>
 	const bool IsAttackAnimEnd(float num)
 	{
 		while (true)
@@ -17,6 +22,13 @@ namespace
 
 		return num == 0.0f;
 	}
+
+	//攻撃の当たり判定を生成するフレーム
+	constexpr int kCreateAttackCollisionFrame = 20;
+	//攻撃の当たり判定を削除するフレーム
+	constexpr int kDeleteAttackCollisionFrame = 45;
+	//攻撃を開始するプレイヤーとの距離
+	constexpr float kStartAttackLength = 6.0f;
 }
 
 /// <summary>
@@ -54,11 +66,11 @@ void EnemyStateAttack::Update()
 	auto prevVel = own->GetRigidbody()->GetVelocity();
 	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 
-	if (m_waitCount == 20)
+	if (m_waitCount == kCreateAttackCollisionFrame)
 	{
 		own->CreateAttackCollision(m_attackVec);
 	}
-	else if (m_waitCount == 45)
+	else if (m_waitCount == kDeleteAttackCollisionFrame)
 	{
 		own->DeleteAttackCollision();
 	}
@@ -66,9 +78,8 @@ void EnemyStateAttack::Update()
 
 	auto frame = m_pOwn.lock()->GetAnimNowFrame();
 
-	float ans = frame - 40.0f;
 	//アニメーション上で攻撃が一回終了した時
-	if (IsAttackAnimEnd(ans) && frame >= 1)
+	if (IsAttackAnimEnd(frame) && frame > 0)
 	{
 		//索敵範囲内にプレイヤーがいて
 		if (own->GetIsSearchInPlayer())
@@ -77,7 +88,7 @@ void EnemyStateAttack::Update()
 			auto moveVec = playerPos - own->GetRigidbody()->GetPos();
 
 			//プレイヤーとの距離が一定距離以下の時は攻撃
-			if (moveVec.Length() <= 6.0f)
+			if (moveVec.Length() <= kStartAttackLength)
 			{
 				//atan2を使用して向いている角度を取得
 				auto angle = atan2(moveVec.x, moveVec.z);

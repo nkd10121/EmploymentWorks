@@ -10,8 +10,7 @@
 /// コンストラクタ
 /// </summary>
 EnemyStateIdle::EnemyStateIdle(std::shared_ptr<CharacterBase> own) :
-	StateBase(own),
-	temp_frame(0)
+	StateBase(own)
 {
 	//現在のステートを待機状態にする
 	m_nowState = StateKind::Idle;
@@ -34,18 +33,9 @@ void EnemyStateIdle::Update()
 	//持ち主が敵かどうかをチェックする
 	if (!CheakEnemy())	return;
 
-	////2秒経過したら歩き状態にする
-	//if (temp_frame >= 120)
-	//{
-	//	ChangeState(StateKind::Walk);
-	//	return;
-	//}
-
-	////フレーム数を更新する
-	//temp_frame++;
-
 	auto own = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
 
+	//索敵範囲内にプレイヤーが存在していたら歩き状態に遷移する
 	if (own->GetIsSearchInPlayer())
 	{
 		ChangeState(StateKind::Walk);

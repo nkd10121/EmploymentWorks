@@ -1,5 +1,9 @@
 ﻿#pragma once
 #include "StateBase.h"
+
+/// <summary>
+/// 敵の死亡状態
+/// </summary>
 class EnemyStateDeath : public StateBase
 {
 public:

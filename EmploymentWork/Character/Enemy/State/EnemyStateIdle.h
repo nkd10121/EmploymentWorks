@@ -20,8 +20,5 @@ public:
 	/// 更新
 	/// </summary>
 	virtual void Update() override;
-
-private:
-	int temp_frame;	//ステートを切り替えるための一時的な変数
 };
 

@@ -1,5 +1,9 @@
 ﻿#pragma once
 #include "StateBase.h"
+
+/// <summary>
+/// 敵の攻撃状態
+/// </summary>
 class EnemyStateAttack : public StateBase
 {
 public:
@@ -18,7 +22,7 @@ public:
 	virtual void Update() override;
 
 private:
-	int m_waitCount;
-	Vec3 m_attackVec;
+	int m_waitCount;		//待機フレーム
+	Vec3 m_attackVec;		//攻撃判定を出す方向ベクトル
 };
 

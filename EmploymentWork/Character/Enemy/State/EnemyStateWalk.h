@@ -22,8 +22,5 @@ public:
 	virtual void Update() override;
 
 private:
-	int temp_frame;	//ステートを切り替えるための一時的な変数
-
-	Vec3 m_playerPos;
 };
 
