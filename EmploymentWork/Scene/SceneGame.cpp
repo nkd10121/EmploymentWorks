@@ -6,6 +6,7 @@
 #include "HealPortion.h"
 
 #include "ModelManager.h"
+#include "ImageManager.h"
 #include "TrapManager.h"
 #include "SoundManager.h"
 #include "EffectManager.h"
@@ -82,6 +83,7 @@ bool SceneGame::IsLoaded() const
 
 	if (!ModelManager::GetInstance().IsLoaded())	return false;
 	if (!SoundManager::GetInstance().IsLoaded())	return false;
+	if (!ImageManager::GetInstance().IsLoaded())	return false;
 
 	return true;
 }

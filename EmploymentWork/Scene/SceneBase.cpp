@@ -6,6 +6,7 @@
 #include "SoundManager.h"
 #include "MapManager.h"
 #include "TrapManager.h"
+#include "ImageManager.h"
 
 #include "SceneDebug.h"
 
@@ -118,7 +119,8 @@ void SceneBase::AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data)
 		//画像データなら
 		else if (d.extension == ".png")
 		{
-
+			auto path = d.path + d.extension;
+			ImageManager::GetInstance().Load(d.id, path, d.isEternal);
 		}
 	}
 }
@@ -266,6 +268,7 @@ bool SceneBase::IsSceneEnd()
 	EffectManager::GetInstance().Clear();
 	MapManager::GetInstance().DeleteModel();
 	TrapManager::GetInstance().Clear();
+	ImageManager::GetInstance().Clear();
 
 	//ここまで来たらシーンを完全に終了する
 	return true;
@@ -328,7 +331,7 @@ void SceneBase::DrawLoading() const
 		for (auto& text : kLoadingText)
 		{
 			//ロード中の経過フレームで高さを変える
-			float height = sinf(static_cast<float>(m_loadingFrame + num * 2) / 6);
+			float height = sinf(static_cast<float>(m_loadingFrame - num * 2) / 6);
 			//文字の描画
 			DrawFormatString(x + num * 8, y - static_cast<int>(height * 4), 0xffffff, "%s", text.c_str());
 
