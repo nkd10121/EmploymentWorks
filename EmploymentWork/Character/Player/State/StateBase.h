@@ -70,12 +70,6 @@ public:
 	const StateKind GetNextKind()const { return m_nextState; }
 
 	/// <summary>
-	/// 次のシーンのポインタを取得
-	/// </summary>
-	/// <returns></returns>
-	std::shared_ptr<StateBase> GetNextStatePointer();
-
-	/// <summary>
 	/// 遷移予定のStateを設定する
 	/// </summary>
 	/// <param name="state">遷移予定のState</param>

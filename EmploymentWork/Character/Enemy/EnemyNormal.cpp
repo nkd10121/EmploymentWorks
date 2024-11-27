@@ -244,59 +244,7 @@ const float EnemyNormal::GetSearchCollisionRadius() const
 
 void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
-	//#ifdef _DEBUG
-	//	printf("敵の");
-	//
-	//	switch (m_colliders[colIndex].collideTag)
-	//	{
-	//	case MyLib::ColliderBase::CollisionTag::Normal:
-	//		printf("通常の当たり判定が");
-	//		break;
-	//
-	//	case MyLib::ColliderBase::CollisionTag::Attack:
-	//		printf("攻撃の当たり判定が");
-	//		break;
-	//
-	//	case MyLib::ColliderBase::CollisionTag::Search:
-	//		printf("索敵の当たり判定が");
-	//		break;
-	//
-	//	case MyLib::ColliderBase::CollisionTag::Head:
-	//		printf("頭の当たり判定が");
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//
-	//	switch (colider->GetTag())
-	//	{
-	//	case GameObjectTag::Crystal:
-	//		printf("クリスタルと");
-	//		break;
-	//
-	//	case GameObjectTag::Player:
-	//		printf("プレイヤーと");
-	//		break;
-	//
-	//	case GameObjectTag::PlayerShot:
-	//		printf("プレイヤーの弾と");
-	//		break;
-	//
-	//	case GameObjectTag::Enemy:
-	//		printf("敵と");
-	//		break;
-	//
-	//	case GameObjectTag::SwarmEnemy:
-	//		printf("敵の群れと");
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//
-	//	printf("当たった\n");
-	//#endif
-
-		//当たったオブジェクトのタグを取得する
+	//当たったオブジェクトのタグを取得する
 	m_hitObjectTag = send->GetTag();
 
 	if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Normal)
