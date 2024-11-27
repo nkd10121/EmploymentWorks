@@ -209,6 +209,9 @@
     <ClCompile Include="Geometry\Vec2.cpp">
       <Filter>ソース ファイル\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="HPBar.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
@@ -379,5 +382,6 @@
     <ClInclude Include="Geometry\Vec2.h">
       <Filter>ソース ファイル\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="HPBar.h" />
   </ItemGroup>
 </Project>
