@@ -57,7 +57,8 @@ Player::Player() :
 	m_angle(0.0f),
 	m_attackButtonPushCount(0),
 	m_isStartDeathAnimation(false),
-	m_isDeath(false)
+	m_isDeath(false),
+	m_slotNum(0)
 {
 	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
@@ -180,11 +181,19 @@ void Player::Update(SceneGame* pScene)
 	//スロットの選択
 	if (Input::GetInstance().IsTriggered("RB"))
 	{
-
+		m_slotNum++;
+		if (m_slotNum > 3)
+		{
+			m_slotNum = 3;
+		}
 	}
 	if (Input::GetInstance().IsTriggered("LB"))
 	{
-
+		m_slotNum--;
+		if (m_slotNum < 0)
+		{
+			m_slotNum = 0;
+		}
 	}
 
 
@@ -202,9 +211,9 @@ void Player::Update(SceneGame* pScene)
 
 	//足元座標を使ってトラップ設置位置の選択と設置
 	TrapManager::GetInstance().SelectPoint(bottomPos, m_cameraDirection);
-	if (Input::GetInstance().IsTriggered("Y"))
+	if (Input::GetInstance().GetIsPushedTriggerButton(true))
 	{
-		TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection,0);
+		TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection, m_slotNum);
 	}
 
 	//DEBUG:自決用

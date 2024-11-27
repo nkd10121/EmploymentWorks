@@ -104,21 +104,21 @@ void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
 {
 	if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
 	{
-		auto& sa = debugTrap;
-		sa->isPlaced = true;
-
-		if (slot == 0)
+		//現状はスロット番号が1だったらスパイクトラップを設置する。
+		//MEMO:今後、選択したトラップに応じた種類を設置するようにするかも
+		if (slot == 1)
 		{
+			auto& sa = debugTrap;
+			sa->isPlaced = true;
 			auto add = std::make_shared<SpikeTrap>();
 			add->Init(debugTrap->pos);
 
 			m_traps.emplace_back(add);
-		}
 
-
-		for (auto& trap : debugTrap->neighborTraps)
-		{
-			trap.lock()->isPlaced = true;
+			for (auto& trap : debugTrap->neighborTraps)
+			{
+				trap.lock()->isPlaced = true;
+			}
 		}
 	}
 }

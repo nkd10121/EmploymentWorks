@@ -250,7 +250,18 @@ void SceneGame::Draw()
 		object->Draw();
 	}
 
+	for (int i = 0; i < 4; i++)
+	{
+		int x = 362 + i * 75;
+		int y = 655;
+		DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
+	}
+
+	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 75 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 75 + 35, 655 + 35, 0xff0000, false);
+
 	(this->*m_drawFunc)();
+
+
 
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());

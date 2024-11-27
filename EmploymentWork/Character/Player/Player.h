@@ -77,6 +77,12 @@ public:
 	const bool GetIsDeath()const { return m_isDeath; }
 
 	/// <summary>
+	/// 現在選択しているスロット番号を取得
+	/// </summary>
+	/// <returns>スロット番号</returns>
+	const int GetNowSlotNumber()const { return m_slotNum; }
+
+	/// <summary>
 	/// 押し出し処理を行うオブジェクトと衝突したとき
 	/// </summary>
 	/// <param name="colider">衝突したオブジェクト</param>
@@ -105,5 +111,7 @@ private:
 
 	bool m_isStartDeathAnimation;
 	bool m_isDeath;
+
+	int m_slotNum;
 };
 
