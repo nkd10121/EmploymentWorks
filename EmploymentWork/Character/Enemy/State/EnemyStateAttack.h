@@ -19,5 +19,6 @@ public:
 
 private:
 	int m_waitCount;
+	Vec3 m_attackVec;
 };
 

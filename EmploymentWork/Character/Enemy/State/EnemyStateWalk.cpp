@@ -52,6 +52,11 @@ void EnemyStateWalk::Update()
 
 		moveVec = moveVec.Normalize() * own->GetMoveSpeed();
 	}
+	else
+	{
+		ChangeState(StateBase::StateKind::Idle);
+		return;
+	}
 
 	auto pos = m_pOwn.lock()->GetRigidbody()->GetPos();
 	//atan2を使用して向いている角度を取得

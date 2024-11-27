@@ -24,11 +24,16 @@ namespace
 /// </summary>
 EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
 	StateBase(own),
-	m_waitCount(0)
+	m_waitCount(0),
+	m_attackVec()
 {
 	//現在のステートを歩き状態にする
 	m_nowState = StateKind::Attack;
 	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "ATTACK"));
+
+	auto enemy = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
+	auto playerPos = enemy->GetPlayerPos();
+	m_attackVec = playerPos - own->GetRigidbody()->GetPos();
 }
 
 /// <summary>
@@ -51,7 +56,7 @@ void EnemyStateAttack::Update()
 
 	if (m_waitCount == 20)
 	{
-		own->CreateAttackCollision();
+		own->CreateAttackCollision(m_attackVec);
 	}
 	else if (m_waitCount == 45)
 	{

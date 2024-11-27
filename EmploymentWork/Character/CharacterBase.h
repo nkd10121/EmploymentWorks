@@ -82,11 +82,6 @@ public:
 	const std::string GetCharacterName()const { return m_characterName; }
 protected:		/*継承先のクラスで呼ぶ関数*/
 	/// <summary>
-	/// 前のフレームとStateを比較して違うStateだったら変更する
-	/// </summary>
-	void ChangeState();
-
-	/// <summary>
 	/// アニメーションの切り替え
 	/// </summary>
 	void AnimationBlend();
@@ -104,6 +99,14 @@ public:
 	void ChangeAnim(int animIndex, float animSpeed = 0.5f);
 
 	bool IsInAir();
+
+	/// <summary>
+	/// ステートを変更する
+	/// 自身のステートクラスから呼ぶ専用
+	/// </summary>
+	/// <param name="nextState">変更先</param>
+	void ChangeState(std::shared_ptr<StateBase> nextState);
+
 protected:
 	int m_modelHandle;	//モデルハンドル
 	std::string m_characterName;	//キャラクター名 

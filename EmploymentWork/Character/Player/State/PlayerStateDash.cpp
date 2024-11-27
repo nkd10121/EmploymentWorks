@@ -22,6 +22,7 @@ PlayerStateDash::PlayerStateDash(std::shared_ptr<CharacterBase> own) :
 {
 	//現在のステートをダッシュ状態にする
 	m_nowState = StateKind::Dash;
+	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "RUN_FORWARD"));
 }
 
 /// <summary>

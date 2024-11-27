@@ -15,12 +15,6 @@
 #include "LoadCSV.h"
 #include "Input.h"
 
-namespace PlayerAnim
-{
-	constexpr float kWalkAnimSpeed = 0.35f;
-}
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -40,78 +34,78 @@ StateBase::~StateBase()
 std::shared_ptr<StateBase> StateBase::GetNextStatePointer()
 {
 	std::shared_ptr<StateBase> ret;
-
-	//タグを取得
-	auto tag = m_pOwn.lock()->GetTag();
-
-	//タグから持ち主がプレイヤーか敵かを判断して処理を分ける
-	if (tag == GameObjectTag::Player)
-	{
-		if (m_nextState == StateKind::Idle)
-		{
-			ret = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-			ret->Init();
-			ret->SetNextKind(m_nextState);
-
-			return ret;
-		}
-		else if (m_nextState == StateKind::Walk)
-		{
-			ret = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
-			ret->Init();
-			ret->SetNextKind(m_nextState);
-
-			return ret;
-		}
-		else if (m_nextState == StateKind::Dash)
-		{
-			ret = std::make_shared<PlayerStateDash>(m_pOwn.lock());
-			ret->Init();
-			ret->SetNextKind(m_nextState);
-
-			return ret;
-		}
-		else if (m_nextState == StateKind::Jump)
-		{
-			ret = std::make_shared<PlayerStateJump>(m_pOwn.lock());
-			ret->Init();
-			ret->SetNextKind(m_nextState);
-
-			return ret;
-		}
-	}
-	//敵の場合
-	else
-	{
-		if (m_nextState == StateKind::Idle)
-		{
-			ret = std::make_shared<EnemyStateIdle>(m_pOwn.lock());
-			ret->Init();
-			ret->SetNextKind(m_nextState);
-
-			return ret;
-		}
-		else if (m_nextState == StateKind::Walk)
-		{
-			ret = std::make_shared<EnemyStateWalk>(m_pOwn.lock());
-			ret->Init();
-			ret->SetNextKind(m_nextState);
-
-			return ret;
-		}
-		else if (m_nextState == StateKind::Attack)
-		{
-			ret = std::make_shared<EnemyStateAttack>(m_pOwn.lock());
-			ret->Init();
-			ret->SetNextKind(m_nextState);
-
-			return ret;
-		}
-	}
-
-#ifdef _DEBUG
-	assert(0 && "次のステートのポインタがnullです");
-#endif
+//
+//	//タグを取得
+//	auto tag = m_pOwn.lock()->GetTag();
+//
+//	//タグから持ち主がプレイヤーか敵かを判断して処理を分ける
+//	if (tag == GameObjectTag::Player)
+//	{
+//		if (m_nextState == StateKind::Idle)
+//		{
+//			ret = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
+//			ret->Init();
+//			ret->SetNextKind(m_nextState);
+//
+//			return ret;
+//		}
+//		else if (m_nextState == StateKind::Walk)
+//		{
+//			ret = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
+//			ret->Init();
+//			ret->SetNextKind(m_nextState);
+//
+//			return ret;
+//		}
+//		else if (m_nextState == StateKind::Dash)
+//		{
+//			ret = std::make_shared<PlayerStateDash>(m_pOwn.lock());
+//			ret->Init();
+//			ret->SetNextKind(m_nextState);
+//
+//			return ret;
+//		}
+//		else if (m_nextState == StateKind::Jump)
+//		{
+//			ret = std::make_shared<PlayerStateJump>(m_pOwn.lock());
+//			ret->Init();
+//			ret->SetNextKind(m_nextState);
+//
+//			return ret;
+//		}
+//	}
+//	//敵の場合
+//	else
+//	{
+//		if (m_nextState == StateKind::Idle)
+//		{
+//			ret = std::make_shared<EnemyStateIdle>(m_pOwn.lock());
+//			ret->Init();
+//			ret->SetNextKind(m_nextState);
+//
+//			return ret;
+//		}
+//		else if (m_nextState == StateKind::Walk)
+//		{
+//			ret = std::make_shared<EnemyStateWalk>(m_pOwn.lock());
+//			ret->Init();
+//			ret->SetNextKind(m_nextState);
+//
+//			return ret;
+//		}
+//		else if (m_nextState == StateKind::Attack)
+//		{
+//			ret = std::make_shared<EnemyStateAttack>(m_pOwn.lock());
+//			ret->Init();
+//			ret->SetNextKind(m_nextState);
+//
+//			return ret;
+//		}
+//	}
+//
+//#ifdef _DEBUG
+//	assert(0 && "次のステートのポインタがnullです");
+//#endif
 	return ret;
 }
 
@@ -182,40 +176,34 @@ void StateBase::ChangeState(StateKind kind)
 		auto name = m_pOwn.lock()->GetCharacterName();
 		if (kind == StateKind::Idle)
 		{
-			//std::shared_ptr<PlayerStateIdle> pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-			//pNext->Init();
+			auto pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
+			pNext->Init();
 
-			m_nextState = kind;
-
-			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "IDLE"));
+			m_pOwn.lock()->ChangeState(pNext);
 			return;
 		}
 		else if (kind == StateKind::Walk)
 		{
-			std::shared_ptr<PlayerStateWalk> pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
+			auto pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
 			pNext->Init();
 
-			m_nextState = kind;
-
-			//左スティックの入力に応じてアニメーションを変更する
-			auto input = Input::GetInstance().GetInputStick(false);
-			auto dir = GetDirection(input.first, -input.second);
-			auto animName = pNext->GetWalkAnimName(dir);
-			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, animName), PlayerAnim::kWalkAnimSpeed);
+			m_pOwn.lock()->ChangeState(pNext);
 			return;
 		}
 		else if (kind == StateKind::Dash)
 		{
-			m_nextState = kind;
+			auto pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
+			pNext->Init();
 
-			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "RUN_FORWARD"));
+			m_pOwn.lock()->ChangeState(pNext);
 			return;
 		}
 		else if (kind == StateKind::Jump)
 		{
-			m_nextState = kind;
+			auto pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
+			pNext->Init();
 
-			m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(name, "JUMP_UP"), 0.75f);
+			m_pOwn.lock()->ChangeState(pNext);
 			return;
 		}
 	}
@@ -226,20 +214,26 @@ void StateBase::ChangeState(StateKind kind)
 
 		if (kind == StateKind::Idle)
 		{
-			m_nextState = kind;
+			auto pNext = std::make_shared<EnemyStateIdle>(m_pOwn.lock());
+			pNext->Init();
 
+			m_pOwn.lock()->ChangeState(pNext);
 			return;
 		}
 		else if (kind == StateKind::Walk)
 		{
-			m_nextState = kind;
+			auto pNext = std::make_shared<EnemyStateWalk>(m_pOwn.lock());
+			pNext->Init();
 
+			m_pOwn.lock()->ChangeState(pNext);
 			return;
 		}
 		else if (kind == StateKind::Attack)
 		{
-			m_nextState = kind;
+			auto pNext = std::make_shared<EnemyStateAttack>(m_pOwn.lock());
+			pNext->Init();
 
+			m_pOwn.lock()->ChangeState(pNext);
 			return;
 		}
 	}

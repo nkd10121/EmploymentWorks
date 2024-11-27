@@ -39,19 +39,6 @@ CharacterBase::~CharacterBase()
 }
 
 /// <summary>
-/// 前のフレームとStateを比較して違うStateだったら変更する
-/// </summary>
-void CharacterBase::ChangeState()
-{
-	//前のフレームとStateを比較して違うStateだったら
-	if (m_pState->GetNextKind() != m_pState->GetKind())
-	{
-		//Stateを変更する
-		m_pState = m_pState->GetNextStatePointer();
-	}
-}
-
-/// <summary>
 /// アニメーションの切り替え
 /// </summary>
 void CharacterBase::AnimationBlend()
@@ -144,4 +131,9 @@ bool CharacterBase::IsInAir()
 	}
 
 	return true;
+}
+
+void CharacterBase::ChangeState(std::shared_ptr<StateBase> nextState)
+{
+	m_pState = nextState;
 }

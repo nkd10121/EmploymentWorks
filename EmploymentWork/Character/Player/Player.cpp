@@ -134,8 +134,6 @@ void Player::Finalize()
 /// </summary>
 void Player::Update(SceneGame* pScene)
 {
-	//ステータスの変更
-	ChangeState();
 	//ステートの更新
 	m_pState->Update();
 

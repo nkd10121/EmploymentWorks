@@ -56,7 +56,7 @@ const void EnemyBase::SetModelRotation(Vec3 rot) const
 	}
 }
 
-const void EnemyBase::CreateAttackCollision()
+const void EnemyBase::CreateAttackCollision(Vec3 vec)
 {
 	m_isAttack = true;
 
@@ -65,8 +65,8 @@ const void EnemyBase::CreateAttackCollision()
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = 4.0f;
 
-	auto vec = m_playerPos - rigidbody->GetPos();
-	auto attackPos = Vec3(vec.x, 0.0f,vec.z);
+	auto attackPos = vec.Normalize() * 4.0f;
+	attackPos = Vec3(attackPos.x, 0.0f, attackPos.z);
 
 	sphereCol->localPos.localPos = attackPos;
 

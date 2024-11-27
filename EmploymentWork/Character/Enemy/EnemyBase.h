@@ -96,7 +96,7 @@ public:
 
 	const void SetModelRotation(Vec3 rot)const;
 
-	const void CreateAttackCollision();
+	const void CreateAttackCollision(Vec3 vec);
 	const void DeleteAttackCollision();
 
 protected:

@@ -130,8 +130,6 @@ void EnemyNormal::Update()
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
 
-	//ステータスの変更
-	ChangeState();
 	//ステートの更新
 	m_pState->Update();
 

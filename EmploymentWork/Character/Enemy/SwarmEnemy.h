@@ -41,6 +41,7 @@ public:
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 	void OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
+
 private:
 	std::list<std::shared_ptr<EnemyBase>> m_swarm;	//群れの構成員
 	bool m_isExistMember;		//メンバーが存在するかどうか

@@ -26,6 +26,8 @@ PlayerStateJump::PlayerStateJump(std::shared_ptr<CharacterBase> own) :
 	//現在のステートをダッシュ状態にする
 	m_nowState = StateKind::Jump;
 
+	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "JUMP_UP"), 0.75f);
+
 	//このステートに入った瞬間にジャンプ力を足す
 	auto vel = own->GetRigidbody()->GetVelocity();
 	vel.y += kJumpPower;

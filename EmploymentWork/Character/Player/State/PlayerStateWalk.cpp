@@ -11,6 +11,8 @@ namespace
 	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定最小範囲
 	constexpr float kAnalogRangeMax = 0.8f;		//アナログスティックの入力判定最大範囲
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
+
+	constexpr float kWalkAnimSpeed = 0.35f;
 }
 
 /// <summary>
@@ -27,6 +29,8 @@ PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 	//このシーンに遷移した瞬間の左スティックの入力角度を取得しておく
 	auto input = Input::GetInstance().GetInputStick(false);
 	m_dir = GetDirection(input.first, -input.second);
+	auto animName = GetWalkAnimName(m_dir);
+	m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), animName), kWalkAnimSpeed);
 }
 
 /// <summary>

@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "Player.h"
 
+#include "LoadCSV.h"
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -10,6 +12,7 @@ PlayerStateIdle::PlayerStateIdle(std::shared_ptr<CharacterBase> own):
 {
 	//現在のステートを待機状態にする
 	m_nowState = StateKind::Idle;
+	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "IDLE"));
 }
 
 /// <summary>
