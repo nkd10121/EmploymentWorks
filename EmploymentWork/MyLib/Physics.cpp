@@ -140,8 +140,6 @@ void MyLib::Physics::Update()
 		item->rigidbody->SetNextPos(nextPos);
 
 		// もともとの情報、予定情報をデバッグ表示
-#if _DEBUG
-
 		for (const auto& collider : item->m_colliders)
 		{
 			auto colPos = collider->collide->GetWorldPos();
@@ -153,21 +151,22 @@ void MyLib::Physics::Update()
 			{
 				auto sphereData = dynamic_cast<MyLib::ColliderSphere*> (collider->collide.get());
 				auto radius = sphereData->m_radius;
+#if _DEBUG
 				MyLib::DebugDraw::AddDrawSphere(colPos, radius, kBeforeFixInfoColor);
 				MyLib::DebugDraw::AddDrawSphere(colNextPos, radius, kAimInfoColor);
+#endif
 			}
 			else if (kind == ColliderBase::Kind::Cupsule)
 			{
 				auto cupsuleData = dynamic_cast<MyLib::ColliderCupsule*> (collider->collide.get());
 				auto size = cupsuleData->m_size;
 				auto radius = cupsuleData->m_radius;
+#if _DEBUG
 				MyLib::DebugDraw::AddDrawCupsule(colPos, size, radius, kBeforeFixInfoColor);
 				MyLib::DebugDraw::AddDrawCupsule(colNextPos, size, radius, kAimInfoColor);
+#endif
 			}
 		}
-
-#endif
-
 	}
 
 	// 当たり判定チェック（nextPos指定）
