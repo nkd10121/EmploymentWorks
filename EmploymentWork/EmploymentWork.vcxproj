@@ -27,7 +27,7 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp" />
     <ClCompile Include="Geometry\LocalPos.cpp" />
     <ClCompile Include="Common\ImageManager.cpp" />
-    <ClCompile Include="HPBar.cpp" />
+    <ClCompile Include="Ui\HPBar.cpp" />
     <ClCompile Include="Object\Crystal.cpp" />
     <ClCompile Include="Character\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Character\Enemy\EnemyNormal.cpp" />
@@ -84,7 +84,7 @@
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h" />
     <ClInclude Include="Geometry\LocalPos.h" />
     <ClInclude Include="Common\ImageManager.h" />
-    <ClInclude Include="HPBar.h" />
+    <ClInclude Include="Ui\HPBar.h" />
     <ClInclude Include="Object\Crystal.h" />
     <ClInclude Include="Character\Enemy\EnemyBase.h" />
     <ClInclude Include="Character\Enemy\EnemyNormal.h" />
@@ -192,14 +192,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Object/Character/Enemy</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Object/Character/Enemy;$(ProjectDir)Ui</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4099</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Object/Character/Enemy</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Object/Character/Enemy;$(ProjectDir)Ui</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>
@@ -213,7 +213,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Object/Character/Enemy</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Object/Character/Enemy;$(ProjectDir)Ui</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4099</DisableSpecificWarnings>
     </ClCompile>
@@ -222,7 +222,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Object/Character/Enemy</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Object/Character/Enemy;$(ProjectDir)Ui</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>
@@ -234,7 +234,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap;$(ProjectDir)Ui</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>4099</DisableSpecificWarnings>
@@ -242,7 +242,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap;$(ProjectDir)Ui</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>
@@ -256,7 +256,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap;$(ProjectDir)Ui</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>4099</DisableSpecificWarnings>
@@ -266,7 +266,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap;$(ProjectDir)Ui</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>

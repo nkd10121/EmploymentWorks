@@ -45,6 +45,9 @@
     <Filter Include="ソース ファイル\Geometry">
       <UniqueIdentifier>{c176987a-6b58-4c6c-b954-52996b9c4726}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Ui">
+      <UniqueIdentifier>{3ca7d748-1a85-4433-9466-7b57797979eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -209,8 +212,8 @@
     <ClCompile Include="Geometry\Vec2.cpp">
       <Filter>ソース ファイル\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="HPBar.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Ui\HPBar.cpp">
+      <Filter>ソース ファイル\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -382,6 +385,8 @@
     <ClInclude Include="Geometry\Vec2.h">
       <Filter>ソース ファイル\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="HPBar.h" />
+    <ClInclude Include="Ui\HPBar.h">
+      <Filter>ソース ファイル\Ui</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
