@@ -78,6 +78,8 @@ const void EnemyBase::DeleteAttackCollision()
 	m_isAttack = false;
 
 	auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
+	if (col == nullptr)return;		//もし攻撃の判定を持っていなかったら早期リターン
+
 	Collidable::DeleteRequestCollider(col);
 
 	return void();

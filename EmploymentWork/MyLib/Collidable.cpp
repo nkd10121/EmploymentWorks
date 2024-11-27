@@ -102,13 +102,16 @@ std::shared_ptr<MyLib::ColliderBase> MyLib::Collidable::AddCollider(const Collid
 
 void MyLib::Collidable::DeleteRequestCollider(std::shared_ptr<Collide> col)
 {
-	for (auto& c : m_colliders)
-	{
-		if (c == col)
-		{
-			c->isDelete = true;
-		}
-	}
+	auto it = std::find(m_colliders.begin(), m_colliders.end(), col);
+	m_colliders.erase(it, m_colliders.end());
+
+	//for (auto& c : m_colliders)
+	//{
+	//	if (c == col)
+	//	{
+	//		c->isDelete = true;
+	//	}
+	//}
 
 //	auto newEnd = remove(m_colliders.begin(), m_colliders.end(), col);
 //	m_colliders.erase(newEnd, m_colliders.end());

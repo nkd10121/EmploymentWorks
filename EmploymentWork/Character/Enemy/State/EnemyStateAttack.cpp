@@ -5,11 +5,26 @@
 
 #include "LoadCSV.h"
 
+namespace
+{
+	const bool IsAttackAnimEnd(float num)
+	{
+		while (true)
+		{
+			if (num < 40.0f) break;
+			num -= 40.0f;
+		}
+
+		return num == 0.0f;
+	}
+}
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
 EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
-	StateBase(own)
+	StateBase(own),
+	m_waitCount(0)
 {
 	//現在のステートを歩き状態にする
 	m_nowState = StateKind::Attack;
@@ -21,8 +36,6 @@ EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
 /// </summary>
 void EnemyStateAttack::Init()
 {
-	auto own = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
-	own->CreateAttackCollision();
 }
 
 /// <summary>
@@ -36,12 +49,22 @@ void EnemyStateAttack::Update()
 	auto prevVel = own->GetRigidbody()->GetVelocity();
 	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 
-	auto frame = m_pOwn.lock()->GetAnimNowFrame();
-	//アニメーション上で攻撃が一回終了した時
-	if (static_cast<int>(frame) % static_cast <int>(40.0f) == 0 && frame >= 1)
+	if (m_waitCount == 20)
+	{
+		own->CreateAttackCollision();
+	}
+	else if (m_waitCount == 45)
 	{
 		own->DeleteAttackCollision();
+	}
+	m_waitCount++;
 
+	auto frame = m_pOwn.lock()->GetAnimNowFrame();
+
+	float ans = frame - 40.0f;
+	//アニメーション上で攻撃が一回終了した時
+	if (IsAttackAnimEnd(ans) && frame >= 1)
+	{
 		//索敵範囲内にプレイヤーがいて
 		if (own->GetIsSearchInPlayer())
 		{
@@ -57,7 +80,7 @@ void EnemyStateAttack::Update()
 				//移動方向に体を回転させる
 				own->SetModelRotation(rotation);
 
-				own->CreateAttackCollision();
+				m_waitCount = 0;
 				ChangeState(StateBase::StateKind::Attack);
 				return;
 			}
