@@ -10,6 +10,7 @@
 #include "MapManager.h"
 #include "TrapManager.h"
 #include "EffectManager.h"
+#include "ImageManager.h"
 #include "LoadCSV.h"
 #include "Input.h"
 
@@ -57,6 +58,8 @@ GameManager::~GameManager()
 	m_pObjects.clear();
 
 	MyLib::Physics::GetInstance().Clear();
+
+	DeleteGraph(m_slotBgHandle);
 }
 
 /// <summary>
@@ -107,6 +110,7 @@ void GameManager::Init(int stageIdx)
 	//m_pObjects.back()->Init();
 	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
+	m_slotBgHandle = ImageManager::GetInstance().GetHandle("I_SLOTBG");
 
 	TrapManager::GetInstance().SetUp();
 }
@@ -250,7 +254,8 @@ void GameManager::Draw()
 	{
 		int x = 362 + i * 75;
 		int y = 655;
-		DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
+		//DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
+		DrawRotaGraph(x,y,0.45f,0.0f,m_slotBgHandle,false);
 	}
 
 	//現在選択しているスロット枠の描画
