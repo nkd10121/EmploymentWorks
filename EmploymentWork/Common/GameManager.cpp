@@ -75,8 +75,6 @@ void GameManager::Init(int stageIdx)
 		m_phaseNum.push_back(i);
 	}
 
-	
-
 	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle(info[1]);
 	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
