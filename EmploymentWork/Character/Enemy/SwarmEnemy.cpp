@@ -199,6 +199,14 @@ void SwarmEnemy::AddSwarm(std::shared_ptr<EnemyBase> add)
 }
 
 /// <summary>
+/// メンバーの人数を取得
+/// </summary>
+const int SwarmEnemy::CheckMemberNum() const
+{
+	return m_swarm.size();
+}
+
+/// <summary>
 /// 押し出し処理を行わないオブジェクトと衝突したとき
 /// </summary>
 void SwarmEnemy::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)

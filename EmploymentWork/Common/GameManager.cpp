@@ -31,8 +31,9 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-GameManager::GameManager():
-	m_isCreateEnemy(false)
+GameManager::GameManager() :
+	m_isCreateEnemy(false),
+	m_phaseCount(0)
 {
 
 }
@@ -64,11 +65,13 @@ GameManager::~GameManager()
 void GameManager::Init(int stageIdx)
 {
 	auto info = LoadCSV::GetInstance().LoadStageInfo(stageIdx);
-	for (int i = 1; i < std::stoi(info[3]) + 1;i++)
+	for (int i = 1; i < std::stoi(info[3]) + 1; i++)
 	{
 		m_phaseNum.push_back(-i);
 		m_phaseNum.push_back(i);
 	}
+	//クリア番号として0を最後に入れておく
+	m_phaseNum.push_back(0);
 
 	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle(info[1]);
@@ -113,12 +116,11 @@ void GameManager::Init(int stageIdx)
 /// </summary>
 void GameManager::Update()
 {
-	if (Input::GetInstance().IsTriggered("Y"))
+	//Yボタンを押した時かつ最初のフェーズの時、
+	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front() == -1)
 	{
-		if (m_phaseNum.size() > 1)
-		{
-			m_phaseNum.pop_front();
-		}
+		//次のフェーズに進む
+		m_phaseNum.pop_front();
 	}
 
 	//プレイヤーの更新
@@ -131,21 +133,50 @@ void GameManager::Update()
 		m_pPlayer->Init();
 	}
 
+	//現在のフェーズが0以上(戦闘フェーズ)の時、敵を生成していなかったら敵を生成する
 	if (m_phaseNum.front() >= 0)
 	{
 		if (!m_isCreateEnemy)
 		{
 			m_pEnemyManager->CreateEnemy(m_phaseNum.front());
 		}
+		//敵を生成した
 		m_isCreateEnemy = true;
 
 	}
+	//0以下(準備フェーズ)の時
 	else
 	{
+		//敵生成フラグをリセットする
 		m_isCreateEnemy = false;
 	}
 
-	m_pEnemyManager->Update();
+	//敵の更新処理
+	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front());
+	//敵が全滅した時、次のフェーズに進む
+	if (isNextPhase)
+	{
+		//念のため、現在が戦闘フェーズであるか確認
+		if (m_phaseNum.front() > 0)
+		{
+			//次のフェーズに進む
+			m_phaseNum.pop_front();
+		}
+	}
+
+	//最初の準備フレームでなければフェーズカウントを進める
+	if (m_phaseNum.front() < 0 && m_phaseNum.front() != -1)
+	{
+		m_phaseCount++;
+	}
+
+	//10秒経ったら次のフェーズに進める
+	if (m_phaseCount >= 600)
+	{
+		m_phaseNum.pop_front();
+		//フェーズカウントをリセット
+		m_phaseCount = 0;
+	}
 
 	//ポーションの更新
 	for (auto& object : m_pObjects)
@@ -236,6 +267,7 @@ void GameManager::Draw()
 	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xffffff, true);
 
 	DrawFormatString(640, 0, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
+	DrawFormatString(640, 16, 0xffffff, "次のフェーズまで:%d", m_phaseCount);
 #endif
 }
 

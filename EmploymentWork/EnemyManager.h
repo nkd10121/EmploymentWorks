@@ -2,6 +2,7 @@
 #include <list>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 
@@ -26,7 +27,7 @@ public:
 	virtual ~EnemyManager();
 
 	void Init(std::string stageName);
-	void Update();
+	bool Update(int phase);
 	void Draw();
 
 	void Finalize();
@@ -40,4 +41,7 @@ public:
 private:
 	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列
 	std::map<int, std::list<EnemyCreateInfo>> m_createEnemyInfo;
+	std::unordered_map<int, int> m_enemyNum;	//それぞれのフェーズで何体の敵を生成する予定か保存
+
+	int m_deadEnemyNum;
 };

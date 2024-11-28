@@ -48,6 +48,12 @@ public:
 	void AddSwarm(std::shared_ptr<EnemyBase> add);
 
 	/// <summary>
+	/// メンバーの人数を取得
+	/// </summary>
+	/// <returns></returns>
+	const int CheckMemberNum()const;
+
+	/// <summary>
 	/// 構成メンバーが存在するかどうかを取得
 	/// </summary>
 	/// <returns>構成メンバーが存在するかどうか</returns>

@@ -50,6 +50,7 @@ private:
 
 	std::list<int> m_phaseNum;
 	bool m_isCreateEnemy;
+	int m_phaseCount;
 
 	int m_stageModel;	//モデルハンドル(仮)
 };

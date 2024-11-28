@@ -18,7 +18,8 @@ namespace
 	};
 }
 
-EnemyManager::EnemyManager()
+EnemyManager::EnemyManager():
+	m_deadEnemyNum(0)
 {
 }
 
@@ -34,9 +35,14 @@ void EnemyManager::Init(std::string stageName)
 	{
 		SeparateData(inf);
 	}
+
+	for (auto& inf : m_createEnemyInfo)
+	{
+		m_enemyNum[inf.first] = inf.second.size();
+	}
 }
 
-void EnemyManager::Update()
+bool EnemyManager::Update(int phase)
 {
 	//敵の更新
 	for (auto& enemy : m_pEnemies)
@@ -51,6 +57,14 @@ void EnemyManager::Update()
 			});
 		m_pEnemies.erase(it, m_pEnemies.end());
 	}
+
+	//もし群れの数が0になった(敵が全滅した)ら、次のフェーズに行く
+	if (m_pEnemies.size() == 0)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void EnemyManager::Draw()
@@ -91,6 +105,8 @@ void EnemyManager::CreateEnemy(int phaseNum)
 			add->SetPos(Vec3(-48.0f + 16 * i, 8.0f, -48.0f));
 			add->Init();
 			addSwarm->AddSwarm(add);
+
+			data.isCreated = true;
 		}
 
 		i++;
