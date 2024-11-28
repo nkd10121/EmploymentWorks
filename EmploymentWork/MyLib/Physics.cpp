@@ -543,11 +543,25 @@ void MyLib::Physics::CheckColide()
 			{
 				for (int j = 0; j < objB->m_colliders.size(); j++)
 				{
+					auto& colA = objA->m_colliders.at(i);
+					auto& colB = objB->m_colliders.at(j);
+
+					//敵同士かつ、どちらかが通常の当たり判定じゃないときは次に行く
+					//MEMO:判定回数が多くなるのの対策でこの処理を入れたが処理速度はあまり変わらない可能性あり。今後敵を大量に出したときにまた試してみて。
+					bool isContinue = false;
+					if (objA->GetTag() == GameObjectTag::Enemy && objB->GetTag() == GameObjectTag::Enemy)
+					{
+						if (colA->collideTag != MyLib::ColliderBase::CollisionTag::Normal || colB->collideTag != MyLib::ColliderBase::CollisionTag::Normal) isContinue = true;
+					}
+					if (isContinue)
+					{
+						continue;
+					}
+
 					// 判定回数増加
 					checkCount++;
 
-					auto& colA = objA->m_colliders.at(i);
-					auto& colB = objB->m_colliders.at(j);
+
 
 					// 優先度に合わせて変数を変更
 					auto primary = objA;
