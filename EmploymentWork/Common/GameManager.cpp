@@ -4,8 +4,7 @@
 #include "Camera.h"
 #include "Crystal.h"
 #include "HealPortion.h"
-#include "SwarmEnemy.h"
-#include "EnemyNormal.h"
+#include "EnemyManager.h"
 
 #include "ModelManager.h"
 #include "MapManager.h"
@@ -47,11 +46,7 @@ GameManager::~GameManager()
 
 	m_pPlayer->Finalize();
 
-	for (auto& enemy : m_pEnemies)
-	{
-		enemy->Finalize();
-	}
-	m_pEnemies.clear();
+	m_pEnemyManager->Finalize();
 
 	//ポーションの解放
 	for (auto& object : m_pObjects)
@@ -87,6 +82,10 @@ void GameManager::Init(int stageIdx)
 	m_pPlayer = std::make_shared<Player>();
 	m_pPlayer->Init();
 
+	//敵管理クラスの生成
+	m_pEnemyManager = std::make_shared<EnemyManager>();
+	m_pEnemyManager->Init(info[0].c_str());
+
 	//カメラの生成
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init(m_stageModel);
@@ -104,7 +103,6 @@ void GameManager::Init(int stageIdx)
 	//m_pObjects.emplace_back(std::make_shared<HealPortion>());
 	//m_pObjects.back()->Init();
 	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
-
 
 
 	TrapManager::GetInstance().SetUp();
@@ -137,24 +135,7 @@ void GameManager::Update()
 	{
 		if (!m_isCreateEnemy)
 		{
-			//DEBUG:敵を生成
-			for (int i = 0; i < 1; i++)
-			{
-				auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
-
-				for (int j = 0; j < 1; j++)
-				{
-					auto add = std::make_shared<EnemyNormal>();
-					add->SetPos(Vec3(-48.0f + 16 * i, 8.0f, -48.0f + 16 * j));
-					add->Init();
-
-					addSwarm->AddSwarm(add);
-
-				}
-
-				addSwarm->SetUp();
-				m_pEnemies.emplace_back(addSwarm);
-			}
+			m_pEnemyManager->CreateEnemy(m_phaseNum.front());
 		}
 		m_isCreateEnemy = true;
 
@@ -164,19 +145,7 @@ void GameManager::Update()
 		m_isCreateEnemy = false;
 	}
 
-	//敵の更新
-	for (auto& enemy : m_pEnemies)
-	{
-		enemy->Update();
-	}
-	//isExistがfalseのオブジェクトを削除
-	{
-		auto it = std::remove_if(m_pEnemies.begin(), m_pEnemies.end(), [](auto& v)
-			{
-				return v->GetIsExistMember() == false;
-			});
-		m_pEnemies.erase(it, m_pEnemies.end());
-	}
+	m_pEnemyManager->Update();
 
 	//ポーションの更新
 	for (auto& object : m_pObjects)
@@ -205,10 +174,7 @@ void GameManager::Update()
 	//モデル座標の更新
 	m_pPlayer->UpdateModelPos();
 
-	for (auto& enemy : m_pEnemies)
-	{
-		enemy->UpdateModelPos();
-	}
+	m_pEnemyManager->UpdateModelPos();
 
 	//カメラの更新
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
@@ -239,10 +205,7 @@ void GameManager::Draw()
 	//プレイヤーの描画
 	m_pPlayer->Draw();
 
-	for (auto& enemy : m_pEnemies)
-	{
-		enemy->Draw();
-	}
+	m_pEnemyManager->Draw();
 
 	//ポーションの描画
 	for (auto& object : m_pObjects)

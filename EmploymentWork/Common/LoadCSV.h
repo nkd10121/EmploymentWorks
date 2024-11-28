@@ -98,4 +98,6 @@ public:
 	TrapBase::Status LoadTrapStatus(const char* trapName);
 
 	std::vector<std::string> LoadStageInfo(int stageIdx);
+
+	std::vector<std::vector<std::string>> LoadEnemyCreateData(std::string stageName);
 };

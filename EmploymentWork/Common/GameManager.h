@@ -6,8 +6,8 @@
 class Player;		//プレイヤー
 class Camera;		//カメラ
 class ObjectBase;	//回復ポーション
-class SwarmEnemy;	//敵
 class Crystal;		//クリスタル
+class EnemyManager;		//敵
 
 class GameManager
 {
@@ -46,7 +46,7 @@ private:
 	std::shared_ptr<Crystal> m_pCrystal;		//クリスタルポインタ
 	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
 	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//オブジェクトポインタの配列
-	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列
+	std::shared_ptr<EnemyManager> m_pEnemyManager;
 
 	std::list<int> m_phaseNum;
 	bool m_isCreateEnemy;

@@ -26,6 +26,7 @@
     <ClCompile Include="Character\Enemy\State\EnemyStateDeath.cpp" />
     <ClCompile Include="Character\Enemy\State\EnemyStateAttack.cpp" />
     <ClCompile Include="Common\GameManager.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Geometry\LocalPos.cpp" />
     <ClCompile Include="Common\ImageManager.cpp" />
     <ClCompile Include="Ui\HPBar.cpp" />
@@ -84,6 +85,7 @@
     <ClInclude Include="Character\Enemy\State\EnemyStateDeath.h" />
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h" />
     <ClInclude Include="Common\GameManager.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Geometry\LocalPos.h" />
     <ClInclude Include="Common\ImageManager.h" />
     <ClInclude Include="Ui\HPBar.h" />
