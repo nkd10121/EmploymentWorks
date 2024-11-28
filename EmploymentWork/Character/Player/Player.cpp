@@ -10,10 +10,10 @@
 #include "Shot.h"
 
 #include "LoadCSV.h"
-#include "SceneGame.h"
 #include "ModelManager.h"
 #include "TrapManager.h"
 
+#include "GameManager.h"
 namespace
 {
 	/*デバッグ用のカプセル関係*/
@@ -133,7 +133,7 @@ void Player::Finalize()
 /// <summary>
 /// 更新
 /// </summary>
-void Player::Update(SceneGame* pScene)
+void Player::Update(GameManager* pGameManager)
 {
 	//ステートの更新
 	m_pState->Update();
@@ -183,7 +183,7 @@ void Player::Update(SceneGame* pScene)
 				shot->Set(m_pos, m_cameraDirection, m_status.atk);
 
 				//弾の管理をゲームシーンに任せる
-				pScene->AddObject(shot);
+				pGameManager->AddObject(shot);
 			}
 		}
 		else if(m_slotNum == 1 && m_attackButtonPushCount == 0)

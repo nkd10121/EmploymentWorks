@@ -2,7 +2,7 @@
 #include "Vec3.h"
 #include "CharacterBase.h"
 
-class SceneGame;
+class GameManager;
 
 /// <summary>
 /// プレイヤークラス
@@ -31,7 +31,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(SceneGame* pScene);
+	void Update(GameManager* pGameManager);
 	/// <summary>
 	/// 描画
 	/// </summary>

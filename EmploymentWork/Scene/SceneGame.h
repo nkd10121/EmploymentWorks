@@ -11,6 +11,8 @@ class ObjectBase;	//回復ポーション
 class SwarmEnemy;	//敵
 class Crystal;		//クリスタル
 
+class GameManager;		//ゲームマネージャー
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -53,12 +55,6 @@ public:
 	/// </summary>
 	virtual void Draw() override;
 
-	/// <summary>
-	/// オブジェクトを追加する
-	/// </summary>
-	/// <param name="pAddObject"></param>
-	void AddObject(std::shared_ptr<ObjectBase> pAddObject);
-
 	//状態遷移のためのメンバ関数
 	using UpdateFunc_t = void (SceneGame::*)();
 	using DrawFunc_t = void (SceneGame::*)();
@@ -84,14 +80,7 @@ public:
 	void DrawTrapSelect();
 
 private:
-	std::shared_ptr<Player> m_pPlayer;			//プレイヤーポインタ
-	std::shared_ptr<Camera> m_pCamera;			//カメラポインタ
-	std::shared_ptr<Crystal> m_pCrystal;			//カメラポインタ
-	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
-	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//オブジェクトポインタの配列
-	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列
-
-	int m_stageModel;	//モデルハンドル(仮)
+	std::shared_ptr<GameManager> m_pGameManager;
 
 private:
 	int m_nowCursor;

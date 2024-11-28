@@ -5,6 +5,7 @@
 #include "Crystal.h"
 #include "HealPortion.h"
 
+#include "GameManager.h"
 #include "ModelManager.h"
 #include "ImageManager.h"
 #include "TrapManager.h"
@@ -38,10 +39,6 @@ namespace
 /// </summary>
 SceneGame::SceneGame() :
 	SceneBase("SCENE_GAME"),
-	m_pPlayer(nullptr),
-	m_pCamera(nullptr),
-	m_pPhysics(nullptr),
-	m_pObjects(),
 	m_nowCursor(0)
 {
 
@@ -94,57 +91,8 @@ bool SceneGame::IsLoaded() const
 void SceneGame::Init()
 {
 	//TODO:ここで実態の生成などをする
-
-	//ステージの当たり判定モデルを取得する(描画するため)
-	m_stageModel = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
-	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
-	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
-
-	//ステージの当たり判定を設定
-	MyLib::Physics::GetInstance().SetStageCollisionModel(m_stageModel);
-
-	//プレイヤーの生成
-	m_pPlayer = std::make_shared<Player>();
-	m_pPlayer->Init();
-
-	//カメラの生成
-	m_pCamera = std::make_shared<Camera>();
-	m_pCamera->Init(m_stageModel);
-
-	////クリスタルの生成
-	//m_pCrystal = std::make_shared<Crystal>(10);
-	//m_pCrystal->Init();
-	//m_pCrystal->Set(Vec3(0.0f, 0.0f, 10.0f));
-
-	//ステージ情報をロード
-	MapManager::GetInstance().Init();
-	MapManager::GetInstance().Load("test");
-
-	////DEBUG:ポーションを生成
-	//m_pObjects.emplace_back(std::make_shared<HealPortion>());
-	//m_pObjects.back()->Init();
-	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
-
-	//DEBUG:敵を生成
-	for (int i = 0; i < 1; i++)
-	{
-		auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
-
-		for (int j = 0; j < 1; j++)
-		{
-			auto add = std::make_shared<EnemyNormal>();
-			add->SetPos(Vec3(-48.0f + 16 * i, 8.0f, -48.0f + 16 * j));
-			add->Init();
-
-			addSwarm->AddSwarm(add);
-
-		}
-
-		addSwarm->SetUp();
-		m_pEnemies.emplace_back(addSwarm);
-	}
-
-	TrapManager::GetInstance().SetUp();
+	m_pGameManager = std::make_shared<GameManager>();
+	m_pGameManager->Init();
 
 	//通常状態に設定しておく
 	m_updateFunc = &SceneGame::UpdateGame;
@@ -157,25 +105,6 @@ void SceneGame::Init()
 void SceneGame::End()
 {
 	//TODO:ここでリソースの開放をする
-
-	MV1DeleteModel(m_stageModel);
-
-	m_pPlayer->Finalize();
-
-	for (auto& enemy : m_pEnemies)
-	{
-		enemy->Finalize();
-	}
-	m_pEnemies.clear();
-
-	//ポーションの解放
-	for (auto& object : m_pObjects)
-	{
-		object->Finalize();
-	}
-	m_pObjects.clear();
-
-	MyLib::Physics::GetInstance().Clear();
 
 }
 
@@ -211,8 +140,6 @@ void SceneGame::Update()
 	//	m_pEnemies.emplace_back(std::make_shared<EnemyNormal>());
 	//	m_pEnemies.back()->Init(m_pPhysics);
 	//}
-
-
 }
 
 /// <summary>
@@ -225,45 +152,8 @@ void SceneGame::Draw()
 	if (!IsLoaded())	return;
 	if (!IsInitialized())	return;
 
-	//ステージの描画
-	MapManager::GetInstance().Draw();
-	MV1DrawModel(m_stageModel);
-
-	TrapManager::GetInstance().Draw();
-#ifdef _DEBUG	//デバッグ描画
-	MyLib::DebugDraw::Draw3D();
-#endif
-
-	//m_pCrystal->Draw();
-
-	EffectManager::GetInstance().Draw();
-
-	//プレイヤーの描画
-	m_pPlayer->Draw();
-
-	for (auto& enemy : m_pEnemies)
-	{
-		enemy->Draw();
-	}
-
-	//ポーションの描画
-	for (auto& object : m_pObjects)
-	{
-		object->Draw();
-	}
-
-	//装備スロットの描画
-	for (int i = 0; i < 4; i++)
-	{
-		int x = 362 + i * 75;
-		int y = 655;
-		DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
-	}
-
-	//現在選択しているスロット枠の描画
-	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 75 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 75 + 35, 655 + 35, 0xff0000, false);
-
-
+	
+	m_pGameManager->Draw();
 
 
 	(this->*m_drawFunc)();
@@ -272,105 +162,12 @@ void SceneGame::Draw()
 
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
-
-	//クロスヘアの描画
-	auto centerX = Game::kWindowWidth / 2;
-	auto centerY = Game::kWindowHeight / 2;
-	auto wid = 14;
-	auto hei = 2;
-	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xffffff, true);
-	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xffffff, true);
-
-	//DrawFormatString(1120, 0, 0xbbbbbb, "クリスタルHP:%d", m_pCrystal->GetHp());
 #endif
-}
-
-/// <summary>
-/// オブジェクトを追加する
-/// ほかのクラスからゲームシーンで管理したいオブジェクトを追加するときに使用する
-/// </summary>
-/// <param name="pAddObject"></param>
-void SceneGame::AddObject(std::shared_ptr<ObjectBase> pAddObject)
-{
-	m_pObjects.emplace_back(pAddObject);
 }
 
 void SceneGame::UpdateGame()
 {
-	//m_pCrystal->Update();
-	//if (m_pCrystal->GetIsBreak())
-	//{
-	//	DrawFormatString(640, 0, 0xffff00, "ゲームオーバー");
-	//}
-
-	//プレイヤーの更新
-	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
-	m_pPlayer->Update(this);
-	if (m_pPlayer->GetIsDeath())
-	{
-		//プレイヤーの生成
-		m_pPlayer = std::make_shared<Player>();
-		m_pPlayer->Init();
-	}
-
-	//敵の更新
-	for (auto& enemy : m_pEnemies)
-	{
-		enemy->Update();
-	}
-	//isExistがfalseのオブジェクトを削除
-	{
-		auto it = std::remove_if(m_pEnemies.begin(), m_pEnemies.end(), [](auto& v)
-			{
-				return v->GetIsExistMember() == false;
-			});
-		m_pEnemies.erase(it, m_pEnemies.end());
-	}
-
-	//ポーションの更新
-	for (auto& object : m_pObjects)
-	{
-		object->Update();
-
-		if (!object->GetIsExist())
-		{
-			object->Finalize();
-		}
-	}
-	//isExistがfalseのオブジェクトを削除
-	{
-		auto it = std::remove_if(m_pObjects.begin(), m_pObjects.end(), [](auto& v)
-			{
-				return v->GetIsExist() == false;
-			});
-		m_pObjects.erase(it, m_pObjects.end());
-	}
-
-	TrapManager::GetInstance().Update();
-
-	//物理更新
-	MyLib::Physics::GetInstance().Update();
-
-	//モデル座標の更新
-	m_pPlayer->UpdateModelPos();
-
-	for (auto& enemy : m_pEnemies)
-	{
-		enemy->UpdateModelPos();
-	}
-
-	//カメラの更新
-	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
-	m_pCamera->Update();
-
-	//エフェクトの更新
-	EffectManager::GetInstance().Update();
-
-	//if (Input::GetInstance().IsTriggered("Y"))
-	//{
-	//	m_updateFunc = &SceneGame::UpdateTrapSelect;
-	//	m_drawFunc = &SceneGame::DrawTrapSelect;
-	//}
+	m_pGameManager->Update();
 }
 
 void SceneGame::UpdateTrapSelect()
