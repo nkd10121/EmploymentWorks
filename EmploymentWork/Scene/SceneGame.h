@@ -1,15 +1,5 @@
 ﻿#pragma once
 #include "SceneBase.h"
-#include "Camera.h"
-#include "MyLib.h"
-//テスト用
-#include <list>
-
-//プロトタイプ宣言
-class Player;		//プレイヤー
-class ObjectBase;	//回復ポーション
-class SwarmEnemy;	//敵
-class Crystal;		//クリスタル
 
 class GameManager;		//ゲームマネージャー
 

@@ -43,7 +43,7 @@ public:
 private:
 	std::shared_ptr<Player> m_pPlayer;			//プレイヤーポインタ
 	std::shared_ptr<Camera> m_pCamera;			//カメラポインタ
-	std::shared_ptr<Crystal> m_pCrystal;		//カメラポインタ
+	std::shared_ptr<Crystal> m_pCrystal;		//クリスタルポインタ
 	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
 	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//オブジェクトポインタの配列
 	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列

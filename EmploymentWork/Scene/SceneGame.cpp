@@ -1,22 +1,14 @@
 ﻿#include "SceneGame.h"
 #include "SceneTitle.h"
 #include "ScenePause.h"
-#include "Player.h"
-#include "Crystal.h"
-#include "HealPortion.h"
 
-#include "GameManager.h"
 #include "ModelManager.h"
-#include "ImageManager.h"
-#include "TrapManager.h"
 #include "SoundManager.h"
-#include "EffectManager.h"
-#include "MapManager.h"
-#include "LoadCSV.h"
+#include "ImageManager.h"
+#include "GameManager.h"
+
 #include "Game.h"
 
-#include "SwarmEnemy.h"
-#include "EnemyNormal.h"
 
 namespace
 {

@@ -249,6 +249,9 @@ void GameManager::Draw()
 #endif
 }
 
+/// <summary>
+/// オブジェクトを追加する
+/// </summary>
 void GameManager::AddObject(std::shared_ptr<ObjectBase> pAddObject)
 {
 	m_pObjects.emplace_back(pAddObject);
