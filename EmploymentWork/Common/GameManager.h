@@ -48,7 +48,8 @@ private:
 	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//オブジェクトポインタの配列
 	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列
 
-	int m_phaseNum;
+	std::list<int> m_phaseNum;
+	bool m_isCreateEnemy;
 
 	int m_stageModel;	//モデルハンドル(仮)
 };

@@ -12,6 +12,7 @@
 #include "TrapManager.h"
 #include "EffectManager.h"
 #include "LoadCSV.h"
+#include "Input.h"
 
 #include "Game.h"
 
@@ -31,7 +32,8 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-GameManager::GameManager()
+GameManager::GameManager():
+	m_isCreateEnemy(false)
 {
 
 }
@@ -67,7 +69,13 @@ GameManager::~GameManager()
 void GameManager::Init(int stageIdx)
 {
 	auto info = LoadCSV::GetInstance().LoadStageInfo(stageIdx);
-	m_phaseNum = std::stoi(info[3]);
+	for (int i = 1; i < std::stoi(info[3]) + 1;i++)
+	{
+		m_phaseNum.push_back(-i);
+		m_phaseNum.push_back(i);
+	}
+
+	
 
 	//ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ModelManager::GetInstance().GetModelHandle(info[1]);
@@ -99,24 +107,7 @@ void GameManager::Init(int stageIdx)
 	//m_pObjects.back()->Init();
 	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
-	//DEBUG:敵を生成
-	for (int i = 0; i < 1; i++)
-	{
-		auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
 
-		for (int j = 0; j < 1; j++)
-		{
-			auto add = std::make_shared<EnemyNormal>();
-			add->SetPos(Vec3(-48.0f + 16 * i, 8.0f, -48.0f + 16 * j));
-			add->Init();
-
-			addSwarm->AddSwarm(add);
-
-		}
-
-		addSwarm->SetUp();
-		m_pEnemies.emplace_back(addSwarm);
-	}
 
 	TrapManager::GetInstance().SetUp();
 }
@@ -126,6 +117,14 @@ void GameManager::Init(int stageIdx)
 /// </summary>
 void GameManager::Update()
 {
+	if (Input::GetInstance().IsTriggered("Y"))
+	{
+		if (m_phaseNum.size() > 1)
+		{
+			m_phaseNum.pop_front();
+		}
+	}
+
 	//プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
 	m_pPlayer->Update(this);
@@ -134,6 +133,37 @@ void GameManager::Update()
 		//プレイヤーの生成
 		m_pPlayer = std::make_shared<Player>();
 		m_pPlayer->Init();
+	}
+
+	if (m_phaseNum.front() >= 0)
+	{
+		if (!m_isCreateEnemy)
+		{
+			//DEBUG:敵を生成
+			for (int i = 0; i < 1; i++)
+			{
+				auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
+
+				for (int j = 0; j < 1; j++)
+				{
+					auto add = std::make_shared<EnemyNormal>();
+					add->SetPos(Vec3(-48.0f + 16 * i, 8.0f, -48.0f + 16 * j));
+					add->Init();
+
+					addSwarm->AddSwarm(add);
+
+				}
+
+				addSwarm->SetUp();
+				m_pEnemies.emplace_back(addSwarm);
+			}
+		}
+		m_isCreateEnemy = true;
+
+	}
+	else
+	{
+		m_isCreateEnemy = false;
 	}
 
 	//敵の更新
@@ -243,6 +273,8 @@ void GameManager::Draw()
 	auto hei = 2;
 	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xffffff, true);
 	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xffffff, true);
+
+	DrawFormatString(640, 0, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
 #endif
 }
 
