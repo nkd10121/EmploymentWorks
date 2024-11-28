@@ -1,0 +1,2 @@
+﻿ステージIdx,ステージID,通常当たり判定ID,敵当たり判定ID,フェーズ数
+0,test,M_STAGECOLLISION,no,3

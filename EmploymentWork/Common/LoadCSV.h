@@ -90,5 +90,12 @@ public:
 	/// <param name="rot"></param>
 	void GetCrossbowLocationData(int idx, Vec3& pos, Vec3& rot);
 
+	/// <summary>
+	/// トラップのステータス情報を取得
+	/// </summary>
+	/// <param name="trapName">取得したいトラップ名</param>
+	/// <returns></returns>
 	TrapBase::Status LoadTrapStatus(const char* trapName);
+
+	std::vector<std::string> LoadStageInfo(int stageIdx);
 };

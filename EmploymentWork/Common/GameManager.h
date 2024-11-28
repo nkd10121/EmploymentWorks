@@ -24,7 +24,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init();
+	void Init(int stageIdx);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -47,6 +47,8 @@ private:
 	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
 	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//オブジェクトポインタの配列
 	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列
+
+	int m_phaseNum;
 
 	int m_stageModel;	//モデルハンドル(仮)
 };

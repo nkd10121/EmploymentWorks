@@ -84,7 +84,7 @@ void SceneGame::Init()
 {
 	//TODO:ここで実態の生成などをする
 	m_pGameManager = std::make_shared<GameManager>();
-	m_pGameManager->Init();
+	m_pGameManager->Init(0);
 
 	//通常状態に設定しておく
 	m_updateFunc = &SceneGame::UpdateGame;

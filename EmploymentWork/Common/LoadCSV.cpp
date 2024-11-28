@@ -337,3 +337,66 @@ TrapBase::Status LoadCSV::LoadTrapStatus(const char* trapName)
 
 	return ret;
 }
+
+std::vector<std::string> LoadCSV::LoadStageInfo(int stageIdx)
+{
+	std::vector<std::string> ret;
+
+	// 一時保存用string
+	std::string strBuf;
+	// カンマ分け一時保存用string
+	std::vector<std::string> strConmaBuf;
+
+	// ファイル読み込み
+	std::ifstream ifs("data/csv/StageData.csv");
+	if (!ifs)
+	{
+		assert(false);
+		return ret;
+	}
+
+	//情報を取得できたかどうかのフラグ
+	bool isGet = false;
+
+	//最初は対応表情報が入っているだけなので無視する
+	std::getline(ifs, strBuf);
+
+	while (getline(ifs, strBuf))
+	{
+		//もしすでに情報を取得していたら終わる
+		if (isGet)
+		{
+			break;
+		}
+
+		//取得した文字列をカンマ区切りの配列(情報群)にする
+		strConmaBuf = Split(strBuf, ',');
+
+		//[0]:キャラクター名
+		//[1]:攻撃力
+		//[2]:索敵範囲
+		//[3]:攻撃範囲
+		//[4]:クールタイム
+		//[5]:設置コスト
+
+		//指定したキャラクター名と一致するデータがあれば情報を取得する
+		if (std::stoi(strConmaBuf[0]) == stageIdx)
+		{
+			isGet = true;
+			for (int i = 1; i < strConmaBuf.size(); i++)
+			{
+				ret.push_back(strConmaBuf[i]);
+			}
+		}
+	}
+
+#ifdef _DEBUG
+	//情報を取得できなかった時、エラーを吐くようにする
+	if (!isGet)
+	{
+		assert(0 && "指定した情報を取得できませんでした");
+	}
+#endif
+
+	return ret;
+}

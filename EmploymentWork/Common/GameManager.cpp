@@ -11,6 +11,7 @@
 #include "MapManager.h"
 #include "TrapManager.h"
 #include "EffectManager.h"
+#include "LoadCSV.h"
 
 #include "Game.h"
 
@@ -25,9 +26,6 @@ namespace
 		0x0000ff,
 		0xffff00
 	};
-
-	/*トラップセレクト関係*/
-	constexpr int kBoxSize = 40;
 }
 
 /// <summary>
@@ -35,6 +33,7 @@ namespace
 /// </summary>
 GameManager::GameManager()
 {
+
 }
 
 /// <summary>
@@ -65,15 +64,13 @@ GameManager::~GameManager()
 /// <summary>
 /// 初期化
 /// </summary>
-void GameManager::Init()
+void GameManager::Init(int stageIdx)
 {
-	//ステージの当たり判定モデルを取得する(描画するため)
-	m_stageModel = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
-	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
-	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
+	auto info = LoadCSV::GetInstance().LoadStageInfo(stageIdx);
+	m_phaseNum = std::stoi(info[3]);
 
 	//ステージの当たり判定モデルを取得する(描画するため)
-	m_stageModel = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
+	m_stageModel = ModelManager::GetInstance().GetModelHandle(info[1]);
 	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
 	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
 
@@ -95,7 +92,7 @@ void GameManager::Init()
 
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
-	MapManager::GetInstance().Load("test");
+	MapManager::GetInstance().Load(info[0].c_str());
 
 	////DEBUG:ポーションを生成
 	//m_pObjects.emplace_back(std::make_shared<HealPortion>());
