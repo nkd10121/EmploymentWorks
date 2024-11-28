@@ -155,19 +155,42 @@ void Player::Update(SceneGame* pScene)
 	}
 
 
+	//足元座標を計算
+	auto bottomPos = m_pos;
+	bottomPos.y -= kCollisionCapsuleSize + kCollisionCapsuleRadius;
+	if (m_cameraDirection.y < 0.0f)
+	{
+		bottomPos.y += 1.0f;
+	}
+	else if (m_cameraDirection.y > 0.0f)
+	{
+		bottomPos.y -= 1.0f;
+	}
+
+	//足元座標を使ってトラップ設置位置の選択と設置
+	TrapManager::GetInstance().SelectPoint(bottomPos, m_cameraDirection);
+
 	//ZLボタンを押している
 	if (Input::GetInstance().GetIsPushedTriggerButton(true))
 	{
-		//一定間隔で向いている方向に弾を撃つ
-		if (m_attackButtonPushCount % 20 == 0)
+		if (m_slotNum == 0)
 		{
-			std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
-			shot->Init();
-			shot->Set(m_pos, m_cameraDirection, m_status.atk);
+			//一定間隔で向いている方向に弾を撃つ
+			if (m_attackButtonPushCount % 20 == 0)
+			{
+				std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
+				shot->Init();
+				shot->Set(m_pos, m_cameraDirection, m_status.atk);
 
-			//弾の管理をゲームシーンに任せる
-			pScene->AddObject(shot);
+				//弾の管理をゲームシーンに任せる
+				pScene->AddObject(shot);
+			}
 		}
+		else if(m_slotNum == 1 && m_attackButtonPushCount == 0)
+		{
+			TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection, m_slotNum);
+		}
+
 
 		//押しているカウントを更新
 		m_attackButtonPushCount++;
@@ -197,24 +220,6 @@ void Player::Update(SceneGame* pScene)
 	}
 
 
-	//足元座標を計算
-	auto bottomPos = m_pos;
-	bottomPos.y -= kCollisionCapsuleSize + kCollisionCapsuleRadius;
-	if (m_cameraDirection.y < 0.0f)
-	{
-		bottomPos.y += 1.0f;
-	}
-	else if(m_cameraDirection.y > 0.0f)
-	{
-		bottomPos.y -= 1.0f;
-	}
-
-	//足元座標を使ってトラップ設置位置の選択と設置
-	TrapManager::GetInstance().SelectPoint(bottomPos, m_cameraDirection);
-	if (Input::GetInstance().GetIsPushedTriggerButton(true))
-	{
-		TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection, m_slotNum);
-	}
 
 	//DEBUG:自決用
 	if (Input::GetInstance().IsTriggered("X"))
