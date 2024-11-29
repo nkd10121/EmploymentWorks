@@ -111,6 +111,10 @@ void GameManager::Init(int stageIdx)
 	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
 	m_slotBgHandle = ImageManager::GetInstance().GetHandle("I_SLOTBG");
+	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
+	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
+	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
+	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
 
 	TrapManager::GetInstance().SetUp();
 }
@@ -252,14 +256,15 @@ void GameManager::Draw()
 	//装備スロットの描画
 	for (int i = 0; i < 4; i++)
 	{
-		int x = 362 + i * 75;
+		int x = 362 + i * 85;
 		int y = 655;
 		//DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
-		DrawRotaGraph(x,y,0.45f,0.0f,m_slotBgHandle,true);
+		DrawRotaGraph(x,y,0.5f,0.0f,m_slotBgHandle,true);
+		DrawRotaGraph(x,y,0.5f,0.0f, m_slotIconHandle[i], true);
 	}
 
 	//現在選択しているスロット枠の描画
-	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 75 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 75 + 35, 655 + 35, 0xff0000, false);
+	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 85 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 85 + 35, 655 + 35, 0xff0000, false);
 
 
 #ifdef _DEBUG	//デバッグ描画

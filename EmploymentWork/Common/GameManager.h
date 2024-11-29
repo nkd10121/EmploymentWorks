@@ -52,8 +52,8 @@ private:
 	bool m_isCreateEnemy;
 	int m_phaseCount;
 
-
 	int m_slotBgHandle;
+	std::vector<int> m_slotIconHandle;
 
 
 	int m_stageModel;	//モデルハンドル(仮)
