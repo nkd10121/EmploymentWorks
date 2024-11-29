@@ -31,7 +31,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(GameManager* pGameManager);
+	void Update(GameManager* pGameManager, Vec3 cameraRayCastRet);
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -100,6 +100,8 @@ private:
 	Vec3 temp_moveVec;		//入力情報を確認するためのデバッグ用
 	Vec3 m_cameraDirection;	//カメラの方向ベクトル
 	Vec3 m_rot;				//角度
+
+	Vec3 m_crossbowPos;
 
 	float m_collisionSize;
 	float m_collisionRadius;

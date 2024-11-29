@@ -53,6 +53,7 @@ Player::Player() :
 	temp_moveVec(),
 	m_cameraDirection(),
 	m_rot(),
+	m_crossbowPos(),
 	m_cameraAngle(0.0f),
 	m_angle(0.0f),
 	m_attackButtonPushCount(0),
@@ -133,7 +134,7 @@ void Player::Finalize()
 /// <summary>
 /// 更新
 /// </summary>
-void Player::Update(GameManager* pGameManager)
+void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 {
 	//ステートの更新
 	m_pState->Update();
@@ -180,7 +181,7 @@ void Player::Update(GameManager* pGameManager)
 			{
 				std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
 				shot->Init();
-				shot->Set(m_pos, m_cameraDirection, m_status.atk);
+				shot->Set(m_crossbowPos, (cameraRayCastRet - m_crossbowPos).Normalize(), m_status.atk);
 
 				//弾の管理をゲームシーンに任せる
 				pGameManager->AddObject(shot);
@@ -275,10 +276,10 @@ void Player::Draw()
 	//クロスボウモデルの描画
 	MV1DrawModel(m_crossbowHandle);
 
-#ifdef _DEBUG	//デバッグ描画	//デバッグ描画
+#ifdef _DEBUG	//デバッグ描画
 	//向いてる方向の線
 	auto target = m_pos + m_cameraDirection * 1000.0f;
-	DrawLine3D(m_pos.ToVECTOR(), target.ToVECTOR(), 0x00ff00);
+	DrawLine3D(m_crossbowPos.ToVECTOR(), target.ToVECTOR(), 0x00ff00);
 
 	//入力値の確認
 	DrawFormatString(0, 16, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
@@ -327,6 +328,7 @@ void Player::UpdateModelPos()
 	auto posM = MGetTranslate(nowLocalPos.ToVECTOR());
 	//アタッチフレームの座標にローカル座標を足してクロスボウのワールド座標を計算
 	posM = MMult(posM, weaponFrameMat);
+	m_crossbowPos = Vec3(posM.m[3][0], posM.m[3][1], posM.m[3][2]);
 
 	//回転行列を計算
 	auto rotM = MMult(MMult(xMat, yMat), zMat);

@@ -135,15 +135,10 @@ void GameManager::Update()
 		m_phaseNum.pop_front();
 	}
 
-	//プレイヤーの更新
-	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
-	m_pPlayer->Update(this);
-	if (m_pPlayer->GetIsDeath())
-	{
-		//プレイヤーの生成
-		m_pPlayer = std::make_shared<Player>();
-		m_pPlayer->Init();
-	}
+	//カメラの更新
+	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
+	m_pCamera->Update();
+	auto hitPos = m_pCamera->GetMapHitPosition();
 
 	//現在のフェーズが0以上(戦闘フェーズ)の時、敵を生成していなかったら敵を生成する
 	if (m_phaseNum.front() >= 0)
@@ -164,7 +159,27 @@ void GameManager::Update()
 	}
 
 	//敵の更新処理
-	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front());
+	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front(),m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
+	Vec3 rayCastRet;
+	if ((m_pEnemyManager->GetRayCastRetPos() - m_pCamera->GetCameraPos()).Length() < (m_pCamera->GetMapHitPosition() - m_pCamera->GetCameraPos()).Length())
+	{
+		rayCastRet = m_pCamera->GetMapHitPosition();
+	}
+	else
+	{
+		rayCastRet = m_pEnemyManager->GetRayCastRetPos();
+	}
+
+	//プレイヤーの更新
+	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
+	m_pPlayer->Update(this, m_pEnemyManager->GetRayCastRetPos());
+	if (m_pPlayer->GetIsDeath())
+	{
+		//プレイヤーの生成
+		m_pPlayer = std::make_shared<Player>();
+		m_pPlayer->Init();
+	}
+
 	//敵が全滅した時、次のフェーズに進む
 	if (isNextPhase)
 	{
@@ -219,9 +234,7 @@ void GameManager::Update()
 
 	m_pEnemyManager->UpdateModelPos();
 
-	//カメラの更新
-	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
-	m_pCamera->Update();
+
 
 	//エフェクトの更新
 	EffectManager::GetInstance().Update();
@@ -273,6 +286,7 @@ void GameManager::Draw()
 	//現在選択しているスロット枠の描画
 	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 85 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 85 + 35, 655 + 35, 0xff0000, false);
 
+	//右上のUI描画
 	DrawRotaGraph(1180, 150, 0.9f, 0.0f, m_slotIconHandle[3], true);
 	DrawRotaGraph(1180, 45, 0.75f, 0.0f, m_slotIconHandle[2], true);
 	DrawRotaGraph(1180, 40, 0.65f, 0.0f, m_slotIconHandle[1], true);
@@ -283,8 +297,8 @@ void GameManager::Draw()
 	auto centerY = Game::kWindowHeight / 2;
 	auto wid = 14;
 	auto hei = 2;
-	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xffffff, true);
-	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xffffff, true);
+	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xaaaaaa, true);
+	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xaaaaaa, true);
 
 	DrawFormatString(640, 0, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
 	DrawFormatString(640, 16, 0xffffff, "次のフェーズまで:%d", m_phaseCount);

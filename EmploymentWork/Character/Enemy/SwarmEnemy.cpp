@@ -244,3 +244,15 @@ void SwarmEnemy::OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std
 		}
 	}
 }
+
+const std::list<int> SwarmEnemy::GetModelHandles() const
+{
+	std::list<int> ret;
+
+	for (auto& enemy : m_swarm)
+	{
+		ret.push_back(enemy->GetModelHandle());
+	}
+
+	return ret;
+}

@@ -232,3 +232,15 @@ const Vec3 Camera::GetDirection() const
 {
 	return (m_aimPos - m_cameraPos).Normalize();
 }
+
+const Vec3 Camera::GetMapHitPosition() const
+{
+	auto line = (m_aimPos - m_cameraPos).Normalize() * 10000.0f;
+	auto ret = MV1CollCheck_Line(m_stageHandle, -1, m_cameraPos.ToVECTOR(), line.ToVECTOR());
+	if (ret.HitFlag)
+	{
+		//DrawSphere3D(ret.HitPosition, 8, 8, 0xffffff, 0xffffff, true);
+		return ret.HitPosition;
+	}
+	return line;
+}

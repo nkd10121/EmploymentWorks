@@ -33,11 +33,15 @@ public:
 	/// <returns>カメラが向いている方向ベクトル</returns>
 	const Vec3 GetDirection()const;
 
+	const Vec3 GetCameraPos()const { return m_cameraPos; }
+
 	/// <summary>
 	/// プレイヤーの座標を設定する
 	/// </summary>
 	/// <param name="playerPos">プレイヤーの座標</param>
 	void SetPlayerPos(Vec3 playerPos) { m_playerPos = playerPos; }
+
+	const Vec3 GetMapHitPosition()const;
 
 private:
 	float m_cameraAngleX;		//水平角度

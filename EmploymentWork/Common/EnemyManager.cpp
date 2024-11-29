@@ -42,12 +42,31 @@ void EnemyManager::Init(std::string stageName)
 	}
 }
 
-bool EnemyManager::Update(int phase)
+bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 {
+	auto endPos = cameraPos + angle * 100000.0f;
+	Vec3 returnPos;
+	float length = 10000.0f;
+
 	//敵の更新
 	for (auto& enemy : m_pEnemies)
 	{
 		enemy->Update();
+		auto handleList = enemy->GetModelHandles();
+		for (auto& h : handleList)
+		{
+			auto ret =  MV1CollCheck_Line(h, -1, cameraPos.ToVECTOR(), endPos.ToVECTOR());
+			//カメラから向いている方向のレイと当たっていたら
+			if (ret.HitFlag)
+			{
+				//結果の長さと長さを比較して短かったら座標を保存する
+				if (length > (Vec3(ret.HitPosition) - cameraPos).Length())
+				{
+					length = (Vec3(ret.HitPosition) - cameraPos).Length();
+					returnPos = Vec3(ret.HitPosition);
+				}
+			}
+		}
 	}
 	//isExistがfalseのオブジェクトを削除
 	{
@@ -57,6 +76,8 @@ bool EnemyManager::Update(int phase)
 			});
 		m_pEnemies.erase(it, m_pEnemies.end());
 	}
+
+	m_rayCastRetPos = returnPos;
 
 	//もし群れの数が0になった(敵が全滅した)ら、次のフェーズに行く
 	if (m_pEnemies.size() == 0)

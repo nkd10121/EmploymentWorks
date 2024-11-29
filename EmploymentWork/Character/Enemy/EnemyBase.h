@@ -123,6 +123,13 @@ public:
 	/// </summary>
 	const void DeleteAttackCollision();
 
+	/// <summary>
+	/// モデルハンドルを取得
+	/// カメラとのレイキャストをするため
+	/// </summary>
+	/// <returns></returns>
+	const int GetModelHandle()const { return m_modelHandle; }
+
 protected:
 	/// <summary>
 	/// 指定した当たり判定タグが存在するかチェック

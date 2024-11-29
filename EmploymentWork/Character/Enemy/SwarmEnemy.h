@@ -67,7 +67,7 @@ public:
 	/// </summary>
 	void OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
-
+	const std::list<int> GetModelHandles()const;
 private:
 	std::list<std::shared_ptr<EnemyBase>> m_swarm;	//群れの構成員
 	bool m_isExistMember;		//メンバーが存在するかどうか
