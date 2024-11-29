@@ -60,6 +60,10 @@ GameManager::~GameManager()
 	MyLib::Physics::GetInstance().Clear();
 
 	DeleteGraph(m_slotBgHandle);
+	for (auto& h : m_slotIconHandle)
+	{
+		DeleteGraph(h);
+	}
 }
 
 /// <summary>
