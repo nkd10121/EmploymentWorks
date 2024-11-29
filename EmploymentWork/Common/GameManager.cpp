@@ -255,7 +255,7 @@ void GameManager::Draw()
 		int x = 362 + i * 75;
 		int y = 655;
 		//DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
-		DrawRotaGraph(x,y,0.45f,0.0f,m_slotBgHandle,false);
+		DrawRotaGraph(x,y,0.45f,0.0f,m_slotBgHandle,true);
 	}
 
 	//現在選択しているスロット枠の描画
