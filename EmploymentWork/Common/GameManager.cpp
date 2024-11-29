@@ -112,9 +112,6 @@ void GameManager::Init(int stageIdx)
 
 	m_slotBgHandle = ImageManager::GetInstance().GetHandle("I_SLOTBG");
 	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
-	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
-	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
-	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
 
 	TrapManager::GetInstance().SetUp();
 }
@@ -260,7 +257,10 @@ void GameManager::Draw()
 		int y = 655;
 		//DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
 		DrawRotaGraph(x,y,0.5f,0.0f,m_slotBgHandle,true);
-		DrawRotaGraph(x,y,0.5f,0.0f, m_slotIconHandle[i], true);
+		if (i == 0)
+		{
+			DrawRotaGraph(x,y,0.5f,0.0f, m_slotIconHandle[i], true);
+		}
 	}
 
 	//現在選択しているスロット枠の描画
