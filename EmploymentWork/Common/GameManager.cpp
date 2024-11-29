@@ -116,6 +116,9 @@ void GameManager::Init(int stageIdx)
 
 	m_slotBgHandle = ImageManager::GetInstance().GetHandle("I_SLOTBG");
 	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
+	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_CRYSTALBG"));
+	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_IRONUI"));
+	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_MINIMAPBG"));
 
 	TrapManager::GetInstance().SetUp();
 }
@@ -270,6 +273,9 @@ void GameManager::Draw()
 	//現在選択しているスロット枠の描画
 	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 85 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 85 + 35, 655 + 35, 0xff0000, false);
 
+	DrawRotaGraph(1180, 150, 0.9f, 0.0f, m_slotIconHandle[3], true);
+	DrawRotaGraph(1180, 45, 0.75f, 0.0f, m_slotIconHandle[2], true);
+	DrawRotaGraph(1180, 40, 0.65f, 0.0f, m_slotIconHandle[1], true);
 
 #ifdef _DEBUG	//デバッグ描画
 	//クロスヘアの描画
