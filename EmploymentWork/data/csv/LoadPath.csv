@@ -18,7 +18,7 @@ SCENE_GAME,E_ENEMYHIT,data/effect/enemy_hit,.efk,0,
 SCENE_GAME,E_ENEMYCRITICALHIT,data/effect/enemy_CriticalHit,.efk,0,
 SCENE_GAME,S_ENEMYHIT,data/sound/se/enemyHit,.mp3,0,0
 SCENE_GAME,I_HPGAUGE,data/img/hp/hp_gauge,.png,0,
-SCENE_GAME,I_HPBG,data/img/hp/hp_bg,.png,0,
+SCENE_GAME,I_HPFRAME,data/img/hp/hp_frame,.png,0,
 SCENE_GAME,I_HPGAUGEDECREASE,data/img/hp/hp_gauge_decrease,.png,0,
 SCENE_GAME,I_HPGAUGEBG,data/img/hp/hp_gaugeBg,.png,0,
 SCENE_GAME,I_SLOTBG,data/img/slotBg,.png,0,

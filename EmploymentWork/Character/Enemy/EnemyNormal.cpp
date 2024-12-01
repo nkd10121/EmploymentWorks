@@ -69,6 +69,9 @@ void EnemyNormal::Init()
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 	MV1SetPosition(m_modelHandle, m_drawPos.ToVECTOR());
 
+	// モデル全体のコリジョン情報を構築
+	MV1SetupCollInfo(m_modelHandle, -1, 8, 8, 8);
+
 	//待機アニメーションを設定
 	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "IDLE"));
 	m_preAnimIdx = 0;
@@ -121,6 +124,7 @@ void EnemyNormal::Finalize()
 {
 	//当たり判定の削除
 	Collidable::OnExistPhysics();
+	MV1TerminateCollInfo(m_modelHandle, -1);
 }
 
 /// <summary>
@@ -130,6 +134,8 @@ void EnemyNormal::Update()
 {
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
+
+	MV1RefreshCollInfo(m_modelHandle, -1);
 
 	//ステートの更新
 	m_pState->Update();

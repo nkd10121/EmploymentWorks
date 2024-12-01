@@ -161,18 +161,27 @@ void GameManager::Update()
 	//敵の更新処理
 	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front(),m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
 	Vec3 rayCastRet;
-	if ((m_pEnemyManager->GetRayCastRetPos() - m_pCamera->GetCameraPos()).Length() < (m_pCamera->GetMapHitPosition() - m_pCamera->GetCameraPos()).Length())
+	auto cameraToEnemy = (m_pEnemyManager->GetRayCastRetPos() - m_pCamera->GetCameraPos()).Length();
+	auto cameraToMap = (m_pCamera->GetMapHitPosition() - m_pCamera->GetCameraPos()).Length();
+	if (cameraToEnemy > cameraToMap)
 	{
 		rayCastRet = m_pCamera->GetMapHitPosition();
 	}
 	else
 	{
-		rayCastRet = m_pEnemyManager->GetRayCastRetPos();
+		if (m_pEnemyManager->GetRayCastRetPos().Length() != 0.0f)
+		{
+			rayCastRet = m_pEnemyManager->GetRayCastRetPos();
+		}
+		else
+		{
+			rayCastRet = m_pCamera->GetMapHitPosition();
+		}
 	}
 
 	//プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
-	m_pPlayer->Update(this, m_pEnemyManager->GetRayCastRetPos());
+	m_pPlayer->Update(this, rayCastRet);
 	if (m_pPlayer->GetIsDeath())
 	{
 		//プレイヤーの生成
