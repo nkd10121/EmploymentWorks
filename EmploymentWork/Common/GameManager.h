@@ -8,6 +8,7 @@ class Camera;		//カメラ
 class ObjectBase;	//回復ポーション
 class Crystal;		//クリスタル
 class EnemyManager;		//敵
+class HPBar;		//HPバー
 
 class GameManager
 {
@@ -48,13 +49,14 @@ private:
 	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//オブジェクトポインタの配列
 	std::shared_ptr<EnemyManager> m_pEnemyManager;
 
+	std::shared_ptr<HPBar> m_pHpUi;
+
 	std::list<int> m_phaseNum;
 	bool m_isCreateEnemy;
 	int m_phaseCount;
 
 	int m_slotBgHandle;
 	std::vector<int> m_slotIconHandle;
-
 
 	int m_stageModel;	//モデルハンドル(仮)
 };

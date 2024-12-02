@@ -6,25 +6,35 @@ namespace
 {
 	const std::string kId[] =
 	{
-		"I_HPBG",
-		"I_HPGAUGEBG"
+		"I_HPGAUGEBG",
 		"I_HPGAUGEDECREASE",
 		"I_HPGAUGE",
+		"I_HPFRAME",
 	};
 
-	constexpr float kHpBarScale = 0.225f;
+	constexpr float kHpBarScale = 0.55f;
+
+	constexpr int kDrawPosX = 210;
+	constexpr int kDrawPosY = 40;
 
 }
 
 HPBar::HPBar():
 	m_maxHP(0),
+	m_drawRedGaugePos(),
+	m_drawYellowGaugePos(Vec2(kDrawPosX, kDrawPosY)),
 	m_drawPos(),
+	m_offset(),
 	m_hpBarWidth(0),
 	m_hpBarHeight(0),
 	m_gaugeWidth(0),
+	m_gaugeYellowWidth(0),
 	m_handles()
 {
-
+	for (auto& id : kId)
+	{
+		m_handles.push_back(ImageManager::GetInstance().GetHandle(id));
+	}
 }
 
 HPBar::~HPBar()
@@ -38,15 +48,18 @@ HPBar::~HPBar()
 
 void HPBar::Init(int max)
 {
+	//最大HPを保存しておく(ゲージの割合を計算するために必要)
 	m_maxHP = max;
 
-	for (auto& id : kId)
-	{
-		m_handles.push_back(ImageManager::GetInstance().GetHandle(id));
-	}
+	//描画座標を初期化する
+	m_drawPos = Vec2(kDrawPosX, kDrawPosY);
+	m_drawRedGaugePos = Vec2(kDrawPosX, kDrawPosY);
+	m_drawYellowGaugePos = Vec2(kDrawPosX, kDrawPosY);
 
 	//HPバーの画像サイズを取得する
-	GetGraphSize(m_handles[3], &m_hpBarWidth, &m_hpBarHeight);
+	GetGraphSize(m_handles[2], &m_hpBarWidth, &m_hpBarHeight);
+	m_gaugeWidth = m_hpBarWidth;
+	m_gaugeYellowWidth = m_hpBarWidth;
 }
 
 void HPBar::Update(int hp)
@@ -55,18 +68,48 @@ void HPBar::Update(int hp)
 	//プレイヤーのHP÷プレイヤーの最大HPで現在のHPの割合を出す
 	float widthScale = static_cast<float>(hp) / static_cast<float>(m_maxHP);
 	//HPの割合分の画像のX幅を出す
-	m_gaugeWidth = static_cast<int>(m_hpBarWidth * widthScale);
+	auto width = static_cast<int>(m_hpBarWidth * widthScale);
+	if (m_gaugeWidth != width)
+	{
+		//ゲージの幅が小さくなっていたらゲージを揺らすようにする
+		if (m_gaugeWidth > width)
+		{
+			m_vibrationCount = 16;
+		}
+		m_gaugeWidth = width;
+	}
+
 	//何もしないと画像が中心によっていくため画像の中心座標をHPに応じてずらす
-	m_drawPos.x = 240.0f - static_cast<float>((m_hpBarWidth - m_gaugeWidth) * kHpBarScale / 2);
-	m_drawPos.y = 30.0f;
+	m_drawRedGaugePos.x = kDrawPosX - static_cast<float>((m_hpBarWidth - m_gaugeWidth) * kHpBarScale / 2);
+	m_drawRedGaugePos.y = 40.0f;
+
+	//振動カウントが0以上なら揺らす
+	if (m_vibrationCount > 0)
+	{
+		m_offset.x = GetRand(m_vibrationCount) - m_vibrationCount / 2;
+		m_offset.y = GetRand(m_vibrationCount) - m_vibrationCount / 2;
+
+		m_vibrationCount--;
+	}
+	else
+	{
+		m_offset = Vec2(0.0f, 0.0f);
+		m_vibrationCount = 0;
+
+		if (m_gaugeWidth < m_gaugeYellowWidth)
+		{
+			m_gaugeYellowWidth -= 4.0f;
+			m_drawYellowGaugePos.x = kDrawPosX - static_cast<float>((m_hpBarWidth - m_gaugeYellowWidth) * kHpBarScale / 2);
+		}
+	}
 
 }
 
 void HPBar::Draw()
 {
 	//Hpバーの描画
-	DrawRotaGraph(220, 30, kHpBarScale, 0.0f, m_handles[0], true);
-	DrawRotaGraph(236, 30, kHpBarScale, 0.0f, m_handles[2], true);
-	DrawRectRotaGraph(static_cast<int>(m_drawPos.x), static_cast<int>(m_drawPos.y), 0, 0, m_gaugeWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[1], true);
-	DrawRotaGraph(236, 25, kHpBarScale, 0.0f, m_handles[3], true);
+	DrawRotaGraph(m_drawPos.x + m_offset.x, m_drawPos.y + m_offset.y, kHpBarScale, 0.0f, m_handles[0], true);
+	DrawRectRotaGraph(m_drawYellowGaugePos.x + m_offset.x, m_drawYellowGaugePos.y + m_offset.y, 0, 0, m_gaugeYellowWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[1], true);
+	DrawRectRotaGraph(m_drawRedGaugePos.x + m_offset.x, m_drawRedGaugePos.y + m_offset.y, 0, 0, m_gaugeWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[2], true);
+	DrawRotaGraph(m_drawPos.x + m_offset.x, m_drawPos.y + m_offset.y, kHpBarScale, 0.0f, m_handles[3], true);
 }

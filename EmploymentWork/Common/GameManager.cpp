@@ -5,6 +5,7 @@
 #include "Crystal.h"
 #include "HealPortion.h"
 #include "EnemyManager.h"
+#include "HPBar.h"
 
 #include "ModelManager.h"
 #include "MapManager.h"
@@ -120,6 +121,9 @@ void GameManager::Init(int stageIdx)
 	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_IRONUI"));
 	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_MINIMAPBG"));
 
+	m_pHpUi = std::make_shared<HPBar>();
+	m_pHpUi->Init(m_pPlayer->GetHp());
+
 	TrapManager::GetInstance().SetUp();
 }
 
@@ -192,8 +196,6 @@ void GameManager::Update()
 		}
 	}
 
-	DrawSphere3D(rayCastRet.ToVECTOR(), 4, 8, 0xff0000, 0xff0000, true);
-
 	//プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
 	m_pPlayer->Update(this, rayCastRet);
@@ -202,6 +204,7 @@ void GameManager::Update()
 		//プレイヤーの生成
 		m_pPlayer = std::make_shared<Player>();
 		m_pPlayer->Init();
+		m_pHpUi->Init(m_pPlayer->GetHp());
 	}
 
 	//敵が全滅した時、次のフェーズに進む
@@ -258,7 +261,7 @@ void GameManager::Update()
 
 	m_pEnemyManager->UpdateModelPos();
 
-
+	m_pHpUi->Update(m_pPlayer->GetHp());
 
 	//エフェクトの更新
 	EffectManager::GetInstance().Update();
@@ -314,6 +317,8 @@ void GameManager::Draw()
 	DrawRotaGraph(1180, 150, 0.9f, 0.0f, m_slotIconHandle[3], true);
 	DrawRotaGraph(1180, 45, 0.75f, 0.0f, m_slotIconHandle[2], true);
 	DrawRotaGraph(1180, 40, 0.65f, 0.0f, m_slotIconHandle[1], true);
+
+	m_pHpUi->Draw();
 
 #ifdef _DEBUG	//デバッグ描画
 	//クロスヘアの描画
