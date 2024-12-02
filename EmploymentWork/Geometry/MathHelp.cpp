@@ -45,7 +45,7 @@ Vec3 ClosestPointOnLineSegment(const Vec3& lineStart, const Vec3& lineEnd, const
 {
 	Vec3 startToEnd = lineEnd - lineStart;
 	float t = Dot(point - lineStart, startToEnd) / startToEnd.SqLength();
-	t = min(max(t, 0.0f),1,0f); // 線分上に制限
+	t = min(max(t, 0.0f),1.0f); // 線分上に制限
 	return lineStart + startToEnd * t;
 }
 

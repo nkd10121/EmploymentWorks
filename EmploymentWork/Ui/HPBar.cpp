@@ -14,8 +14,16 @@ namespace
 
 	constexpr float kHpBarScale = 0.55f;
 
+	//描画基準座標
 	constexpr int kDrawPosX = 210;
 	constexpr int kDrawPosY = 40;
+
+	//黄色ゲージが1フレームあたりに短くなるスピード
+	constexpr int kYellowGaugeDecreaseSpeed = 6;
+
+	//揺らすフレーム数
+	//大きくすればするほど揺れる時間と揺れ幅が大きくなる
+	constexpr int kVibrationFrame = 16;
 
 }
 
@@ -29,8 +37,10 @@ HPBar::HPBar():
 	m_hpBarHeight(0),
 	m_gaugeWidth(0),
 	m_gaugeYellowWidth(0),
+	m_vibrationCount(0),
 	m_handles()
 {
+	//画像ハンドルを取得
 	for (auto& id : kId)
 	{
 		m_handles.push_back(ImageManager::GetInstance().GetHandle(id));
@@ -39,6 +49,7 @@ HPBar::HPBar():
 
 HPBar::~HPBar()
 {
+	//画像を削除
 	for (auto& handle : m_handles)
 	{
 		DeleteGraph(handle);
@@ -74,7 +85,7 @@ void HPBar::Update(int hp)
 		//ゲージの幅が小さくなっていたらゲージを揺らすようにする
 		if (m_gaugeWidth > width)
 		{
-			m_vibrationCount = 16;
+			m_vibrationCount = kVibrationFrame;
 		}
 		m_gaugeWidth = width;
 	}
@@ -86,19 +97,24 @@ void HPBar::Update(int hp)
 	//振動カウントが0以上なら揺らす
 	if (m_vibrationCount > 0)
 	{
-		m_offset.x = GetRand(m_vibrationCount) - m_vibrationCount / 2;
-		m_offset.y = GetRand(m_vibrationCount) - m_vibrationCount / 2;
-
+		//揺らすランダム値を取得(時間経過で揺れ幅が小さくなるように)
+		m_offset.x = static_cast<float>(GetRand(m_vibrationCount) - m_vibrationCount / 2);
+		m_offset.y = static_cast<float>(GetRand(m_vibrationCount) - m_vibrationCount / 2);
+	
+		//揺らすフレーム数を減らす
 		m_vibrationCount--;
 	}
+	//0以下(揺らさない)のとき
 	else
 	{
+		//初期化
 		m_offset = Vec2(0.0f, 0.0f);
 		m_vibrationCount = 0;
 
+		//揺れが終わったら黄色ゲージを減らす
 		if (m_gaugeWidth < m_gaugeYellowWidth)
 		{
-			m_gaugeYellowWidth -= 4.0f;
+			m_gaugeYellowWidth -= kYellowGaugeDecreaseSpeed;
 			m_drawYellowGaugePos.x = kDrawPosX - static_cast<float>((m_hpBarWidth - m_gaugeYellowWidth) * kHpBarScale / 2);
 		}
 	}
@@ -108,8 +124,8 @@ void HPBar::Update(int hp)
 void HPBar::Draw()
 {
 	//Hpバーの描画
-	DrawRotaGraph(m_drawPos.x + m_offset.x, m_drawPos.y + m_offset.y, kHpBarScale, 0.0f, m_handles[0], true);
-	DrawRectRotaGraph(m_drawYellowGaugePos.x + m_offset.x, m_drawYellowGaugePos.y + m_offset.y, 0, 0, m_gaugeYellowWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[1], true);
-	DrawRectRotaGraph(m_drawRedGaugePos.x + m_offset.x, m_drawRedGaugePos.y + m_offset.y, 0, 0, m_gaugeWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[2], true);
-	DrawRotaGraph(m_drawPos.x + m_offset.x, m_drawPos.y + m_offset.y, kHpBarScale, 0.0f, m_handles[3], true);
+	DrawRotaGraph(static_cast<int>(m_drawPos.x + m_offset.x), static_cast<int>(m_drawPos.y + m_offset.y), kHpBarScale, 0.0f, m_handles[0], true);
+	DrawRectRotaGraph(static_cast<int>(m_drawYellowGaugePos.x + m_offset.x), static_cast<int>(m_drawYellowGaugePos.y + m_offset.y), 0, 0, m_gaugeYellowWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[1], true);
+	DrawRectRotaGraph(static_cast<int>(m_drawRedGaugePos.x + m_offset.x), static_cast<int>(m_drawRedGaugePos.y + m_offset.y), 0, 0, m_gaugeWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[2], true);
+	DrawRotaGraph(static_cast<int>(m_drawPos.x + m_offset.x), static_cast<int>(m_drawPos.y + m_offset.y), kHpBarScale, 0.0f, m_handles[3], true);
 }
