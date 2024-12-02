@@ -192,6 +192,8 @@ void GameManager::Update()
 		}
 	}
 
+	DrawSphere3D(rayCastRet.ToVECTOR(), 4, 8, 0xff0000, 0xff0000, true);
+
 	//プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
 	m_pPlayer->Update(this, rayCastRet);

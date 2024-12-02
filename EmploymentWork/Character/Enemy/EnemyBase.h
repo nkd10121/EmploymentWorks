@@ -69,6 +69,17 @@ public:
 	virtual void UpdateModelPos() {};
 
 	/// <summary>
+	/// 当たり判定のサイズを取得
+	/// </summary>
+	/// <returns></returns>
+	const float GetCollisionSize()const { return m_collisionSize; }
+	/// <summary>
+	/// 当たり判定の半径を取得
+	/// </summary>
+	/// <returns></returns>
+	const float GetCollisionRadius()const { return m_collisionRadius; }
+
+	/// <summary>
 	/// 存在フラグを取得
 	/// </summary>
 	/// <returns>存在フラグ</returns>
@@ -142,6 +153,9 @@ protected:
 	EnemyKind kind;		//種類
 	bool m_isExist;		//存在フラグ
 	bool m_isStartDeathAnimation;	//死亡アニメーションを開始するか
+
+	float m_collisionRadius;	//当たり判定の半径
+	float m_collisionSize;		//当たり判定のサイズ
 
 	Vec3 m_drawPos;		//描画座標
 

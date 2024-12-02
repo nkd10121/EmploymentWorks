@@ -51,19 +51,19 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 	//敵の更新
 	for (auto& enemy : m_pEnemies)
 	{
-		enemy->Update();
-		auto handleList = enemy->GetModelHandles();
-		for (auto& h : handleList)
+		enemy->Update(cameraPos,endPos);
+
+		if (enemy->GetIsCameraRayHit())
 		{
-			auto ret =  MV1CollCheck_Line(h, -1, cameraPos.ToVECTOR(), endPos.ToVECTOR());
-			//カメラから向いている方向のレイと当たっていたら
-			if (ret.HitFlag)
+			if (returnPos.Length() == 0.0f)
 			{
-				//結果の長さと長さを比較して短かったら座標を保存する
-				if (length > (Vec3(ret.HitPosition) - cameraPos).Length())
+				returnPos = enemy->GetCameraRayHitPos();
+			}
+			else
+			{
+				if (returnPos.Length() > enemy->GetCameraRayHitPos().Length())
 				{
-					length = (Vec3(ret.HitPosition) - cameraPos).Length();
-					returnPos = Vec3(ret.HitPosition);
+					returnPos = enemy->GetCameraRayHitPos();
 				}
 			}
 		}

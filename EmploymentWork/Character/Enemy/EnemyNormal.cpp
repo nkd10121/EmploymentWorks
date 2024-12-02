@@ -53,6 +53,9 @@ void EnemyNormal::Init()
 	//当たり判定の初期化
 	OnEntryPhysics();
 
+	m_collisionRadius = kCollisionCapsuleRadius;
+	m_collisionSize = kCollisionCapsuleSize;
+
 	//ステートパターンの初期化
 	m_pState = std::make_shared<EnemyStateIdle>(std::dynamic_pointer_cast<EnemyNormal>(shared_from_this()));
 	m_pState->SetNextKind(StateBase::StateKind::Idle);
@@ -68,9 +71,6 @@ void EnemyNormal::Init()
 	//モデルのサイズを変更
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 	MV1SetPosition(m_modelHandle, m_drawPos.ToVECTOR());
-
-	// モデル全体のコリジョン情報を構築
-	MV1SetupCollInfo(m_modelHandle, -1, 8, 8, 8);
 
 	//待機アニメーションを設定
 	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "IDLE"));
@@ -124,7 +124,6 @@ void EnemyNormal::Finalize()
 {
 	//当たり判定の削除
 	Collidable::OnExistPhysics();
-	MV1TerminateCollInfo(m_modelHandle, -1);
 }
 
 /// <summary>
@@ -134,8 +133,6 @@ void EnemyNormal::Update()
 {
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
-
-	MV1RefreshCollInfo(m_modelHandle, -1);
 
 	//ステートの更新
 	m_pState->Update();

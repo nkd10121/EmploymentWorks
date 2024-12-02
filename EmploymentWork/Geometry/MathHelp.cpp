@@ -41,6 +41,14 @@ void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& cent
 	resultBPos = sizeB * t + centerB;
 }
 
+Vec3 ClosestPointOnLineSegment(const Vec3& lineStart, const Vec3& lineEnd, const Vec3& point)
+{
+	Vec3 startToEnd = lineEnd - lineStart;
+	float t = Dot(point - lineStart, startToEnd) / startToEnd.SqLength();
+	t = min(max(t, 0.0f),1,0f); // 線分上に制限
+	return lineStart + startToEnd * t;
+}
+
 std::list<std::shared_ptr<TrapManager::Trap>> CheckHitBoundingBoxAndPoints(const Vec3& start, const Vec3& end, const std::list<std::shared_ptr<TrapManager::Trap>> trap)
 {
 	//最終的に返す変数

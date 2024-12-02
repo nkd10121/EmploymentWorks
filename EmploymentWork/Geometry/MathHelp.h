@@ -22,4 +22,6 @@ Vec3 GetNearestPtOnLine(const Vec3& start, const Vec3& end, const Vec3& point);
 /// <param name="resultBPos">線分B上の線分Aとの最近接点座標</param>
 void GetNearestPtOnLine(const Vec3& centerA, const Vec3& sizeA, const Vec3& centerB, const Vec3& sizeB,Vec3& resultAPos,Vec3& resultBPos);
 
+Vec3 ClosestPointOnLineSegment(const Vec3& lineStart, const Vec3& lineEnd, const Vec3& point);
+
 std::list<std::shared_ptr<TrapManager::Trap>> CheckHitBoundingBoxAndPoints(const Vec3& start, const Vec3& end, const std::list<std::shared_ptr<TrapManager::Trap>> trap);

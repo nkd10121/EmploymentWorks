@@ -1,5 +1,7 @@
 ﻿#include "SwarmEnemy.h"
 
+#include "MathHelp.h"
+
 namespace
 {
 	//索敵半径の差分倍率
@@ -55,14 +57,42 @@ void SwarmEnemy::Finalize()
 /// <summary>
 /// 更新
 /// </summary>
-void SwarmEnemy::Update()
+void SwarmEnemy::Update(Vec3 start,Vec3 end)
 {
+	m_isCameraRayHit = false;
+
 	std::list<Vec3> pos;
 	//構成メンバーの更新
 	for (auto& enemy : m_swarm)
 	{
 		enemy->Update();
-		pos.emplace_back(enemy->GetRigidbody()->GetPos());
+		auto p = enemy->GetRigidbody()->GetPos();
+		pos.emplace_back(p);
+
+		auto size = enemy->GetCollisionSize();
+		auto radius = enemy->GetCollisionRadius();
+
+		Vec3 closestOnLine = ClosestPointOnLineSegment(start, end, p);
+
+		// 距離の二乗を計算
+		float distanceSquared = (p - closestOnLine).Length();
+		//もし当たっていたら
+		if (distanceSquared <= radius+size)
+		{
+			if (m_isCameraRayHit)
+			{
+				if (m_cameraRayHitPos.SqLength() > closestOnLine.SqLength())
+				{
+					m_cameraRayHitPos = closestOnLine;
+				}
+			}
+			else
+			{
+				m_cameraRayHitPos = closestOnLine;
+			}
+
+			m_isCameraRayHit = true;
+		}
 	}
 
 	//isExistがfalseのオブジェクトを削除
@@ -128,6 +158,13 @@ void SwarmEnemy::Draw()
 		DrawSphere3D(m_swarmCenterPos.ToVECTOR(), 4, 12, m_memberColor, m_memberColor, true);
 #endif
 	}
+
+#ifdef _DEBUG
+	if (m_isCameraRayHit)
+	{
+		//DrawSphere3D(m_cameraRayHitPos.ToVECTOR(), 4, 8, 0xffff00, 0xffff00, true);
+	}
+#endif
 }
 
 /// <summary>

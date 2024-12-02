@@ -26,7 +26,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(Vec3 start, Vec3 end);
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -59,6 +59,17 @@ public:
 	/// <returns>構成メンバーが存在するかどうか</returns>
 	const bool GetIsExistMember()const { return m_isExistMember; }
 	/// <summary>
+	/// カメラからのレイと敵が当たっているかどうか
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsCameraRayHit()const { return m_isCameraRayHit; }
+	/// <summary>
+	/// カメラからのレイとのヒット座標を取得
+	/// </summary>
+	/// <returns></returns>
+	const Vec3 GetCameraRayHitPos()const { return m_cameraRayHitPos; }
+
+	/// <summary>
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
@@ -77,6 +88,9 @@ private:
 	float m_maxSearchCollisionRadius;		//群れの個体の中で一番大きい索敵範囲
 
 	bool m_isInPlayer;		//プレイヤーが当たり判定内に入っているかどうか
+
+	bool m_isCameraRayHit;	//メンバーの誰かがカメラからのレイに当たったかどうか
+	Vec3 m_cameraRayHitPos;	//カメラからのレイと敵の当たり判定カプセルとのヒット座標
 
 	unsigned int m_memberColor;	//DEBUG用。誰がどの群れなのか見たい
 };
