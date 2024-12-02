@@ -57,8 +57,8 @@ void HPBar::Update(int hp)
 	//HPの割合分の画像のX幅を出す
 	m_gaugeWidth = static_cast<int>(m_hpBarWidth * widthScale);
 	//何もしないと画像が中心によっていくため画像の中心座標をHPに応じてずらす
-	m_drawPos.x = 240 - static_cast<int>((m_hpBarWidth - m_gaugeWidth) * kHpBarScale / 2);
-	m_drawPos.y = 30;
+	m_drawPos.x = 240.0f - static_cast<float>((m_hpBarWidth - m_gaugeWidth) * kHpBarScale / 2);
+	m_drawPos.y = 30.0f;
 
 }
 
@@ -67,6 +67,6 @@ void HPBar::Draw()
 	//Hpバーの描画
 	DrawRotaGraph(220, 30, kHpBarScale, 0.0f, m_handles[0], true);
 	DrawRotaGraph(236, 30, kHpBarScale, 0.0f, m_handles[2], true);
-	DrawRectRotaGraph(m_drawPos.x, m_drawPos.y, 0, 0, m_gaugeWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[1], true);
+	DrawRectRotaGraph(static_cast<int>(m_drawPos.x), static_cast<int>(m_drawPos.y), 0, 0, m_gaugeWidth, m_hpBarHeight, kHpBarScale, 0.0f, m_handles[1], true);
 	DrawRotaGraph(236, 25, kHpBarScale, 0.0f, m_handles[3], true);
 }

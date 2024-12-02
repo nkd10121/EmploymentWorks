@@ -38,7 +38,7 @@ void EnemyManager::Init(std::string stageName)
 
 	for (auto& inf : m_createEnemyInfo)
 	{
-		m_enemyNum[inf.first] = inf.second.size();
+		m_enemyNum[inf.first] = static_cast<int>(inf.second.size());
 	}
 }
 

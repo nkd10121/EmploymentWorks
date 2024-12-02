@@ -160,21 +160,34 @@ void GameManager::Update()
 
 	//敵の更新処理
 	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front(),m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
+
+	//レイキャストの結果変数
 	Vec3 rayCastRet;
+	//カメラから敵までの距離
 	auto cameraToEnemy = (m_pEnemyManager->GetRayCastRetPos() - m_pCamera->GetCameraPos()).Length();
+	//カメラから地形までの距離
 	auto cameraToMap = (m_pCamera->GetMapHitPosition() - m_pCamera->GetCameraPos()).Length();
+	//もし、カメラから地形までの距離よりカメラから敵までの距離が大きかったら
 	if (cameraToEnemy > cameraToMap)
 	{
+		//近い方(地形とのヒット座標)を保存する
 		rayCastRet = m_pCamera->GetMapHitPosition();
 	}
 	else
 	{
+		//近い方(敵とのヒット座標)を保存するが、
+		//そもそも敵と当たっているかどうかを判断する
+
+		//敵と当たっていたら
 		if (m_pEnemyManager->GetRayCastRetPos().Length() != 0.0f)
 		{
+			//敵とのヒット座標を保存する
 			rayCastRet = m_pEnemyManager->GetRayCastRetPos();
 		}
+		//当たっていなかったら
 		else
 		{
+			//地形とのヒット座標を保存する
 			rayCastRet = m_pCamera->GetMapHitPosition();
 		}
 	}

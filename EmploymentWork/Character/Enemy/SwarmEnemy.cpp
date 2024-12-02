@@ -203,7 +203,7 @@ void SwarmEnemy::AddSwarm(std::shared_ptr<EnemyBase> add)
 /// </summary>
 const int SwarmEnemy::CheckMemberNum() const
 {
-	return m_swarm.size();
+	return static_cast<int>(m_swarm.size());
 }
 
 /// <summary>
