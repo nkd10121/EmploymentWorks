@@ -49,6 +49,10 @@ void TrapManager::Draw()
 		trap->Draw();
 	}
 
+
+	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
+	DrawFormatString(64, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
+
 #ifdef _DEBUG	//デバッグ描画
 	for (auto& pos : m_trapPoss)
 	{
@@ -74,8 +78,7 @@ void TrapManager::Draw()
 		}
 	}
 
-	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
-	DrawFormatString(64,720 - 16*4,0xffffff,"%d",m_trapPoint);
+
 #endif
 }
 
