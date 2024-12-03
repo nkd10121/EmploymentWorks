@@ -72,10 +72,12 @@ void TrapManager::Draw()
 		}
 	}
 
+
+	DrawFormatString(0,720 - 16*3,0xffffff,"%d",m_trapPoint);
 #endif
 }
 
-void TrapManager::SetUp()
+void TrapManager::SetUp(int point)
 {
 	for (auto& trap : m_trapPoss)
 	{
@@ -87,6 +89,8 @@ void TrapManager::SetUp()
 			}
 		}
 	}
+
+	m_trapPoint = point;
 }
 
 void TrapManager::Clear()
@@ -98,6 +102,8 @@ void TrapManager::Clear()
 	m_trapPoss.clear();
 
 	m_traps.clear();
+
+	m_trapPoint = 0;
 }
 
 void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
@@ -108,13 +114,25 @@ void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
 		//MEMO:今後、選択したトラップに応じた種類を設置するようにするかも
 		if (slot == 1)
 		{
-			auto& sa = debugTrap;
-			sa->isPlaced = true;
 			auto add = std::make_shared<SpikeTrap>();
+			//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+			if (m_trapPoint < add->GetCost())
+			{
+				//何もしない
+				return;
+			}
+
+			//所持トラップポイントをコスト分減らす
+			m_trapPoint -= add->GetCost();
+
+			//初期化
 			add->Init(debugTrap->pos);
 
+			//追加
 			m_traps.emplace_back(add);
 
+			//トラップを設置済みにする
+			debugTrap->isPlaced = true;
 			for (auto& trap : debugTrap->neighborTraps)
 			{
 				trap.lock()->isPlaced = true;
@@ -154,9 +172,6 @@ void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
 				defaultLength = length;
 
 				debugTrap = trap;
-				//debugTrap->isPlaced = trap.isPlaced;
-				//debugTrap->neighborTraps = trap.neighborTraps;
-				//debugTrap->pos = trap.pos;
 			}
 		}
 	}

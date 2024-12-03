@@ -53,6 +53,11 @@ public:
 	/// </summary>
 	/// <returns>攻撃力</returns>
 	const int GetAtk()const { return m_status.atk; }
+	/// <summary>
+	/// 自身の設置コストを取得
+	/// </summary>
+	/// <returns></returns>
+	const int GetCost()const { return m_status.cost; }
 
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 

@@ -68,7 +68,7 @@ public:
 
 	void Draw();
 
-	void SetUp();
+	void SetUp(int point);
 
 	void Clear();
 
@@ -81,6 +81,8 @@ private:
 	std::list<std::shared_ptr<Trap>> m_trapPoss;
 
 	std::list<std::shared_ptr<TrapBase>> m_traps;
+
+	int m_trapPoint;
 
 	//デバッグ用
 	std::shared_ptr<Trap> debugTrap;
