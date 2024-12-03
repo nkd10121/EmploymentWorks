@@ -1,6 +1,7 @@
 ﻿#include "SwarmEnemy.h"
 
 #include "MathHelp.h"
+#include "TrapManager.h"
 
 namespace
 {
@@ -99,7 +100,14 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 	{
 		auto it = std::remove_if(m_swarm.begin(), m_swarm.end(), [](auto& v)
 			{
-				return v->GetIsExist() == false;
+				//もし存在フラグがfalse(死亡済み)なら
+				if (!v->GetIsExist())
+				{
+					//トラップポイントを追加する
+					TrapManager::GetInstance().AddTrapPoint(v->GetDropPoint());
+					return true;
+				}
+				return false;
 			});
 		m_swarm.erase(it, m_swarm.end());
 	}

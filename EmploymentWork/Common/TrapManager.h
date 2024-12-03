@@ -74,6 +74,11 @@ public:
 
 	void EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot);
 
+	/// <summary>
+	/// トラップポイントを追加する
+	/// </summary>
+	/// <param name="addPoint"></param>
+	void AddTrapPoint(int addPoint) { m_trapPoint += addPoint; }
 
 	//デバッグ用
 	void SelectPoint(Vec3 playerPos, Vec3 targetPos);

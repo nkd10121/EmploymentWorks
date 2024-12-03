@@ -106,6 +106,12 @@ public:
 	const Vec3 GetPlayerPos()const { return m_playerPos; }
 
 	/// <summary>
+	/// ドロップする罠ポイントを取得
+	/// </summary>
+	/// <returns></returns>
+	const int GetDropPoint()const { return m_status.point; }
+
+	/// <summary>
 	/// 索敵判定の半径を取得
 	/// </summary>
 	/// <returns>索敵判定の半径</returns>
