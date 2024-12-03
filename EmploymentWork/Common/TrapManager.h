@@ -89,6 +89,8 @@ private:
 
 	int m_trapPoint;
 
+	int m_bgHandle;
+
 	//デバッグ用
 	std::shared_ptr<Trap> debugTrap;
 };

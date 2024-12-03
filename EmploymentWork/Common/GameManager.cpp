@@ -303,7 +303,7 @@ void GameManager::Draw()
 		int x = 362 + i * 85;
 		int y = 655;
 		//DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
-		DrawRotaGraph(x,y,0.5f,0.0f,m_slotBgHandle,true);
+		DrawRotaGraph(x,y,0.08f,0.0f,m_slotBgHandle,true);
 		if (i == 0)
 		{
 			DrawRotaGraph(x,y,0.5f,0.0f, m_slotIconHandle[i], true);

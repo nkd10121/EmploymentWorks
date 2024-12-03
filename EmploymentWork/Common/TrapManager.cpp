@@ -3,6 +3,8 @@
 
 #include "SpikeTrap.h"
 
+#include "ImageManager.h"
+
 TrapManager* TrapManager::m_instance = nullptr;
 
 TrapManager::TrapManager()
@@ -72,8 +74,8 @@ void TrapManager::Draw()
 		}
 	}
 
-
-	DrawFormatString(0,720 - 16*3,0xffffff,"%d",m_trapPoint);
+	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
+	DrawFormatString(64,720 - 16*4,0xffffff,"%d",m_trapPoint);
 #endif
 }
 
@@ -90,6 +92,7 @@ void TrapManager::SetUp(int point)
 		}
 	}
 
+	m_bgHandle = ImageManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_trapPoint = point;
 }
 
@@ -103,6 +106,7 @@ void TrapManager::Clear()
 
 	m_traps.clear();
 
+	DeleteGraph(m_bgHandle);
 	m_trapPoint = 0;
 }
 
