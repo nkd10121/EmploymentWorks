@@ -288,6 +288,7 @@ bool SceneBase::IsSceneEnd()
 	MapManager::GetInstance().DeleteModel();
 	TrapManager::GetInstance().Clear();
 	ImageManager::GetInstance().Clear();
+	ShaderManager::GetInstance().Clear();
 
 	//ここまで来たらシーンを完全に終了する
 	return true;
