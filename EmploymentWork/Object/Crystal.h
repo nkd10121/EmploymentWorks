@@ -60,5 +60,9 @@ private:
 	int m_crystalStandHandle;	//クリスタルスタンドのモデルハンドル
 
 	float m_angle;	//クリスタルを動かすための角度
+
+private:
+	int m_psHandle;
+	int m_vsHandle;
 };
 

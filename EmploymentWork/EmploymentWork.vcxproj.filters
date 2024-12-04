@@ -48,6 +48,9 @@
     <Filter Include="ソース ファイル\Ui">
       <UniqueIdentifier>{3ca7d748-1a85-4433-9466-7b57797979eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Shader">
+      <UniqueIdentifier>{8e07eec3-675e-44b5-8518-dc068fec6eb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -400,5 +403,13 @@
     <ClInclude Include="Common\EnemyManager.h">
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\VertexShader.hlsl">
+      <Filter>ソース ファイル\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\PixelShader.hlsl">
+      <Filter>ソース ファイル\Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

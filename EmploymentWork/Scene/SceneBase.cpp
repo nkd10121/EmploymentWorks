@@ -12,6 +12,7 @@
 
 #include<chrono>
 #include<ctime>
+#include<cassert>
 
 namespace
 {
@@ -121,6 +122,21 @@ void SceneBase::AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data)
 		{
 			auto path = d.path + d.extension;
 			ImageManager::GetInstance().Load(d.id, path, d.isEternal);
+		}
+		//ピクセルシェーダーなら
+		else if (d.extension == ".pso")
+		{
+
+		}
+		//頂点シェーダーなら
+		else if (d.extension == ".vso")
+		{
+
+		}
+		//今まで以外なら
+		else
+		{
+			assert(0 && "想定されていない拡張子です");
 		}
 	}
 }
