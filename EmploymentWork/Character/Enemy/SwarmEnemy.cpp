@@ -103,8 +103,11 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 				//もし存在フラグがfalse(死亡済み)なら
 				if (!v->GetIsExist())
 				{
-					//トラップポイントを追加する
-					TrapManager::GetInstance().AddTrapPoint(v->GetDropPoint());
+					if (v->GetIsStartDeathAnim())
+					{
+						//トラップポイントを追加する
+						TrapManager::GetInstance().AddTrapPoint(v->GetDropPoint());
+					}
 					return true;
 				}
 				return false;
