@@ -7,6 +7,7 @@
 #include "MapManager.h"
 #include "TrapManager.h"
 #include "ImageManager.h"
+#include "ShaderManager.h"
 
 #include "SceneDebug.h"
 
@@ -126,12 +127,14 @@ void SceneBase::AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data)
 		//ピクセルシェーダーなら
 		else if (d.extension == ".pso")
 		{
-
+			auto path = d.path + d.extension;
+			ShaderManager::GetInstance().Load(d.id, path, true, d.isEternal);
 		}
 		//頂点シェーダーなら
 		else if (d.extension == ".vso")
 		{
-
+			auto path = d.path + d.extension;
+			ShaderManager::GetInstance().Load(d.id, path, false, d.isEternal);
 		}
 		//今まで以外なら
 		else

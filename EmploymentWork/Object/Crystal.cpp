@@ -1,14 +1,18 @@
 ﻿#include "Crystal.h"
 #include <string>
 #include "ModelManager.h"
+#include "ImageManager.h"
+#include "ShaderManager.h"
 
 #include "EnemyBase.h"
 
 namespace
 {
+	constexpr float kModelSize = 0.6f;
 	//当たり判定の半径
-	constexpr float kCollisionRadius = 6.0f;
-	constexpr float kCollisionSize = 4.0f;
+	constexpr float kCollisionRadius = kModelSize * 30;
+	constexpr float kCollisionSize = kModelSize * 20;
+	
 
 	//パス
 	const std::string kCrystalPath = "data/model/stage/crystal.mv1";
@@ -40,6 +44,8 @@ Crystal::~Crystal()
 {
 	MV1DeleteModel(m_modelHandle);
 	MV1DeleteModel(m_crystalStandHandle);
+
+	DeleteGraph(m_noizeTexHandle);
 }
 
 /// <summary>
@@ -56,8 +62,17 @@ void Crystal::Init()
 	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_CRYSTAL");
 	m_crystalStandHandle = ModelManager::GetInstance().GetModelHandle("M_CRYSTALSTAND");
 
-	MV1SetScale(m_modelHandle, VGet(0.2f, 0.2f, 0.2f));
-	MV1SetScale(m_crystalStandHandle, VGet(0.2f, 0.2f, 0.2f));
+	MV1SetScale(m_modelHandle, VGet(kModelSize, kModelSize, kModelSize));
+	MV1SetScale(m_crystalStandHandle, VGet(kModelSize, kModelSize, kModelSize));
+
+	m_psHandle = ShaderManager::GetInstance().GetHandle("P_SHADER");
+	m_vsHandle = ShaderManager::GetInstance().GetHandle("V_SHADER");
+
+	m_noizeTexHandle = ImageManager::GetInstance().GetHandle("I_NOIZETEX");
+
+	cBufferHandle = CreateShaderConstantBuffer(sizeof(UserData));
+	pUserData = static_cast<UserData*>(GetBufferShaderConstantBuffer(cBufferHandle));
+	pUserData->time = 0.0f;
 }
 
 /// <summary>
@@ -77,6 +92,8 @@ void Crystal::Update()
 
 	MV1SetPosition(m_modelHandle, VECTOR(m_pos.x, m_pos.y + posY, m_pos.z));
 	MV1SetRotationXYZ(m_modelHandle, VECTOR(0.0f, m_angle / 4, 0.0f));
+
+	pUserData->time += 0.01f;  // 時間を進める
 }
 
 /// <summary>
@@ -84,7 +101,28 @@ void Crystal::Update()
 /// </summary>
 void Crystal::Draw()
 {
+	MV1SetUseOrigShader(true);
+
+	// シェーダーをセット
+	SetUseVertexShader(m_vsHandle);
+	SetUsePixelShader(m_psHandle);
+
+	// コンスタントバッファを更新
+	UpdateShaderConstantBuffer(cBufferHandle);
+	SetShaderConstantBuffer(cBufferHandle, DX_SHADERTYPE_PIXEL, 4);  // ピクセルシェーダーに渡す
+
+	SetUseTextureToShader(1, m_noizeTexHandle);
+
 	MV1DrawModel(m_modelHandle);
+
+	// シェーダーを解除
+	SetUseVertexShader(-1);
+	SetUsePixelShader(-1);
+
+	//クリスタルスタンドは通常描画
+	SetUseTextureToShader(1, -1);
+	MV1SetUseOrigShader(false);
+
 	MV1DrawModel(m_crystalStandHandle);
 }
 
@@ -95,7 +133,7 @@ void Crystal::Set(const Vec3& pos)
 {
 	m_pos = pos;
 
-	m_pos.y -= 18.0f;
+	m_pos.y -= kModelSize * 90;
 
 	MV1SetPosition(m_modelHandle, m_pos.ToVECTOR());
 	MV1SetPosition(m_crystalStandHandle, m_pos.ToVECTOR());
@@ -111,13 +149,17 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::
 	//当たったオブジェクトが敵なら自身のHPを減らす
 	if (send->GetTag() == GameObjectTag::Enemy)
 	{
-		EnemyBase* col = dynamic_cast<EnemyBase*>(send.get());
-		//col->End();
+		if (sendCol->collideTag == MyLib::ColliderBase::CollisionTag::Normal)
+		{
+			EnemyBase* col = dynamic_cast<EnemyBase*>(send.get());
+			col->Finalize();
+			col->End();
 
-		m_hp--;
+			m_hp--;
 
 #ifdef _DEBUG	//デバッグ描画
-		printf("クリスタルにダメージが入りました。\n");
+			printf("クリスタルにダメージが入りました。\n");
 #endif
+		}
 	}
 }

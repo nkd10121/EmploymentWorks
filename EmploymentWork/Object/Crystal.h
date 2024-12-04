@@ -64,5 +64,16 @@ private:
 private:
 	int m_psHandle;
 	int m_vsHandle;
+	int m_noizeTexHandle;
+
+	// シェーダーに渡すデータ構造体
+	struct UserData
+	{
+		float time;       // アニメーション用の時間
+		float dummy[3];   // 16バイトに合わせるためのダミー
+	};
+	// 自分でシェーダーに渡したい情報をセットできる（コンスタントバッファの設定）
+	int cBufferHandle;
+	UserData* pUserData;
 };
 

@@ -6,6 +6,7 @@
 #include "SoundManager.h"
 #include "ImageManager.h"
 #include "GameManager.h"
+#include "ShaderManager.h"
 
 #include "Game.h"
 
@@ -73,6 +74,7 @@ bool SceneGame::IsLoaded() const
 	if (!ModelManager::GetInstance().IsLoaded())	return false;
 	if (!SoundManager::GetInstance().IsLoaded())	return false;
 	if (!ImageManager::GetInstance().IsLoaded())	return false;
+	if (!ShaderManager::GetInstance().IsLoaded())	return false;
 
 	return true;
 }

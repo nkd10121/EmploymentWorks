@@ -101,10 +101,10 @@ void GameManager::Init(int stageIdx)
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init(m_stageModel);
 
-	////クリスタルの生成
-	//m_pCrystal = std::make_shared<Crystal>(10);
-	//m_pCrystal->Init();
-	//m_pCrystal->Set(Vec3(0.0f, 0.0f, 10.0f));
+	//クリスタルの生成
+	m_pCrystal = std::make_shared<Crystal>(10);
+	m_pCrystal->Init();
+	m_pCrystal->Set(Vec3(0.0f, 0.0f, 10.0f));
 
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
@@ -138,6 +138,9 @@ void GameManager::Update()
 		//次のフェーズに進む
 		m_phaseNum.pop_front();
 	}
+
+	m_pCrystal->Update();
+
 
 	//カメラの更新
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
@@ -276,12 +279,11 @@ void GameManager::Draw()
 	MapManager::GetInstance().Draw();
 	MV1DrawModel(m_stageModel);
 
-	TrapManager::GetInstance().Draw();
 #ifdef _DEBUG	//デバッグ描画
 	MyLib::DebugDraw::Draw3D();
 #endif
 
-	//m_pCrystal->Draw();
+	m_pCrystal->Draw();
 
 	EffectManager::GetInstance().Draw();
 
@@ -295,6 +297,8 @@ void GameManager::Draw()
 	{
 		object->Draw();
 	}
+
+	TrapManager::GetInstance().Draw();
 
 	//TODO:UIクラスみたいなのを作ってそこに移動させる
 	//装備スロットの描画
@@ -331,6 +335,7 @@ void GameManager::Draw()
 
 	DrawFormatString(640, 0, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
 	DrawFormatString(640, 16, 0xffffff, "次のフェーズまで:%d", m_phaseCount);
+	DrawFormatString(1172, 32, 0xffffff, "%d", m_pCrystal->GetHp());
 #endif
 }
 

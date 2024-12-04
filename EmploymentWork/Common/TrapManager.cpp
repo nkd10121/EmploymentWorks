@@ -50,8 +50,6 @@ void TrapManager::Draw()
 	}
 
 
-	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
-	DrawFormatString(64, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 
 #ifdef _DEBUG	//デバッグ描画
 	for (auto& pos : m_trapPoss)
@@ -77,9 +75,10 @@ void TrapManager::Draw()
 			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
 		}
 	}
-
-
 #endif
+
+	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
+	DrawFormatString(64, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 
 void TrapManager::SetUp(int point)
