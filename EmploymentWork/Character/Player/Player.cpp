@@ -4,6 +4,7 @@
 
 #include "PlayerStateIdle.h"
 #include "PlayerStateDeath.h"
+#include "PlayerStateClear.h"
 
 #include "HealPortion.h"
 #include "EnemyBase.h"
@@ -145,7 +146,7 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 	AnimationBlend();
 
 	//死んでいなかったらカメラが向いている方向を正面とする
-	if (!m_isStartDeathAnimation)
+	if (!m_isStartDeathAnimation && m_pState->GetKind() != StateBase::StateKind::Clear)
 	{
 		//カメラの座標からプレイヤーを回転させる方向を計算する
 		m_angle = -atan2f(m_cameraDirection.z, m_cameraDirection.x) - DX_PI_F / 2;
@@ -273,9 +274,12 @@ void Player::Draw()
 	//プレイヤーモデルの描画
 	MV1DrawModel(m_modelHandle);
 
-	//クロスボウモデルの描画
-	MV1DrawModel(m_crossbowHandle);
-
+	if (m_pState->GetKind() != StateBase::StateKind::Clear)
+	{
+		//クロスボウモデルの描画
+		MV1DrawModel(m_crossbowHandle);
+	
+	}
 #ifdef _DEBUG	//デバッグ描画
 	//向いてる方向の線
 	auto target = m_pos + m_cameraDirection * 1000.0f;
@@ -302,46 +306,59 @@ void Player::UpdateModelPos()
 
 	MV1SetPosition(m_modelHandle, drawPos.ToVECTOR());
 
-	//クロスボウモデル描画座標の更新
-	auto weaponAttachFrameNum = MV1SearchFrame(m_modelHandle, kAttachFrameName);
-	auto weaponFrameMat = MV1GetFrameLocalWorldMatrix(m_modelHandle, weaponAttachFrameNum);
+	if (m_pState->GetKind() != StateBase::StateKind::Clear)
+	{
+		//クロスボウモデル描画座標の更新
+		auto weaponAttachFrameNum = MV1SearchFrame(m_modelHandle, kAttachFrameName);
+		auto weaponFrameMat = MV1GetFrameLocalWorldMatrix(m_modelHandle, weaponAttachFrameNum);
 
-	//結果収納用変数
-	Vec3 nowLocalPos;
-	Vec3 nowLocalRot;
-	Vec3 preLocalPos;
-	Vec3 preLocalRot;
+		//結果収納用変数
+		Vec3 nowLocalPos;
+		Vec3 nowLocalRot;
+		Vec3 preLocalPos;
+		Vec3 preLocalRot;
 
-	//直前のアニメーションと現在のアニメーションのクロスボウのローカル座標とローカル回転を取得
-	LoadCSV::GetInstance().GetCrossbowLocationData(m_nowAnimIdx, nowLocalPos, nowLocalRot);
-	LoadCSV::GetInstance().GetCrossbowLocationData(m_preAnimIdx, preLocalPos, preLocalRot);
+		//直前のアニメーションと現在のアニメーションのクロスボウのローカル座標とローカル回転を取得
+		LoadCSV::GetInstance().GetCrossbowLocationData(m_nowAnimIdx, nowLocalPos, nowLocalRot);
+		LoadCSV::GetInstance().GetCrossbowLocationData(m_preAnimIdx, preLocalPos, preLocalRot);
 
-	//直前のアニメーションと現在のアニメーションとアニメーションブレンド率からローカル回転を計算する
-	auto weaponRot = preLocalRot + (nowLocalRot - preLocalRot) * m_animBlendRate;
+		//直前のアニメーションと現在のアニメーションとアニメーションブレンド率からローカル回転を計算する
+		auto weaponRot = preLocalRot + (nowLocalRot - preLocalRot) * m_animBlendRate;
 
-	//floatからそれぞれの軸回転行列を取得する
-	auto xMat = MGetRotX(weaponRot.x);
-	auto yMat = MGetRotY(weaponRot.y);
-	auto zMat = MGetRotZ(weaponRot.z);
+		//floatからそれぞれの軸回転行列を取得する
+		auto xMat = MGetRotX(weaponRot.x);
+		auto yMat = MGetRotY(weaponRot.y);
+		auto zMat = MGetRotZ(weaponRot.z);
 
-	//ローカル座標を座標行列にする
-	auto posM = MGetTranslate(nowLocalPos.ToVECTOR());
-	//アタッチフレームの座標にローカル座標を足してクロスボウのワールド座標を計算
-	posM = MMult(posM, weaponFrameMat);
-	m_crossbowPos = Vec3(posM.m[3][0], posM.m[3][1], posM.m[3][2]);
+		//ローカル座標を座標行列にする
+		auto posM = MGetTranslate(nowLocalPos.ToVECTOR());
+		//アタッチフレームの座標にローカル座標を足してクロスボウのワールド座標を計算
+		posM = MMult(posM, weaponFrameMat);
+		m_crossbowPos = Vec3(posM.m[3][0], posM.m[3][1], posM.m[3][2]);
 
-	//回転行列を計算
-	auto rotM = MMult(MMult(xMat, yMat), zMat);
-	//回転行列と座標行列を合わせる
-	auto setM = MMult(rotM, posM);
+		//回転行列を計算
+		auto rotM = MMult(MMult(xMat, yMat), zMat);
+		//回転行列と座標行列を合わせる
+		auto setM = MMult(rotM, posM);
 
-	//拡大行列を計算
-	auto scaM = MGetScale(VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
-	//回転行列と座標行列を合わせた行列に拡大行列を掛けて最終的なクロスボウに設定する行列を計算する
-	setM = MMult(scaM, setM);
+		//拡大行列を計算
+		auto scaM = MGetScale(VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
+		//回転行列と座標行列を合わせた行列に拡大行列を掛けて最終的なクロスボウに設定する行列を計算する
+		setM = MMult(scaM, setM);
 
-	//クロスボウモデルに行列を設定する
-	MV1SetMatrix(m_crossbowHandle, setM);
+		//クロスボウモデルに行列を設定する
+		MV1SetMatrix(m_crossbowHandle, setM);
+	}
+
+}
+
+const void Player::SetClearState()
+{
+	if (m_pState->GetKind() == StateBase::StateKind::Clear)return;
+
+	//現在のステートを強制的に死亡にする
+	m_pState = std::make_shared<PlayerStateClear>(std::dynamic_pointer_cast<Player>(shared_from_this()));
+	m_pState->Init();
 }
 
 /// <summary>

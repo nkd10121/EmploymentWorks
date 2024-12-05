@@ -41,6 +41,8 @@ public:
 	/// <param name="pAddObject"></param>
 	void AddObject(std::shared_ptr<ObjectBase> pAddObject);
 
+	const bool IsEnd()const { return m_isEnd; }
+
 private:
 	std::shared_ptr<Player> m_pPlayer;			//プレイヤーポインタ
 	std::shared_ptr<Camera> m_pCamera;			//カメラポインタ
@@ -57,6 +59,8 @@ private:
 
 	int m_slotBgHandle;
 	std::vector<int> m_slotIconHandle;
+
+	bool m_isEnd;
 
 	int m_stageModel;	//モデルハンドル(仮)
 };

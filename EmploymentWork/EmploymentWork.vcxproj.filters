@@ -227,6 +227,9 @@
     <ClCompile Include="Common\ShaderManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerStateClear.cpp">
+      <Filter>ソース ファイル\Character\Player\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
@@ -408,6 +411,9 @@
     </ClInclude>
     <ClInclude Include="Common\ShaderManager.h">
       <Filter>ソース ファイル\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateClear.h">
+      <Filter>ソース ファイル\Character\Player\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

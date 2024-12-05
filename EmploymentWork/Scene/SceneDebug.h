@@ -66,7 +66,6 @@ private:
 	//遷移先
 	eDestination m_destinationScene;
 
-
 	int m_selectingStageIdx;
 	std::vector<std::string> m_stageNames;
 

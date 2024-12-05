@@ -5,6 +5,7 @@
 #include "SceneRanking.h"
 #include "SceneMainMenu.h"
 
+#include "Game.h"
 namespace
 {
 #ifdef _DEBUG	//デバッグ描画
@@ -50,6 +51,8 @@ bool SceneResult::IsLoaded() const
 /// </summary>
 void SceneResult::Init()
 {
+	//フェードアウトをスキップする
+	SkipFadeOut();
 	//最初は一番上の項目を選んでいる状態にする
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
 }
@@ -73,6 +76,11 @@ void SceneResult::Update()
 /// </summary>
 void SceneResult::Draw()
 {
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
+
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 
@@ -138,14 +146,14 @@ void SceneResult::SelectNextSceneUpdate()
 		else if (m_destinationScene == eDestination::Strengthen)
 		{
 			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStrengthen>());
-			EndThisScene();
+			EndThisScene(true);
 			return;
 		}
 		//ランキングシーンに遷移する
 		else if (m_destinationScene == eDestination::Ranking)
 		{
 			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneRanking>());
-			EndThisScene();
+			EndThisScene(true);
 			return;
 		}
 		//セレクトシーンに遷移する

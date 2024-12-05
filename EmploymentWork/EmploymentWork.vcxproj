@@ -30,6 +30,7 @@
     <ClCompile Include="Geometry\LocalPos.cpp" />
     <ClCompile Include="Common\ImageManager.cpp" />
     <ClCompile Include="Common\ShaderManager.cpp" />
+    <ClCompile Include="PlayerStateClear.cpp" />
     <ClCompile Include="Ui\HPBar.cpp" />
     <ClCompile Include="Object\Crystal.cpp" />
     <ClCompile Include="Character\Enemy\EnemyBase.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Geometry\LocalPos.h" />
     <ClInclude Include="Common\ImageManager.h" />
     <ClInclude Include="Common\ShaderManager.h" />
+    <ClInclude Include="PlayerStateClear.h" />
     <ClInclude Include="Ui\HPBar.h" />
     <ClInclude Include="Object\Crystal.h" />
     <ClInclude Include="Character\Enemy\EnemyBase.h" />

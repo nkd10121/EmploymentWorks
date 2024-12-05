@@ -280,15 +280,19 @@ bool SceneBase::IsSceneEnd()
 	{
 		m_isThisSceneEnd = false;
 	}
+	else
+	{
+		//staticクラスのデータのリセット
+		ModelManager::GetInstance().Clear();
+		SoundManager::GetInstance().Clear();
+		EffectManager::GetInstance().Clear();
+		MapManager::GetInstance().DeleteModel();
+		TrapManager::GetInstance().Clear();
+		ImageManager::GetInstance().Clear();
+		ShaderManager::GetInstance().Clear();
+	}
 
-	//staticクラスのデータのリセット
-	ModelManager::GetInstance().Clear();
-	SoundManager::GetInstance().Clear();
-	EffectManager::GetInstance().Clear();
-	MapManager::GetInstance().DeleteModel();
-	TrapManager::GetInstance().Clear();
-	ImageManager::GetInstance().Clear();
-	ShaderManager::GetInstance().Clear();
+
 
 	//ここまで来たらシーンを完全に終了する
 	return true;

@@ -35,7 +35,8 @@ namespace
 /// </summary>
 GameManager::GameManager() :
 	m_isCreateEnemy(false),
-	m_phaseCount(0)
+	m_phaseCount(0),
+	m_isEnd(false)
 {
 
 }
@@ -133,7 +134,7 @@ void GameManager::Init(int stageIdx)
 void GameManager::Update()
 {
 	//Yボタンを押した時かつ最初のフェーズの時、
-	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front() == -1)
+	if (Input::GetInstance().IsTriggered("Y") /*&& m_phaseNum.front() == -1*/)
 	{
 		//次のフェーズに進む
 		m_phaseNum.pop_front();
@@ -227,6 +228,7 @@ void GameManager::Update()
 		m_phaseCount++;
 	}
 
+
 	//10秒経ったら次のフェーズに進める
 	if (m_phaseCount >= 600)
 	{
@@ -268,6 +270,18 @@ void GameManager::Update()
 
 	//エフェクトの更新
 	EffectManager::GetInstance().Update();
+
+
+	if (m_phaseNum.front() == 0)
+	{
+		m_pPlayer->SetClearState();
+
+		if (m_pPlayer->GetNowAnimEndFrame() - 1 == m_pPlayer->GetAnimNowFrame())
+		{
+			m_isEnd = true;
+		}
+	}
+
 }
 
 /// <summary>

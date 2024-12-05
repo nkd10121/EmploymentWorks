@@ -53,6 +53,8 @@ public:
 	/// <param name="m_dir">カメラの方向ベクトル</param>
 	void SetCameraAngle(Vec3 m_dir) { m_cameraDirection = m_dir; }
 
+	const void SetClearState();
+
 	/// <summary>
 	/// カメラの方向ベクトルを取得する
 	/// </summary>

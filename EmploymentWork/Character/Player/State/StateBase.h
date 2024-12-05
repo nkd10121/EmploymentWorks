@@ -22,6 +22,7 @@ public:
 		Attack,		//攻撃
 		OnHit,		//被ダメージ
 		Death,		//死亡
+		Clear,		//クリア
 	};
 
 protected:

@@ -1,6 +1,7 @@
 ﻿#include "SceneGame.h"
-#include "SceneTitle.h"
+
 #include "ScenePause.h"
+#include "SceneResult.h"
 
 #include "ModelManager.h"
 #include "SoundManager.h"
@@ -161,6 +162,12 @@ void SceneGame::Draw()
 
 void SceneGame::UpdateGame()
 {
+	if (m_pGameManager->IsEnd())
+	{
+		SceneManager::GetInstance().PushScene(std::make_shared<SceneResult>());
+		return;
+	}
+
 	m_pGameManager->Update();
 }
 
