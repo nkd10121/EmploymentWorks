@@ -47,4 +47,8 @@ public:
 	/// 次のシーンを選択する更新処理
 	/// </summary>
 	virtual void SelectNextSceneUpdate()override;
+
+private:
+	std::vector<std::string> m_stageNames;
+	int m_nowCursor;
 };

@@ -84,9 +84,9 @@ bool SceneGame::IsLoaded() const
 /// </summary>
 void SceneGame::Init()
 {
-	//TODO:ここで実態の生成などをする
+	//TODO:ここで実体の生成などをする
 	m_pGameManager = std::make_shared<GameManager>();
-	m_pGameManager->Init(0);
+	m_pGameManager->Init(SceneManager::GetInstance().GetStageIdx());
 
 	//通常状態に設定しておく
 	m_updateFunc = &SceneGame::UpdateGame;

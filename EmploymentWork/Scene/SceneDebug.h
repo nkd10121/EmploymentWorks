@@ -65,5 +65,22 @@ private:
 
 	//遷移先
 	eDestination m_destinationScene;
+
+
+	int m_selectingStageIdx;
+	std::vector<std::string> m_stageNames;
+
+	//状態遷移のためのメンバ関数
+	using UpdateFunc_t = void (SceneDebug::*)();
+	using DrawFunc_t = void (SceneDebug::*)();
+	UpdateFunc_t m_updateFunc;
+	DrawFunc_t m_drawFunc;
+	/*状態関数*/
+	void UpdateItemSelect();
+	void UpdateStageSelect();
+
+	void DrawNormal();
+	void DrawStageName();
+
 };
 

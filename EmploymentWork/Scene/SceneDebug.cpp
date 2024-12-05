@@ -38,7 +38,8 @@ namespace
 /// コンストラクタ
 /// </summary>
 SceneDebug::SceneDebug() :
-	SceneBase("SCENE_DEBUG")
+	SceneBase("SCENE_DEBUG"),
+	m_selectingStageIdx(0)
 {
 }
 
@@ -81,6 +82,12 @@ bool SceneDebug::IsLoaded() const
 void SceneDebug::Init()
 {
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
+
+	m_stageNames = LoadCSV::GetInstance().GetAllStageName();
+
+	//通常状態に設定しておく
+	m_updateFunc = &SceneDebug::UpdateItemSelect;
+	m_drawFunc = &SceneDebug::DrawNormal;
 }
 
 /// <summary>
@@ -103,7 +110,6 @@ void SceneDebug::Update()
 /// </summary>
 void SceneDebug::Draw()
 {
-	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
 
 	int y = kTextY;
 	for (auto& name : kSceneName)
@@ -112,6 +118,9 @@ void SceneDebug::Draw()
 
 		y += kTextYInterval;
 	}
+
+	//状態の更新
+	(this->*m_drawFunc)();
 
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff,"%s", GetNowSceneName());
@@ -122,6 +131,12 @@ void SceneDebug::Draw()
 /// 次のシーンを選択する更新処理
 /// </summary>
 void SceneDebug::SelectNextSceneUpdate()
+{
+	//状態の更新
+	(this->*m_updateFunc)();
+}
+
+void SceneDebug::UpdateItemSelect()
 {
 	//上を入力したら
 	if (Input::GetInstance().IsTriggered("UP"))
@@ -192,9 +207,11 @@ void SceneDebug::SelectNextSceneUpdate()
 		//ゲームシーンに遷移する
 		else if (m_destinationScene == eDestination::InGame)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
-			EndThisScene();
-			return;
+			//通常状態に設定しておく
+			m_updateFunc = &SceneDebug::UpdateStageSelect;
+			m_drawFunc = &SceneDebug::DrawStageName;
+
+
 		}
 		//ゲームシーンに遷移する
 		else if (m_destinationScene == eDestination::Result)
@@ -217,5 +234,68 @@ void SceneDebug::SelectNextSceneUpdate()
 			EndThisScene(true);
 			return;
 		}
+	}
+}
+
+void SceneDebug::UpdateStageSelect()
+{
+	//上を入力したら
+	if (Input::GetInstance().IsTriggered("UP"))
+	{
+		//現在選択している項目から一個上にずらす
+		m_selectingStageIdx--;
+
+		//もし一番上の項目を選択している状態になっていたら
+		if (m_selectingStageIdx < 0)
+		{
+			//一個下にずらす
+			m_selectingStageIdx++;
+		}
+	}
+
+	//下を入力したら
+	if (Input::GetInstance().IsTriggered("DOWN"))
+	{
+		//現在選択している項目から一個下にずらす
+		m_selectingStageIdx++;
+
+		//もし一番下の項目を選択している状態になっていたら
+		if (m_selectingStageIdx == m_stageNames.size())
+		{
+			//一個上にずらす
+			m_selectingStageIdx--;
+		}
+	}
+
+	//キャンセルボタンを押したら項目を選ぶ状態に戻る
+	if (Input::GetInstance().IsTriggered("CANCEL"))
+	{
+		m_updateFunc = &SceneDebug::UpdateItemSelect;
+		m_drawFunc = &SceneDebug::DrawNormal;
+	}
+
+	//決定ボタンを押したら現在選択しているシーンに遷移する
+	if (Input::GetInstance().IsTriggered("OK"))
+	{
+		SceneManager::GetInstance().SetStageIdx(m_selectingStageIdx);
+		SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
+		EndThisScene();
+		return;
+	}
+}
+
+void SceneDebug::DrawNormal()
+{
+	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
+}
+
+void SceneDebug::DrawStageName()
+{
+
+	DrawString(kTextX * 4 - 24, kTextY + kTextYInterval * m_selectingStageIdx, "→", 0xff0000);
+
+	for (int i = 0; i < m_stageNames.size(); i++)
+	{
+		DrawFormatString(kTextX * 4, kTextY + kTextYInterval * i, 0xffffff, "%s", m_stageNames[i].c_str());
 	}
 }

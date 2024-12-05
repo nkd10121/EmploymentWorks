@@ -401,6 +401,39 @@ std::vector<std::string> LoadCSV::LoadStageInfo(int stageIdx)
 	return ret;
 }
 
+std::vector<std::string> LoadCSV::GetAllStageName()
+{
+	std::vector<std::string> ret;
+
+	// 一時保存用string
+	std::string strBuf;
+	// カンマ分け一時保存用string
+	std::vector<std::string> strConmaBuf;
+
+	// ファイル読み込み
+	std::ifstream ifs("data/csv/StageData.csv");
+	if (!ifs)
+	{
+		assert(false);
+		return ret;
+	}
+
+	//最初は対応表情報が入っているだけなので無視する
+	std::getline(ifs, strBuf);
+
+	while (getline(ifs, strBuf))
+	{
+		//取得した文字列をカンマ区切りの配列(情報群)にする
+		strConmaBuf = Split(strBuf, ',');
+
+		//ステージ名がはいっているインデックスは1
+		ret.push_back(strConmaBuf[1]);
+
+	}
+
+	return ret;
+}
+
 std::vector<std::vector<std::string>> LoadCSV::LoadEnemyCreateData(std::string stageName)
 {
 	std::vector<std::vector<std::string>> ret;

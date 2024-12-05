@@ -78,7 +78,12 @@ public:
 	/// 現在の先頭シーンを削除する
 	/// </summary>
 	void PopScene();
+
+	const int GetStageIdx()const { return m_stageIndex; }
+	const void SetStageIdx(int idx) { m_stageIndex = idx; }
 private:
 	std::list<std::shared_ptr<SceneBase>> m_pScene;		//現在のシーン
 	std::shared_ptr<SceneBase> m_pNextScene;			//遷移予定のシーン
+
+	int m_stageIndex;
 };
