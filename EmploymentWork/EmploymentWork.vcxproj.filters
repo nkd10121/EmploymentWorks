@@ -224,8 +224,8 @@
     <ClCompile Include="Common\EnemyManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Common\ShaderManager.cpp">
+      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,7 +406,9 @@
     <ClInclude Include="Common\EnemyManager.h">
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="Common\ShaderManager.h">
+      <Filter>ソース ファイル\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">
