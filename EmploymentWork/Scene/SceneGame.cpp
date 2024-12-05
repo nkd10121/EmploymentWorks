@@ -3,11 +3,16 @@
 #include "ScenePause.h"
 #include "SceneResult.h"
 
+#include "GameManager.h"
+
 #include "ModelManager.h"
 #include "SoundManager.h"
 #include "ImageManager.h"
-#include "GameManager.h"
+#include "EffectManager.h"
 #include "ShaderManager.h"
+#include "MapManager.h"
+#include "TrapManager.h"
+
 
 #include "Game.h"
 
@@ -43,6 +48,16 @@ SceneGame::SceneGame() :
 /// </summary>
 SceneGame::~SceneGame()
 {
+	//staticクラスのデータのリセット
+	SoundManager::GetInstance().Clear();
+	ImageManager::GetInstance().Clear();
+
+	ModelManager::GetInstance().Clear();
+	EffectManager::GetInstance().Clear();
+
+	ShaderManager::GetInstance().Clear();
+	MapManager::GetInstance().DeleteModel();
+	TrapManager::GetInstance().Clear();
 }
 
 /// <summary>

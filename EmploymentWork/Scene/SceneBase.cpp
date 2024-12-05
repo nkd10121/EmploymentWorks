@@ -282,14 +282,15 @@ bool SceneBase::IsSceneEnd()
 	}
 	else
 	{
-		//staticクラスのデータのリセット
-		ModelManager::GetInstance().Clear();
-		SoundManager::GetInstance().Clear();
-		EffectManager::GetInstance().Clear();
-		MapManager::GetInstance().DeleteModel();
-		TrapManager::GetInstance().Clear();
-		ImageManager::GetInstance().Clear();
-		ShaderManager::GetInstance().Clear();
+		////staticクラスのデータのリセット
+		//ModelManager::GetInstance().Clear();
+		//SoundManager::GetInstance().Clear();
+		//EffectManager::GetInstance().Clear();
+		//ImageManager::GetInstance().Clear();
+
+		//ShaderManager::GetInstance().Clear();
+		//MapManager::GetInstance().DeleteModel();
+		//TrapManager::GetInstance().Clear();
 	}
 
 
