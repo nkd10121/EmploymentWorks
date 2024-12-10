@@ -4,6 +4,7 @@
 #include "SpikeTrap.h"
 
 #include "ImageManager.h"
+#include "ResourceManager.h"
 
 TrapManager* TrapManager::m_instance = nullptr;
 
@@ -94,7 +95,7 @@ void TrapManager::SetUp(int point)
 		}
 	}
 
-	m_bgHandle = ImageManager::GetInstance().GetHandle("I_TRAPPOINTBG");
+	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_trapPoint = point;
 }
 

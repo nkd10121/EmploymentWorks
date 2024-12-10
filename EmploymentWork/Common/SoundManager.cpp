@@ -1,6 +1,8 @@
 ﻿#include "SoundManager.h"
 #include <cassert>
 
+#include "ResourceManager.h"
+
 SoundManager* SoundManager::m_instance = nullptr;
 
 
@@ -125,21 +127,31 @@ void SoundManager::Clear()
 /// </summary>
 void SoundManager::PlayBGM(std::string id, bool isFromStart)
 {
-	for (auto& bgm : m_BGM)
-	{
-		//指定したIDと一致するハンドルが存在していたら
-		if (bgm->id == id)
-		{
-			//流れていたら何もしない
-			if (CheckPlaying(bgm->handle))
-			{
-				return;
-			}
+	//for (auto& bgm : m_BGM)
+	//{
+	//	//指定したIDと一致するハンドルが存在していたら
+	//	if (bgm->id == id)
+	//	{
+	//		//流れていたら何もしない
+	//		if (CheckPlaying(bgm->handle))
+	//		{
+	//			return;
+	//		}
 
-			//流れていなかったら流す
-			PlaySoundMem(bgm->handle, DX_PLAYTYPE_BACK, isFromStart);
-			return;
-		}
+	//		//流れていなかったら流す
+	//		PlaySoundMem(bgm->handle, DX_PLAYTYPE_BACK, isFromStart);
+	//		return;
+	//	}
+	//}
+
+	auto playHandle = ResourceManager::GetInstance().GetHandle(id);
+	ChangeVolumeSoundMem(static_cast<int>(255 * m_BGMvolume), playHandle);
+	//流れていたら何もしない
+	if (!CheckPlaying(playHandle))
+	{
+		//流れていなかったら流す
+		PlaySoundMem(playHandle, DX_PLAYTYPE_BACK, isFromStart);
+		return;
 	}
 
 	//ここまできたらなにかしらの理由でサウンドを流すのを失敗している
@@ -155,16 +167,22 @@ void SoundManager::PlayBGM(std::string id, bool isFromStart)
 /// </summary>
 void SoundManager::PlaySE(std::string id)
 {
-	for (auto& se : m_SE)
-	{
-		//指定したIDと一致するハンドルが存在していたら
-		if (se->id == id)
-		{
-			//流す
-			PlaySoundMem(se->handle, DX_PLAYTYPE_BACK, true);
-			return;
-		}
-	}
+	//for (auto& se : m_SE)
+	//{
+	//	//指定したIDと一致するハンドルが存在していたら
+	//	if (se->id == id)
+	//	{
+	//		//流す
+	//		PlaySoundMem(se->handle, DX_PLAYTYPE_BACK, true);
+	//		return;
+	//	}
+	//}
+
+	auto playHandle = ResourceManager::GetInstance().GetHandle(id);
+	ChangeVolumeSoundMem(static_cast<int>(255 * m_SEvolume), playHandle);
+	PlaySoundMem(playHandle, DX_PLAYTYPE_BACK, true);
+
+	return;
 
 	//ここまできたらなにかしらの理由でサウンドを流すのを失敗している
 #ifdef _DEBUG	//デバッグ描画

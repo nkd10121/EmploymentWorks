@@ -4,6 +4,7 @@
 #include <map>
 
 #include "ModelManager.h"
+#include "ResourceManager.h"
 #include "TrapManager.h"
 
 MapManager* MapManager::m_instance = nullptr;
@@ -53,7 +54,7 @@ void MapManager::Init()
 	//ロードが完了しているときにここが呼ばれるため、モデルマネージャーに頼んでおいたモデルを取得する
 	for (auto& path : kId)
 	{
-		m_handles[path.first] = ModelManager::GetInstance().GetModelHandle(path.second);
+		m_handles[path.first] = ResourceManager::GetInstance().GetHandle(path.second);
 	}
 }
 

@@ -1,6 +1,7 @@
 ﻿#include "HealPortion.h"
 #include "DxLib.h"
 #include "ModelManager.h"
+#include "ResourceManager.h"
 
 namespace
 {
@@ -56,7 +57,7 @@ void HealPortion::Init()
 	rigidbody->Init();
 
 	//モデルのハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_PORTION");
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_PORTION");
 	//モデルのスケールを設定
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 

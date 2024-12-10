@@ -86,63 +86,63 @@ void SceneBase::EndThisScene(bool isPushScene)
 	StartFadeOut();
 }
 
-/// <summary>
-/// リソースの仕分けとロード開始をする
-/// </summary>
-void SceneBase::AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data)
-{
-	for (auto& d : data)
-	{
-		//モデルデータなら
-		if (d.extension == ".mv1")
-		{
-			//モデルをロードする
-			auto path = d.path + d.extension;
-			ModelManager::GetInstance().Load(d.id, path, d.isEternal);
-		}
-		//音声データなら
-		else if (d.extension == ".mp3")
-		{
-			//サウンドをロードする
-			auto path = d.path + d.extension;
-			SoundManager::GetInstance().Load(d.id, path, d.isBGM, d.isEternal);
-		}
-		//エフェクトデータなら
-		else if (d.extension == ".efk")
-		{
-			//MEMO:Effekseerのロードは非同期ロード対応してないらしいのでここは非同期ロードじゃない
-			SetUseASyncLoadFlag(false);
-			//エフェクトをロードする
-			auto path = d.path + d.extension;
-			EffectManager::GetInstance().Load(d.id, path, 30, d.isEternal);
-			//非同期ロードをONに戻す
-			SetUseASyncLoadFlag(true);
-		}
-		//画像データなら
-		else if (d.extension == ".png")
-		{
-			auto path = d.path + d.extension;
-			ImageManager::GetInstance().Load(d.id, path, d.isEternal);
-		}
-		//ピクセルシェーダーなら
-		else if (d.extension == ".pso")
-		{
-			auto path = d.path + d.extension;
-			ShaderManager::GetInstance().Load(d.id, path, true, d.isEternal);
-		}
-		//頂点シェーダーなら
-		else if (d.extension == ".vso")
-		{
-			auto path = d.path + d.extension;
-			ShaderManager::GetInstance().Load(d.id, path, false, d.isEternal);
-		}
-		//今まで以外なら
-		else
-		{
-			assert(0 && "想定されていない拡張子です");
-		}
-	}
-}
+///// <summary>
+///// リソースの仕分けとロード開始をする
+///// </summary>
+//void SceneBase::AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data)
+//{
+//	for (auto& d : data)
+//	{
+//		//モデルデータなら
+//		if (d.extension == ".mv1")
+//		{
+//			//モデルをロードする
+//			auto path = d.path + d.extension;
+//			ModelManager::GetInstance().Load(d.id, path, d.isEternal);
+//		}
+//		//音声データなら
+//		else if (d.extension == ".mp3")
+//		{
+//			//サウンドをロードする
+//			auto path = d.path + d.extension;
+//			SoundManager::GetInstance().Load(d.id, path, d.isBGM, d.isEternal);
+//		}
+//		//エフェクトデータなら
+//		else if (d.extension == ".efk")
+//		{
+//			//MEMO:Effekseerのロードは非同期ロード対応してないらしいのでここは非同期ロードじゃない
+//			SetUseASyncLoadFlag(false);
+//			//エフェクトをロードする
+//			auto path = d.path + d.extension;
+//			EffectManager::GetInstance().Load(d.id, path, 30, d.isEternal);
+//			//非同期ロードをONに戻す
+//			SetUseASyncLoadFlag(true);
+//		}
+//		//画像データなら
+//		else if (d.extension == ".png")
+//		{
+//			auto path = d.path + d.extension;
+//			ImageManager::GetInstance().Load(d.id, path, d.isEternal);
+//		}
+//		//ピクセルシェーダーなら
+//		else if (d.extension == ".pso")
+//		{
+//			auto path = d.path + d.extension;
+//			ShaderManager::GetInstance().Load(d.id, path, true, d.isEternal);
+//		}
+//		//頂点シェーダーなら
+//		else if (d.extension == ".vso")
+//		{
+//			auto path = d.path + d.extension;
+//			ShaderManager::GetInstance().Load(d.id, path, false, d.isEternal);
+//		}
+//		//今まで以外なら
+//		else
+//		{
+//			assert(0 && "想定されていない拡張子です");
+//		}
+//	}
+//}
 
 /// <summary>
 /// 派生先の初期化とシーン共通で必要な初期化を行う

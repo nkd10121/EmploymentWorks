@@ -9,7 +9,7 @@
 #include "SoundManager.h"
 #include "EffectManager.h"
 #include "LoadCSV.h"
-#include "ModelManager.h"
+#include "ResourceManager.h"
 
 namespace
 {
@@ -67,7 +67,7 @@ void EnemyNormal::Init()
 	rigidbody->SetNextPos(rigidbody->GetPos());
 
 	//モデルハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_ENEMYNORMAL");
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_ENEMYNORMAL");
 	//モデルのサイズを変更
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 	MV1SetPosition(m_modelHandle, m_drawPos.ToVECTOR());

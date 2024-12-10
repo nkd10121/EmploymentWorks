@@ -1,6 +1,7 @@
 ﻿#include "SpikeTrap.h"
 
 #include "ModelManager.h"
+#include "ResourceManager.h"
 #include "LoadCSV.h"
 
 namespace
@@ -50,10 +51,10 @@ void SpikeTrap::Init(Vec3 pos)
 	m_spikePosInit = m_spikePos;
 
 	//モデルのハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_SPIKEFRAME");
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_SPIKEFRAME");
 	MV1SetScale(m_modelHandle, VECTOR(kModelScale, kModelScale, kModelScale));
 	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
-	m_spikeModel = ModelManager::GetInstance().GetModelHandle("M_SPIKE");
+	m_spikeModel = ResourceManager::GetInstance().GetHandle("M_SPIKE");
 	MV1SetScale(m_spikeModel, VECTOR(kModelScale, kModelScale, kModelScale));
 	MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
 

@@ -12,6 +12,7 @@
 
 #include "LoadCSV.h"
 #include "ModelManager.h"
+#include "ResourceManager.h"
 #include "TrapManager.h"
 
 #include "GameManager.h"
@@ -104,7 +105,7 @@ void Player::Init()
 	rigidbody->SetNextPos(rigidbody->GetPos());
 
 	//プレイヤーモデルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_PLAYER");
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_PLAYER");
 	//スケールの変更
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 
@@ -119,7 +120,7 @@ void Player::Init()
 	m_hpMax = m_status.hp;
 
 	//クロスボウのモデルハンドルを取得する
-	m_crossbowHandle = ModelManager::GetInstance().GetModelHandle("M_CROSSBOW");
+	m_crossbowHandle = ResourceManager::GetInstance().GetHandle("M_CROSSBOW");
 	//スケールの変更
 	MV1SetScale(m_crossbowHandle, VGet(kCrossbowModelScale, kCrossbowModelScale, kCrossbowModelScale));
 }

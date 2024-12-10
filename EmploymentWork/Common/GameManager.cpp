@@ -8,6 +8,7 @@
 #include "HPBar.h"
 
 #include "ModelManager.h"
+#include "ResourceManager.h"
 #include "MapManager.h"
 #include "TrapManager.h"
 #include "EffectManager.h"
@@ -83,7 +84,7 @@ void GameManager::Init(int stageIdx)
 	m_phaseNum.push_back(0);
 
 	//ステージの当たり判定モデルを取得する(描画するため)
-	m_stageModel = ModelManager::GetInstance().GetModelHandle(info[1]);
+	m_stageModel = ResourceManager::GetInstance().GetHandle(info[1]);
 	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
 	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
 
@@ -116,11 +117,11 @@ void GameManager::Init(int stageIdx)
 	//m_pObjects.back()->Init();
 	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
 
-	m_slotBgHandle = ImageManager::GetInstance().GetHandle("I_SLOTBG");
-	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
-	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_CRYSTALBG"));
-	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_IRONUI"));
-	m_slotIconHandle.push_back(ImageManager::GetInstance().GetHandle("I_MINIMAPBG"));
+	m_slotBgHandle = ResourceManager::GetInstance().GetHandle("I_SLOTBG");
+	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
+	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_CRYSTALBG"));
+	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_IRONUI"));
+	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_MINIMAPBG"));
 
 	m_pHpUi = std::make_shared<HPBar>();
 	m_pHpUi->Init(m_pPlayer->GetHp());

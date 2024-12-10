@@ -1,6 +1,6 @@
 ﻿#include "Crystal.h"
 #include <string>
-#include "ModelManager.h"
+#include "ResourceManager.h"
 #include "ImageManager.h"
 #include "ShaderManager.h"
 
@@ -59,16 +59,16 @@ void Crystal::Init()
 	rigidbody->Init();
 
 	//モデルハンドルを取得
-	m_modelHandle = ModelManager::GetInstance().GetModelHandle("M_CRYSTAL");
-	m_crystalStandHandle = ModelManager::GetInstance().GetModelHandle("M_CRYSTALSTAND");
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_CRYSTAL");
+	m_crystalStandHandle = ResourceManager::GetInstance().GetHandle("M_CRYSTALSTAND");
 
 	MV1SetScale(m_modelHandle, VGet(kModelSize, kModelSize, kModelSize));
 	MV1SetScale(m_crystalStandHandle, VGet(kModelSize, kModelSize, kModelSize));
 
-	m_psHandle = ShaderManager::GetInstance().GetHandle("P_SHADER");
-	m_vsHandle = ShaderManager::GetInstance().GetHandle("V_SHADER");
+	m_psHandle = ResourceManager::GetInstance().GetHandle("P_SHADER");
+	m_vsHandle = ResourceManager::GetInstance().GetHandle("V_SHADER");
 
-	m_noizeTexHandle = ImageManager::GetInstance().GetHandle("I_NOIZETEX");
+	m_noizeTexHandle = ResourceManager::GetInstance().GetHandle("I_NOIZETEX");
 
 	cBufferHandle = CreateShaderConstantBuffer(sizeof(UserData));
 	pUserData = static_cast<UserData*>(GetBufferShaderConstantBuffer(cBufferHandle));

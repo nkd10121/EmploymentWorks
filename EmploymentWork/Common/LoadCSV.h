@@ -4,18 +4,18 @@
 
 class LoadCSV
 {
-public:
-	/// <summary>
-	/// リソースのデータ
-	/// </summary>
-	struct ResourceData
-	{
-		std::string id;			//リソースID
-		std::string path;		//パス
-		std::string extension;	//拡張子
-		bool isEternal;			//常駐フラグ
-		bool isBGM;				//サウンドデータの場合格納するデータ
-	};
+//public:
+//	/// <summary>
+//	/// リソースのデータ
+//	/// </summary>
+//	struct ResourceData
+//	{
+//		std::string id;			//リソースID
+//		std::string path;		//パス
+//		std::string extension;	//拡張子
+//		bool isEternal;			//常駐フラグ
+//		bool isBGM;				//サウンドデータの場合格納するデータ
+//	};
 
 private:
 	/// <summary>
@@ -72,7 +72,7 @@ public:
 	/// </summary>
 	/// <param name="stageId">ステージID</param>
 	/// <returns>そのシーンでロードするリソース情報</returns>
-	std::list<ResourceData>GetLoadResourcePath(std::string stageId);
+	std::list<std::vector<std::string>>GetLoadResourcePath(std::string stageId);
 
 	/// <summary>
 	/// 指定したキャラクターIDの指定したアニメーションの名前を取得する

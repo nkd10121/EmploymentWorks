@@ -61,8 +61,8 @@ void SceneDebug::StartLoad()
 	// 非同期読み込みを開始する
 	SetUseASyncLoadFlag(true);
 
-	//リソースデータ群をみてリソースのロードを開始する
-	AssortAndLoadResourse(loadResourceData);
+	////リソースデータ群をみてリソースのロードを開始する
+	//AssortAndLoadResourse(loadResourceData);
 
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);

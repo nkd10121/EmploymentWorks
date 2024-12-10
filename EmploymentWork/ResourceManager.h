@@ -78,12 +78,12 @@ public:
 	/// 指定したパスをロードする
 	/// </summary>
 	/// <param name="data">情報群</param>
-	void Load(std::vector<std::string> data);
+	void Load(std::string sceneName);
 
 	/// <summary>
 	/// ハンドルを取得する
 	/// </summary>
-	/// <param name="id">モデルID</param>
+	/// <param name="id">ID</param>
 	/// <returns>-1 : エラー, -1以外 : ハンドル</returns>
 	int GetHandle(std::string id);
 
@@ -99,7 +99,7 @@ public:
 	bool IsLoaded();
 
 private:
-	const Kind CheckKind(std::string ex)const;
+	const void LoadResource(const std::vector<std::string>& data);
 private:
 	std::list<std::shared_ptr<Resource>> m_resources;
 };

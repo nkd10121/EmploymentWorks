@@ -151,7 +151,7 @@ private:
 	std::list<std::shared_ptr<Sound>> m_BGM;	//BGM配列
 	std::list<std::shared_ptr<Sound>> m_SE;		//SE配列
 
-	float m_BGMvolume;	//bgmの音量　min:0.0f,max:1.0f
-	float m_SEvolume;	//seの音量　min:0.0f,max:1.0f
+	float m_BGMvolume = 0.5f;	//bgmの音量　min:0.0f,max:1.0f
+	float m_SEvolume = 0.5f;	//seの音量　min:0.0f,max:1.0f
 };
 

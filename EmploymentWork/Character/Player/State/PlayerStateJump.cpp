@@ -3,6 +3,7 @@
 #include "Player.h"
 
 #include "ModelManager.h"
+#include "ResourceManager.h"
 #include "LoadCSV.h"
 
 //TODO:ジャンプ中の状態遷移はStateとして作るべき？？？？
@@ -91,7 +92,7 @@ void PlayerStateJump::LoopUpdate()
 	if (m_jumpFrame > kJumpFrame)
 	{
 		//ステージモデルを取得して設定
-		auto stageModel = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
+		auto stageModel = ResourceManager::GetInstance().GetHandle("M_STAGECOLLISION");
 		MV1SetScale(stageModel, VGet(0.01f, 0.01f, 0.01f));
 		MV1SetRotationXYZ(stageModel, VGet(0.0f, DX_PI_F, 0.0f));
 

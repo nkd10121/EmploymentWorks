@@ -1,6 +1,7 @@
 ﻿#include "HPBar.h"
 
 #include "ImageManager.h"
+#include "ResourceManager.h"
 
 namespace
 {
@@ -43,7 +44,7 @@ HPBar::HPBar():
 	//画像ハンドルを取得
 	for (auto& id : kId)
 	{
-		m_handles.push_back(ImageManager::GetInstance().GetHandle(id));
+		m_handles.push_back(ResourceManager::GetInstance().GetHandle(id));
 	}
 }
 

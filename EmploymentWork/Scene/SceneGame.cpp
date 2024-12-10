@@ -13,6 +13,8 @@
 #include "MapManager.h"
 #include "TrapManager.h"
 
+#include "ResourceManager.h"
+
 
 #include "Game.h"
 
@@ -67,14 +69,21 @@ void SceneGame::StartLoad()
 {
 	// TODO:この間でリソースをロードする
 
-	//このシーンでロードするべきリソースのデータを取得
-	auto loadResourceData = LoadCSV::GetInstance().GetLoadResourcePath(GetNowSceneName());
+	////このシーンでロードするべきリソースのデータを取得
+	//auto loadResourceData = LoadCSV::GetInstance().GetLoadResourcePath(GetNowSceneName());
 
-	// 非同期読み込みを開始する
+	//SetUseASyncLoadFlag(true);
+
+	////リソースデータ群をみてリソースのロードを開始する
+	//AssortAndLoadResourse(loadResourceData);
+
+	//// デフォルトに戻す
+	//SetUseASyncLoadFlag(false);
+
 	SetUseASyncLoadFlag(true);
 
 	//リソースデータ群をみてリソースのロードを開始する
-	AssortAndLoadResourse(loadResourceData);
+	ResourceManager::GetInstance().Load(GetNowSceneName());
 
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);
@@ -87,10 +96,13 @@ bool SceneGame::IsLoaded() const
 {
 	//TODO:ここでリソースがロード中かどうかを判断する
 
-	if (!ModelManager::GetInstance().IsLoaded())	return false;
-	if (!SoundManager::GetInstance().IsLoaded())	return false;
-	if (!ImageManager::GetInstance().IsLoaded())	return false;
-	if (!ShaderManager::GetInstance().IsLoaded())	return false;
+	//if (!ModelManager::GetInstance().IsLoaded())	return false;
+	//if (!SoundManager::GetInstance().IsLoaded())	return false;
+	//if (!ImageManager::GetInstance().IsLoaded())	return false;
+	//if (!ShaderManager::GetInstance().IsLoaded())	return false;
+
+	if (!ResourceManager::GetInstance().IsLoaded())	return false;
+	
 
 	return true;
 }

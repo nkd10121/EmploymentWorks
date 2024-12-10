@@ -86,11 +86,11 @@ protected:
 	/// </summary>
 	void EndThisScene(bool isPushScene = false);
 
-	/// <summary>
-	/// リソースの仕分けとロード開始をする
-	/// </summary>
-	/// <param name="name">読み込みたいリソースデータ配列</param>
-	void AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data);
+	///// <summary>
+	///// リソースの仕分けとロード開始をする
+	///// </summary>
+	///// <param name="name">読み込みたいリソースデータ配列</param>
+	//void AssortAndLoadResourse(std::list<LoadCSV::ResourceData> data);
 
 public:	/*継承を行わない処理	SceneManagerから呼び出すのはこっち*/
 

@@ -7,6 +7,7 @@
 
 //おそらく一時的な実装
 #include "ModelManager.h"
+#include "ResourceManager.h"
 #include "TrapManager.h"
 
 //軽量化できてるか比較用
@@ -53,7 +54,7 @@ MyLib::Physics::~Physics()
 
 void MyLib::Physics::SetStageCollisionModel(int handle)
 {
-	m_stageCollisionHandle = ModelManager::GetInstance().GetModelHandle("M_STAGECOLLISION");
+	m_stageCollisionHandle = ResourceManager::GetInstance().GetHandle("M_STAGECOLLISION");
 	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
 	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 }
