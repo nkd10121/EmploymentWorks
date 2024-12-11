@@ -1,5 +1,7 @@
 ﻿#include "SceneStrengthen.h"
 
+#include "ResourceManager.h"
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -13,6 +15,7 @@ SceneStrengthen::SceneStrengthen():
 /// </summary>
 SceneStrengthen::~SceneStrengthen()
 {
+	ResourceManager::GetInstance().Clear();
 }
 
 /// <summary>

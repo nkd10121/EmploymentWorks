@@ -134,6 +134,38 @@ int ResourceManager::GetHandle(std::string id)
 
 void ResourceManager::Clear()
 {
+	for (auto& resource : m_resources)
+	{
+		if (!resource->isEternal)
+		{
+			if (resource->kind == Kind::Image)
+			{
+				DeleteGraph(resource->handle);
+			}
+			else if (resource->kind == Kind::Sound)
+			{
+				DeleteSoundMem(resource->handle);
+			}
+			else if (resource->kind == Kind::Model)
+			{
+				MV1DeleteModel(resource->handle);
+			}
+			else if (resource->kind == Kind::Effect)
+			{
+				//エフェクトはDelete処理なし
+			}
+			else if (resource->kind == Kind::Shader)
+			{
+				//シェーダーもDelete処理なし
+			}
+		}
+	}
+
+	//不要になったハンドルをここで削除処理する
+	auto it = remove_if(m_resources.begin(), m_resources.end(), [](auto& v) {
+		return v->isEternal == false;
+		});
+	m_resources.erase(it, m_resources.end());
 }
 
 bool ResourceManager::IsLoaded()
