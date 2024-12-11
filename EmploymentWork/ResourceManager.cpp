@@ -132,10 +132,12 @@ int ResourceManager::GetHandle(std::string id)
 	return -1;
 }
 
-void ResourceManager::Clear()
+void ResourceManager::Clear(std::string sceneName)
 {
 	for (auto& resource : m_resources)
 	{
+		if (resource->sceneName != sceneName)	continue;
+
 		if (!resource->isEternal)
 		{
 			if (resource->kind == Kind::Image)
@@ -236,6 +238,7 @@ const void ResourceManager::LoadResource(const std::vector<std::string>& data)
 		}
 	}
 
+	add->sceneName = data[Order::StageId];
 	add->id = data[Order::Id];
 	add->isEternal = stoi(data[Order::EternalFlag]);
 

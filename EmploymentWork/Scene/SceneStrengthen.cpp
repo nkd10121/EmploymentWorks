@@ -15,7 +15,7 @@ SceneStrengthen::SceneStrengthen():
 /// </summary>
 SceneStrengthen::~SceneStrengthen()
 {
-	ResourceManager::GetInstance().Clear();
+	ResourceManager::GetInstance().Clear(GetNowSceneName());
 }
 
 /// <summary>

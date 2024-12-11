@@ -50,17 +50,8 @@ SceneGame::SceneGame() :
 /// </summary>
 SceneGame::~SceneGame()
 {
-	////staticクラスのデータのリセット
-	//SoundManager::GetInstance().Clear();
-	//ImageManager::GetInstance().Clear();
-
-	//ModelManager::GetInstance().Clear();
-	//EffectManager::GetInstance().Clear();
-
-	//ShaderManager::GetInstance().Clear();
-	
-	ResourceManager::GetInstance().Clear();
-
+	//staticクラスのデータのリセット
+	ResourceManager::GetInstance().Clear(GetNowSceneName());
 
 	MapManager::GetInstance().DeleteModel();
 	TrapManager::GetInstance().Clear();

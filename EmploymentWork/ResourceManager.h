@@ -19,10 +19,11 @@ public:
 	//画像構造体
 	struct Resource
 	{
-		Kind kind;			//種類
-		std::string id;		//ID
-		int handle;			//ハンドル
-		bool isEternal;		//常駐フラグ
+		std::string sceneName;	//読み込んだシーン
+		Kind kind;				//種類
+		std::string id;			//ID
+		int handle;				//ハンドル
+		bool isEternal;			//常駐フラグ
 	};
 
 	struct Sound : public  Resource
@@ -90,7 +91,7 @@ public:
 	/// <summary>
 	/// 常駐フラグがfalseのハンドルを全削除する
 	/// </summary>
-	void Clear();
+	void Clear(std::string sceneName);
 
 	/// <summary>
 	/// ハンドルが読み込まれているかどうか確認
