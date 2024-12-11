@@ -25,8 +25,9 @@ PlayerStateIdle::~PlayerStateIdle()
 /// <summary>
 /// 初期化
 /// </summary>
-void PlayerStateIdle::Init()
+void PlayerStateIdle::Init(std::string id)
 {
+	m_stageColId = id;
 }
 
 /// <summary>

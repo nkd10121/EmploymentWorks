@@ -51,7 +51,7 @@ EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
 /// <summary>
 /// 初期化
 /// </summary>
-void EnemyStateAttack::Init()
+void EnemyStateAttack::Init(std::string id)
 {
 }
 

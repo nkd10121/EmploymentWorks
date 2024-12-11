@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <memory>
 #include <map>
+#include <string>
 
 namespace MyLib {
 
@@ -112,7 +113,7 @@ public:
 	}
 
 public:
-	void SetStageCollisionModel(int handle);
+	void SetStageCollisionModel(std::string id);
 
 	/// <summary>
 	/// 衝突物の登録

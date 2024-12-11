@@ -2,6 +2,8 @@
 #include "Vec3.h"
 #include "CharacterBase.h"
 
+#include <string>
+
 class GameManager;
 
 /// <summary>
@@ -23,7 +25,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="physics">物理クラスポインタ</param>
-	void Init();
+	void Init(std::string stageId);
 	/// <summary>
 	/// 終了
 	/// </summary>
@@ -97,6 +99,8 @@ public:
 
 private:
 	int m_crossbowHandle;
+
+	std::string m_stageId;
 
 	Vec3 m_pos;				//プレイヤーの描画座標
 	Vec3 temp_moveVec;		//入力情報を確認するためのデバッグ用

@@ -99,7 +99,7 @@ void StateBase::ChangeState(StateKind kind)
 		if (kind == StateKind::Idle)
 		{
 			auto pNext = std::make_shared<PlayerStateIdle>(m_pOwn.lock());
-			pNext->Init();
+			pNext->Init(m_stageColId);
 
 			m_pOwn.lock()->ChangeState(pNext);
 			return;
@@ -107,7 +107,7 @@ void StateBase::ChangeState(StateKind kind)
 		else if (kind == StateKind::Walk)
 		{
 			auto pNext = std::make_shared<PlayerStateWalk>(m_pOwn.lock());
-			pNext->Init();
+			pNext->Init(m_stageColId);
 
 			m_pOwn.lock()->ChangeState(pNext);
 			return;
@@ -115,7 +115,7 @@ void StateBase::ChangeState(StateKind kind)
 		else if (kind == StateKind::Dash)
 		{
 			auto pNext = std::make_shared<PlayerStateDash>(m_pOwn.lock());
-			pNext->Init();
+			pNext->Init(m_stageColId);
 
 			m_pOwn.lock()->ChangeState(pNext);
 			return;
@@ -123,7 +123,7 @@ void StateBase::ChangeState(StateKind kind)
 		else if (kind == StateKind::Jump)
 		{
 			auto pNext = std::make_shared<PlayerStateJump>(m_pOwn.lock());
-			pNext->Init();
+			pNext->Init(m_stageColId);
 
 			m_pOwn.lock()->ChangeState(pNext);
 			return;
@@ -137,7 +137,7 @@ void StateBase::ChangeState(StateKind kind)
 		if (kind == StateKind::Idle)
 		{
 			auto pNext = std::make_shared<EnemyStateIdle>(m_pOwn.lock());
-			pNext->Init();
+			pNext->Init(m_stageColId);
 
 			m_pOwn.lock()->ChangeState(pNext);
 			return;
@@ -145,7 +145,7 @@ void StateBase::ChangeState(StateKind kind)
 		else if (kind == StateKind::Walk)
 		{
 			auto pNext = std::make_shared<EnemyStateWalk>(m_pOwn.lock());
-			pNext->Init();
+			pNext->Init(m_stageColId);
 
 			m_pOwn.lock()->ChangeState(pNext);
 			return;
@@ -153,7 +153,7 @@ void StateBase::ChangeState(StateKind kind)
 		else if (kind == StateKind::Attack)
 		{
 			auto pNext = std::make_shared<EnemyStateAttack>(m_pOwn.lock());
-			pNext->Init();
+			pNext->Init(m_stageColId);
 
 			m_pOwn.lock()->ChangeState(pNext);
 			return;

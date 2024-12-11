@@ -52,9 +52,9 @@ MyLib::Physics::~Physics()
 
 }
 
-void MyLib::Physics::SetStageCollisionModel(int handle)
+void MyLib::Physics::SetStageCollisionModel(std::string id)
 {
-	m_stageCollisionHandle = ResourceManager::GetInstance().GetHandle("M_STAGECOLLISION");
+	m_stageCollisionHandle = ResourceManager::GetInstance().GetHandle(id);
 	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
 	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 }

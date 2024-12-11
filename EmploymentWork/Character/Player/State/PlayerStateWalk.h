@@ -22,7 +22,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init()override;
+	void Init(std::string id)override;
 	/// <summary>
 	/// 更新
 	/// </summary>

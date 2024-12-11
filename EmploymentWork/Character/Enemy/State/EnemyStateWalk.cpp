@@ -27,7 +27,7 @@ EnemyStateWalk::EnemyStateWalk(std::shared_ptr<CharacterBase> own) :
 /// <summary>
 /// 初期化
 /// </summary>
-void EnemyStateWalk::Init()
+void EnemyStateWalk::Init(std::string id)
 {
 }
 

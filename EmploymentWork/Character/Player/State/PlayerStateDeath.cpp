@@ -17,8 +17,9 @@ PlayerStateDeath::~PlayerStateDeath()
 {
 }
 
-void PlayerStateDeath::Init()
+void PlayerStateDeath::Init(std::string id)
 {
+	m_stageColId = id;
 }
 
 void PlayerStateDeath::Update()

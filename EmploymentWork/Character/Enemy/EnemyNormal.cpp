@@ -59,7 +59,7 @@ void EnemyNormal::Init()
 	//ステートパターンの初期化
 	m_pState = std::make_shared<EnemyStateIdle>(std::dynamic_pointer_cast<EnemyNormal>(shared_from_this()));
 	m_pState->SetNextKind(StateBase::StateKind::Idle);
-	m_pState->Init();
+	m_pState->Init("");
 
 	//物理データの初期化
 	rigidbody->Init(true);
@@ -154,7 +154,7 @@ void EnemyNormal::Update()
 		//現在のステートを強制的に死亡にする
 		m_pState = std::make_shared<EnemyStateDeath>(std::dynamic_pointer_cast<EnemyBase>(shared_from_this()));
 		m_pState->SetNextKind(StateBase::StateKind::Death);
-		m_pState->Init();
+		m_pState->Init("");
 	}
 
 	//死亡アニメーションが始まっていて

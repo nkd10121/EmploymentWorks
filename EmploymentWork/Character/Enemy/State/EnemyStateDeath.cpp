@@ -19,7 +19,7 @@ EnemyStateDeath::EnemyStateDeath(std::shared_ptr<CharacterBase> own):
 /// <summary>
 /// 初期化
 /// </summary>
-void EnemyStateDeath::Init()
+void EnemyStateDeath::Init(std::string id)
 {
 }
 

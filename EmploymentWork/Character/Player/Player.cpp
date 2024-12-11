@@ -89,15 +89,17 @@ Player::~Player()
 /// <summary>
 /// 初期化
 /// </summary>
-void Player::Init()
+void Player::Init(std::string stageId)
 {
+	m_stageId = stageId;
+
 	//当たり判定の初期化
 	OnEntryPhysics();
 
 	//ステートパターンの初期化
 	m_pState = std::make_shared<PlayerStateIdle>(std::dynamic_pointer_cast<Player>(shared_from_this()));
 	m_pState->SetNextKind(StateBase::StateKind::Idle);
-	m_pState->Init();
+	m_pState->Init(m_stageId);
 
 	//プレイヤーの初期位置設定
 	rigidbody->Init(true);
@@ -245,7 +247,7 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		//現在のステートを強制的に死亡にする
 		m_pState = std::make_shared<PlayerStateDeath>(std::dynamic_pointer_cast<Player>(shared_from_this()));
 		m_pState->SetNextKind(StateBase::StateKind::Death);
-		m_pState->Init();
+		m_pState->Init(m_stageId);
 	}
 
 	//死亡アニメーションが始まっていて
@@ -359,7 +361,7 @@ const void Player::SetClearState()
 
 	//現在のステートを強制的に死亡にする
 	m_pState = std::make_shared<PlayerStateClear>(std::dynamic_pointer_cast<Player>(shared_from_this()));
-	m_pState->Init();
+	m_pState->Init(m_stageId);
 }
 
 /// <summary>

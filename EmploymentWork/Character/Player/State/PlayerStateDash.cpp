@@ -35,8 +35,9 @@ PlayerStateDash::~PlayerStateDash()
 /// <summary>
 /// 初期化
 /// </summary>
-void PlayerStateDash::Init()
+void PlayerStateDash::Init(std::string id)
 {
+	m_stageColId = id;
 }
 
 /// <summary>

@@ -43,8 +43,9 @@ PlayerStateWalk::~PlayerStateWalk()
 /// <summary>
 /// 初期化
 /// </summary>
-void PlayerStateWalk::Init()
+void PlayerStateWalk::Init(std::string id)
 {
+	m_stageColId = id;
 }
 
 /// <summary>

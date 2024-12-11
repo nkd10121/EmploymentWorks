@@ -45,10 +45,12 @@ PlayerStateJump::~PlayerStateJump()
 /// <summary>
 /// 初期化
 /// </summary>
-void PlayerStateJump::Init()
+void PlayerStateJump::Init(std::string id)
 {
 	//上昇状態にする
 	m_updateFunc = &PlayerStateJump::UpUpdate;
+
+	m_stageColId = id;
 }
 
 /// <summary>
@@ -92,7 +94,7 @@ void PlayerStateJump::LoopUpdate()
 	if (m_jumpFrame > kJumpFrame)
 	{
 		//ステージモデルを取得して設定
-		auto stageModel = ResourceManager::GetInstance().GetHandle("M_STAGECOLLISION");
+		auto stageModel = ResourceManager::GetInstance().GetHandle(m_stageColId);
 		MV1SetScale(stageModel, VGet(0.01f, 0.01f, 0.01f));
 		MV1SetRotationXYZ(stageModel, VGet(0.0f, DX_PI_F, 0.0f));
 

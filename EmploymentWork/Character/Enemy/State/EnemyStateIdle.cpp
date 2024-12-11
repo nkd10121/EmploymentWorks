@@ -21,7 +21,7 @@ EnemyStateIdle::EnemyStateIdle(std::shared_ptr<CharacterBase> own) :
 /// <summary>
 /// 初期化
 /// </summary>
-void EnemyStateIdle::Init()
+void EnemyStateIdle::Init(std::string id)
 {
 }
 

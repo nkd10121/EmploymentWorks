@@ -53,7 +53,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	virtual void Init()abstract;
+	virtual void Init(std::string id)abstract;
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -121,6 +121,8 @@ protected:
 
 protected:
 	std::weak_ptr<CharacterBase> m_pOwn;	//所有者のポインタ
+
+	std::string m_stageColId;
 
 	StateKind m_nowState;	//現在のステート
 	StateKind m_nextState;	//現在のステート

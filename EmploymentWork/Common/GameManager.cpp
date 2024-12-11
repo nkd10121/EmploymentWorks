@@ -75,6 +75,8 @@ GameManager::~GameManager()
 void GameManager::Init(int stageIdx)
 {
 	auto info = LoadCSV::GetInstance().LoadStageInfo(stageIdx);
+	m_stageId = info[1];
+
 	for (int i = 1; i < std::stoi(info[3]) + 1; i++)
 	{
 		m_phaseNum.push_back(-i);
@@ -84,16 +86,16 @@ void GameManager::Init(int stageIdx)
 	m_phaseNum.push_back(0);
 
 	//ステージの当たり判定モデルを取得する(描画するため)
-	m_stageModel = ResourceManager::GetInstance().GetHandle(info[1]);
+	m_stageModel = ResourceManager::GetInstance().GetHandle(m_stageId);
 	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
 	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
 
 	//ステージの当たり判定を設定
-	MyLib::Physics::GetInstance().SetStageCollisionModel(m_stageModel);
+	MyLib::Physics::GetInstance().SetStageCollisionModel(m_stageId);
 
 	//プレイヤーの生成
 	m_pPlayer = std::make_shared<Player>();
-	m_pPlayer->Init();
+	m_pPlayer->Init(m_stageId);
 
 	//敵管理クラスの生成
 	m_pEnemyManager = std::make_shared<EnemyManager>();
@@ -208,7 +210,7 @@ void GameManager::Update()
 	{
 		//プレイヤーの生成
 		m_pPlayer = std::make_shared<Player>();
-		m_pPlayer->Init();
+		m_pPlayer->Init(m_stageId);
 		m_pHpUi->Init(m_pPlayer->GetHp());
 	}
 

@@ -16,8 +16,9 @@ PlayerStateClear::~PlayerStateClear()
 {
 }
 
-void PlayerStateClear::Init()
+void PlayerStateClear::Init(std::string id)
 {
+	m_stageColId = id;
 }
 
 void PlayerStateClear::Update()

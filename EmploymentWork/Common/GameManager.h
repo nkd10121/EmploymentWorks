@@ -53,6 +53,8 @@ private:
 
 	std::shared_ptr<HPBar> m_pHpUi;
 
+	std::string m_stageId;
+
 	std::list<int> m_phaseNum;
 	bool m_isCreateEnemy;
 	int m_phaseCount;
