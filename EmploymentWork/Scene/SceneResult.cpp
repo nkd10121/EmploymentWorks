@@ -134,6 +134,7 @@ void SceneResult::SelectNextSceneUpdate()
 		if (m_destinationScene == eDestination::InGame)
 		{
 			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
+			SceneManager::GetInstance().SetStageIdx(SceneManager::GetInstance().GetStageIdx() + 1);
 			EndThisScene();
 			return;
 		}
