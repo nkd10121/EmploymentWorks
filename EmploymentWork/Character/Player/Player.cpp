@@ -185,7 +185,7 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 			{
 				std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
 				shot->Init();
-				shot->Set(m_crossbowPos, (cameraRayCastRet - m_crossbowPos).Normalize(), m_status.atk);
+				shot->Set(m_stageId,m_crossbowPos, (cameraRayCastRet - m_crossbowPos).Normalize(), m_status.atk);
 
 				//弾の管理をゲームシーンに任せる
 				pGameManager->AddObject(shot);

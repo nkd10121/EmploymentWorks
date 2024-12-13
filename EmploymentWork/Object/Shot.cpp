@@ -20,6 +20,7 @@ Shot::Shot(GameObjectTag tag):
 	ObjectBase(Collidable::Priority::Low, tag),
 	m_moveDir(),
 	m_frameCount(0),
+	m_mapHandle(0),
 	m_atk(0)
 {
 	//当たり判定の生成
@@ -33,7 +34,7 @@ Shot::Shot(GameObjectTag tag):
 /// </summary>
 Shot::~Shot()
 {
-
+	MV1DeleteModel(m_mapHandle);
 }
 
 /// <summary>
@@ -60,8 +61,13 @@ void Shot::Init()
 /// <summary>
 /// 生成座標と向きと攻撃力を設定
 /// </summary>
-void Shot::Set(const Vec3& pos, const Vec3& m_dir, const int& atk)
+void Shot::Set(std::string stageId, const Vec3& pos, const Vec3& m_dir, const int& atk)
 {
+	m_mapHandle = ResourceManager::GetInstance().GetHandle(stageId);
+	MV1SetScale(m_mapHandle, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
+	MV1SetRotationXYZ(m_mapHandle, VGet(0.0f, DX_PI_F, 0.0f));	//回転
+
+
 	rigidbody->SetPos(pos + m_dir);
 	m_moveDir = m_dir;
 	m_atk = atk;
@@ -91,17 +97,17 @@ void Shot::Update()
 	rigidbody->SetVelocity(dirNorm * 4.0f);
 
 	/*地形との当たり判定を検出し、地形と当たっていたら自身を削除する*/
-	//auto hitDim = MV1CollCheck_Sphere(m_mapHandle, -1, rigidbody->GetPosVECTOR(), kCollisionRadius);
+	auto hitDim = MV1CollCheck_Sphere(m_mapHandle, -1, rigidbody->GetPosVECTOR(), kCollisionRadius);
 
-	//// 検出した周囲のポリゴン情報を開放する
-	//MV1CollResultPolyDimTerminate(hitDim);
+	// 検出した周囲のポリゴン情報を開放する
+	MV1CollResultPolyDimTerminate(hitDim);
 
-	////もし地形と当たっていたら
-	//if (hitDim.HitNum != 0)
-	//{
-	//	//自身を削除する
-	//	m_isExist = false;
-	//}
+	//もし地形と当たっていたら
+	if (hitDim.HitNum != 0)
+	{
+		//自身を削除する
+		m_isExist = false;
+	}
 
 	//何も当たらずに飛んで行ったとき、20秒後に自身を削除する
 	if (m_frameCount > 60 * 10)

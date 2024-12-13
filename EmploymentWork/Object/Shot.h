@@ -28,7 +28,7 @@ public:
 	/// <param name="pos">生成座標</param>
 	/// <param name="m_dir">向き</param>
 	/// <param name="atk">攻撃力</param>
-	void Set(const Vec3& pos, const Vec3& m_dir, const int& atk);
+	void Set(std::string stageId,const Vec3& pos, const Vec3& m_dir, const int& atk);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -61,7 +61,7 @@ private:
 
 	int m_frameCount;	//フレーム数
 
-	//int m_mapHandle;
+	int m_mapHandle;
 
 	int m_atk;		//攻撃力
 };
