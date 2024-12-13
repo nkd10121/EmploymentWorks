@@ -65,4 +65,5 @@ private:
 	bool m_isEnd;
 
 	int m_stageModel;	//モデルハンドル(仮)
+	int m_skyBoxHandle;
 };

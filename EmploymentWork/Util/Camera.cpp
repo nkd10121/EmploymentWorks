@@ -9,7 +9,7 @@ namespace
 	constexpr float kCameraHeight = 10.0f;
 
 	constexpr float kCameraNear = 1.0f;
-	constexpr float kCameraFar = 360.0f;
+	constexpr float kCameraFar = 360.0f*2;
 
 	constexpr float kCameraRadius = kCameraNear + 0.2f;
 

@@ -48,6 +48,7 @@ GameManager::GameManager() :
 GameManager::~GameManager()
 {
 	MV1DeleteModel(m_stageModel);
+	MV1DeleteModel(m_skyBoxHandle);
 
 	m_pPlayer->Finalize();
 
@@ -118,6 +119,10 @@ void GameManager::Init(int stageIdx)
 	//m_pObjects.emplace_back(std::make_shared<HealPortion>());
 	//m_pObjects.back()->Init();
 	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
+
+	m_skyBoxHandle = ResourceManager::GetInstance().GetHandle("M_SKYBOX");
+	float scale = 0.6f;
+	MV1SetScale(m_skyBoxHandle, VGet(scale, scale, scale));
 
 	m_slotBgHandle = ResourceManager::GetInstance().GetHandle("I_SLOTBG");
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
@@ -274,6 +279,7 @@ void GameManager::Update()
 	//エフェクトの更新
 	EffectManager::GetInstance().Update();
 
+	MV1SetPosition(m_skyBoxHandle,m_pPlayer->GetPos().ToVECTOR());
 
 	if (m_phaseNum.front() == 0)
 	{
@@ -292,6 +298,7 @@ void GameManager::Update()
 /// </summary>
 void GameManager::Draw()
 {
+	MV1DrawModel(m_skyBoxHandle);
 	//ステージの描画
 	MapManager::GetInstance().Draw();
 
