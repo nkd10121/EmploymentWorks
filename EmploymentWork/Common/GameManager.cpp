@@ -294,9 +294,9 @@ void GameManager::Draw()
 {
 	//ステージの描画
 	MapManager::GetInstance().Draw();
-	MV1DrawModel(m_stageModel);
 
 #ifdef _DEBUG	//デバッグ描画
+	MV1DrawModel(m_stageModel);
 	MyLib::DebugDraw::Draw3D();
 #endif
 
