@@ -8,6 +8,12 @@
 
 TrapManager* TrapManager::m_instance = nullptr;
 
+namespace
+{
+	const std::string kStageDataPathFront = "data/stageData/";
+	const std::string kStageDataPathBack = ".tLoc";
+}
+
 TrapManager::TrapManager()
 {
 }
@@ -28,11 +34,11 @@ const bool TrapManager::CheckNeighbor(std::list<std::weak_ptr<Trap>> check) cons
 
 void TrapManager::AddTrapPos(Vec3 pos)
 {
-	std::shared_ptr<Trap> add = std::make_shared<Trap>();
-	add->isPlaced = false;
-	add->pos = pos;
-	add->neighborTraps.clear();
-	m_trapPoss.emplace_back(add);
+	//std::shared_ptr<Trap> add = std::make_shared<Trap>();
+	//add->isPlaced = false;
+	//add->pos = pos;
+	//add->neighborTraps.clear();
+	//m_trapPoss.emplace_back(add);
 }
 
 void TrapManager::Update()
@@ -82,18 +88,40 @@ void TrapManager::Draw()
 	DrawFormatString(64, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 
-void TrapManager::SetUp(int point)
+void TrapManager::Load(const char* stageName)
 {
+	//開くファイルのハンドルを取得
+	int handle = FileRead_open((kStageDataPathFront + stageName + kStageDataPathBack).c_str());
+
+	//読み込むオブジェクト数が何個あるか取得
+	int dataCnt = 0;
+	FileRead_read(&dataCnt, sizeof(dataCnt), handle);
+	//読み込むオブジェクト数分の配列に変更する
+	m_trapPoss.resize(dataCnt);
+
 	for (auto& trap : m_trapPoss)
 	{
-		for (auto& temp : m_trapPoss)
-		{
-			if (abs((trap->pos - temp->pos).Length()) > 0.0f && abs((trap->pos - temp->pos).Length()) < 12.0f)
-			{
-				trap->neighborTraps.emplace_back(temp);
-			}
-		}
+		trap = std::make_shared<Trap>();
+		//座標を取得する
+		FileRead_read(&trap->pos, sizeof(Vec3), handle);
+		trap->isPlaced = false;
 	}
+
+	FileRead_close(handle);
+}
+
+void TrapManager::SetUp(int point)
+{
+	//for (auto& trap : m_trapPoss)
+	//{
+	//	for (auto& temp : m_trapPoss)
+	//	{
+	//		if (abs((trap->pos - temp->pos).Length()) > 0.0f && abs((trap->pos - temp->pos).Length()) < 12.0f)
+	//		{
+	//			trap->neighborTraps.emplace_back(temp);
+	//		}
+	//	}
+	//}
 
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_trapPoint = point;

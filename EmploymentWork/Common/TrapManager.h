@@ -68,6 +68,8 @@ public:
 
 	void Draw();
 
+	void Load(const char* stageName);
+
 	void SetUp(int point);
 
 	void Clear();

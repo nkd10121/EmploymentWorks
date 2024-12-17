@@ -111,10 +111,17 @@ public class TrapPlacementDetector : MonoBehaviour
         //バイナリとして書き込む
         BinaryWriter binaryWriter = new BinaryWriter(fs);
 
+        binaryWriter.Write(trapPositions.Count);
+
         foreach (var pos in trapPositions)
         {
             WriteVector(binaryWriter, pos);
+            Debug.Log(pos);
         }
+        //書き込み終えたらCloseする
+        fs.Close();
+
+        return;
     }
 
     void WriteVector(BinaryWriter bw, Vector3 vec)

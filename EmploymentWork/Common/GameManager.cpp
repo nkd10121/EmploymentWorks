@@ -133,6 +133,7 @@ void GameManager::Init(int stageIdx)
 	m_pHpUi = std::make_shared<HPBar>();
 	m_pHpUi->Init(m_pPlayer->GetHp());
 
+	TrapManager::GetInstance().Load(info[0].c_str());
 	TrapManager::GetInstance().SetUp(1000);
 }
 
