@@ -9,6 +9,7 @@ TagManager:
   - wall
   - stairs
   - stairsWall
+  - TrapPlaceable
   layers:
   - Default
   - TransparentFX
