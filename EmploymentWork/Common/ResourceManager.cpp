@@ -70,7 +70,7 @@ void ResourceManager::Load(std::string sceneName)
 			if (resource->id == data[Order::Id])
 			{
 #ifdef _DEBUG	//デバッグ描画
-				assert(0 && "%sはすでにロードされています", data.id.c_str());
+				assert(0 && "このIDはすでにロードされています");
 #endif
 				continue;
 			}
