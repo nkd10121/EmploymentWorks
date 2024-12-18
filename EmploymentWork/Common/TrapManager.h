@@ -12,6 +12,7 @@ public:
 	{
 		//std::shared_ptr<TrapBase> trap;
 		Vec3 pos;
+		Vec3 norm;			//法線ベクトル
 		bool isPlaced;
 		std::list<std::weak_ptr<Trap>> neighborTraps;
 	};

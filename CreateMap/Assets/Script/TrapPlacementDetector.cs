@@ -46,9 +46,11 @@ public class TrapPlacementDetector : MonoBehaviour
                     foreach (Vector3 dir in directions)
                     {
                         Vector3 retHitPos = Vector3.zero;
-                        if (CheckSurface(origin, dir, ref retHitPos))
+                        Vector3 retNormVec = Vector3.zero;
+                        if (CheckSurface(origin, dir, ref retHitPos,ref retNormVec))
                         {
                             trapPositions.Add(retHitPos); // 設置可能座標を追加
+                            trapPositions.Add(retNormVec); // 上の座標の法線ベクトルを追加
                         }
                     }
                 }
@@ -56,7 +58,7 @@ public class TrapPlacementDetector : MonoBehaviour
         }
     }
 
-    bool CheckSurface(Vector3 origin, Vector3 direction, ref Vector3 ret)
+    bool CheckSurface(Vector3 origin, Vector3 direction, ref Vector3 retPos,ref Vector3 normVec)
     {
         RaycastHit hit;
         if (Physics.Raycast(origin, direction, out hit, raycastLength, terrainMask))
@@ -70,7 +72,8 @@ public class TrapPlacementDetector : MonoBehaviour
                 // オブジェクトに特定のタグがある場合のみ有効
                 if (hit.collider.CompareTag("TrapPlaceable"))
                 {
-                    ret = hit.point;
+                    retPos = hit.point;
+                    normVec = normal;
                     return true;
                 }
             }

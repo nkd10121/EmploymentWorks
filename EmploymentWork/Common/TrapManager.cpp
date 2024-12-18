@@ -104,6 +104,7 @@ void TrapManager::Load(const char* stageName)
 		trap = std::make_shared<Trap>();
 		//座標を取得する
 		FileRead_read(&trap->pos, sizeof(Vec3), handle);
+		FileRead_read(&trap->norm, sizeof(Vec3), handle);
 		trap->isPlaced = false;
 	}
 
@@ -112,16 +113,19 @@ void TrapManager::Load(const char* stageName)
 
 void TrapManager::SetUp(int point)
 {
-	//for (auto& trap : m_trapPoss)
-	//{
-	//	for (auto& temp : m_trapPoss)
-	//	{
-	//		if (abs((trap->pos - temp->pos).Length()) > 0.0f && abs((trap->pos - temp->pos).Length()) < 12.0f)
-	//		{
-	//			trap->neighborTraps.emplace_back(temp);
-	//		}
-	//	}
-	//}
+	for (auto& trap : m_trapPoss)
+	{
+		for (auto& temp : m_trapPoss)
+		{
+			if (abs((trap->pos - temp->pos).Length()) > 0.0f && abs((trap->pos - temp->pos).Length()) < 12.0f)
+			{
+				if (Dot(trap->norm.Normalize(),temp->norm.Normalize()) >= 1.0f)
+				{
+					trap->neighborTraps.emplace_back(temp);
+				}
+			}
+		}
+	}
 
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_trapPoint = point;
@@ -161,7 +165,7 @@ void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
 			m_trapPoint -= add->GetCost();
 
 			//初期化
-			add->Init(debugTrap->pos);
+			add->Init(debugTrap->pos,debugTrap->norm);
 
 			//追加
 			m_traps.emplace_back(add);

@@ -15,8 +15,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="physics">物理クラス</param>
-	void Init(Vec3 pos);
+	void Init(Vec3 pos,Vec3 norm);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -32,5 +31,8 @@ private:
 
 	Vec3 m_spikePos;	//スパイクモデルの座標	
 	Vec3 m_spikePosInit;	//スパイクモデルの初期座標	
+
+	Vec3 m_norm;
+	Vec3 m_movedPos;		//スパイクモデルの移動量
 };
 

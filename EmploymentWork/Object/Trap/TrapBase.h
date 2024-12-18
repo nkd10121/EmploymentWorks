@@ -38,12 +38,6 @@ public:
 	void LoadModel()override;
 
 	/// <summary>
-	/// 座標を設定
-	/// </summary>
-	/// <param name="pos">設定座標</param>
-	void SetPosition(Vec3 pos)override;
-
-	/// <summary>
 	/// 終了させる
 	/// </summary>
 	void End();

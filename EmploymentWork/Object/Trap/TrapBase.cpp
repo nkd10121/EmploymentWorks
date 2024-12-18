@@ -31,9 +31,6 @@ void TrapBase::LoadModel()
 {
 }
 
-void TrapBase::SetPosition(Vec3 pos)
-{
-}
 
 void TrapBase::End()
 {
