@@ -227,11 +227,11 @@
     <ClCompile Include="Common\ShaderManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateClear.cpp">
+    <ClCompile Include="Character\Player\State\PlayerStateClear.cpp">
       <Filter>ソース ファイル\Character\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Common\ResourceManager.cpp">
+      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,10 +415,12 @@
     <ClInclude Include="Common\ShaderManager.h">
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStateClear.h">
+    <ClInclude Include="Character\Player\State\PlayerStateClear.h">
       <Filter>ソース ファイル\Character\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Common\ResourceManager.h">
+      <Filter>ソース ファイル\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">
