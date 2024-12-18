@@ -103,7 +103,7 @@ VS_OUTPUT main(VS_INPUT VSInput)
 	// 出力パラメータセット ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++( 開始 )
 
 	// テクスチャ座標変換行列による変換を行った結果のテクスチャ座標をセット
-    VSOutput.TexCoords0 = VSInput.TexCoords0;
+    VSOutput.TexCoords0 = VSInput.TexCoords0.xy;
 
 	// 出力パラメータセット ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++( 終了 )
     VSOutput.Diffuse = VSInput.Diffuse/* * (max(saturate(dot(VSInput.Normal, light)), 0.3))*/;
