@@ -98,7 +98,7 @@ public class TrapPlacementDetector : MonoBehaviour
     void OutPutTrapPositionData()
     {
         //出力先を指定する
-        string fileName = EditorUtility.SaveFilePanel("出力ファイル", "", SceneManager.GetActiveScene().name, "tLoc");
+        string fileName = EditorUtility.SaveFilePanel("罠設置可能座標データの出力先を選んでください", "", SceneManager.GetActiveScene().name, "tLoc");
 
         //出力先がなにも指定されなかったとき(キャンセルされたとき)
         if (fileName == "")
