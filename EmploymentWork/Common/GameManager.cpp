@@ -76,6 +76,7 @@ GameManager::~GameManager()
 void GameManager::Init(int stageIdx)
 {
 	auto info = LoadCSV::GetInstance().LoadStageInfo(stageIdx);
+	auto stageName = info[0];
 	m_stageId = info[1];
 
 	for (int i = 1; i < std::stoi(info[3]) + 1; i++)
@@ -100,7 +101,8 @@ void GameManager::Init(int stageIdx)
 
 	//敵管理クラスの生成
 	m_pEnemyManager = std::make_shared<EnemyManager>();
-	m_pEnemyManager->Init(info[0].c_str());
+	m_pEnemyManager->Init(stageName.c_str());
+	m_pEnemyManager->LoadWayPoint(stageName.c_str());
 
 	//カメラの生成
 	m_pCamera = std::make_shared<Camera>();
@@ -113,7 +115,7 @@ void GameManager::Init(int stageIdx)
 
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
-	MapManager::GetInstance().Load(info[0].c_str());
+	MapManager::GetInstance().Load(stageName.c_str());
 
 	////DEBUG:ポーションを生成
 	//m_pObjects.emplace_back(std::make_shared<HealPortion>());
@@ -133,7 +135,7 @@ void GameManager::Init(int stageIdx)
 	m_pHpUi = std::make_shared<HPBar>();
 	m_pHpUi->Init(m_pPlayer->GetHp());
 
-	TrapManager::GetInstance().Load(info[0].c_str());
+	TrapManager::GetInstance().Load(stageName.c_str());
 	TrapManager::GetInstance().SetUp(10000);
 }
 

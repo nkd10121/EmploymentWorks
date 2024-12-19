@@ -18,6 +18,12 @@ namespace
 	};
 }
 
+namespace
+{
+	const std::string kStageDataPathFront = "data/stageData/";
+	const std::string kStageDataPathBack = ".Way";
+}
+
 EnemyManager::EnemyManager():
 	m_deadEnemyNum(0)
 {
@@ -93,6 +99,48 @@ void EnemyManager::Draw()
 	for (auto& enemy : m_pEnemies)
 	{
 		enemy->Draw();
+	}
+}
+
+void EnemyManager::LoadWayPoint(const char* stageName)
+{
+	//開くファイルのハンドルを取得
+	int handle = FileRead_open((kStageDataPathFront + stageName + kStageDataPathBack).c_str());
+
+	//読み込むオブジェクト数が何個あるか取得
+	int dataCnt = 0;
+	FileRead_read(&dataCnt, sizeof(dataCnt), handle);
+	//読み込むオブジェクト数分の配列に変更する
+	m_wayPoints.resize(dataCnt);
+
+	for (auto& wp : m_wayPoints)
+	{
+		//名前のバイト数を取得する
+		byte nameCnt = 0;
+		FileRead_read(&nameCnt, sizeof(nameCnt), handle);
+		//名前のサイズを変更する
+		wp.name.resize(nameCnt);
+		//名前を取得する
+		FileRead_read(wp.name.data(), sizeof(char) * static_cast<int>(wp.name.size()), handle);
+		//座標を取得する
+		FileRead_read(&wp.pos, sizeof(wp.pos), handle);
+
+		//次のウェイポイント候補数が何個あるか取得
+		int nextPointCnt = 0;
+		FileRead_read(&nextPointCnt, sizeof(nextPointCnt), handle);
+		//候補数分のサイズに変更する
+		wp.nextPointName.resize(nextPointCnt);
+
+		for (auto& nextWp : wp.nextPointName)
+		{
+			//名前のバイト数を取得する
+			byte nextWpNameCnt = 0;
+			FileRead_read(&nextWpNameCnt, sizeof(nextWpNameCnt), handle);
+			//名前のサイズを変更する
+			nextWp.resize(nextWpNameCnt);
+			//名前を取得する
+			FileRead_read(nextWp.data(), sizeof(char) * static_cast<int>(nextWp.size()), handle);
+		}
 	}
 }
 

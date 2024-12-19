@@ -24,6 +24,14 @@ public:
 
 		bool isCreated = false;		//生成済みかどうか
 	};
+
+	struct WayPoint
+	{
+		std::string name;
+		Vec3 pos;
+		std::list<std::string> nextPointName;
+	};
+
 public:
 	EnemyManager();
 	virtual ~EnemyManager();
@@ -31,6 +39,8 @@ public:
 	void Init(std::string stageName);
 	bool Update(int phase, Vec3 cameraPos, Vec3 angle);
 	void Draw();
+
+	void LoadWayPoint(const char* stageName);
 
 	void Finalize();
 
@@ -46,6 +56,8 @@ private:
 	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列
 	std::map<int, std::list<EnemyCreateInfo>> m_createEnemyInfo;
 	std::unordered_map<int, int> m_enemyNum;	//それぞれのフェーズで何体の敵を生成する予定か保存
+
+	std::list<WayPoint> m_wayPoints;
 
 	Vec3 m_rayCastRetPos;
 
