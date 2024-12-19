@@ -4,6 +4,7 @@
 #include "CharacterBase.h"
 #include "EnemyBase.h"
 
+#include "Vec2.h"
 #include "LoadCSV.h"
 
 namespace
@@ -62,9 +63,27 @@ void EnemyStateWalk::Update()
 	}
 	else
 	{
-		//索敵範囲内にプレイヤーがいなかったら待機状態に遷移する
-		ChangeState(StateBase::StateKind::Idle);
-		return;
+		//索敵範囲内にプレイヤーがいなかったらルートに沿って移動する
+		auto nextPos = own->GetNextPos();
+		Vec2 nextPosXZ = Vec2(nextPos.x, nextPos.z);
+		auto ownPos = own->GetRigidbody()->GetPos();
+		Vec2 ownPosXZ = Vec2(ownPos.x, ownPos.z);
+
+		if (abs((nextPosXZ - ownPosXZ).Length()) <= 3.0f)
+		{
+			own->AddRouteIdx();
+			nextPos = own->GetNextPos();
+		}
+
+
+		moveVec = nextPos - own->GetRigidbody()->GetPos();
+
+		//移動ベクトルを計算する
+		moveVec = moveVec.Normalize() * own->GetMoveSpeed();
+
+		////索敵範囲内にプレイヤーがいなかったら待機状態に遷移する
+		//ChangeState(StateBase::StateKind::Idle);
+		//return;
 	}
 
 	//体を移動方向に向ける

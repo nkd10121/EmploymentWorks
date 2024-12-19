@@ -15,6 +15,7 @@ EnemyBase::EnemyBase() :
 	kind(),
 	m_isExist(false),
 	m_isStartDeathAnimation(false),
+	m_routeIdx(0),
 	m_collisionRadius(0.0f),
 	m_collisionSize(0.0f),
 	m_drawPos(),

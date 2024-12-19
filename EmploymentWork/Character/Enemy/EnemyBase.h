@@ -148,6 +148,17 @@ public:
 	const void DeleteAttackCollision();
 
 	/// <summary>
+	/// ルートインデックスを更新する
+	/// </summary>
+	/// <returns></returns>
+	const void AddRouteIdx() { m_routeIdx++; }
+	/// <summary>
+	/// ルートインデックスのウェイポイント座標を取得する
+	/// </summary>
+	/// <returns></returns>
+	const Vec3 GetNextPos()const { return m_route[m_routeIdx].pos; }
+
+	/// <summary>
 	/// モデルハンドルを取得
 	/// カメラとのレイキャストをするため
 	/// </summary>
@@ -168,6 +179,7 @@ protected:
 	bool m_isStartDeathAnimation;	//死亡アニメーションを開始するか
 
 	std::vector<EnemyManager::WayPoint> m_route;	//移動ルート
+	int m_routeIdx;
 
 	float m_collisionRadius;	//当たり判定の半径
 	float m_collisionSize;		//当たり判定のサイズ
