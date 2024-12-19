@@ -29,7 +29,7 @@ public:
 	{
 		std::string name;
 		Vec3 pos;
-		std::list<std::string> nextPointName;
+		std::vector<std::string> nextPointName;
 	};
 
 public:
@@ -40,7 +40,13 @@ public:
 	bool Update(int phase, Vec3 cameraPos, Vec3 angle);
 	void Draw();
 
+	/// <summary>
+	/// ウェイポイントをロード
+	/// </summary>
+	/// <param name="stageName">ステージ名</param>
 	void LoadWayPoint(const char* stageName);
+	//
+	std::vector<WayPoint> GetRoute();
 
 	void Finalize();
 

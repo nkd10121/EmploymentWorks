@@ -152,8 +152,8 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::
 		if (sendCol->collideTag == MyLib::ColliderBase::CollisionTag::Normal)
 		{
 			EnemyBase* col = dynamic_cast<EnemyBase*>(send.get());
-			col->Finalize();
-			col->End();
+			//col->Finalize();
+			//col->End();
 
 			m_hp--;
 

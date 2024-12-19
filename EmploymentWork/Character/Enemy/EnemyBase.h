@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CharacterBase.h"
+#include "EnemyManager.h"
 
 /// <summary>
 /// 敵の基底クラス
@@ -40,6 +41,12 @@ public:
 	/// 描画
 	/// </summary>
 	virtual void Draw() {};
+
+	/// <summary>
+	/// 移動ルートを設定する
+	/// </summary>
+	/// <param name="wayPoints">移動ルート</param>
+	void SetRoute(const std::vector<EnemyManager::WayPoint> wayPoints);
 
 	/// <summary>
 	/// 座標を設定
@@ -159,6 +166,8 @@ protected:
 	EnemyKind kind;		//種類
 	bool m_isExist;		//存在フラグ
 	bool m_isStartDeathAnimation;	//死亡アニメーションを開始するか
+
+	std::vector<EnemyManager::WayPoint> m_route;	//移動ルート
 
 	float m_collisionRadius;	//当たり判定の半径
 	float m_collisionSize;		//当たり判定のサイズ

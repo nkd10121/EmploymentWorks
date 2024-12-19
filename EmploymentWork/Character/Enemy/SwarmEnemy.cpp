@@ -67,6 +67,9 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 	for (auto& enemy : m_swarm)
 	{
 		enemy->Update();
+
+		if (!enemy->GetIsExist()) continue;
+
 		auto p = enemy->GetRigidbody()->GetPos();
 		pos.emplace_back(p);
 

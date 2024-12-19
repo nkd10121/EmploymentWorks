@@ -5,6 +5,8 @@
 
 #include "LoadCSV.h"
 
+#include <cassert>
+
 namespace
 {
 	const unsigned int kColor[6]
@@ -106,6 +108,9 @@ void EnemyManager::LoadWayPoint(const char* stageName)
 {
 	//開くファイルのハンドルを取得
 	int handle = FileRead_open((kStageDataPathFront + stageName + kStageDataPathBack).c_str());
+#ifdef _DEBUG
+	assert(handle != 0 && "ウェイポイントデータファイルが開けませんでした");
+#endif
 
 	//読み込むオブジェクト数が何個あるか取得
 	int dataCnt = 0;
@@ -144,6 +149,61 @@ void EnemyManager::LoadWayPoint(const char* stageName)
 	}
 }
 
+std::vector<EnemyManager::WayPoint> EnemyManager::GetRoute()
+{
+	//最終的に返す値
+	std::vector<WayPoint> ret;
+
+	//startと名前の付いたWayPointを開始地点とする
+	std::vector<WayPoint> startWp;
+	for (auto& wp : m_wayPoints)
+	{
+		if (wp.name == "start")
+		{
+			startWp.push_back(wp);
+		}
+	}
+
+	//念のためstartが見つからなかったらエラーが出るようにしておく
+#ifdef _DEBUG
+	assert(startWp.size() != 0 && "スタートウェイポイントが見つかっていません");
+#endif
+	//TODO:おそらく複数ある場合が存在するためstartWpの中から一つ選ぶ必要がある
+	//			12.19時点では一旦startWp[0]をスタートとする処理を書く
+
+	//スタートウェイポイントを追加する
+	ret.push_back(startWp[0]);
+
+
+	int idx = 0;
+	//
+	while (true)
+	{
+		//もし最後に入れたウェイポイントの接続先がなかったら抜けるようにする
+		if (ret[idx].nextPointName.size() == 0)
+		{
+			break;
+		}
+
+		//接続先の中からランダムに選ぶ
+		int rand = GetRand(ret[idx].nextPointName.size() - 1);
+		auto addWpName = ret[idx].nextPointName[rand];
+
+		for (auto& wp : m_wayPoints)
+		{
+			if (wp.name == addWpName)
+			{
+				ret.push_back(wp);
+				break;
+			}
+		}
+
+		idx++;
+	}
+
+	return ret;
+}
+
 void EnemyManager::Finalize()
 {
 	for (auto& enemy : m_pEnemies)
@@ -171,7 +231,7 @@ void EnemyManager::CreateEnemy(int phaseNum)
 		if (data.enemyName == "EnemyNormal")
 		{
 			auto add = std::make_shared<EnemyNormal>();
-			add->SetPos(Vec3(-48.0f + 16 * i, 8.0f, -48.0f));
+			add->SetRoute(GetRoute());
 			add->Init();
 			addSwarm->AddSwarm(add);
 

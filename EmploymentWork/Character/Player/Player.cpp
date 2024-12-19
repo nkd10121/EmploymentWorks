@@ -289,9 +289,9 @@ void Player::Draw()
 	DrawLine3D(m_crossbowPos.ToVECTOR(), target.ToVECTOR(), 0x00ff00);
 
 	//入力値の確認
-	DrawFormatString(0, 16, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
+	DrawFormatString(0, 480, 0xff0000, "入力値　: %.3f,%.3f,%.3f", temp_moveVec.x, temp_moveVec.y, temp_moveVec.z);
 	auto pos = rigidbody->GetPos();
-	DrawFormatString(280, 16, 0xff0000, "座標　: %.3f,%.3f,%.3f", pos.x, pos.y, pos.z);
+	DrawFormatString(0, 496, 0xff0000, "座標　: %.3f,%.3f,%.3f", pos.x, pos.y, pos.z);
 	DrawFormatString(0, 80, 0xff0000, "%d", MV1GetAttachAnim(m_modelHandle, m_currentAnimNo));
 	//ステートパターンの確認
 	m_pState->DebugDrawState(0, 32);

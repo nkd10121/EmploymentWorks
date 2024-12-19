@@ -32,6 +32,16 @@ EnemyBase::~EnemyBase()
 	MV1DeleteModel(m_modelHandle);
 }
 
+void EnemyBase::SetRoute(const std::vector<EnemyManager::WayPoint> wayPoints)
+{
+	for (auto& wp : wayPoints)
+	{
+		auto add = wp;
+		add.pos.y += 6.0f;
+		m_route.push_back(add);
+	}
+}
+
 /// <summary>
 /// 座標を設定
 /// </summary>

@@ -50,6 +50,9 @@ EnemyNormal::~EnemyNormal()
 /// </summary>
 void EnemyNormal::Init()
 {
+	//スタートウェイポイントの座標に設定する
+	SetPos(m_route[0].pos);
+
 	//当たり判定の初期化
 	OnEntryPhysics();
 
@@ -77,7 +80,7 @@ void EnemyNormal::Init()
 	m_preAnimIdx = 0;
 	m_nowAnimIdx = 0;
 
-	//プレイヤーのステータス取得
+	//ステータス取得
 	m_status = LoadCSV::GetInstance().LoadStatus(m_characterName.c_str());
 	//最大HPを設定しておく
 	m_hpMax = m_status.hp;
@@ -112,6 +115,8 @@ void EnemyNormal::Init()
 
 		sphereCol->SetOffsetPos(vec);
 	}
+
+
 
 	//存在フラグをtrueにする
 	m_isExist = true;
