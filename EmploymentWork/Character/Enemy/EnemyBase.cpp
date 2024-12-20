@@ -5,6 +5,8 @@ namespace
 	//攻撃判定の半径
 	constexpr float kAttackCollisionRadius = 4.0f;
 	constexpr float kAttackCollisionDirection = 4.0f;
+
+	constexpr int kRandMax = 12;
 }
 
 /// <summary>
@@ -38,7 +40,11 @@ void EnemyBase::SetRoute(const std::vector<EnemyManager::WayPoint> wayPoints)
 	for (auto& wp : wayPoints)
 	{
 		auto add = wp;
+		int rand = GetRand(kRandMax) - kRandMax/2;
+		add.pos.x += rand;
 		add.pos.y += 6.0f;
+		rand = GetRand(kRandMax) - kRandMax/2;
+		add.pos.z += rand;
 		m_route.push_back(add);
 	}
 }
@@ -73,10 +79,15 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std
 const void EnemyBase::SetModelRotation(Vec3 rot) const
 {
 	MV1SetRotationXYZ(m_modelHandle, rot.ToVECTOR());
+
+}
+
+const void EnemyBase::SetHeadCollisionFrontVec(Vec3 vec) const
+{
 	auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Head);
 	if (col != nullptr)
 	{
-		col->collide->localPos.SetFrontPos(m_playerPos);
+		col->collide->localPos.SetFrontPos(vec);
 	}
 }
 

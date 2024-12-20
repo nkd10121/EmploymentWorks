@@ -1,5 +1,5 @@
 ﻿#include "EnemyNormal.h"
-#include "EnemyStateIdle.h"
+#include "EnemyStateWalk.h"
 #include "EnemyStateDeath.h"
 
 #include "Player.h"
@@ -60,8 +60,8 @@ void EnemyNormal::Init()
 	m_collisionSize = kCollisionCapsuleSize;
 
 	//ステートパターンの初期化
-	m_pState = std::make_shared<EnemyStateIdle>(std::dynamic_pointer_cast<EnemyNormal>(shared_from_this()));
-	m_pState->SetNextKind(StateBase::StateKind::Idle);
+	m_pState = std::make_shared<EnemyStateWalk>(std::dynamic_pointer_cast<EnemyNormal>(shared_from_this()));
+	m_pState->SetNextKind(StateBase::StateKind::Walk);
 	m_pState->Init("");
 
 	//物理データの初期化
@@ -76,7 +76,7 @@ void EnemyNormal::Init()
 	MV1SetPosition(m_modelHandle, m_drawPos.ToVECTOR());
 
 	//待機アニメーションを設定
-	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "IDLE"));
+	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "WALK_FORWARD"));
 	m_preAnimIdx = 0;
 	m_nowAnimIdx = 0;
 
@@ -215,7 +215,7 @@ void EnemyNormal::Draw()
 
 #ifdef _DEBUG	//デバッグ描画
 	//ステートパターンの確認
-	m_pState->DebugDrawState(128, 32);
+	m_pState->DebugDrawState(0, 280);
 #endif
 }
 

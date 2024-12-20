@@ -129,6 +129,8 @@ public:
 	/// <param name="rot">向きベクトル</param>
 	const void SetModelRotation(Vec3 rot)const;
 
+	const void SetHeadCollisionFrontVec(Vec3 vec)const;
+
 	/// <summary>
 	/// 索敵判定の作成
 	/// </summary>

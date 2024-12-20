@@ -95,6 +95,7 @@ void EnemyStateAttack::Update()
 				auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
 				//移動方向に体を回転させる
 				own->SetModelRotation(rotation);
+				own->SetHeadCollisionFrontVec(playerPos);
 
 				m_waitCount = 0;
 				ChangeState(StateBase::StateKind::Attack);
@@ -110,7 +111,7 @@ void EnemyStateAttack::Update()
 		//索敵範囲内にプレイヤーがいなかったら待機にする
 		else
 		{
-			ChangeState(StateKind::Idle);
+			ChangeState(StateKind::Walk);
 			return;
 		}
 	}

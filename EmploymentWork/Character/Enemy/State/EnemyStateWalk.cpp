@@ -43,13 +43,14 @@ void EnemyStateWalk::Update()
 	//ダウンキャスト
 	auto own = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
 	Vec3 moveVec;
+	Vec3 targetPos;
 
 	//索敵範囲内にプレイヤーがいたら
 	if (own->GetIsSearchInPlayer())
 	{
 		//自身からプレイヤーまでのベクトルを求める
-		auto playerPos = own->GetPlayerPos();
-		moveVec = playerPos - own->GetRigidbody()->GetPos();
+		targetPos = own->GetPlayerPos();
+		moveVec = targetPos - own->GetRigidbody()->GetPos();
 
 		//距離が一定距離以下なら攻撃をする
 		if (moveVec.Length() <= kStartAttackLength)
@@ -64,20 +65,18 @@ void EnemyStateWalk::Update()
 	else
 	{
 		//索敵範囲内にプレイヤーがいなかったらルートに沿って移動する
-		auto nextPos = own->GetNextPos();
-		Vec2 nextPosXZ = Vec2(nextPos.x, nextPos.z);
+		targetPos = own->GetNextPos();
+		Vec2 targetPosXZ = Vec2(targetPos.x, targetPos.z);
 		auto ownPos = own->GetRigidbody()->GetPos();
 		Vec2 ownPosXZ = Vec2(ownPos.x, ownPos.z);
 
-		if (abs((nextPosXZ - ownPosXZ).Length()) <= 3.0f)
+		if (abs((targetPosXZ - ownPosXZ).Length()) <= 3.0f)
 		{
 			own->AddRouteIdx();
-			nextPos = own->GetNextPos();
+			targetPos = own->GetNextPos();
 		}
 
-
-		moveVec = nextPos - own->GetRigidbody()->GetPos();
-
+		moveVec = targetPos - ownPos;
 		//移動ベクトルを計算する
 		moveVec = moveVec.Normalize() * own->GetMoveSpeed();
 
@@ -92,7 +91,7 @@ void EnemyStateWalk::Update()
 	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
 	//移動方向に体を回転させる
 	own->SetModelRotation(rotation);
-
+	own->SetHeadCollisionFrontVec(targetPos);
 
 	//直前のY方向の移動速度と入力された移動速度を合わせて移動速度を決定する
 	Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
