@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\data\shader\PixelShader.pso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\data\shader\VertexShader.vso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
