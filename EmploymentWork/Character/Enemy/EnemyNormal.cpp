@@ -288,12 +288,15 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 		//当たったオブジェクトがトラップなら
 		else if (m_hitObjectTag == GameObjectTag::Trap)
 		{
-			//そのトラップの攻撃力分HPを減らす
-			TrapBase* col = dynamic_cast<TrapBase*>(send.get());
-			auto damage = col->GetAtk() - m_status.def;
-			if (damage > 0)
+			if (sendCol->collideTag == MyLib::ColliderBase::CollisionTag::Attack)
 			{
-				m_status.hp -= damage;
+				//そのトラップの攻撃力分HPを減らす
+				TrapBase* col = dynamic_cast<TrapBase*>(send.get());
+				auto damage = col->GetAtk() - m_status.def;
+				if (damage > 0)
+				{
+					m_status.hp -= damage;
+				}
 			}
 		}
 	}
