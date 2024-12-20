@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2019608936787217676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1acf1a4ba8eba134daa48f518aeb07f0, type: 3}
+  m_Script: {fileID: 11500000, guid: ba1d604b10b03674d95076e1b1260f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   connectedWaypoints: []

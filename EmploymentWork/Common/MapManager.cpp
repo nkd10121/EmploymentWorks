@@ -121,14 +121,10 @@ void MapManager::Load(const char* stageName)
 		//大きさを取得する
 		FileRead_read(&loc.scale, sizeof(loc.scale), handle);
 
-		if (loc.tag == "trapPos")
+		if (loc.tag == "Crystal")
 		{
-			TrapManager::GetInstance().AddTrapPos(loc.pos);
+			m_crystalPos = loc.pos;
 		}
-
-		m_min = Vec3(min(m_min.x, loc.pos.x), min(m_min.y, loc.pos.y), min(m_min.z, loc.pos.z));
-		m_max = Vec3(max(m_max.x, loc.pos.x), max(m_max.y, loc.pos.y), max(m_max.z, loc.pos.z));
-
 	}
 	FileRead_close(handle);
 

@@ -11,6 +11,7 @@ TagManager:
   - stairsWall
   - TrapPlaceable
   - WayPoint
+  - Crystal
   layers:
   - Default
   - TransparentFX

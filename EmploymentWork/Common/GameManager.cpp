@@ -108,14 +108,14 @@ void GameManager::Init(int stageIdx)
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init(m_stageModel);
 
-	//クリスタルの生成
-	m_pCrystal = std::make_shared<Crystal>(10);
-	m_pCrystal->Init();
-	m_pCrystal->Set(Vec3(0.0f, 0.0f, 10.0f));
-
 	//ステージ情報をロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load(stageName.c_str());
+
+	//クリスタルの生成
+	m_pCrystal = std::make_shared<Crystal>(10);
+	m_pCrystal->Init();
+	m_pCrystal->Set(MapManager::GetInstance().GetCrystalPos());
 
 	////DEBUG:ポーションを生成
 	//m_pObjects.emplace_back(std::make_shared<HealPortion>());

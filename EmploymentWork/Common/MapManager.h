@@ -88,11 +88,16 @@ public:
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// クリスタルの座標を取得
+	/// </summary>
+	/// <returns></returns>
+	const Vec3 GetCrystalPos()const { return m_crystalPos; }
+
 private:
 	std::vector<LocationData> m_data;	//マップ情報
 	std::unordered_map<std::string, int> m_handles;	//モデルハンドル
 
-	Vec3 m_min;
-	Vec3 m_max;
+	Vec3 m_crystalPos;
 };
 
