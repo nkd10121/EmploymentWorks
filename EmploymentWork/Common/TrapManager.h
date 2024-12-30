@@ -83,12 +83,16 @@ public:
 	/// <param name="addPoint"></param>
 	void AddTrapPoint(int addPoint) { m_trapPoint += addPoint; }
 
+	void SetCameraPos(Vec3 cameraPos) { m_cameraPos = cameraPos; }
+
 	//デバッグ用
 	void SelectPoint(Vec3 playerPos, Vec3 targetPos);
 private:
 	std::list<std::shared_ptr<Trap>> m_trapPoss;
 
 	std::list<std::shared_ptr<TrapBase>> m_traps;
+
+	Vec3 m_cameraPos;
 
 	int m_trapPoint;
 

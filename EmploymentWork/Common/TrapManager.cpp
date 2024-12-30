@@ -14,7 +14,9 @@ namespace
 	const std::string kStageDataPathBack = ".tLoc";
 }
 
-TrapManager::TrapManager()
+TrapManager::TrapManager():
+	m_bgHandle(-1),
+	m_cameraPos()
 {
 }
 
@@ -184,7 +186,8 @@ void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
 {
 #ifdef TRUE	//バウンディングボックスを使った処理方法
 	//線分の始点と終点を設定
-	auto start = playerPos;
+	//auto start = playerPos;
+	auto start = m_cameraPos;
 	auto end = playerPos + targetPos * 60;
 
 	float defaultLength = 100.0f;

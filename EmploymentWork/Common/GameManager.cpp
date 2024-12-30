@@ -177,6 +177,8 @@ void GameManager::Update()
 		m_isCreateEnemy = false;
 	}
 
+	TrapManager::GetInstance().SetCameraPos(m_pCamera->GetCameraPos());
+
 	//敵の更新処理
 	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front(),m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
 
