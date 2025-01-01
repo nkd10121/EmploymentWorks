@@ -1,11 +1,2 @@
-﻿  SwarmEnemy.cpp
-  Player.cpp
-  GameManager.cpp
-  MapManager.cpp
-  TrapManager.cpp
-  MathHelp.cpp
-  Physics.cpp
-  SceneBase.cpp
-  SceneGame.cpp
-  コードを生成中...
+﻿  TrapManager.cpp
   EmploymentWork.vcxproj -> C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe
