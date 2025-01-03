@@ -3,7 +3,15 @@
 
 class TrapBase : public ObjectBase
 {
-	public:
+public:
+
+	//設置場所の種類
+	enum Kind
+	{
+		Floor,	//床
+		Wall,	//壁
+	};
+
 	//ステータス構造体
 	struct Status
 	{
@@ -12,6 +20,7 @@ class TrapBase : public ObjectBase
 		float atkRange;
 		int coolTime;
 		int cost;
+		Kind kind;
 	};
 public:
 	/// <summary>

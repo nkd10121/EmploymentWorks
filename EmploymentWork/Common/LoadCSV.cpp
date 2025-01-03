@@ -321,6 +321,7 @@ TrapBase::Status LoadCSV::LoadTrapStatus(const char* trapName)
 			ret.atkRange = std::stof(strConmaBuf[3]);
 			ret.coolTime = std::stoi(strConmaBuf[4]);
 			ret.cost = std::stoi(strConmaBuf[5]);
+			ret.kind = static_cast<TrapBase::Kind>(std::stoi(strConmaBuf[6]));
 		}
 	}
 
