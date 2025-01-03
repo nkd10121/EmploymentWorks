@@ -17,6 +17,7 @@ TrapBase::TrapBase():
 
 TrapBase::~TrapBase()
 {
+	MV1DeleteModel(m_modelHandle);
 }
 
 void TrapBase::Update()

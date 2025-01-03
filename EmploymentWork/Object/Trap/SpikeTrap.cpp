@@ -10,13 +10,15 @@ namespace
 	constexpr float kCollisionRadius = 11.0f;
 
 	//モデルサイズ
-	//constexpr float kModelScale = 0.08f;
 	constexpr float kModelScale = 1.8f;
 
 	constexpr float kSpikeMoveSpeed = 0.8f;
 
+	//モデルのスパイク部分を地面に埋めておくためのオフセット
+	constexpr float kSpikePosYOffset = 7.5f;
+
 	//スパイクモデルが動く幅。大きくすればするほど大きく動く。
-	constexpr float kSpikeModelMoveRange = 140.0f;
+	constexpr float kSpikeModelMoveRange = 120.0f;
 	//サインカーブの制限。(0.0f～0.1f)
 	constexpr float kSinLimit = 0.08f;
 
@@ -26,8 +28,8 @@ namespace
 
 SpikeTrap::SpikeTrap() :
 	TrapBase(),
-	m_spikeModel(-1),
 	m_attackCount(0),
+	m_frameIdx(0),
 	m_spikePos(),
 	m_norm(),
 	m_movedPos()
@@ -37,52 +39,60 @@ SpikeTrap::SpikeTrap() :
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
 
+	//罠のステータスを取得
 	m_status = LoadCSV::GetInstance().LoadTrapStatus("Spike");
 }
 
 
 SpikeTrap::~SpikeTrap()
 {
-	MV1DeleteModel(m_spikeModel);
+	//MEMO:モデルの削除はTrapBaseでしているためしなくて大丈夫
 }
 
 
 void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 {
+	//当たり判定を取るようにする
 	OnEntryPhysics();
 
 	//物理挙動の初期化
 	rigidbody->Init();
 
+	//座標の更新
 	rigidbody->SetPos(pos);
 	rigidbody->SetNextPos(pos);
 
+	//設置場所に座標を移動させる
 	m_spikePos = pos;
-	m_spikePos -= norm * 2.6f;
-	m_spikePosInit = m_spikePos;
+	m_spikePos -= norm * 2.6f;		//そのまま置くと地面と隙間があるため法線方向を調整
+	m_spikePosInit = m_spikePos;	//初期座標を保存
 
 	//モデルのハンドルを取得
-	//m_modelHandle = ResourceManager::GetInstance().GetHandle("M_SPIKEFRAME");
-	//MV1SetScale(m_modelHandle, VECTOR(kModelScale, kModelScale, kModelScale));
-	//MV1SetPosition(m_modelHandle, pos.ToVECTOR());
-	m_spikeModel = ResourceManager::GetInstance().GetHandle("M_TEMP_SPIKE");
-	MV1SetScale(m_spikeModel, VECTOR(kModelScale, kModelScale, kModelScale));
-	MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_TEMP_SPIKE");
+	MV1SetScale(m_modelHandle, VECTOR(kModelScale, kModelScale, kModelScale));
+	MV1SetPosition(m_modelHandle, m_spikePos.ToVECTOR());
 
 	//第二引数の法線ベクトルに沿ってモデルの向きを回転させたい
 	m_norm = norm;
 
-	//MV1SetRotationXYZ(m_modelHandle, VGet(norm.z * (DX_PI_F / 2), 0.0f, -norm.x * (DX_PI_F / 2)));
-	MV1SetRotationXYZ(m_spikeModel, VGet(norm.z * (DX_PI_F / 2), 0.0f, -norm.x * (DX_PI_F / 2)));
+	//回転させる
+	//MEMO:この罠は床にのみ設置できる罠にすると思うため、壁に設置する処理をなくす可能性あり
+	MV1SetRotationXYZ(m_modelHandle, VGet(norm.z * (DX_PI_F / 2), 0.0f, -norm.x * (DX_PI_F / 2)));
 
-	m_frameIdx = MV1SearchFrame(m_spikeModel, kTargetFrameName);
+	//3Dモデルからスパイク部分のフレーム番号を取得
+	m_frameIdx = MV1SearchFrame(m_modelHandle, kTargetFrameName);
 
-	auto mat = MV1GetFrameLocalWorldMatrix(m_spikeModel, m_frameIdx);
+	//そのままだとスパイク部分が飛び出たままだから地面に埋めるために下げる
+	m_spikePosInit.y -= 7.5f;
+
+	//スパイク部分の座標を下げる
+	auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
 	mat.m[3][0] = m_spikePosInit.x;
 	mat.m[3][1] = m_spikePosInit.y;
 	mat.m[3][2] = m_spikePosInit.z;
 
-	MV1SetFrameUserLocalWorldMatrix(m_spikeModel, m_frameIdx, mat);
+	//スパイク部分に行列をセットする
+	MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 
 	//存在フラグをtrueにする
 	m_isExist = true;
@@ -120,15 +130,12 @@ void SpikeTrap::Update()
 		//制限より小さいときはモデルを動かす
 		if (sin < kSinLimit)
 		{
-			auto mat = MV1GetFrameLocalWorldMatrix(m_spikeModel, m_frameIdx);
+			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
 			mat.m[3][0] += (m_norm * move).x;
 			mat.m[3][1] += (m_norm * move).y;
 			mat.m[3][2] += (m_norm * move).z;
 
-			MV1SetFrameUserLocalWorldMatrix(m_spikeModel, m_frameIdx, mat);
-
-			//m_spikePos += m_norm * move;
-			//MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
+			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 		}
 
 		//サインカーブが0以下になった時に攻撃中から抜け出す
@@ -136,16 +143,16 @@ void SpikeTrap::Update()
 		{
 			m_isAttack = false;
 
-			auto mat = MV1GetFrameLocalWorldMatrix(m_spikeModel, m_frameIdx);
+			//スパイク部分の座標を初期化する
+			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
 			mat.m[3][0] = m_spikePosInit.x;
 			mat.m[3][1] = m_spikePosInit.y;
 			mat.m[3][2] = m_spikePosInit.z;
 
-			MV1SetFrameUserLocalWorldMatrix(m_spikeModel, m_frameIdx, mat);
+			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 
 			m_spikePos = m_spikePosInit;
 			m_movedPos = Vec3();
-			MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
 		}
 	}
 	else
@@ -157,6 +164,6 @@ void SpikeTrap::Update()
 
 void SpikeTrap::Draw()
 {
-	//MV1DrawModel(m_modelHandle);
-	MV1DrawModel(m_spikeModel);
+	//モデルの描画
+	MV1DrawModel(m_modelHandle);
 }

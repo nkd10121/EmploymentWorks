@@ -26,7 +26,6 @@ public:
 	void Draw()override;
 
 private:
-	int m_spikeModel;	//スパイクモデルのハンドル
 	int m_attackCount;	//攻撃カウント
 
 	int m_frameIdx;		//スパイクのモデルフレーム数
