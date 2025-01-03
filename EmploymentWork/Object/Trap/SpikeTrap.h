@@ -29,6 +29,8 @@ private:
 	int m_spikeModel;	//スパイクモデルのハンドル
 	int m_attackCount;	//攻撃カウント
 
+	int m_frameIdx;		//スパイクのモデルフレーム数
+
 	Vec3 m_spikePos;	//スパイクモデルの座標	
 	Vec3 m_spikePosInit;	//スパイクモデルの初期座標	
 

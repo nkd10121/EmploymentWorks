@@ -10,7 +10,8 @@ namespace
 	constexpr float kCollisionRadius = 11.0f;
 
 	//モデルサイズ
-	constexpr float kModelScale = 0.08f;
+	//constexpr float kModelScale = 0.08f;
+	constexpr float kModelScale = 1.8f;
 
 	constexpr float kSpikeMoveSpeed = 0.8f;
 
@@ -18,6 +19,9 @@ namespace
 	constexpr float kSpikeModelMoveRange = 140.0f;
 	//サインカーブの制限。(0.0f～0.1f)
 	constexpr float kSinLimit = 0.08f;
+
+	const char* kTargetFrameName = "wooden_spikes.001"; // ボーン（フレーム）の名前を指定
+
 }
 
 SpikeTrap::SpikeTrap() :
@@ -54,22 +58,31 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 	rigidbody->SetNextPos(pos);
 
 	m_spikePos = pos;
-	m_spikePos -= norm * 4.5f;
+	m_spikePos -= norm * 2.6f;
 	m_spikePosInit = m_spikePos;
 
 	//モデルのハンドルを取得
-	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_SPIKEFRAME");
-	MV1SetScale(m_modelHandle, VECTOR(kModelScale, kModelScale, kModelScale));
-	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
-	m_spikeModel = ResourceManager::GetInstance().GetHandle("M_SPIKE");
+	//m_modelHandle = ResourceManager::GetInstance().GetHandle("M_SPIKEFRAME");
+	//MV1SetScale(m_modelHandle, VECTOR(kModelScale, kModelScale, kModelScale));
+	//MV1SetPosition(m_modelHandle, pos.ToVECTOR());
+	m_spikeModel = ResourceManager::GetInstance().GetHandle("M_TEMP_SPIKE");
 	MV1SetScale(m_spikeModel, VECTOR(kModelScale, kModelScale, kModelScale));
 	MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
 
 	//第二引数の法線ベクトルに沿ってモデルの向きを回転させたい
 	m_norm = norm;
 
-	MV1SetRotationXYZ(m_modelHandle, VGet(norm.z * (DX_PI_F / 2), 0.0f, -norm.x * (DX_PI_F / 2)));
+	//MV1SetRotationXYZ(m_modelHandle, VGet(norm.z * (DX_PI_F / 2), 0.0f, -norm.x * (DX_PI_F / 2)));
 	MV1SetRotationXYZ(m_spikeModel, VGet(norm.z * (DX_PI_F / 2), 0.0f, -norm.x * (DX_PI_F / 2)));
+
+	m_frameIdx = MV1SearchFrame(m_spikeModel, kTargetFrameName);
+
+	auto mat = MV1GetFrameLocalWorldMatrix(m_spikeModel, m_frameIdx);
+	mat.m[3][0] = m_spikePosInit.x;
+	mat.m[3][1] = m_spikePosInit.y;
+	mat.m[3][2] = m_spikePosInit.z;
+
+	MV1SetFrameUserLocalWorldMatrix(m_spikeModel, m_frameIdx, mat);
 
 	//存在フラグをtrueにする
 	m_isExist = true;
@@ -102,17 +115,34 @@ void SpikeTrap::Update()
 		//二つのsinカーブを比較して上昇か下降かを計算する
 		auto move = (sin - presin) * kSpikeModelMoveRange;
 
+
+
 		//制限より小さいときはモデルを動かす
 		if (sin < kSinLimit)
 		{
-			m_spikePos += m_norm * move;
-			MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
+			auto mat = MV1GetFrameLocalWorldMatrix(m_spikeModel, m_frameIdx);
+			mat.m[3][0] += (m_norm * move).x;
+			mat.m[3][1] += (m_norm * move).y;
+			mat.m[3][2] += (m_norm * move).z;
+
+			MV1SetFrameUserLocalWorldMatrix(m_spikeModel, m_frameIdx, mat);
+
+			//m_spikePos += m_norm * move;
+			//MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
 		}
 
 		//サインカーブが0以下になった時に攻撃中から抜け出す
 		if (sin < 0.0f)
 		{
 			m_isAttack = false;
+
+			auto mat = MV1GetFrameLocalWorldMatrix(m_spikeModel, m_frameIdx);
+			mat.m[3][0] = m_spikePosInit.x;
+			mat.m[3][1] = m_spikePosInit.y;
+			mat.m[3][2] = m_spikePosInit.z;
+
+			MV1SetFrameUserLocalWorldMatrix(m_spikeModel, m_frameIdx, mat);
+
 			m_spikePos = m_spikePosInit;
 			m_movedPos = Vec3();
 			MV1SetPosition(m_spikeModel, m_spikePos.ToVECTOR());
@@ -127,6 +157,6 @@ void SpikeTrap::Update()
 
 void SpikeTrap::Draw()
 {
-	MV1DrawModel(m_modelHandle);
+	//MV1DrawModel(m_modelHandle);
 	MV1DrawModel(m_spikeModel);
 }
