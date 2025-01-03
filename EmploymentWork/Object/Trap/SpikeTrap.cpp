@@ -22,7 +22,8 @@ namespace
 	//サインカーブの制限。(0.0f～0.1f)
 	constexpr float kSinLimit = 0.08f;
 
-	const char* kTargetFrameName = "wooden_spikes.001"; // ボーン（フレーム）の名前を指定
+	//ボーン（フレーム）の名前を指定
+	const char* kTargetFrameName = "wooden_spikes.001"; 
 
 }
 
