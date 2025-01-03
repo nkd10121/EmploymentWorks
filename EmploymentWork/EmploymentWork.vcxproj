@@ -32,6 +32,7 @@
     <ClCompile Include="Common\ShaderManager.cpp" />
     <ClCompile Include="Character\Player\State\PlayerStateClear.cpp" />
     <ClCompile Include="Common\ResourceManager.cpp" />
+    <ClCompile Include="HammerTrap.cpp" />
     <ClCompile Include="Ui\HPBar.cpp" />
     <ClCompile Include="Object\Crystal.cpp" />
     <ClCompile Include="Character\Enemy\EnemyBase.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="Common\ShaderManager.h" />
     <ClInclude Include="Character\Player\State\PlayerStateClear.h" />
     <ClInclude Include="Common\ResourceManager.h" />
+    <ClInclude Include="HammerTrap.h" />
     <ClInclude Include="Ui\HPBar.h" />
     <ClInclude Include="Object\Crystal.h" />
     <ClInclude Include="Character\Enemy\EnemyBase.h" />
