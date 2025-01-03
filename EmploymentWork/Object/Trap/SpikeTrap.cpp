@@ -68,7 +68,7 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 	m_spikePosInit = m_spikePos;	//初期座標を保存
 
 	//モデルのハンドルを取得
-	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_TEMP_SPIKE");
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_SPIKE");
 	MV1SetScale(m_modelHandle, VECTOR(kModelScale, kModelScale, kModelScale));
 	MV1SetPosition(m_modelHandle, m_spikePos.ToVECTOR());
 
