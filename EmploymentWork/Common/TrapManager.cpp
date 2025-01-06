@@ -225,8 +225,12 @@ void TrapManager::Clear()
 		trap->neighborTraps.clear();
 	}
 	m_trapPoss.clear();
-
 	m_traps.clear();
+
+	m_slotIdx = 0;
+	m_cameraPos = Vec3();
+	m_cameraDir = Vec3();
+	m_trapPoint = 0;
 
 	DeleteGraph(m_bgHandle);
 	m_trapPoint = 0;

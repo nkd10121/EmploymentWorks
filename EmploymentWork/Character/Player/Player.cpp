@@ -172,9 +172,6 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		bottomPos.y -= 1.0f;
 	}
 
-	////足元座標を使ってトラップ設置位置の選択と設置
-	//TrapManager::GetInstance().SelectPoint(bottomPos, m_cameraDirection);
-
 	//ZLボタンを押している
 	if (Input::GetInstance().GetIsPushedTriggerButton(true))
 	{
@@ -191,12 +188,6 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 				pGameManager->AddObject(shot);
 			}
 		}
-		else if(m_slotNum == 1 && m_attackButtonPushCount == 0)
-		{
-			//TrapManager::GetInstance().EstablishTrap(bottomPos, m_cameraDirection, m_slotNum);
-		}
-
-
 		//押しているカウントを更新
 		m_attackButtonPushCount++;
 	}
