@@ -83,7 +83,9 @@ public:
 	/// <param name="addPoint"></param>
 	void AddTrapPoint(int addPoint) { m_trapPoint += addPoint; }
 
-	void SetCameraPos(Vec3 cameraPos) { m_cameraPos = cameraPos; }
+
+	const void SetCameraInfo(Vec3 cameraPos, Vec3 dirVec);
+	const void SetSlotIdx(int idx) { m_slotIdx = idx; }
 
 	//デバッグ用
 	void SelectPoint(Vec3 playerPos, Vec3 targetPos);
@@ -92,9 +94,12 @@ private:
 
 	std::list<std::shared_ptr<TrapBase>> m_traps;
 
-	Vec3 m_cameraPos;
+	int m_slotIdx;		//プレイヤーのスロット番号
+	Vec3 m_cameraPos;	//カメラ座標
+	Vec3 m_cameraDir;	//カメラの向いている方向
+	int m_trapPoint;	//罠ポイント
 
-	int m_trapPoint;
+	int m_rightTriggerPushCount;
 
 	int m_bgHandle;
 

@@ -4,6 +4,7 @@
 #include "SpikeTrap.h"
 
 #include "ImageManager.h"
+#include "Input.h"
 #include "ResourceManager.h"
 
 TrapManager* TrapManager::m_instance = nullptr;
@@ -15,8 +16,12 @@ namespace
 }
 
 TrapManager::TrapManager():
-	m_bgHandle(-1),
-	m_cameraPos()
+	m_slotIdx(-1),
+	m_cameraPos(),
+	m_cameraDir(),
+	m_trapPoint(0),
+	m_rightTriggerPushCount(0),
+	m_bgHandle(-1)
 {
 }
 
@@ -45,9 +50,89 @@ void TrapManager::AddTrapPos(Vec3 pos)
 
 void TrapManager::Update()
 {
+	//現在設置しているトラップの更新
 	for (auto& trap : m_traps)
 	{
 		trap->Update();
+	}
+
+	//現在プレイヤーが選択しているスロット番号、カメラの座標と向きベクトルを事前にもらっておく
+
+	//スロット番号が0(クロスボウなら何もしない)
+	if (m_slotIdx == 0) return;
+
+	//それ以外なら罠を設置しようとしている
+
+	auto start = m_cameraPos;					//カメラ座標を開始座標
+	auto end = m_cameraPos + m_cameraDir * 60;	//カメラからカメラの向いている方向の座標を終点座標にする
+
+	//上の二つをつなぐ線分と罠の座標の距離を格納する変数
+	float defaultLength = 100.0f;
+
+	//設置可能なトラップの座標分回す
+	for (auto& trapPos : m_trapPoss)
+	{
+		//トラップが置かれていないかつ、周囲に8個のトラップがおかれていない候補地があるとき
+		if (!trapPos->isPlaced && trapPos->neighborTraps.size() == 8 && CheckNeighbor(trapPos->neighborTraps))
+		{
+			//線分と座標の距離を計算する
+			float length = Segment_Point_MinLength(start.ToVECTOR(), end.ToVECTOR(), trapPos->pos.ToVECTOR());
+
+			//もし、上で計算した距離が今までの距離より短かったらその距離と候補地を保存する
+			if (defaultLength > length)
+			{
+				defaultLength = length;
+				debugTrap = trapPos;
+			}
+		}
+	}
+
+	//もしライトトリガーボタン(RT)が押されたら
+	if (Input::GetInstance().GetIsPushedTriggerButton(true))
+	{
+		//トリガーボタンを押した瞬間なら
+		if (m_rightTriggerPushCount == 0)
+		{
+			switch (m_slotIdx)
+			{
+			case 1:
+				{
+					auto add = std::make_shared<SpikeTrap>();
+					//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+					if (m_trapPoint < add->GetCost())
+					{
+						//何もしない
+						return;
+					}
+
+					//所持トラップポイントをコスト分減らす
+					m_trapPoint -= add->GetCost();
+
+					//初期化
+					add->Init(debugTrap->pos, debugTrap->norm);
+
+					//追加
+					m_traps.emplace_back(add);
+
+					//トラップを設置済みにする
+					debugTrap->isPlaced = true;
+					for (auto& trap : debugTrap->neighborTraps)
+					{
+						trap.lock()->isPlaced = true;
+					}
+				}
+				break;
+			default:
+				break;
+			}
+		}
+
+		//トリガーボタンを押したカウントを更新する
+		m_rightTriggerPushCount++;
+	}
+	else
+	{
+		m_rightTriggerPushCount = 0;
 	}
 }
 
@@ -180,6 +265,12 @@ void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
 			}
 		}
 	}
+}
+
+const void TrapManager::SetCameraInfo(Vec3 cameraPos, Vec3 dirVec)
+{
+	m_cameraPos = cameraPos;
+	m_cameraDir = dirVec;
 }
 
 void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
