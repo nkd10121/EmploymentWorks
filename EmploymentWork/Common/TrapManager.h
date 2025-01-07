@@ -99,6 +99,11 @@ private:
 	std::vector<std::pair<int,float>> m_trapModelHandles;
 	int m_previewTrapModelHandle;
 
+	//罠を点滅させるためのアングル
+	float m_angle;
+	//罠の透明度
+	float m_transparency;
+
 	int m_slotIdx;		//プレイヤーのスロット番号
 	Vec3 m_cameraPos;	//カメラ座標
 	Vec3 m_cameraDir;	//カメラの向いている方向

@@ -16,6 +16,9 @@ namespace
 }
 
 TrapManager::TrapManager():
+	m_previewTrapModelHandle(-1),
+	m_angle(0.0f),
+	m_transparency(0.0f),
 	m_slotIdx(-1),
 	m_cameraPos(),
 	m_cameraDir(),
@@ -61,6 +64,9 @@ void TrapManager::Update()
 
 	//スロット番号が0(クロスボウなら何もしない)
 	if (m_slotIdx == 0) return;
+
+	m_angle += 0.04f;
+	m_transparency = abs(sinf(m_angle) / 2.5f) + 0.1f;
 
 	//それ以外なら罠を設置しようとしている
 
@@ -190,7 +196,7 @@ void TrapManager::PreviewDraw()
 	auto scale = m_trapModelHandles[m_slotIdx - 1].second;
 	MV1SetScale(m_previewTrapModelHandle, VGet(scale, scale, scale));
 	MV1SetPosition(m_previewTrapModelHandle, debugTrap->pos.ToVECTOR());
-
+	MV1SetOpacityRate(m_previewTrapModelHandle, m_transparency);
 
 	//TODO:半透明描画が多分これだとできない？調べる必要あり
 	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
