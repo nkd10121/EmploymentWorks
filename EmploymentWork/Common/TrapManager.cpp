@@ -23,6 +23,7 @@ TrapManager::TrapManager():
 	m_rightTriggerPushCount(0),
 	m_bgHandle(-1)
 {
+	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.8f));
 }
 
 TrapManager::~TrapManager()
@@ -68,6 +69,8 @@ void TrapManager::Update()
 
 	//上の二つをつなぐ線分と罠の座標の距離を格納する変数
 	float defaultLength = 100.0f;
+
+	//MEMO:今までしていた四角で先に判定を取る方法をいったん消しているが露骨に処理時間が増えてそう
 
 	//設置可能なトラップの座標分回す
 	for (auto& trapPos : m_trapPoss)
@@ -173,6 +176,27 @@ void TrapManager::Draw()
 
 	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
 	DrawFormatString(64, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
+}
+
+void TrapManager::PreviewDraw()
+{
+	//仮設置描画をする
+	//現在のスロット番号から対応する罠のハンドルを取得して半透明描画する
+	//	罠のサイズがそれぞれ異なるため、どうにかして設定するためにスケール値を取得する必要がある
+
+	if (m_slotIdx == 0) return;
+
+	m_previewTrapModelHandle = m_trapModelHandles[m_slotIdx - 1].first;
+	auto scale = m_trapModelHandles[m_slotIdx - 1].second;
+	MV1SetScale(m_previewTrapModelHandle, VGet(scale, scale, scale));
+	MV1SetPosition(m_previewTrapModelHandle, debugTrap->pos.ToVECTOR());
+
+
+	//TODO:半透明描画が多分これだとできない？調べる必要あり
+	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+	MV1DrawModel(m_previewTrapModelHandle);
+	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 }
 
 void TrapManager::Load(const char* stageName)

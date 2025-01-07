@@ -65,7 +65,6 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 
 	//設置場所に座標を移動させる
 	m_spikePos = pos;
-	m_spikePos -= norm * 2.6f;		//そのまま置くと地面と隙間があるため法線方向を調整
 	m_spikePosInit = m_spikePos;	//初期座標を保存
 
 	//モデルのハンドルを取得

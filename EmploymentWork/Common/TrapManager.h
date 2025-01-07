@@ -2,6 +2,7 @@
 #include "Vec3.h"
 #include <memory>
 #include <list>
+#include <map>
 
 #include "TrapBase.h"
 
@@ -66,8 +67,9 @@ public:
 	void AddTrapPos(Vec3 pos);
 
 	void Update();
-
 	void Draw();
+
+	void PreviewDraw();
 
 	void Load(const char* stageName);
 
@@ -93,6 +95,9 @@ private:
 	std::list<std::shared_ptr<Trap>> m_trapPoss;
 
 	std::list<std::shared_ptr<TrapBase>> m_traps;
+
+	std::vector<std::pair<int,float>> m_trapModelHandles;
+	int m_previewTrapModelHandle;
 
 	int m_slotIdx;		//プレイヤーのスロット番号
 	Vec3 m_cameraPos;	//カメラ座標

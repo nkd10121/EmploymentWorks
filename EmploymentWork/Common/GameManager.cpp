@@ -328,6 +328,7 @@ void GameManager::Draw()
 		object->Draw();
 	}
 
+	TrapManager::GetInstance().PreviewDraw();
 	TrapManager::GetInstance().Draw();
 
 	//TODO:UIクラスみたいなのを作ってそこに移動させる
