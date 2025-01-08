@@ -27,7 +27,9 @@ namespace
 }
 
 EnemyManager::EnemyManager():
-	m_deadEnemyNum(0)
+	m_deadEnemyNum(0),
+	m_killedByPlayerNum(0),
+	m_killedByTrapNum(0)
 {
 }
 
@@ -60,6 +62,13 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 	for (auto& enemy : m_pEnemies)
 	{
 		enemy->Update(cameraPos,endPos);
+
+		//メンバーが誰も存在していない群れがあったらメンバーが何によって倒されたか取得して次に行く
+		if (!enemy->GetIsExistMember())
+		{
+			enemy->GetKilledData(m_killedByPlayerNum, m_killedByTrapNum);
+			continue;
+		}
 
 		if (enemy->GetIsCameraRayHit())
 		{

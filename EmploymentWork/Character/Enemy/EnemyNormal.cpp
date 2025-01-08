@@ -277,7 +277,8 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 			{
 				m_status.hp -= damage;
 			}
-
+			//攻撃してきたタグを保存
+			m_lastAttackTag = m_hitObjectTag;
 			//敵ヒットSEを流す
 			SoundManager::GetInstance().PlaySE("S_ENEMYHIT");
 			//敵ヒットエフェクトを出す
@@ -297,6 +298,9 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 				{
 					m_status.hp -= damage;
 				}
+
+				//攻撃してきたタグを保存
+				m_lastAttackTag = m_hitObjectTag;
 			}
 		}
 	}
@@ -325,7 +329,8 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 				{
 					m_status.hp -= damage * 2;
 				}
-
+				//攻撃してきたタグを保存
+				m_lastAttackTag = m_hitObjectTag;
 				//敵ヒットSEを流す
 				SoundManager::GetInstance().PlaySE("S_ENEMYHIT");
 				//敵ヒットエフェクトを出す

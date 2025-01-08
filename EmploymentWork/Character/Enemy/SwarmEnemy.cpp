@@ -20,6 +20,8 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 	m_swarmRadius(0.0f),
 	m_maxSearchCollisionRadius(0.0f),
 	m_isInPlayer(false),
+	m_killedByTrapNum(0),
+	m_killedByPlayerNum(0),
 	m_memberColor(color)
 {
 	//物理データの初期化
@@ -68,7 +70,18 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 	{
 		enemy->Update();
 
-		if (!enemy->GetIsExist()) continue;
+		if (!enemy->GetIsExist())
+		{
+			if (enemy->GetLastAttackTag() == GameObjectTag::Player)
+			{
+				m_killedByPlayerNum++;
+			}
+			else if (enemy->GetLastAttackTag() == GameObjectTag::Trap)
+			{
+				m_killedByTrapNum++;
+			}
+		}
+		
 
 		auto p = enemy->GetRigidbody()->GetPos();
 		pos.emplace_back(p);
@@ -255,6 +268,12 @@ void SwarmEnemy::AddSwarm(std::shared_ptr<EnemyBase> add)
 const int SwarmEnemy::CheckMemberNum() const
 {
 	return static_cast<int>(m_swarm.size());
+}
+
+const void SwarmEnemy::GetKilledData(int& playerKill, int& trapKill)
+{
+	playerKill += m_killedByPlayerNum;
+	trapKill += m_killedByTrapNum;
 }
 
 /// <summary>

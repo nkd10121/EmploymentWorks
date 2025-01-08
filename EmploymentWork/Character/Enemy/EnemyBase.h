@@ -150,6 +150,12 @@ public:
 	const void DeleteAttackCollision();
 
 	/// <summary>
+	/// 最後に攻撃してきたオブジェクトのタグを取得
+	/// </summary>
+	/// <returns></returns>
+	const GameObjectTag GetLastAttackTag()const { return m_lastAttackTag; }
+
+	/// <summary>
 	/// ルートインデックスを更新する
 	/// </summary>
 	/// <returns></returns>
@@ -191,7 +197,8 @@ protected:
 	bool m_isSearchInPlayer;		//索敵範囲内にプレイヤーがいるか
 	Vec3 m_playerPos;				//プレイヤーの座標
 
-	GameObjectTag m_hitObjectTag;	//あったオブジェクトタグ
+	GameObjectTag m_hitObjectTag;	//当たったオブジェクトタグ
+	GameObjectTag m_lastAttackTag;	//最後に攻撃してきたオブジェクトタグ
 
 	bool m_isAttack;	//攻撃しているかどうか
 };

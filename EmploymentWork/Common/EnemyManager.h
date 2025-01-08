@@ -68,4 +68,6 @@ private:
 	Vec3 m_rayCastRetPos;
 
 	int m_deadEnemyNum;
+	int m_killedByPlayerNum;
+	int m_killedByTrapNum;
 };

@@ -246,7 +246,6 @@ void TrapManager::PreviewDraw()
 	MV1SetScale(m_previewTrapModelHandle, VGet(scale, scale, scale));
 	MV1SetPosition(m_previewTrapModelHandle, debugTrap->pos.ToVECTOR());
 	//回転させる
-	//atan2を使用して向いている角度を取得
 	auto angle = atan2(debugTrap->norm.x, debugTrap->norm.z);
 	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
 	MV1SetRotationXYZ(m_previewTrapModelHandle, rotation);

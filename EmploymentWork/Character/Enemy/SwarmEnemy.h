@@ -70,6 +70,14 @@ public:
 	const Vec3 GetCameraRayHitPos()const { return m_cameraRayHitPos; }
 
 	/// <summary>
+	/// 敵が何によって殺されたかの数値データを取得
+	/// </summary>
+	/// <param name="playerKill">プレイヤーのキル数の参照</param>
+	/// <param name="trapKill">トラップのキル数の参照</param>
+	/// <returns></returns>
+	const void GetKilledData(int& playerKill, int& trapKill);
+
+	/// <summary>
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
@@ -91,6 +99,9 @@ private:
 
 	bool m_isCameraRayHit;	//メンバーの誰かがカメラからのレイに当たったかどうか
 	Vec3 m_cameraRayHitPos;	//カメラからのレイと敵の当たり判定カプセルとのヒット座標
+
+	int m_killedByTrapNum;		//罠によって倒された敵の数
+	int m_killedByPlayerNum;	//プレイヤーによって倒された敵の数
 
 	unsigned int m_memberColor;	//DEBUG用。誰がどの群れなのか見たい
 };
