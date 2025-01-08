@@ -6,6 +6,7 @@
 #include "ImageManager.h"
 #include "Input.h"
 #include "ResourceManager.h"
+#include "LoadCSV.h"
 
 TrapManager* TrapManager::m_instance = nullptr;
 
@@ -84,6 +85,24 @@ void TrapManager::Update()
 		//トラップが置かれていないかつ、周囲に8個のトラップがおかれていない候補地があるとき
 		if (!trapPos->isPlaced && trapPos->neighborTraps.size() == 8 && CheckNeighbor(trapPos->neighborTraps))
 		{
+			//もし、設置しようとしているトラップの種類がトラップ座標候補の法線ベクトルと一致していなければ次に行く
+			//罠ごとに設定されている種類を取得できるようにしたい
+			auto data = 0;
+			if (data == 0)
+			{
+				if (abs(trapPos->norm.y - 1.0f) > 0.1f)
+				{
+					continue;
+				}
+			}
+			else if (data == 1)
+			{
+				if(abs(trapPos->norm.y) > 0.1f)
+				{
+					continue;
+				}
+			}
+
 			//線分と座標の距離を計算する
 			float length = Segment_Point_MinLength(start.ToVECTOR(), end.ToVECTOR(), trapPos->pos.ToVECTOR());
 
