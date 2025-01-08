@@ -239,6 +239,9 @@
     <ClCompile Include="Object\Trap\ArrowWallTrap.cpp">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
@@ -433,6 +436,7 @@
     <ClInclude Include="Object\Trap\HammerTrap.h">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">
