@@ -164,6 +164,9 @@ void SpikeTrap::Update()
 
 void SpikeTrap::Draw()
 {
+	//存在していない状態なら何もさせない
+	if (!m_isExist)return;
+
 	//モデルの描画
 	MV1DrawModel(m_modelHandle);
 }
