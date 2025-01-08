@@ -29,7 +29,7 @@ TrapManager::TrapManager():
 	m_bgHandle(-1)
 {
 	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.8f));
-	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_ARROWWALL"), 1.8f));
+	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_ARROWWALL"), 1.0f));
 	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("Spike").kind);
 	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("ArrowWall").kind);
 }
@@ -245,6 +245,11 @@ void TrapManager::PreviewDraw()
 	auto scale = m_trapModelHandles[m_slotIdx - 1].second;
 	MV1SetScale(m_previewTrapModelHandle, VGet(scale, scale, scale));
 	MV1SetPosition(m_previewTrapModelHandle, debugTrap->pos.ToVECTOR());
+	//回転させる
+	//atan2を使用して向いている角度を取得
+	auto angle = atan2(debugTrap->norm.x, debugTrap->norm.z);
+	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
+	MV1SetRotationXYZ(m_previewTrapModelHandle, rotation);
 
 	//モデルの半透明設定
 	MV1SetOpacityRate(m_previewTrapModelHandle, m_transparency);
