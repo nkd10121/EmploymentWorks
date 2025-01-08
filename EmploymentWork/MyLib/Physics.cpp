@@ -334,8 +334,8 @@ std::vector<std::shared_ptr<MyLib::Collidable>> MyLib::Physics::GetCollisionList
 						lengthB = colB->m_radius;
 					}
 
-					const auto& pos1 = obj1->rigidbody->GetNextPos();
-					const auto& pos2 = obj2->rigidbody->GetNextPos();
+					const auto& pos1 = col1->collide->GetWorldPos();
+					const auto& pos2 = col2->collide->GetWorldPos();
 
 					float maxDistance = 40.0f * 40.0f;
 

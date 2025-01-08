@@ -127,6 +127,10 @@ void ArrowWallTrap::Update()
 			{
 				Collidable::DeleteRequestCollider(col);
 			}
+
+			//座標の更新
+			rigidbody->SetPos(m_arrowPosInit);
+			rigidbody->SetNextPos(m_arrowPosInit);
 		}
 
 		//攻撃カウントを更新
