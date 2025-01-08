@@ -2,6 +2,7 @@
 #include "MathHelp.h"
 
 #include "SpikeTrap.h"
+#include "ArrowWallTrap.h"
 
 #include "ImageManager.h"
 #include "Input.h"
@@ -28,7 +29,9 @@ TrapManager::TrapManager():
 	m_bgHandle(-1)
 {
 	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.8f));
-	m_trapKind.push_back(0);
+	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_ARROWWALL"), 1.8f));
+	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("Spike").kind);
+	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("ArrowWall").kind);
 }
 
 TrapManager::~TrapManager()
@@ -150,6 +153,33 @@ void TrapManager::Update()
 					}
 				}
 				break;
+			case 2:
+			{
+				auto add = std::make_shared<ArrowWallTrap>();
+				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+				if (m_trapPoint < add->GetCost())
+				{
+					//何もしない
+					return;
+				}
+
+				//所持トラップポイントをコスト分減らす
+				m_trapPoint -= add->GetCost();
+
+				//初期化
+				add->Init(debugTrap->pos, debugTrap->norm);
+
+				//追加
+				m_traps.emplace_back(add);
+
+				//トラップを設置済みにする
+				debugTrap->isPlaced = true;
+				for (auto& trap : debugTrap->neighborTraps)
+				{
+					trap.lock()->isPlaced = true;
+				}
+			}
+			break;
 			default:
 				break;
 			}

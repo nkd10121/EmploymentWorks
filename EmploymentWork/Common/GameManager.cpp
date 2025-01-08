@@ -328,8 +328,8 @@ void GameManager::Draw()
 		object->Draw();
 	}
 
-	TrapManager::GetInstance().PreviewDraw();
 	TrapManager::GetInstance().Draw();
+	TrapManager::GetInstance().PreviewDraw();
 
 	//TODO:UIクラスみたいなのを作ってそこに移動させる
 	//装備スロットの描画
