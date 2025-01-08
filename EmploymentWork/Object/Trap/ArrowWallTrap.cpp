@@ -17,10 +17,7 @@ namespace
 
 ArrowWallTrap::ArrowWallTrap()
 {
-	//当たり判定の生成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
-	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-	sphereCol->m_radius = kCollisionRadius;
+
 
 	//罠のステータスを取得
 	m_status = LoadCSV::GetInstance().LoadTrapStatus("ArrowWall");
@@ -52,6 +49,18 @@ void ArrowWallTrap::Init(Vec3 pos,Vec3 norm)
 	auto angle = atan2(norm.x, norm.z);
 	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
 	MV1SetRotationXYZ(m_modelHandle, rotation);
+
+	//索敵判定の作成(3つ作成)
+	for (int i = 1; i < 4; i++)
+	{
+		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
+		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+		sphereCol->m_radius = kCollisionRadius;
+
+		auto searchPos = norm * i * 20.0f;
+		sphereCol->SetOffsetPos(searchPos);
+	}
+
 	//存在フラグをtrueにする
 	m_isExist = true;
 }
