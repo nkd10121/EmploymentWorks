@@ -131,6 +131,9 @@ void ArrowWallTrap::Update()
 			//座標の更新
 			rigidbody->SetPos(m_arrowPosInit);
 			rigidbody->SetNextPos(m_arrowPosInit);
+			rigidbody->SetVelocity(Vec3(0.0f,0.0f,0.0f));
+
+			m_attackCount = 0;
 		}
 
 		//攻撃カウントを更新
