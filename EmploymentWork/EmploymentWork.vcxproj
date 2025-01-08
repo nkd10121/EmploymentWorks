@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Trap\ArrowWallTrap.cpp" />
     <ClCompile Include="Common\SoundManager.cpp" />
     <ClCompile Include="Common\EffectManager.cpp" />
     <ClCompile Include="Character\Enemy\State\EnemyStateIdle.cpp" />
@@ -32,7 +33,7 @@
     <ClCompile Include="Common\ShaderManager.cpp" />
     <ClCompile Include="Character\Player\State\PlayerStateClear.cpp" />
     <ClCompile Include="Common\ResourceManager.cpp" />
-    <ClCompile Include="HammerTrap.cpp" />
+    <ClCompile Include="Object\Trap\HammerTrap.cpp" />
     <ClCompile Include="Ui\HPBar.cpp" />
     <ClCompile Include="Object\Crystal.cpp" />
     <ClCompile Include="Character\Enemy\EnemyBase.cpp" />
@@ -82,6 +83,7 @@
     <ClCompile Include="Geometry\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Trap\ArrowWallTrap.h" />
     <ClInclude Include="Common\SoundManager.h" />
     <ClInclude Include="Common\EffectManager.h" />
     <ClInclude Include="Character\Enemy\State\EnemyStateIdle.h" />
@@ -95,7 +97,7 @@
     <ClInclude Include="Common\ShaderManager.h" />
     <ClInclude Include="Character\Player\State\PlayerStateClear.h" />
     <ClInclude Include="Common\ResourceManager.h" />
-    <ClInclude Include="HammerTrap.h" />
+    <ClInclude Include="Object\Trap\HammerTrap.h" />
     <ClInclude Include="Ui\HPBar.h" />
     <ClInclude Include="Object\Crystal.h" />
     <ClInclude Include="Character\Enemy\EnemyBase.h" />

@@ -98,6 +98,7 @@ private:
 
 	std::vector<std::pair<int,float>> m_trapModelHandles;
 	int m_previewTrapModelHandle;
+	std::vector<int> m_trapKind;
 
 	//罠を点滅させるためのアングル
 	float m_angle;

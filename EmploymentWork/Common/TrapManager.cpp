@@ -28,6 +28,7 @@ TrapManager::TrapManager():
 	m_bgHandle(-1)
 {
 	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.8f));
+	m_trapKind.push_back(0);
 }
 
 TrapManager::~TrapManager()
@@ -87,15 +88,14 @@ void TrapManager::Update()
 		{
 			//もし、設置しようとしているトラップの種類がトラップ座標候補の法線ベクトルと一致していなければ次に行く
 			//罠ごとに設定されている種類を取得できるようにしたい
-			auto data = 0;
-			if (data == 0)
+			if (m_trapKind[m_slotIdx-1] == 0)
 			{
 				if (abs(trapPos->norm.y - 1.0f) > 0.1f)
 				{
 					continue;
 				}
 			}
-			else if (data == 1)
+			else if (m_trapKind[m_slotIdx - 1] == 1)
 			{
 				if(abs(trapPos->norm.y) > 0.1f)
 				{
@@ -215,12 +215,11 @@ void TrapManager::PreviewDraw()
 	auto scale = m_trapModelHandles[m_slotIdx - 1].second;
 	MV1SetScale(m_previewTrapModelHandle, VGet(scale, scale, scale));
 	MV1SetPosition(m_previewTrapModelHandle, debugTrap->pos.ToVECTOR());
+
+	//モデルの半透明設定
 	MV1SetOpacityRate(m_previewTrapModelHandle, m_transparency);
 
-	//TODO:半透明描画が多分これだとできない？調べる必要あり
-	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	MV1DrawModel(m_previewTrapModelHandle);
-	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 }
 
