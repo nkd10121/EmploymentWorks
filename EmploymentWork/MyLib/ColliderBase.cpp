@@ -6,7 +6,8 @@
 MyLib::ColliderBase::ColliderBase(Kind kind, bool isTrigger):
 	localPos(),
 	kind(kind),
-	isTrigger(isTrigger)
+	isTrigger(isTrigger),
+	isStatic(false)
 {
 
 }

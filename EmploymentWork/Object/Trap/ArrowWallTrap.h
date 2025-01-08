@@ -25,5 +25,14 @@ public:
 	/// </summary>
 	void Draw()override;
 
+private:
+	int m_attackCount;	//攻撃カウント
+
+	int m_frameIdx;		//モデルフレーム番号
+
+	Vec3 m_arrowPos;	//スパイクモデルの座標	
+	Vec3 m_arrowPosInit;	//スパイクモデルの初期座標
+
+	Vec3 m_norm;
 };
 

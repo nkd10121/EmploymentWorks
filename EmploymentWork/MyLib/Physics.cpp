@@ -144,7 +144,10 @@ void MyLib::Physics::Update()
 		for (const auto& collider : item->m_colliders)
 		{
 			auto colPos = collider->collide->GetWorldPos();
-			collider->collide->SetCenterPos(nextPos);
+			if (!collider->collide->GetIsStatic())
+			{
+				collider->collide->SetCenterPos(nextPos);
+			}
 			auto colNextPos = collider->collide->GetWorldPos();
 
 			auto kind = collider->collide->GetKind();

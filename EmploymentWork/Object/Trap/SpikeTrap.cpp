@@ -151,6 +151,12 @@ void SpikeTrap::Update()
 
 			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 
+			auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
+			if (col != nullptr)
+			{
+				Collidable::DeleteRequestCollider(col);
+			}
+
 			m_spikePos = m_spikePosInit;
 			m_movedPos = Vec3();
 		}

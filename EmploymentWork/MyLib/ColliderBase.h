@@ -49,9 +49,23 @@ namespace MyLib
 		/// <returns>トリガーフラグ</returns>
 		bool IsTrigger() const { return isTrigger; }
 
+		/// <summary>
+		/// ローカル座標の中心座標を設定する
+		/// </summary>
+		/// <param name="pos">座標</param>
+		/// <returns></returns>
 		const void SetCenterPos(Vec3 pos);
 
+		/// <summary>
+		/// ローカル座標の中心からのベクトルを設定する
+		/// </summary>
+		/// <param name="pos"></param>
+		/// <returns></returns>
 		const void SetOffsetPos(Vec3 pos);
+
+		const void UseIsStatic() { isStatic = true; }
+
+		const bool GetIsStatic()const { return isStatic; }
 
 		const Vec3 GetWorldPos() { return localPos.GetWorldPos();}
 
@@ -59,8 +73,9 @@ namespace MyLib
 		LocalPos localPos;		//中心座標からの相対座標
 								//体の中心座標が当たり判定の中心座標なら(0,0,0)
 	private:
-
 		Kind kind;		//当たり判定種別
 		bool isTrigger;	//トリガーフラグ
+
+		bool isStatic;	//スタティックフラグ
 	};
 }

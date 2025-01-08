@@ -15,14 +15,15 @@ namespace
 
 }
 
-ArrowWallTrap::ArrowWallTrap()
+ArrowWallTrap::ArrowWallTrap() :
+	m_attackCount(0),
+	m_frameIdx(0),
+	m_arrowPos(),
+	m_arrowPosInit(),
+	m_norm()
 {
-
-
 	//罠のステータスを取得
 	m_status = LoadCSV::GetInstance().LoadTrapStatus("ArrowWall");
-
-
 }
 
 ArrowWallTrap::~ArrowWallTrap()
@@ -41,6 +42,13 @@ void ArrowWallTrap::Init(Vec3 pos,Vec3 norm)
 	rigidbody->SetPos(pos);
 	rigidbody->SetNextPos(pos);
 
+	//設置場所に座標を移動させる
+	m_arrowPos = pos;
+	m_arrowPosInit = m_arrowPos;	//初期座標を保存
+
+	//法線ベクトルの設定
+	m_norm = norm;
+
 	//モデルのハンドルを取得
 	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_ARROWWALL");
 	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
@@ -57,9 +65,18 @@ void ArrowWallTrap::Init(Vec3 pos,Vec3 norm)
 		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 		sphereCol->m_radius = kCollisionRadius;
 
+
 		auto searchPos = norm * i * 20.0f;
 		sphereCol->SetOffsetPos(searchPos);
+
+		//索敵判定は動かすつもりがないため、先に中心座標を設定して動かないようにする
+		sphereCol->SetCenterPos(pos);
+		sphereCol->UseIsStatic();
 	}
+
+	//3Dモデルからスパイク部分のフレーム番号を取得
+	m_frameIdx = MV1SearchFrame(m_modelHandle, kTargetFrameName);
+
 
 	//存在フラグをtrueにする
 	m_isExist = true;
@@ -69,6 +86,58 @@ void ArrowWallTrap::Update()
 {
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
+
+	//攻撃フラグがオンになったら
+	if (m_isAttack)
+	{
+		//攻撃用当たり判定を生成する
+		if (m_attackCount == 0)
+		{
+			//当たり判定の生成
+			auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
+			auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+			sphereCol->m_radius = kCollisionRadius;
+		}
+
+		auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
+		mat.m[3][0] += (m_norm).x * 2.0f;
+		mat.m[3][1] += (m_norm).y * 2.0f;
+		mat.m[3][2] += (m_norm).z * 2.0f;
+
+		MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
+
+		Vec3 prevVelocity = rigidbody->GetVelocity();
+		Vec3 newVelocity = Vec3(mat.m[3][0], mat.m[3][1], mat.m[3][2]);
+		rigidbody->SetVelocity(m_norm * 2.0f);
+
+		if (m_attackCount >= 300)
+		{
+			m_isAttack = false;
+
+			//スパイク部分の座標を初期化する
+			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
+			mat.m[3][0] = m_arrowPosInit.x;
+			mat.m[3][1] = m_arrowPosInit.y;
+			mat.m[3][2] = m_arrowPosInit.z;
+
+			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
+
+			auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
+			if (col != nullptr)
+			{
+				Collidable::DeleteRequestCollider(col);
+			}
+		}
+
+		//攻撃カウントを更新
+		m_attackCount++;
+	}
+	else
+	{
+		m_attackCount = 0;
+	}
+
+
 }
 
 void ArrowWallTrap::Draw()

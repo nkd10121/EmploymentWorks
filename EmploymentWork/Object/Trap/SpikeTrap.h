@@ -31,7 +31,7 @@ private:
 	int m_frameIdx;		//スパイクのモデルフレーム数
 
 	Vec3 m_spikePos;	//スパイクモデルの座標	
-	Vec3 m_spikePosInit;	//スパイクモデルの初期座標	
+	Vec3 m_spikePosInit;	//スパイクモデルの初期座標
 
 	Vec3 m_norm;
 	Vec3 m_movedPos;		//スパイクモデルの移動量
