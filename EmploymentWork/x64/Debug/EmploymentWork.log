@@ -1,5 +1,13 @@
-﻿  EnemyManager.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(198,52): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-  ScoreManager.cpp
+﻿  EnemyBase.cpp
+  EnemyNormal.cpp
+  EnemyStateAttack.cpp
+  EnemyStateIdle.cpp
+  EnemyStateWalk.cpp
+  SwarmEnemy.cpp
+  Player.cpp
+  EnemyManager.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(199,52): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  GameManager.cpp
+  Crystal.cpp
   コードを生成中...
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

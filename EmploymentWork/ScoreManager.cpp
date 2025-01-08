@@ -28,5 +28,10 @@ void ScoreManager::Clear()
 
 const void ScoreManager::CalculationScore()
 {
-	return void();
+	//タイムの計算
+	m_score += m_targetClearTime - m_clearTime;
+	m_score += m_playerKillNum * 50;
+	m_score += m_trapKillNum * 100;
+	m_score += m_crystalHp + 100;
+	//m_score += m_maxCombo * 100;
 }

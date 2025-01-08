@@ -52,6 +52,12 @@ public:
 	void Clear();
 
 	/// <summary>
+	/// 目標クリアタイムを設定する
+	/// </summary>
+	/// <param name="time">目標クリアタイム</param>
+	/// <returns></returns>
+	const void SetTargetClearTime(int time) { m_targetClearTime = time; }
+	/// <summary>
 	/// クリアタイムを設定する
 	/// </summary>
 	/// <param name="time">クリアタイム</param>
@@ -83,13 +89,20 @@ public:
 	/// <returns></returns>
 	const void CalculationScore();
 
+	/// <summary>
+	/// スコアを取得する
+	/// </summary>
+	/// <returns></returns>
+	const int GetScore()const { return m_score; }
+
 private:
+	int m_targetClearTime;	//目標クリアタイム
 	int m_clearTime;		//クリアタイム
 	int m_playerKillNum;	//プレイヤーが倒した数
 	int m_trapKillNum;		//トラップが倒した数
 	int m_crystalHp;		//クリスタルの残りHP
 	int m_maxComboNum;		//最大コンボ数
 
-	int m_score;
+	int m_score;			//スコア
 };
 

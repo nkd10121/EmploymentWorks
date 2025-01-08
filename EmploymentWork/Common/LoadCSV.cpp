@@ -370,13 +370,6 @@ std::vector<std::string> LoadCSV::LoadStageInfo(int stageIdx)
 		//取得した文字列をカンマ区切りの配列(情報群)にする
 		strConmaBuf = Split(strBuf, ',');
 
-		//[0]:キャラクター名
-		//[1]:攻撃力
-		//[2]:索敵範囲
-		//[3]:攻撃範囲
-		//[4]:クールタイム
-		//[5]:設置コスト
-
 		//指定したキャラクター名と一致するデータがあれば情報を取得する
 		if (std::stoi(strConmaBuf[0]) == stageIdx)
 		{

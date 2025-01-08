@@ -13,6 +13,7 @@
 #include "TrapManager.h"
 #include "EffectManager.h"
 #include "ImageManager.h"
+#include "ScoreManager.h"
 #include "LoadCSV.h"
 #include "Input.h"
 
@@ -53,6 +54,9 @@ GameManager::~GameManager()
 	m_pPlayer->Finalize();
 
 	m_pEnemyManager->Finalize();
+	
+
+	m_pCrystal->Finalize();
 
 	//ポーションの解放
 	for (auto& object : m_pObjects)
@@ -68,6 +72,7 @@ GameManager::~GameManager()
 	{
 		DeleteGraph(h);
 	}
+
 }
 
 /// <summary>
@@ -113,7 +118,7 @@ void GameManager::Init(int stageIdx)
 	MapManager::GetInstance().Load(stageName.c_str());
 
 	//クリスタルの生成
-	m_pCrystal = std::make_shared<Crystal>(10);
+	m_pCrystal = std::make_shared<Crystal>(std::stoi(info[5]));
 	m_pCrystal->Init();
 	m_pCrystal->Set(MapManager::GetInstance().GetCrystalPos());
 
@@ -136,7 +141,10 @@ void GameManager::Init(int stageIdx)
 	m_pHpUi->Init(m_pPlayer->GetHp());
 
 	TrapManager::GetInstance().Load(stageName.c_str());
-	TrapManager::GetInstance().SetUp(10000);
+	TrapManager::GetInstance().SetUp(std::stoi(info[4]));
+
+	//目標クリアタイムの設定
+	ScoreManager::GetInstance().SetTargetClearTime(std::stoi(info[6]));
 }
 
 /// <summary>
@@ -293,6 +301,11 @@ void GameManager::Update()
 
 		if (m_pPlayer->GetNowAnimEndFrame() - 1 == m_pPlayer->GetAnimNowFrame())
 		{
+			//クリスタルの残りHPをスコア計算用に保存
+			ScoreManager::GetInstance().SetCrystalHp(m_pCrystal->GetHp());
+			m_pEnemyManager->SetScoreData();
+
+			ScoreManager::GetInstance().CalculationScore();
 			m_isEnd = true;
 		}
 	}
@@ -333,7 +346,7 @@ void GameManager::Draw()
 
 	//TODO:UIクラスみたいなのを作ってそこに移動させる
 	//装備スロットの描画
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		int x = 362 + i * 85;
 		int y = 655;

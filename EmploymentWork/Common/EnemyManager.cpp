@@ -4,6 +4,7 @@
 #include "SwarmEnemy.h"
 
 #include "LoadCSV.h"
+#include "ScoreManager.h"
 
 #include <cassert>
 
@@ -215,6 +216,7 @@ std::vector<EnemyManager::WayPoint> EnemyManager::GetRoute()
 
 void EnemyManager::Finalize()
 {
+
 	for (auto& enemy : m_pEnemies)
 	{
 		enemy->Finalize();
@@ -280,4 +282,9 @@ void EnemyManager::SeparateData(std::vector<std::string> data)
 	add.isCreated = false;
 
 	m_createEnemyInfo[std::stoi(data[0])].push_back(add);
+}
+
+const void EnemyManager::SetScoreData() const
+{
+	ScoreManager::GetInstance().SetKillData(m_killedByPlayerNum, m_killedByTrapNum);
 }
