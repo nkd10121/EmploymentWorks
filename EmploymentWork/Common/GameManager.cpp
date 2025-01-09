@@ -325,7 +325,7 @@ void GameManager::Draw()
 	MapManager::GetInstance().Draw();
 
 #ifdef _DEBUG	//デバッグ描画
-	MV1DrawModel(m_stageModel);
+	//MV1DrawModel(m_stageModel);
 	MyLib::DebugDraw::Draw3D();
 #endif
 

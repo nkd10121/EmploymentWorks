@@ -181,8 +181,9 @@ std::vector<EnemyManager::WayPoint> EnemyManager::GetRoute()
 	//TODO:おそらく複数ある場合が存在するためstartWpの中から一つ選ぶ必要がある
 	//			12.19時点では一旦startWp[0]をスタートとする処理を書く
 
+	int r = GetRand(static_cast<int>(startWp.size()) - 1);
 	//スタートウェイポイントを追加する
-	ret.push_back(startWp[0]);
+	ret.push_back(startWp[r]);
 
 
 	int idx = 0;
