@@ -50,6 +50,12 @@ public:
 	/// <returns>クリスタルの現在HP</returns>
 	const int GetHp()const { return m_hp; }
 
+	/// <summary>
+	/// プレイヤーが死亡したら呼ばれる関数
+	/// </summary>
+	/// <returns></returns>
+	const void PlayerDead() { m_hp -= 5; }
+
 private:
 	Vec3 m_pos;	//座標
 

@@ -254,25 +254,6 @@ void EnemyManager::CreateEnemy(int phaseNum)
 
 	addSwarm->SetUp();
 	m_pEnemies.emplace_back(addSwarm);
-
-	////DEBUG:敵を生成
-	//for (int i = 0; i < 1; i++)
-	//{
-	//	auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
-
-	//	for (int j = 0; j < 1; j++)
-	//	{
-	//		auto add = std::make_shared<EnemyNormal>();
-	//		add->SetPos(Vec3(-48.0f + 16 * i, 8.0f, -48.0f + 16 * j));
-	//		add->Init();
-
-	//		addSwarm->AddSwarm(add);
-
-	//	}
-
-	//	addSwarm->SetUp();
-	//	m_pEnemies.emplace_back(addSwarm);
-	//}
 }
 
 void EnemyManager::SeparateData(std::vector<std::string> data)

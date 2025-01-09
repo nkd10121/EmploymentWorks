@@ -227,6 +227,9 @@ void GameManager::Update()
 	m_pPlayer->Update(this, rayCastRet);
 	if (m_pPlayer->GetIsDeath())
 	{
+		//クリスタルのHPを減らす
+		m_pCrystal->PlayerDead();
+
 		//プレイヤーの生成
 		m_pPlayer = std::make_shared<Player>();
 		m_pPlayer->Init(m_stageId);
@@ -304,7 +307,7 @@ void GameManager::Update()
 			//クリスタルの残りHPをスコア計算用に保存
 			ScoreManager::GetInstance().SetCrystalHp(m_pCrystal->GetHp());
 			m_pEnemyManager->SetScoreData();
-
+			//スコアを計算
 			ScoreManager::GetInstance().CalculationScore();
 			m_isEnd = true;
 		}
