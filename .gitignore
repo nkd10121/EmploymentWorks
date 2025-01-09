@@ -8,7 +8,6 @@
 [Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
-# They also could contain extremely sensitive data
 [Mm]emoryCaptures/
 
 # Recordings can get excessive in size
@@ -17,11 +16,8 @@
 # Ignore crash reports
 sysinfo.txt
 
-# Ignore Visual Studio, Rider, and other IDE-related files
+# Visual Studio related files and folders
 .vs/
-.gradle/
-ExportedObj/
-.consulo/
 *.csproj
 *.unityproj
 *.sln
@@ -36,12 +32,15 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.obj
 
-# Ignore builds
-*.apk
-*.aab
-*.unitypackage
-*.app
+# Ignore build outputs
+bin/
+obj/
+[Bb]uild/
+[Bb]uilds/
+*.exe
+*.dll
 
 # Ignore JetBrains Rider plugin files
 [Aa]ssets/Plugins/Editor/JetBrains*
