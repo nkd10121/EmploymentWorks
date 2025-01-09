@@ -28,10 +28,7 @@ TrapManager::TrapManager():
 	m_rightTriggerPushCount(0),
 	m_bgHandle(-1)
 {
-	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.8f));
-	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_ARROWWALL"), 1.0f));
-	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("Spike").kind);
-	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("ArrowWall").kind);
+
 }
 
 TrapManager::~TrapManager()
@@ -296,6 +293,11 @@ void TrapManager::SetUp(int point)
 		}
 	}
 
+	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.8f));
+	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_ARROWWALL"), 1.0f));
+	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("Spike").kind);
+	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("ArrowWall").kind);
+
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_trapPoint = point;
 }
@@ -316,6 +318,15 @@ void TrapManager::Clear()
 
 	DeleteGraph(m_bgHandle);
 	m_trapPoint = 0;
+
+	for (auto& h : m_trapModelHandles)
+	{
+		MV1DeleteModel(h.first);
+	}
+	m_trapModelHandles.clear();
+
+	m_trapKind.clear();
+
 }
 
 void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)

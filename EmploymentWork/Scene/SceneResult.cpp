@@ -5,6 +5,8 @@
 #include "SceneRanking.h"
 #include "SceneMainMenu.h"
 
+#include "ScoreManager.h"
+
 #include "Game.h"
 namespace
 {
@@ -62,6 +64,7 @@ void SceneResult::Init()
 /// </summary>
 void SceneResult::End()
 {
+	ScoreManager::GetInstance().Clear();
 }
 
 /// <summary>
@@ -80,6 +83,8 @@ void SceneResult::Draw()
 	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
+
+	DrawFormatString(240,240,0xffffff,"Score:%d",ScoreManager::GetInstance().GetScore());
 
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
