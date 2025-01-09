@@ -6,7 +6,7 @@
 namespace Game
 {
 	//ウィンドウ名
-	constexpr const char* kWindowName = "SkeletonMustBreak!";
+	constexpr const char* kWindowName = "MonsterMustDie!";
 
 	//ウィンドウの横幅
 	constexpr int kWindowWidth = 1280;

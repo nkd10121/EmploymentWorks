@@ -1,3 +1,4 @@
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Object\Trap\ArrowWallTrap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ArrowWallTrap.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\SoundManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\SoundManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\EffectManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EffectManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Enemy\State\EnemyStateIdle.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyStateIdle.obj
@@ -11,7 +12,8 @@ C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\ImageManag
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\ShaderManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ShaderManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Player\State\PlayerStateClear.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\PlayerStateClear.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\ResourceManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ResourceManager.obj
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\HammerTrap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\HammerTrap.obj
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Object\Trap\HammerTrap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\HammerTrap.obj
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\ScoreManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ScoreManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Ui\HPBar.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\HPBar.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Object\Crystal.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\Crystal.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Enemy\EnemyBase.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyBase.obj
