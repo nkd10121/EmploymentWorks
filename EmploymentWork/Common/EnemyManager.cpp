@@ -196,7 +196,7 @@ std::vector<EnemyManager::WayPoint> EnemyManager::GetRoute()
 		}
 
 		//接続先の中からランダムに選ぶ
-		int rand = GetRand(ret[idx].nextPointName.size() - 1);
+		int rand = GetRand(static_cast<int>(ret[idx].nextPointName.size()) - 1);
 		auto addWpName = ret[idx].nextPointName[rand];
 
 		for (auto& wp : m_wayPoints)

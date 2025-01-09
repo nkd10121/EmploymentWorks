@@ -66,7 +66,7 @@ void ArrowWallTrap::Init(Vec3 pos,Vec3 norm)
 		sphereCol->m_radius = kCollisionRadius;
 
 
-		auto searchPos = norm * i * 20.0f;
+		auto searchPos = norm * static_cast<float>(i * 20.0f);
 		sphereCol->SetOffsetPos(searchPos);
 
 		//索敵判定は動かすつもりがないため、先に中心座標を設定して動かないようにする
