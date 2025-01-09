@@ -26,7 +26,7 @@ namespace
 	{
 		{"floor","M_FLOOR"},
 		{"wall","M_WALL"},
-		{"doorFrame","M_FRAME"},
+		{"gate","M_FRAME"},
 		{"stairs","M_STAIRS"},
 		{"stairsWall","M_SMOOTHBLOCK"},
 	};
@@ -156,7 +156,7 @@ void MapManager::Draw()
 {
 	for (auto& loc : m_data)
 	{
-		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "doorFrame" && loc.tag != "stairs" && loc.tag != "stairsWall")
+		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "gate" && loc.tag != "stairs" && loc.tag != "stairsWall")
 		{
 			continue;
 		}

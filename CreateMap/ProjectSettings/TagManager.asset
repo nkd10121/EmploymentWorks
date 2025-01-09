@@ -12,6 +12,7 @@ TagManager:
   - TrapPlaceable
   - WayPoint
   - Crystal
+  - gate
   layers:
   - Default
   - TransparentFX
