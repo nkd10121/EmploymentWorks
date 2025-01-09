@@ -58,6 +58,7 @@ private:
 	std::list<int> m_phaseNum;
 	bool m_isCreateEnemy;
 	int m_phaseCount;
+	int m_allPhaseCount;
 
 	int m_slotBgHandle;
 	std::vector<int> m_slotIconHandle;

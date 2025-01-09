@@ -38,6 +38,7 @@ namespace
 GameManager::GameManager() :
 	m_isCreateEnemy(false),
 	m_phaseCount(0),
+	m_allPhaseCount(0),
 	m_isEnd(false)
 {
 
@@ -152,7 +153,7 @@ void GameManager::Init(int stageIdx)
 /// </summary>
 void GameManager::Update()
 {
-	//Yボタンを押した時かつ最初のフェーズの時、
+	//Yボタンを押した時かつ最初のフェーズの時(コメント化している部分はデバッグでフェーズをスキップするためにされている。)
 	if (Input::GetInstance().IsTriggered("Y") /*&& m_phaseNum.front() == -1*/)
 	{
 		//次のフェーズに進む
@@ -170,13 +171,7 @@ void GameManager::Update()
 	//現在のフェーズが0以上(戦闘フェーズ)の時、敵を生成していなかったら敵を生成する
 	if (m_phaseNum.front() >= 0)
 	{
-		if (!m_isCreateEnemy)
-		{
-			m_pEnemyManager->CreateEnemy(m_phaseNum.front());
-		}
-		//敵を生成した
-		m_isCreateEnemy = true;
-
+		m_pEnemyManager->CreateEnemy(m_phaseNum.front(),m_phaseCount);
 	}
 	//0以下(準備フェーズ)の時
 	else
@@ -242,23 +237,28 @@ void GameManager::Update()
 		//念のため、現在が戦闘フェーズであるか確認
 		if (m_phaseNum.front() > 0)
 		{
+			//フェーズカウントをリセット
+			m_allPhaseCount += m_phaseCount;
+			m_phaseCount = 0;
+
 			//次のフェーズに進む
 			m_phaseNum.pop_front();
 		}
 	}
 
 	//最初の準備フレームでなければフェーズカウントを進める
-	if (m_phaseNum.front() < 0 && m_phaseNum.front() != -1)
+	if (m_phaseNum.front() != -1)
 	{
 		m_phaseCount++;
 	}
 
 
 	//10秒経ったら次のフェーズに進める
-	if (m_phaseCount >= 600)
+	if (m_phaseNum.front() < 0 && m_phaseNum.front() != -1 && m_phaseCount >= 600)
 	{
 		m_phaseNum.pop_front();
 		//フェーズカウントをリセット
+		m_allPhaseCount += m_phaseCount;
 		m_phaseCount = 0;
 	}
 
@@ -306,6 +306,7 @@ void GameManager::Update()
 		{
 			//クリスタルの残りHPをスコア計算用に保存
 			ScoreManager::GetInstance().SetCrystalHp(m_pCrystal->GetHp());
+			ScoreManager::GetInstance().SetClearTime(m_allPhaseCount);
 			m_pEnemyManager->SetScoreData();
 			//スコアを計算
 			ScoreManager::GetInstance().CalculationScore();
@@ -381,7 +382,8 @@ void GameManager::Draw()
 	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xaaaaaa, true);
 
 	DrawFormatString(640, 0, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
-	DrawFormatString(640, 16, 0xffffff, "次のフェーズまで:%d", m_phaseCount);
+	DrawFormatString(640, 16, 0xffffff, "現在のフェーズの経過フレーム:%d", m_phaseCount);
+	DrawFormatString(640, 32, 0xffffff, "すべてのフェーズの経過フレーム:%d", m_allPhaseCount);
 	DrawFormatString(1172, 32, 0xffffff, "%d", m_pCrystal->GetHp());
 #endif
 }

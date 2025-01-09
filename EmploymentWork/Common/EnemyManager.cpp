@@ -233,25 +233,33 @@ void EnemyManager::UpdateModelPos()
 	}
 }
 
-void EnemyManager::CreateEnemy(int phaseNum)
+void EnemyManager::CreateEnemy(int phaseNum,int count)
 {
 	int i = 0;
 	auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
 
+	bool isAdd = false;
+
 	for (auto& data : m_createEnemyInfo[phaseNum])
 	{
-		if (data.enemyName == "EnemyNormal")
+		if (data.appearFrame == count / 60)
 		{
-			auto add = std::make_shared<EnemyNormal>();
-			add->SetRoute(GetRoute());
-			add->Init();
-			addSwarm->AddSwarm(add);
+			if (data.enemyName == "EnemyNormal" && !data.isCreated)
+			{
+				auto add = std::make_shared<EnemyNormal>();
+				add->SetRoute(GetRoute());
+				add->Init();
+				addSwarm->AddSwarm(add);
 
-			data.isCreated = true;
+				data.isCreated = true;
+				isAdd = true;
+			}
 		}
 
 		i++;
 	}
+
+	if (!isAdd)	return;
 
 	addSwarm->SetUp();
 	m_pEnemies.emplace_back(addSwarm);
@@ -261,6 +269,7 @@ void EnemyManager::SeparateData(std::vector<std::string> data)
 {
 	EnemyCreateInfo add;
 	add.enemyName = data[1];
+	add.appearFrame = stoi(data[2]);
 	add.isCreated = false;
 
 	m_createEnemyInfo[std::stoi(data[0])].push_back(add);
