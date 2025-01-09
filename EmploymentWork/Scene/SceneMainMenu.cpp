@@ -8,12 +8,12 @@
 
 namespace
 {
-#ifdef _DEBUG	//デバッグ描画
+//#ifdef _DEBUG	//デバッグ描画
 	/*テキスト描画関係*/
 	constexpr int kTextX = 64;			//テキスト描画X座標
 	constexpr int kTextY = 32;			//テキスト描画Y座標
 	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
-#endif
+//#endif
 }
 
 /// <summary>
@@ -75,6 +75,7 @@ void SceneMainMenu::Draw()
 {
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
+#endif
 
 
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
@@ -84,7 +85,6 @@ void SceneMainMenu::Draw()
 	DrawString(kTextX, kTextY + kTextYInterval * 2, "オプション", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 3, "ランキング", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 4, "やめる", 0xffffff);
-#endif
 }
 
 /// <summary>

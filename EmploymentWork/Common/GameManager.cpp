@@ -156,7 +156,7 @@ void GameManager::Init(int stageIdx)
 void GameManager::Update()
 {
 	//Yボタンを押した時かつ最初のフェーズの時(コメント化している部分はデバッグでフェーズをスキップするためにされている。)
-	if (Input::GetInstance().IsTriggered("Y") /*&& m_phaseNum.front() == -1*/)
+	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front() == -1)
 	{
 		//次のフェーズに進む
 		m_phaseNum.pop_front();

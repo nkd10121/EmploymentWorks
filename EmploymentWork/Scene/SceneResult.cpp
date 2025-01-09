@@ -10,12 +10,12 @@
 #include "Game.h"
 namespace
 {
-#ifdef _DEBUG	//デバッグ描画
+//#ifdef _DEBUG	//デバッグ描画
 	/*テキスト描画関係*/
 	constexpr int kTextX = 64;			//テキスト描画X座標
 	constexpr int kTextY = 32;			//テキスト描画Y座標
 	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
-#endif
+//#endif
 }
 
 /// <summary>
@@ -88,6 +88,7 @@ void SceneResult::Draw()
 
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
+#endif
 
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
 
@@ -96,7 +97,6 @@ void SceneResult::Draw()
 	DrawString(kTextX, kTextY + kTextYInterval * 2, "強化へ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 3, "ランキングへ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 4, "メインメニューに戻る", 0xffffff);
-#endif
 }
 
 /// <summary>
@@ -139,7 +139,7 @@ void SceneResult::SelectNextSceneUpdate()
 		if (m_destinationScene == eDestination::InGame)
 		{
 			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
-			SceneManager::GetInstance().SetStageIdx(SceneManager::GetInstance().GetStageIdx() + 1);
+			SceneManager::GetInstance().SetStageIdx(SceneManager::GetInstance().GetStageIdx());
 			EndThisScene();
 			return;
 		}
