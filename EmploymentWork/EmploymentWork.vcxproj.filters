@@ -95,9 +95,6 @@
     <ClCompile Include="MyLib\Rigidbody.cpp">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="Util\Input.cpp">
-      <Filter>ソース ファイル\MyLib</Filter>
-    </ClCompile>
     <ClCompile Include="Character\CharacterBase.cpp">
       <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
@@ -242,6 +239,9 @@
     <ClCompile Include="Common\ScoreManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
+    <ClCompile Include="Util\Input.cpp">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
@@ -323,9 +323,6 @@
       <Filter>ソース ファイル\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="MyLib\GameObjectTag.h">
-      <Filter>ソース ファイル\MyLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Input.h">
       <Filter>ソース ファイル\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="MyLib\MyLib.h">
@@ -438,6 +435,9 @@
     </ClInclude>
     <ClInclude Include="Common\ScoreManager.h">
       <Filter>ソース ファイル\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Input.h">
+      <Filter>ソース ファイル\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

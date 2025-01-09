@@ -17,7 +17,7 @@ namespace
 	const std::string kStageDataPathBack = ".tLoc";
 }
 
-TrapManager::TrapManager():
+TrapManager::TrapManager() :
 	m_previewTrapModelHandle(-1),
 	m_angle(0.0f),
 	m_transparency(0.0f),
@@ -88,7 +88,7 @@ void TrapManager::Update()
 		{
 			//もし、設置しようとしているトラップの種類がトラップ座標候補の法線ベクトルと一致していなければ次に行く
 			//罠ごとに設定されている種類を取得できるようにしたい
-			if (m_trapKind[m_slotIdx-1] == 0)
+			if (m_trapKind[m_slotIdx - 1] == 0)
 			{
 				if (abs(trapPos->norm.y - 1.0f) > 0.1f)
 				{
@@ -97,7 +97,7 @@ void TrapManager::Update()
 			}
 			else if (m_trapKind[m_slotIdx - 1] == 1)
 			{
-				if(abs(trapPos->norm.y) > 0.1f)
+				if (abs(trapPos->norm.y) > 0.1f)
 				{
 					continue;
 				}
@@ -124,32 +124,32 @@ void TrapManager::Update()
 			switch (m_slotIdx)
 			{
 			case 1:
+			{
+				auto add = std::make_shared<SpikeTrap>();
+				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+				if (m_trapPoint < add->GetCost())
 				{
-					auto add = std::make_shared<SpikeTrap>();
-					//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
-					if (m_trapPoint < add->GetCost())
-					{
-						//何もしない
-						return;
-					}
-
-					//所持トラップポイントをコスト分減らす
-					m_trapPoint -= add->GetCost();
-
-					//初期化
-					add->Init(debugTrap->pos, debugTrap->norm);
-
-					//追加
-					m_traps.emplace_back(add);
-
-					//トラップを設置済みにする
-					debugTrap->isPlaced = true;
-					for (auto& trap : debugTrap->neighborTraps)
-					{
-						trap.lock()->isPlaced = true;
-					}
+					//何もしない
+					return;
 				}
-				break;
+
+				//所持トラップポイントをコスト分減らす
+				m_trapPoint -= add->GetCost();
+
+				//初期化
+				add->Init(debugTrap->pos, debugTrap->norm);
+
+				//追加
+				m_traps.emplace_back(add);
+
+				//トラップを設置済みにする
+				debugTrap->isPlaced = true;
+				for (auto& trap : debugTrap->neighborTraps)
+				{
+					trap.lock()->isPlaced = true;
+				}
+			}
+			break;
 			case 2:
 			{
 				auto add = std::make_shared<ArrowWallTrap>();
@@ -198,7 +198,8 @@ void TrapManager::Draw()
 		trap->Draw();
 	}
 
-
+	DrawFormatString(435, 700, 0xffffff, "400");
+	DrawFormatString(520, 700, 0xffffff, "500");
 
 #ifdef _DEBUG	//デバッグ描画
 	for (auto& pos : m_trapPoss)
@@ -215,7 +216,7 @@ void TrapManager::Draw()
 
 	if (debugTrap != nullptr)
 	{
-		if(!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
+		if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
 		{
 			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
 		}
@@ -223,7 +224,7 @@ void TrapManager::Draw()
 		{
 			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
 		}
-	}
+}
 #endif
 
 	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
@@ -285,7 +286,7 @@ void TrapManager::SetUp(int point)
 		{
 			if (abs((trap->pos - temp->pos).Length()) > 0.0f && abs((trap->pos - temp->pos).Length()) < 12.0f)
 			{
-				if (Dot(trap->norm.Normalize(),temp->norm.Normalize()) >= 1.0f)
+				if (Dot(trap->norm.Normalize(), temp->norm.Normalize()) >= 1.0f)
 				{
 					trap->neighborTraps.emplace_back(temp);
 				}
@@ -349,7 +350,7 @@ void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
 			m_trapPoint -= add->GetCost();
 
 			//初期化
-			add->Init(debugTrap->pos,debugTrap->norm);
+			add->Init(debugTrap->pos, debugTrap->norm);
 
 			//追加
 			m_traps.emplace_back(add);

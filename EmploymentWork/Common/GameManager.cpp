@@ -134,6 +134,8 @@ void GameManager::Init(int stageIdx)
 
 	m_slotBgHandle = ResourceManager::GetInstance().GetHandle("I_SLOTBG");
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
+	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SPIKE"));
+	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SLOTARROWWALL"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_CRYSTALBG"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_IRONUI"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_MINIMAPBG"));
@@ -356,7 +358,7 @@ void GameManager::Draw()
 		int y = 655;
 		//DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
 		DrawRotaGraph(x,y,0.08f,0.0f,m_slotBgHandle,true);
-		if (i == 0)
+		//if (i == 0)
 		{
 			DrawRotaGraph(x,y,0.5f,0.0f, m_slotIconHandle[i], true);
 		}
@@ -366,13 +368,14 @@ void GameManager::Draw()
 	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 85 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 85 + 35, 655 + 35, 0xff0000, false);
 
 	//右上のUI描画
-	DrawRotaGraph(1180, 150, 0.9f, 0.0f, m_slotIconHandle[3], true);
-	DrawRotaGraph(1180, 45, 0.75f, 0.0f, m_slotIconHandle[2], true);
-	DrawRotaGraph(1180, 40, 0.65f, 0.0f, m_slotIconHandle[1], true);
+	DrawRotaGraph(1180, 150, 0.9f, 0.0f, m_slotIconHandle[5], true);
+	DrawRotaGraph(1180, 45, 0.75f, 0.0f, m_slotIconHandle[4], true);
+	DrawRotaGraph(1180, 40, 0.65f, 0.0f, m_slotIconHandle[3], true);
+
+	DrawFormatString(1160,240,0xffffff,"%d / 3",abs(m_phaseNum.front()));
 
 	m_pHpUi->Draw();
 
-#ifdef _DEBUG	//デバッグ描画
 	//クロスヘアの描画
 	auto centerX = Game::kWindowWidth / 2;
 	auto centerY = Game::kWindowHeight / 2;
@@ -381,11 +384,23 @@ void GameManager::Draw()
 	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xaaaaaa, true);
 	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xaaaaaa, true);
 
+	if (m_phaseNum.front() == -1)
+	{
+		DrawString(580, 20, "Yボタンでゲーム開始", 0xffffff);
+	}
+
+	//準備フェーズなら
+	if (m_phaseNum.front() < 0 && m_phaseNum.front() != -1)
+	{
+		DrawFormatString(580, 20, 0xffffff, "次のフェーズまで %d", (660 - m_phaseCount) / 60);
+	}
+
+#ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(640, 0, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
 	DrawFormatString(640, 16, 0xffffff, "現在のフェーズの経過フレーム:%d", m_phaseCount);
 	DrawFormatString(640, 32, 0xffffff, "すべてのフェーズの経過フレーム:%d", m_allPhaseCount);
-	DrawFormatString(1172, 32, 0xffffff, "%d", m_pCrystal->GetHp());
 #endif
+	DrawFormatString(1172, 32, 0xffffff, "%d", m_pCrystal->GetHp());
 }
 
 /// <summary>
