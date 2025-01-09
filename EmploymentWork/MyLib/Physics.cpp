@@ -52,11 +52,15 @@ MyLib::Physics::~Physics()
 
 }
 
-void MyLib::Physics::SetStageCollisionModel(std::string id)
+void MyLib::Physics::SetStageCollisionModel(std::string id,std::string id2)
 {
 	m_stageCollisionHandle = ResourceManager::GetInstance().GetHandle(id);
 	MV1SetScale(m_stageCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
 	MV1SetRotationXYZ(m_stageCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
+
+	m_enemyCollisionHandle = ResourceManager::GetInstance().GetHandle(id2);
+	MV1SetScale(m_enemyCollisionHandle, VGet(0.01f, 0.01f, 0.01f));
+	MV1SetRotationXYZ(m_enemyCollisionHandle, VGet(0.0f, DX_PI_F, 0.0f));
 }
 
 /// <summary>
@@ -197,14 +201,14 @@ void MyLib::Physics::Update()
 				{
 					continue;
 				}
-				//if (item->GetTag() == GameObjectTag::Player)
-				//{
-				//	modelHandle = m_stageCollisionHandle;
-				//}
-				//else
-				//{
-				//	modelHandle = m_enemyCollisionHandle;
-				//}
+				if (item->GetTag() == GameObjectTag::Player)
+				{
+					modelHandle = m_stageCollisionHandle;
+				}
+				else
+				{
+					modelHandle = m_enemyCollisionHandle;
+				}
 			}
 
 			//カプセルの中心座標
@@ -275,6 +279,7 @@ void MyLib::Physics::Update()
 void MyLib::Physics::Clear()
 {
 	MV1DeleteModel(m_stageCollisionHandle);
+	MV1DeleteModel(m_enemyCollisionHandle);
 
 	m_collidables.clear();
 	m_onCollideInfo.clear();

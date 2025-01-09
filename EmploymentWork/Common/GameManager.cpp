@@ -98,7 +98,7 @@ void GameManager::Init(int stageIdx)
 	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
 
 	//ステージの当たり判定を設定
-	MyLib::Physics::GetInstance().SetStageCollisionModel(m_stageId);
+	MyLib::Physics::GetInstance().SetStageCollisionModel(info[1], info[2]);
 
 	//プレイヤーの生成
 	m_pPlayer = std::make_shared<Player>();

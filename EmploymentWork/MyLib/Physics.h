@@ -113,7 +113,7 @@ public:
 	}
 
 public:
-	void SetStageCollisionModel(std::string id);
+	void SetStageCollisionModel(std::string id, std::string id2);
 
 	/// <summary>
 	/// 衝突物の登録
