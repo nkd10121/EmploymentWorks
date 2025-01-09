@@ -18,7 +18,6 @@ ScoreManager::~ScoreManager()
 
 void ScoreManager::Clear()
 {
-
 	m_clearTime = 0;
 	m_playerKillNum = 0;
 	m_trapKillNum = 0;
