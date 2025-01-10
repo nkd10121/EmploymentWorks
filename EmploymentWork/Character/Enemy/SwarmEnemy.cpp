@@ -64,6 +64,7 @@ void SwarmEnemy::Finalize()
 void SwarmEnemy::Update(Vec3 start,Vec3 end)
 {
 	m_isCameraRayHit = false;
+	m_attackerCount = 0;
 
 	std::list<Vec3> pos;
 	//構成メンバーの更新

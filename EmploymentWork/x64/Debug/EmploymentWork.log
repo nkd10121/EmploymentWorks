@@ -1,5 +1,4 @@
-﻿  EnemyNormal.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Character\Enemy\EnemyNormal.cpp(292,46): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Character\Enemy\EnemyNormal.cpp(311,47): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Character\Enemy\EnemyNormal.cpp(350,47): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+﻿  SwarmEnemy.cpp
+  EnemyManager.cpp
+  コードを生成中...
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

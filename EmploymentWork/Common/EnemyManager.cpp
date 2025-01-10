@@ -56,6 +56,7 @@ void EnemyManager::Init(std::string stageName)
 
 bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 {
+	m_attackerCount = 0;
 
 	auto endPos = cameraPos + angle * 100000.0f;
 	Vec3 returnPos;

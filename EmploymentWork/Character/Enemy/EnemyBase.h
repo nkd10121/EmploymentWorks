@@ -185,7 +185,7 @@ public:
 	/// 攻撃してきたオブジェクト名の数を取得
 	/// </summary>
 	/// <returns></returns>
-	const int GetAttackerNaneNum() { return static_cast<int>(m_attackerName.size()) - m_preAttackerNameNum; }
+	const int GetAttackerNaneNum() { return static_cast<int>(m_attackerName.size()); }
 protected:
 	/// <summary>
 	/// 指定した当たり判定タグが存在するかチェック
