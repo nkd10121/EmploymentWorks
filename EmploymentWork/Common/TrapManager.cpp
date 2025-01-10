@@ -125,7 +125,6 @@ void TrapManager::Update()
 			break;
 		}
 
-
 		//ここまで来たならレイキャストする対象が見つかっていない場合ということ
 		//半径を大きくしてもう一回繰り返す
 		rad += 5.0f;
@@ -373,109 +372,8 @@ void TrapManager::Clear()
 
 }
 
-void TrapManager::EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot)
-{
-	if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
-	{
-		//現状はスロット番号が1だったらスパイクトラップを設置する。
-		//MEMO:今後、選択したトラップに応じた種類を設置するようにするかも
-		if (slot == 1)
-		{
-			auto add = std::make_shared<SpikeTrap>();
-			//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
-			if (m_trapPoint < add->GetCost())
-			{
-				//何もしない
-				return;
-			}
-
-			//所持トラップポイントをコスト分減らす
-			m_trapPoint -= add->GetCost();
-
-			//初期化
-			add->Init(debugTrap->pos, debugTrap->norm);
-
-			//追加
-			m_traps.emplace_back(add);
-
-			//トラップを設置済みにする
-			debugTrap->isPlaced = true;
-			for (auto& trap : debugTrap->neighborTraps)
-			{
-				trap.lock()->isPlaced = true;
-			}
-		}
-	}
-}
-
 const void TrapManager::SetCameraInfo(Vec3 cameraPos, Vec3 dirVec)
 {
 	m_cameraPos = cameraPos;
 	m_cameraDir = dirVec;
-}
-
-void TrapManager::SelectPoint(Vec3 playerPos, Vec3 targetPos)
-{
-#ifdef TRUE	//バウンディングボックスを使った処理方法
-	//線分の始点と終点を設定
-	//auto start = playerPos;
-	auto start = m_cameraPos;
-	auto end = playerPos + targetPos * 60;
-
-	float defaultLength = 100.0f;
-
-#ifdef _DEBUG
-	DrawCube3D(start.ToVECTOR(), end.ToVECTOR(), 0xff0000, 0xff0000, false);
-#endif
-	//startとendを始点終点とした四角形との当たり判定をまずとる
-
-	auto hit = CheckHitBoundingBoxAndPoints(start, end, m_trapPoss);
-
-	//設置可能なトラップの座標分回す
-	for (auto& trap : hit)
-	{
-		//トラップが置かれていない
-		//if (!trap->isPlaced && trap->neighborTraps.size() == 8 && CheckNeighbor(trap->neighborTraps))
-		{
-			//線分とトラップ設置可能座標の距離を計算する
-			//float length = Segment_Point_MinLength(start.ConvertToVECTOR(), end.ConvertToVECTOR(), pos.ConvertToVECTOR());
-			float length = Segment_Point_MinLength(start.ToVECTOR(), end.ToVECTOR(), trap->pos.ToVECTOR());
-
-			if (defaultLength > length)
-			{
-				defaultLength = length;
-
-				debugTrap = trap;
-			}
-		}
-	}
-#else		//バウンディングボックスを使わずにごり押し処理方法
-	//線分の始点と終点を設定
-	auto start = playerPos;
-	auto end = playerPos + targetPos * 60;
-
-	float defaultLength = 100.0f;
-
-	//設置可能なトラップの座標分回す
-	for (auto& trap : m_traps)
-	{
-		//トラップが置かれていない
-		if (!trap->isPlaced && trap->neighborTraps.size() == 8 && CheckNeighbor(trap->neighborTraps))
-		{
-			//線分とトラップ設置可能座標の距離を計算する
-			//float length = Segment_Point_MinLength(start.ConvertToVECTOR(), end.ConvertToVECTOR(), pos.ConvertToVECTOR());
-			float length = Segment_Point_MinLength(start.ToVECTOR(), end.ToVECTOR(), trap->pos.ToVECTOR());
-
-			if (defaultLength > length)
-			{
-				defaultLength = length;
-
-				debugTrap = trap;
-				//debugTrap->isPlaced = trap.isPlaced;
-				//debugTrap->neighborTraps = trap.neighborTraps;
-				//debugTrap->pos = trap.pos;
-			}
-		}
-	}
-#endif
 }

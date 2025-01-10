@@ -77,8 +77,6 @@ public:
 
 	void Clear();
 
-	void EstablishTrap(Vec3 playerPos, Vec3 targetPos, int slot);
-
 	/// <summary>
 	/// トラップポイントを追加する
 	/// </summary>
@@ -89,8 +87,6 @@ public:
 	const void SetCameraInfo(Vec3 cameraPos, Vec3 dirVec);
 	const void SetSlotIdx(int idx) { m_slotIdx = idx; }
 
-	//デバッグ用
-	void SelectPoint(Vec3 playerPos, Vec3 targetPos);
 private:
 	std::list<std::shared_ptr<Trap>> m_trapPoss;
 
