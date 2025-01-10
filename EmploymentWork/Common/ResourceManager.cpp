@@ -82,28 +82,6 @@ void ResourceManager::Load(std::string sceneName)
 
 	}
 	return;
-
-//
-//	//すでにロードされていたら何もしない
-//	for (auto& resource : m_resources)
-//	{
-//		if (resource->id == data[Order::StageId])
-//		{
-//#ifdef _DEBUG	//デバッグ描画
-//			assert(0 && "%sはすでにロードされています",id.c_str());
-//#endif
-//			return;
-//		}
-//	}
-//
-//	//ここに来たということはすでにロードされていなかった
-//	//→新しくロードする必要がある
-//	for (auto& d : data)
-//	{
-//		LoadResource(d);
-//	}
-//
-//	return;
 }
 
 int ResourceManager::GetHandle(std::string id)
@@ -121,8 +99,6 @@ int ResourceManager::GetHandle(std::string id)
 			return resource->handle;
 		}
 	}
-
-
 
 	//ここまで来たということはロードされていなかった
 #ifdef _DEBUG
