@@ -20,7 +20,7 @@ namespace
 	//スパイクモデルが動く幅。大きくすればするほど大きく動く。
 	constexpr float kSpikeModelMoveRange = 120.0f;
 	//サインカーブの制限。(0.0f～0.1f)
-	constexpr float kSinLimit = 0.08f;
+	constexpr float kSinLimit = 0.075f;
 
 	//ボーン（フレーム）の名前を指定
 	const char* kTargetFrameName = "wooden_spikes.001"; 
