@@ -27,6 +27,7 @@ public:
 
 private:
 	int m_attackCount;	//攻撃カウント
+	int m_coolTimeCount;	//クールタイム
 
 	int m_frameIdx;		//スパイクのモデルフレーム数
 

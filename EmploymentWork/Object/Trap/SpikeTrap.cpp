@@ -30,6 +30,7 @@ namespace
 SpikeTrap::SpikeTrap() :
 	TrapBase(),
 	m_attackCount(0),
+	m_coolTimeCount(0),
 	m_frameIdx(0),
 	m_spikePos(),
 	m_norm(),
@@ -139,32 +140,46 @@ void SpikeTrap::Update()
 		}
 
 		//サインカーブが0以下になった時に攻撃中から抜け出す
-		if (sin < 0.0f)
+		if (sin < -0.2f)
 		{
 			m_isAttack = false;
-
-			//スパイク部分の座標を初期化する
-			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
-			mat.m[3][0] = m_spikePosInit.x;
-			mat.m[3][1] = m_spikePosInit.y;
-			mat.m[3][2] = m_spikePosInit.z;
-
-			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 
 			auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
 			if (col != nullptr)
 			{
 				Collidable::DeleteRequestCollider(col);
 			}
-
-			m_spikePos = m_spikePosInit;
-			m_movedPos = Vec3();
 		}
 	}
 	else
 	{
-		m_attackCount = 0;
+		//攻撃をした後だったらクールタイムのカウントを更新する
+		if (m_attackCount != 0)
+		{
+			m_coolTimeCount++;
+		}
+
+		//クールタイムカウントが設定されたクールタイムの値以上になったら攻撃可能状態に戻す
+		if (m_coolTimeCount > m_status.coolTime)
+		{
+			//スパイク部分の座標を初期化する
+			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
+			mat.m[3][0] = m_spikePosInit.x;
+			mat.m[3][1] = m_spikePosInit.y;
+			mat.m[3][2] = m_spikePosInit.z;
+			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
+
+			m_spikePos = m_spikePosInit;
+			m_movedPos = Vec3();
+
+			//カウントを初期化する
+			m_coolTimeCount = 0;
+			m_attackCount = 0;
+		}
+
 	}
+
+
 }
 
 
