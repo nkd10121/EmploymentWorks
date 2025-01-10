@@ -17,6 +17,7 @@ namespace
 
 ArrowWallTrap::ArrowWallTrap() :
 	m_attackCount(0),
+	m_coolTimeCount(0),
 	m_frameIdx(0),
 	m_arrowPos(),
 	m_arrowPosInit(),
@@ -110,17 +111,9 @@ void ArrowWallTrap::Update()
 		Vec3 newVelocity = Vec3(mat.m[3][0], mat.m[3][1], mat.m[3][2]);
 		rigidbody->SetVelocity(m_norm * 2.0f);
 
-		if (m_attackCount >= 300)
+		if (m_attackCount >= 60)
 		{
 			m_isAttack = false;
-
-			//スパイク部分の座標を初期化する
-			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
-			mat.m[3][0] = m_arrowPosInit.x;
-			mat.m[3][1] = m_arrowPosInit.y;
-			mat.m[3][2] = m_arrowPosInit.z;
-
-			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 
 			auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
 			if (col != nullptr)
@@ -128,12 +121,12 @@ void ArrowWallTrap::Update()
 				Collidable::DeleteRequestCollider(col);
 			}
 
-			//rigidbodyの初期化
-			rigidbody->SetPos(m_arrowPosInit);
-			rigidbody->SetNextPos(m_arrowPosInit);
-			rigidbody->SetVelocity(Vec3(0.0f,0.0f,0.0f));
-
-			m_attackCount = 0;
+			//矢の部分の座標を初期化する
+			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
+			mat.m[3][0] = m_arrowPosInit.x - m_norm.x * 6.0f;
+			mat.m[3][1] = m_arrowPosInit.y - m_norm.y * 6.0f;
+			mat.m[3][2] = m_arrowPosInit.z - m_norm.z * 6.0f;
+			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 		}
 
 		//攻撃カウントを更新
@@ -141,7 +134,33 @@ void ArrowWallTrap::Update()
 	}
 	else
 	{
-		m_attackCount = 0;
+		//攻撃をした後だったらクールタイムのカウントを更新する
+		if (m_attackCount != 0)
+		{
+			m_coolTimeCount++;
+		}
+
+		//クールタイムカウントが設定されたクールタイムの値以上になったら攻撃可能状態に戻す
+		if (m_coolTimeCount > m_status.coolTime)
+		{
+			//矢の部分の座標を初期化する
+			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
+			mat.m[3][0] = m_arrowPosInit.x;
+			mat.m[3][1] = m_arrowPosInit.y;
+			mat.m[3][2] = m_arrowPosInit.z;
+			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
+
+			m_arrowPos = m_arrowPosInit;
+
+			//rigidbodyの初期化
+			rigidbody->SetPos(m_arrowPosInit);
+			rigidbody->SetNextPos(m_arrowPosInit);
+			rigidbody->SetVelocity(Vec3(0.0f, 0.0f, 0.0f));
+
+			//カウントを初期化する
+			m_coolTimeCount = 0;
+			m_attackCount = 0;
+		}
 	}
 
 

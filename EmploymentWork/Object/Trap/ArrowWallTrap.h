@@ -26,12 +26,13 @@ public:
 	void Draw()override;
 
 private:
-	int m_attackCount;	//攻撃カウント
+	int m_attackCount;		//攻撃カウント
+	int m_coolTimeCount;	//クールタイム
 
 	int m_frameIdx;		//モデルフレーム番号
 
-	Vec3 m_arrowPos;	//スパイクモデルの座標	
-	Vec3 m_arrowPosInit;	//スパイクモデルの初期座標
+	Vec3 m_arrowPos;		//矢モデルの座標	
+	Vec3 m_arrowPosInit;	//矢モデルの初期座標
 
 	Vec3 m_norm;
 };
