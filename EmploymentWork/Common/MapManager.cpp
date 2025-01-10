@@ -29,6 +29,8 @@ namespace
 		{"gate","M_FRAME"},
 		{"stairs","M_STAIRS"},
 		{"stairsWall","M_SMOOTHBLOCK"},
+		{"wallDecoA","M_WALLDECB"},
+		{"wallWIndowGate","M_WINDOWGATE"},
 	};
 }
 
@@ -156,10 +158,19 @@ void MapManager::Draw()
 {
 	for (auto& loc : m_data)
 	{
-		if (loc.tag != "floor" && loc.tag != "wall" && loc.tag != "gate" && loc.tag != "stairs" && loc.tag != "stairsWall")
+		bool isDraw = false;
+
+		for (auto& name : kId)
 		{
-			continue;
+			//もしタグがステージを構成するオブジェクトのタグなら描画する
+			if (name.first == loc.tag)	isDraw = true;
+			//もし描画すると決まっていたらこのfor文を抜ける
+			if (isDraw)	break;
 		}
-		MV1DrawModel(loc.handle);
+
+		if (isDraw)
+		{
+			MV1DrawModel(loc.handle);
+		}
 	}
 }
