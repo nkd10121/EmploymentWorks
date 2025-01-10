@@ -40,6 +40,13 @@ public:
 	virtual void Draw() override;
 
 	/// <summary>
+	/// クリアしたかどうかを取得する
+	/// </summary>
+	/// <param name="isClear"></param>
+	/// <returns></returns>
+	const void SetIsClear(const bool isClear) { m_isClear = isClear; }
+
+	/// <summary>
 	/// 次のシーンを選択する更新処理
 	/// </summary>
 	virtual void SelectNextSceneUpdate()override;
@@ -60,5 +67,7 @@ private:
 
 	//遷移先
 	eDestination m_destinationScene;
+
+	bool m_isClear;
 };
 

@@ -39,7 +39,8 @@ GameManager::GameManager() :
 	m_isCreateEnemy(false),
 	m_phaseCount(0),
 	m_allPhaseCount(0),
-	m_isEnd(false)
+	m_isEnd(false),
+	m_isClear(false)
 {
 
 }
@@ -224,13 +225,25 @@ void GameManager::Update()
 	m_pPlayer->Update(this, rayCastRet);
 	if (m_pPlayer->GetIsDeath())
 	{
-		//クリスタルのHPを減らす
-		m_pCrystal->PlayerDead();
+		//クリスタルの残りHPが5以上あればクリスタルHPを消費してプレイヤーを復活させる
+		//TODO:画面を黒にフェードさせたい
+		if (m_pCrystal->GetHp() > 5)
+		{
+			//クリスタルのHPを減らす
+			m_pCrystal->PlayerDead();
 
-		//プレイヤーの生成
-		m_pPlayer = std::make_shared<Player>();
-		m_pPlayer->Init(m_stageId);
-		m_pHpUi->Init(m_pPlayer->GetHp());
+			//プレイヤーの生成
+			m_pPlayer = std::make_shared<Player>();
+			m_pPlayer->Init(m_stageId);
+			m_pHpUi->Init(m_pPlayer->GetHp());
+		}
+		//クリスタルの残りHPが5以下ならゲームオーバーにする
+		else
+		{
+			m_isEnd = true;
+			m_isClear = false;
+			return;
+		}
 	}
 
 	//敵が全滅した時、次のフェーズに進む
@@ -300,6 +313,12 @@ void GameManager::Update()
 
 	MV1SetPosition(m_skyBoxHandle,m_pPlayer->GetPos().ToVECTOR());
 
+	if (m_pCrystal->GetHp() <= 0)
+	{
+		m_isClear = false;
+		m_isEnd = true;
+	}
+
 	if (m_phaseNum.front() == 0)
 	{
 		m_pPlayer->SetClearState();
@@ -312,6 +331,7 @@ void GameManager::Update()
 			m_pEnemyManager->SetScoreData();
 			//スコアを計算
 			ScoreManager::GetInstance().CalculationScore();
+			m_isClear = true;
 			m_isEnd = true;
 		}
 	}

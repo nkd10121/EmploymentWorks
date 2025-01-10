@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <list>
+#include <vector>
 #include <memory>
 
 class SceneBase;
@@ -79,10 +80,16 @@ public:
 	/// </summary>
 	void PopScene();
 
+	/// <summary>
+	/// 現在のシーンのsharedポインタを取得する
+	/// </summary>
+	/// <returns></returns>
+	const std::shared_ptr<SceneBase> GetBackScenePointer()const { return m_pScene[m_pScene.size()-1]; }
+
 	const int GetStageIdx()const { return m_stageIndex; }
 	const void SetStageIdx(int idx) { m_stageIndex = idx; }
 private:
-	std::list<std::shared_ptr<SceneBase>> m_pScene;		//現在のシーン
+	std::vector<std::shared_ptr<SceneBase>> m_pScene;		//現在のシーン
 	std::shared_ptr<SceneBase> m_pNextScene;			//遷移予定のシーン
 
 	int m_stageIndex;

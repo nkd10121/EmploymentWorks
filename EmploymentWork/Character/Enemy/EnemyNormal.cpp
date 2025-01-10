@@ -127,8 +127,11 @@ void EnemyNormal::Init()
 /// </summary>
 void EnemyNormal::Finalize()
 {
-	//当たり判定の削除
-	Collidable::OnExistPhysics();
+	if (m_isExist)
+	{
+		//当たり判定の削除
+		Collidable::OnExistPhysics();
+	}
 }
 
 /// <summary>

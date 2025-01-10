@@ -51,7 +51,7 @@ namespace
 /// </summary>
 Player::Player() :
 	CharacterBase(Collidable::Priority::Middle, GameObjectTag::Player),
-	m_pos(Vec3(0.0f, kCollisionCapsuleRadius + kCollisionCapsuleSize *8, 0.0f)),
+	m_pos(Vec3(0.0f, kCollisionCapsuleRadius + kCollisionCapsuleSize *5, 0.0f)),
 	temp_moveVec(),
 	m_cameraDirection(),
 	m_rot(),
@@ -132,7 +132,10 @@ void Player::Init(std::string stageId)
 /// </summary>
 void Player::Finalize()
 {
-	Collidable::OnExistPhysics();
+	if (m_status.hp > 0)
+	{
+		Collidable::OnExistPhysics();
+	}
 }
 
 /// <summary>

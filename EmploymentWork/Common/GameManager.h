@@ -41,7 +41,7 @@ public:
 	/// <param name="pAddObject"></param>
 	void AddObject(std::shared_ptr<ObjectBase> pAddObject);
 
-	const bool IsEnd()const { return m_isEnd; }
+	const bool IsEnd(bool& isClear)const { isClear = m_isClear; return m_isEnd; }
 
 private:
 	std::shared_ptr<Player> m_pPlayer;			//プレイヤーポインタ
@@ -64,6 +64,7 @@ private:
 	std::vector<int> m_slotIconHandle;
 
 	bool m_isEnd;
+	bool m_isClear;
 
 	int m_stageModel;	//モデルハンドル(仮)
 	int m_skyBoxHandle;

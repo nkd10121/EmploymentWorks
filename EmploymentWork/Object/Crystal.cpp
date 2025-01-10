@@ -35,6 +35,8 @@ Crystal::Crystal(int hp):
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
 	sphereCol->m_size = kCollisionSize;
+
+	m_hp = 1;
 }
 
 /// <summary>

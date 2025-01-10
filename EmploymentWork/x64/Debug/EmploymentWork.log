@@ -1,20 +1,2 @@
-﻿  SceneResult.cpp
-  SceneDebug.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\xutility(240,54): error C2512: 'SceneResult::SceneResult': クラス、構造体、共用体に既定のコンストラクターがありません。
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\xutility(240,54): message : 引数リスト '()' を一致させようとしているとき
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\xutility(250,14): message : コンパイル対象の関数 テンプレート インスタンス化 '_Ty *std::construct_at<_Ty,,0x0>(_Ty *const ) noexcept(<expr>)' のリファレンスを確認してください
-          with
-          [
-              _Ty=SceneResult
-          ]
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(2104,18): message : コンパイル対象の関数 テンプレート インスタンス化 'void std::_Construct_in_place<_Ty,>(_Ty &) noexcept(false)' のリファレンスを確認してください
-          with
-          [
-              _Ty=SceneResult
-          ]
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(2779,46): message : コンパイル対象の関数 テンプレート インスタンス化 'std::_Ref_count_obj2<SceneResult>::_Ref_count_obj2<>(void)' のリファレンスを確認してください
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Scene\SceneDebug.cpp(219,50): message : コンパイル対象の関数 テンプレート インスタンス化 'std::shared_ptr<SceneResult> std::make_shared<SceneResult,>(void)' のリファレンスを確認してください
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\xutility(254,61): error C2512: 'SceneResult::SceneResult': クラス、構造体、共用体に既定のコンストラクターがありません。
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\xutility(254,61): message : 引数リスト '()' を一致させようとしているとき
-  SceneGame.cpp
-  コードを生成中...
+﻿  EnemyNormal.cpp
+  EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

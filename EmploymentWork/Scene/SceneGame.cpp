@@ -184,9 +184,14 @@ void SceneGame::Draw()
 
 void SceneGame::UpdateGame()
 {
-	if (m_pGameManager->IsEnd())
+	bool isClear = false;
+	if (m_pGameManager->IsEnd(isClear))
 	{
 		SceneManager::GetInstance().PushScene(std::make_shared<SceneResult>());
+
+		auto resultScene = std::dynamic_pointer_cast<SceneResult>(SceneManager::GetInstance().GetBackScenePointer());
+		resultScene->SetIsClear(isClear);
+
 		return;
 	}
 

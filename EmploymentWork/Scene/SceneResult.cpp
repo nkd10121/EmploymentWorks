@@ -22,7 +22,8 @@ namespace
 /// コンストラクタ
 /// </summary>
 SceneResult::SceneResult():
-	SceneBase("SCENE_RESULT")
+	SceneBase("SCENE_RESULT"),
+	m_isClear(false)
 {
 }
 
@@ -83,6 +84,15 @@ void SceneResult::Draw()
 	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
+
+	if (m_isClear)
+	{
+		DrawString(240, 224,"クリア!",0xffffff);
+	}
+	else
+	{
+		DrawString(240, 224, "ゲームオーバー...", 0xffffff);
+	}
 
 	DrawFormatString(240,240,0xffffff,"Score:%d",ScoreManager::GetInstance().GetScore());
 
