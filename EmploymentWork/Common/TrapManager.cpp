@@ -73,36 +73,78 @@ void TrapManager::Update()
 	//それ以外なら罠を設置しようとしている
 
 	auto start = m_cameraPos;					//カメラ座標を開始座標
-	auto end = m_cameraPos + m_cameraDir * 60;	//カメラからカメラの向いている方向の座標を終点座標にする
+	auto end = m_cameraPos + m_cameraDir * 70;	//カメラからカメラの向いている方向の座標を終点座標にする
 
-	//上の二つをつなぐ線分と罠の座標の距離を格納する変数
-	float defaultLength = 100.0f;
+	auto rad = (end - start).Length() * 0.5f;
 
-	//MEMO:今までしていた四角で先に判定を取る方法をいったん消しているが露骨に処理時間が増えてそう
+	//毎フレーム全部のトラップ座標とレイキャストしていたら処理時間が大幅に増えてしまう問題の対処
+	//レイの終点座標を中心とした円との判定をとってその円の中にあるトラップ座標とレイキャストをする
+	std::list <std::shared_ptr<Trap>> hit;
 
-	//設置可能なトラップの座標分回す
-	for (auto& trapPos : m_trapPoss)
+	while (1)
 	{
-		//トラップが置かれていないかつ、周囲に8個のトラップがおかれていない候補地があるとき
-		if (!trapPos->isPlaced && trapPos->neighborTraps.size() == 8 && CheckNeighbor(trapPos->neighborTraps))
+		for (auto& p : m_trapPoss)
 		{
-			//もし、設置しようとしているトラップの種類がトラップ座標候補の法線ベクトルと一致していなければ次に行く
-			//罠ごとに設定されている種類を取得できるようにしたい
+			//現在のスロット番号の罠の種類と法線ベクトルを見て計算するかしないかを決める
 			if (m_trapKind[m_slotIdx - 1] == 0)
 			{
-				if (abs(trapPos->norm.y - 1.0f) > 0.1f)
+				if (abs(p->norm.y - 1.0f) > 0.1f)
 				{
 					continue;
 				}
 			}
 			else if (m_trapKind[m_slotIdx - 1] == 1)
 			{
-				if (abs(trapPos->norm.y) > 0.1f)
+				if (abs(p->norm.y) > 0.1f)
 				{
 					continue;
 				}
 			}
 
+			//周囲に8個の候補地がなければ次へ
+			if (p->neighborTraps.size() != 8)
+			{
+				continue;
+			}
+
+			//ここまで来たならその座標と大きな円の判定をとる
+
+			//円の中心座標と候補地の座標との距離を計算する
+			auto dis = (end - p->pos).Length();
+
+			//円の半径よりも短かったらレイキャストする対象に追加する
+			if (rad > dis)
+			{
+				hit.push_back(p);
+			}
+		}
+
+		//もしレイキャストする対象が見つかっていたらwhile文を抜ける
+		if (hit.size() != 0)
+		{
+			break;
+		}
+
+
+		//ここまで来たならレイキャストする対象が見つかっていない場合ということ
+		//半径を大きくしてもう一回繰り返す
+		rad += 5.0f;
+	}
+
+
+#ifdef _DEBUG
+	DrawSphere3D(end.ToVECTOR(), rad, 12, 0xff0000, 0xff0000, false);
+#endif
+
+	//上の二つをつなぐ線分と罠の座標の距離を格納する変数
+	float defaultLength = 100.0f;
+
+	//円と当たったトラップ座標分回す
+	for (auto& trapPos : hit)
+	{
+		//トラップが置かれていないかつ、周囲に8個のトラップがおかれていない候補地があるとき
+		if (/*!trapPos->isPlaced &&*//* trapPos->neighborTraps.size() == 8 && */CheckNeighbor(trapPos->neighborTraps))
+		{
 			//線分と座標の距離を計算する
 			float length = Segment_Point_MinLength(start.ToVECTOR(), end.ToVECTOR(), trapPos->pos.ToVECTOR());
 
@@ -201,31 +243,31 @@ void TrapManager::Draw()
 	DrawFormatString(435, 700, 0xffffff, "400");
 	DrawFormatString(520, 700, 0xffffff, "500");
 
-#ifdef _DEBUG	//デバッグ描画
-	for (auto& pos : m_trapPoss)
-	{
-		if (pos->isPlaced)
-		{
-			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
-		}
-		else
-		{
-			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
-		}
-	}
-
-	if (debugTrap != nullptr)
-	{
-		if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
-		{
-			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
-		}
-		else
-		{
-			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
-		}
-}
-#endif
+//#ifdef _DEBUG	//デバッグ描画
+//	for (auto& pos : m_trapPoss)
+//	{
+//		if (pos->isPlaced)
+//		{
+//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
+//		}
+//		else
+//		{
+//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
+//		}
+//	}
+//
+//	if (debugTrap != nullptr)
+//	{
+//		if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
+//		{
+//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
+//		}
+//		else
+//		{
+//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
+//		}
+//	}
+//#endif
 
 	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
 	DrawFormatString(64, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
@@ -238,6 +280,7 @@ void TrapManager::PreviewDraw()
 	//	罠のサイズがそれぞれ異なるため、どうにかして設定するためにスケール値を取得する必要がある
 
 	if (m_slotIdx == 0) return;
+	if (!debugTrap)	return;
 
 	m_previewTrapModelHandle = m_trapModelHandles[m_slotIdx - 1].first;
 	auto scale = m_trapModelHandles[m_slotIdx - 1].second;
