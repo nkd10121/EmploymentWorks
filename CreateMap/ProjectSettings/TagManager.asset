@@ -13,6 +13,10 @@ TagManager:
   - WayPoint
   - Crystal
   - gate
+  - wallDecoA
+  - wallWIndowGate
+  - wallBrokenEnd
+  - wallBroken
   layers:
   - Default
   - TransparentFX
