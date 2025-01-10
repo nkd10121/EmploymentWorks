@@ -98,7 +98,7 @@ public:	/*継承を行わない処理	SceneManagerから呼び出すのはこっ
 	/// 派生先の初期化とシーン共通で必要な初期化を行う
 	/// MEMO:これはロード完了後の初回update()で呼ぶのでSceneManager()からは呼ばない
 	/// </summary>
-	void InitAll();
+	bool InitAll();
 
 	/// <summary>
 	/// 派生先の更新とシーン共通で必要な更新を行う
@@ -193,6 +193,7 @@ private:
 	unsigned int m_fadeColor;	//フェード時の色
 
 	std::string m_sceneName;	//今のシーン名
+	bool m_isDrawOperation;
 
 #ifdef DISP_PROCESS
 	/*処理負荷計測*/

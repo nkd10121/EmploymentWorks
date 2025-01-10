@@ -9,6 +9,8 @@
 #include "ImageManager.h"
 #include "ShaderManager.h"
 
+#include "ResourceManager.h"
+
 #include "SceneDebug.h"
 
 #include<chrono>
@@ -55,7 +57,8 @@ SceneBase::SceneBase(std::string name) :
 	m_fadeAlpha(kBrightMax),
 	m_fadeSpeed(0),
 	m_fadeColor(0x000000),
-	m_sceneName(name)
+	m_sceneName(name),
+	m_isDrawOperation(false)
 #ifdef DISP_PROCESS
 	, m_updateTime(0),
 	m_drawTime(0)
@@ -147,13 +150,30 @@ void SceneBase::EndThisScene(bool isPushScene)
 /// <summary>
 /// 派生先の初期化とシーン共通で必要な初期化を行う
 /// </summary>
-void SceneBase::InitAll()
+bool SceneBase::InitAll()
 {
+	//ゲームシーンを開始しようとしていたら
+	if (m_sceneName == "SCENE_GAME")
+	{
+		m_isDrawOperation = true;
+
+		if (Input::GetInstance().IsTriggered("OK"))
+		{
+			m_isDrawOperation = false;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	// フェードアウト状態から開始
 	m_fadeAlpha = kBrightMax;
 	StartFadeIn();
 	// 継承先シーンの初期化処理
 	Init();
+
+	return true;
 }
 
 /// <summary>
@@ -192,8 +212,12 @@ void SceneBase::UpdateAll()
 	if (!m_isInit)
 	{
 		//呼んでいなかったら初期化関数を呼ぶ
-		InitAll();
-		m_isInit = true;
+		m_isInit = InitAll();
+
+		if (!m_isInit)
+		{
+			return;
+		}
 	}
 
 	//フェードの更新
@@ -230,10 +254,19 @@ void SceneBase::DrawAll()
 	}
 #endif
 
+
+
 	//継承先のシーンの描画処理
 	Draw();
 	//フェードの描画
 	DrawFade();
+
+	if (m_isDrawOperation)
+	{
+		DrawGraph(0, 0, ResourceManager::GetInstance().GetHandle("I_OPERATION"), true);
+		DrawString(580, 660, "Aボタンでスタート", 0x000000);
+	}
+
 	//ロード中画面の描画
 	DrawLoading();
 #ifdef _DEBUG	//デバッグ描画
