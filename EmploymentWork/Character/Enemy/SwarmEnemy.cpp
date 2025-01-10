@@ -16,6 +16,7 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 	Collidable(Priority::Low, GameObjectTag::SwarmEnemy),
 	m_swarm(),
 	m_isExistMember(false),
+	m_attackerCount(0),
 	m_swarmCenterPos(),
 	m_swarmRadius(0.0f),
 	m_maxSearchCollisionRadius(0.0f),
@@ -70,6 +71,8 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 	{
 		enemy->Update();
 
+		m_attackerCount += enemy->GetAttackerNaneNum();
+		
 		if (!enemy->GetIsExist())
 		{
 			if (enemy->GetLastAttackTag() == GameObjectTag::Player)

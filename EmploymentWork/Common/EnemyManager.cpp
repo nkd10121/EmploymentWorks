@@ -28,6 +28,7 @@ namespace
 }
 
 EnemyManager::EnemyManager():
+	m_attackerCount(0),
 	m_deadEnemyNum(0),
 	m_killedByPlayerNum(0),
 	m_killedByTrapNum(0)
@@ -55,6 +56,7 @@ void EnemyManager::Init(std::string stageName)
 
 bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 {
+
 	auto endPos = cameraPos + angle * 100000.0f;
 	Vec3 returnPos;
 	float length = 10000.0f;
@@ -63,6 +65,9 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 	for (auto& enemy : m_pEnemies)
 	{
 		enemy->Update(cameraPos,endPos);
+
+		m_attackerCount += enemy->GetAttackerCount();
+
 
 		//メンバーが誰も存在していない群れがあったらメンバーが何によって倒されたか取得して次に行く
 		if (!enemy->GetIsExistMember())
@@ -94,6 +99,10 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 			});
 		m_pEnemies.erase(it, m_pEnemies.end());
 	}
+
+#ifdef _DEBUG
+	printf("敵の攻撃者カウント:%d\n", m_attackerCount);
+#endif
 
 	m_rayCastRetPos = returnPos;
 

@@ -78,6 +78,12 @@ public:
 	const void GetKilledData(int& playerKill, int& trapKill);
 
 	/// <summary>
+	/// 攻撃者カウントを取得する
+	/// </summary>
+	/// <returns></returns>
+	const int GetAttackerCount()const { return m_attackerCount; }
+
+	/// <summary>
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
@@ -90,6 +96,7 @@ public:
 private:
 	std::list<std::shared_ptr<EnemyBase>> m_swarm;	//群れの構成員
 	bool m_isExistMember;		//メンバーが存在するかどうか
+	int m_attackerCount;
 
 	Vec3 m_swarmCenterPos;	//群れ全体の中心座標
 	float m_swarmRadius;	//群れ全体の半径

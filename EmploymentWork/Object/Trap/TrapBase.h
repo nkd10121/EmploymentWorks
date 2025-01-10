@@ -62,11 +62,15 @@ public:
 	/// <returns></returns>
 	const int GetCost()const { return m_status.cost; }
 
+	const std::string GetTrapName()const { return m_trapName; }
+
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
 protected:
 	Status m_status;
 	bool m_isExist;		//存在フラグ
 	bool m_isAttack;	//攻撃フラグ
+
+	std::string m_trapName;	//トラップ名
 };
 

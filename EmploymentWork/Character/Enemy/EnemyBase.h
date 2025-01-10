@@ -1,4 +1,7 @@
 ﻿#pragma once
+#include <list>
+#include <string>
+
 #include "CharacterBase.h"
 #include "EnemyManager.h"
 
@@ -173,6 +176,16 @@ public:
 	/// <returns></returns>
 	const int GetModelHandle()const { return m_modelHandle; }
 
+	/// <summary>
+	/// 攻撃してきたオブジェクト名を全削除
+	/// </summary>
+	/// <returns></returns>
+	const void ClearAttackerName() { m_attackerName.clear(); }
+	/// <summary>
+	/// 攻撃してきたオブジェクト名の数を取得
+	/// </summary>
+	/// <returns></returns>
+	const int GetAttackerNaneNum() { return static_cast<int>(m_attackerName.size()) - m_preAttackerNameNum; }
 protected:
 	/// <summary>
 	/// 指定した当たり判定タグが存在するかチェック
@@ -180,6 +193,13 @@ protected:
 	/// <param name="tag"></param>
 	/// <returns></returns>
 	const bool CheckIsExistCollisionTag(MyLib::ColliderBase::CollisionTag tag)const;
+
+	/// <summary>
+	/// 攻撃してきたオブジェクト名を追加する
+	/// </summary>
+	/// <param name="name">攻撃してきたオブジェクト名</param>
+	/// <returns></returns>
+	const void AddAttackerName(std::string name);
 
 protected:
 	EnemyKind kind;		//種類
@@ -201,4 +221,6 @@ protected:
 	GameObjectTag m_lastAttackTag;	//最後に攻撃してきたオブジェクトタグ
 
 	bool m_isAttack;	//攻撃しているかどうか
+
+	std::list<std::string> m_attackerName;	//攻撃してきたオブジェクトの名前
 };

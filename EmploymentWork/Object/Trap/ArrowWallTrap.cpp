@@ -23,8 +23,9 @@ ArrowWallTrap::ArrowWallTrap() :
 	m_arrowPosInit(),
 	m_norm()
 {
+	m_trapName = "ArrowWall";
 	//罠のステータスを取得
-	m_status = LoadCSV::GetInstance().LoadTrapStatus("ArrowWall");
+	m_status = LoadCSV::GetInstance().LoadTrapStatus(m_trapName.c_str());
 }
 
 ArrowWallTrap::~ArrowWallTrap()

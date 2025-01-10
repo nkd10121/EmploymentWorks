@@ -41,8 +41,9 @@ SpikeTrap::SpikeTrap() :
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
 
+	m_trapName = "Spike";
 	//罠のステータスを取得
-	m_status = LoadCSV::GetInstance().LoadTrapStatus("Spike");
+	m_status = LoadCSV::GetInstance().LoadTrapStatus(m_trapName.c_str());
 }
 
 

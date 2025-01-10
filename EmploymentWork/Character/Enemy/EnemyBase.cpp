@@ -141,3 +141,16 @@ const bool EnemyBase::CheckIsExistCollisionTag(MyLib::ColliderBase::CollisionTag
 	}
 	return false;
 }
+
+const void EnemyBase::AddAttackerName(std::string name)
+{
+	for (auto& attackerName : m_attackerName)
+	{
+		if (attackerName == name)
+		{
+			return;
+		}
+	}
+
+	m_attackerName.push_back(name);
+}

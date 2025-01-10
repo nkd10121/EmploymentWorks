@@ -288,6 +288,8 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 			EffectManager::GetInstance().CreateEffect("E_ENEMYHIT", rigidbody->GetPos());
 			//当たった弾の終了処理を呼ぶ
 			col->End();
+
+			AddAttackerName("Player");
 		}
 		//当たったオブジェクトがトラップなら
 		else if (m_hitObjectTag == GameObjectTag::Trap)
@@ -304,6 +306,8 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 
 				//攻撃してきたタグを保存
 				m_lastAttackTag = m_hitObjectTag;
+
+				AddAttackerName(col->GetTrapName());
 			}
 		}
 	}
@@ -340,6 +344,8 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 				EffectManager::GetInstance().CreateEffect("E_ENEMYCRITICALHIT", rigidbody->GetPos());
 				//当たった弾の終了処理を呼ぶ
 				col->End();
+
+				AddAttackerName("Player");
 #ifdef _DEBUG	//デバッグ描画
 
 #endif
