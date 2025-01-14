@@ -60,6 +60,9 @@ private:
 	int m_phaseCount;
 	int m_allPhaseCount;
 
+	int m_portionCount;
+	int m_portionMax;
+
 	int m_slotBgHandle;
 	std::vector<int> m_slotIconHandle;
 

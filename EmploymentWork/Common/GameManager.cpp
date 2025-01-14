@@ -39,6 +39,7 @@ GameManager::GameManager() :
 	m_isCreateEnemy(false),
 	m_phaseCount(0),
 	m_allPhaseCount(0),
+	m_portionCount(0),
 	m_isEnd(false),
 	m_isClear(false)
 {
@@ -128,6 +129,8 @@ void GameManager::Init(int stageIdx)
 	//m_pObjects.emplace_back(std::make_shared<HealPortion>());
 	//m_pObjects.back()->Init();
 	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
+
+	m_portionMax = stoi(info[7]);
 
 	m_skyBoxHandle = ResourceManager::GetInstance().GetHandle("M_SKYBOX");
 	float scale = 0.6f;
@@ -220,12 +223,17 @@ void GameManager::Update()
 		}
 	}
 
+	//ポーションの生成
 	Vec3 createPos;
 	if (m_pEnemyManager->GetIsCreatePortion(createPos))
 	{
-		m_pObjects.emplace_back(std::make_shared<HealPortion>());
-		m_pObjects.back()->Init();
-		m_pObjects.back()->SetPosition(createPos);
+		if (m_portionCount < m_portionMax)
+		{
+			m_pObjects.emplace_back(std::make_shared<HealPortion>());
+			m_pObjects.back()->Init();
+			m_pObjects.back()->SetPosition(createPos);
+		}
+		m_portionCount++;
 	}
 
 	//プレイヤーの更新

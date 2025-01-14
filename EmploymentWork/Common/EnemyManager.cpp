@@ -26,6 +26,9 @@ namespace
 	const std::string kStageDataPathBack = ".Way";
 
 	constexpr int kKillStreakResetTime = 60 * 4;
+
+	//ポーションがドロップする確率
+	constexpr int kPortionDropPercent = 12;	//12%
 }
 
 EnemyManager::EnemyManager():
@@ -74,7 +77,11 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 		//上のUpdate内で敵が死んだかどうかを取得する
 		if (enemy->GetIsKilled(m_createPortionPos))
 		{
-			m_isCreatePortion = true;
+			auto rand = GetRand(100);
+			if (rand < kPortionDropPercent)
+			{
+				m_isCreatePortion = true;
+			}
 
 			//死んでいたらキルストリークカウントを更新する
 			m_killStreakCount++;
