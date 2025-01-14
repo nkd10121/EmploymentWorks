@@ -84,6 +84,12 @@ public:
 	const int GetAttackerCount()const { return m_attackerCount; }
 
 	/// <summary>
+	/// 直前に敵が倒されたかどうかを取得する
+	/// </summary>
+	/// <returns></returns>
+	const bool GetIsKilled()const { return m_isKilled; }
+
+	/// <summary>
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
@@ -109,6 +115,8 @@ private:
 
 	int m_killedByTrapNum;		//罠によって倒された敵の数
 	int m_killedByPlayerNum;	//プレイヤーによって倒された敵の数
+
+	bool m_isKilled;			//直前に敵が倒されたかどうか
 
 	unsigned int m_memberColor;	//DEBUG用。誰がどの群れなのか見たい
 };

@@ -3,6 +3,8 @@
 #include "EnemyNormal.h"
 #include "SwarmEnemy.h"
 
+#include "TrapManager.h"
+
 #include "LoadCSV.h"
 #include "ScoreManager.h"
 
@@ -19,16 +21,16 @@ namespace
 		0x0000ff,
 		0xffff00
 	};
-}
 
-namespace
-{
 	const std::string kStageDataPathFront = "data/stageData/";
 	const std::string kStageDataPathBack = ".Way";
+
+	constexpr int kKillStreakResetTime = 300;
 }
 
 EnemyManager::EnemyManager():
-	m_attackerCount(0),
+	m_killStreakCount(0),
+	m_killStreakTime(0),
 	m_deadEnemyNum(0),
 	m_killedByPlayerNum(0),
 	m_killedByTrapNum(0)
@@ -56,19 +58,23 @@ void EnemyManager::Init(std::string stageName)
 
 bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 {
-	m_attackerCount = 0;
-
 	auto endPos = cameraPos + angle * 100000.0f;
 	Vec3 returnPos;
 	float length = 10000.0f;
+
+	int preKillStreakCount = m_killStreakCount;
 
 	//敵の更新
 	for (auto& enemy : m_pEnemies)
 	{
 		enemy->Update(cameraPos,endPos);
 
-		m_attackerCount += enemy->GetAttackerCount();
-
+		//上のUpdate内で敵が死んだかどうかを取得する
+		if (enemy->GetIsKilled())
+		{
+			//死んでいたらキルストリークカウントを更新する
+			m_killStreakCount++;
+		}
 
 		//メンバーが誰も存在していない群れがあったらメンバーが何によって倒されたか取得して次に行く
 		if (!enemy->GetIsExistMember())
@@ -101,11 +107,31 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 		m_pEnemies.erase(it, m_pEnemies.end());
 	}
 
-#ifdef _DEBUG
-	printf("敵の攻撃者カウント:%d\n", m_attackerCount);
-#endif
-
 	m_rayCastRetPos = returnPos;
+
+	//もし連続キルカウントが0以上なら
+	if (m_killStreakCount > 0)
+	{
+		if (preKillStreakCount != m_killStreakCount)
+		{
+			m_killStreakTime = 0;
+		}
+
+		if (m_killStreakTime > kKillStreakResetTime)
+		{
+			//キルストリークカウントの2乗をポイントとして取得する
+			TrapManager::GetInstance().AddTrapPoint(m_killStreakCount * m_killStreakCount);
+
+			m_killStreakCount = 0;
+			m_killStreakTime = 0;
+		}
+		else
+		{
+			m_killStreakTime++;
+		}
+
+	}
+
 
 	//もし群れの数が0になった(敵が全滅した)ら、次のフェーズに行く
 	if (m_pEnemies.size() == 0)
@@ -122,6 +148,12 @@ void EnemyManager::Draw()
 	{
 		enemy->Draw();
 	}
+
+
+#ifdef _DEBUG
+	DrawFormatString(0, 296, 0xffffff, "連続キルカウント:%d", m_killStreakCount);
+	DrawFormatString(0, 312, 0xffffff, "連続キルCD:%d", m_killStreakTime);
+#endif
 }
 
 void EnemyManager::LoadWayPoint(const char* stageName)
@@ -189,7 +221,6 @@ std::vector<EnemyManager::WayPoint> EnemyManager::GetRoute()
 	assert(startWp.size() != 0 && "スタートウェイポイントが見つかっていません");
 #endif
 	//TODO:おそらく複数ある場合が存在するためstartWpの中から一つ選ぶ必要がある
-	//			12.19時点では一旦startWp[0]をスタートとする処理を書く
 
 	int r = GetRand(static_cast<int>(startWp.size()) - 1);
 	//スタートウェイポイントを追加する

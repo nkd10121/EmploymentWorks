@@ -65,11 +65,12 @@ private:
 	std::map<int, std::list<EnemyCreateInfo>> m_createEnemyInfo;
 	std::unordered_map<int, int> m_enemyNum;	//それぞれのフェーズで何体の敵を生成する予定か保存
 
-	int m_attackerCount;
-	
 	std::list<WayPoint> m_wayPoints;
 
 	Vec3 m_rayCastRetPos;
+
+	int m_killStreakCount;
+	int m_killStreakTime;
 
 	int m_deadEnemyNum;
 	int m_killedByPlayerNum;

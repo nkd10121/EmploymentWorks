@@ -23,6 +23,7 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 	m_isInPlayer(false),
 	m_killedByTrapNum(0),
 	m_killedByPlayerNum(0),
+	m_isKilled(false),
 	m_memberColor(color)
 {
 	//物理データの初期化
@@ -67,6 +68,9 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 	m_attackerCount = 0;
 
 	std::list<Vec3> pos;
+
+	m_isKilled = false;
+
 	//構成メンバーの更新
 	for (auto& enemy : m_swarm)
 	{
@@ -76,6 +80,8 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 		
 		if (!enemy->GetIsExist())
 		{
+			m_isKilled = true;
+
 			if (enemy->GetLastAttackTag() == GameObjectTag::Player)
 			{
 				m_killedByPlayerNum++;
@@ -85,7 +91,6 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 				m_killedByTrapNum++;
 			}
 		}
-		
 
 		auto p = enemy->GetRigidbody()->GetPos();
 		pos.emplace_back(p);
