@@ -78,19 +78,21 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 
 		if (!enemy->GetIsExist())
 		{
-			m_isKilled = true;
-
-			m_killedPos = enemy->GetPos();
-
-			if (enemy->GetLastAttackTag() == GameObjectTag::Player)
+			if (enemy->GetIsStartDeathAnim())
 			{
-				m_killedByPlayerNum++;
-			}
-			else if (enemy->GetLastAttackTag() == GameObjectTag::Trap)
-			{
-				m_killedByTrapNum++;
-			}
+				m_isKilled = true;
 
+				m_killedPos = enemy->GetPos();
+
+				if (enemy->GetLastAttackTag() == GameObjectTag::Player)
+				{
+					m_killedByPlayerNum++;
+				}
+				else if (enemy->GetLastAttackTag() == GameObjectTag::Trap)
+				{
+					m_killedByTrapNum++;
+				}
+			}
 			continue;
 		}
 
