@@ -119,7 +119,7 @@ public:
 	/// ドロップする罠ポイントを取得
 	/// </summary>
 	/// <returns></returns>
-	const int GetDropPoint()const { return m_status.point; }
+	const int GetDropPoint()const;
 
 	/// <summary>
 	/// 索敵判定の半径を取得
@@ -223,4 +223,6 @@ protected:
 	bool m_isAttack;	//攻撃しているかどうか
 
 	std::list<std::string> m_attackerName;	//攻撃してきたオブジェクトの名前
+	int m_attackerNameClearCount;			//攻撃してきたオブジェクト名の配列をクリア(全消去)するまでのカウント
+	int m_attackerNameClearLimit;			//攻撃してきたオブジェクト名の配列をクリア(全消去)するまでの時間
 };

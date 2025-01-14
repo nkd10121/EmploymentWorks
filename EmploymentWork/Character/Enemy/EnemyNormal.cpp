@@ -36,6 +36,7 @@ EnemyNormal::EnemyNormal() :
 {
 	//キャラクター名を設定
 	m_characterName = "EnemyNormal";
+
 }
 
 /// <summary>
@@ -141,6 +142,25 @@ void EnemyNormal::Update()
 {
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
+
+	//攻撃してきたオブジェクト名配列のサイズが0以外なら
+	if (m_attackerName.size() != 0)
+	{
+		//条件にあっていたら
+		if (m_attackerNameClearCount > m_attackerNameClearLimit)
+		{
+			//配列を削除する
+			m_attackerName.clear();
+
+			//カウントを初期化する
+			m_attackerNameClearCount = 0;
+		}
+		else
+		{
+			//カウントを更新する
+			m_attackerNameClearCount++;
+		}
+	}
 
 	//ステートの更新
 	m_pState->Update();

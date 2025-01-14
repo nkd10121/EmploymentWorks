@@ -7,6 +7,9 @@ namespace
 	constexpr float kAttackCollisionDirection = 4.0f;
 
 	constexpr int kRandMax = 12;
+
+	//攻撃してきたオブジェクト名配列をリセットするまでの時間
+	constexpr int kAttackerNameClearLimit = 300;
 }
 
 /// <summary>
@@ -22,7 +25,9 @@ EnemyBase::EnemyBase() :
 	m_collisionSize(0.0f),
 	m_drawPos(),
 	m_isSearchInPlayer(false),
-	m_hitObjectTag()
+	m_hitObjectTag(),
+	m_attackerNameClearCount(0),
+	m_attackerNameClearLimit(kAttackerNameClearLimit)
 {
 }
 
@@ -71,6 +76,25 @@ void EnemyBase::OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std
 void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 
+}
+
+/// <summary>
+/// ドロップする罠ポイントを取得
+/// </summary>
+const int EnemyBase::GetDropPoint() const
+{
+	//攻撃してきたオブジェクト名の配列のサイズが0か1なら設定されていたポイントをそのまま返す
+	if (m_attackerName.size() == 0 || m_attackerName.size() == 1)
+	{
+		return m_status.point;
+	}
+	//サイズが2以上だったらボーナスポイントを足して返す
+	else
+	{
+		float twentyPer = static_cast<float>(m_status.point) / 5;
+
+		return m_status.point + static_cast<int>(twentyPer) * static_cast<int>(m_attackerName.size());
+	}
 }
 
 /// <summary>
