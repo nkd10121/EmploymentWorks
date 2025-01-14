@@ -86,12 +86,18 @@ const int EnemyBase::GetDropPoint() const
 	//攻撃してきたオブジェクト名の配列のサイズが0か1なら設定されていたポイントをそのまま返す
 	if (m_attackerName.size() == 0 || m_attackerName.size() == 1)
 	{
+		//auto screenPos = ConvWorldPosToScreenPos(rigidbody->GetPosVECTOR());
+		//DrawFormatString(screenPos.x,screenPos.y, 0xff0000,"%d", m_status.point);
+
 		return m_status.point;
 	}
 	//サイズが2以上だったらボーナスポイントを足して返す
 	else
 	{
 		float twentyPer = static_cast<float>(m_status.point) / 5;
+
+		//auto screenPos = ConvWorldPosToScreenPos(rigidbody->GetPosVECTOR());
+		//DrawFormatString(screenPos.x, screenPos.y, 0xff0000, "%d", m_status.point + static_cast<int>(twentyPer) * static_cast<int>(m_attackerName.size()));
 
 		return m_status.point + static_cast<int>(twentyPer) * static_cast<int>(m_attackerName.size());
 	}
