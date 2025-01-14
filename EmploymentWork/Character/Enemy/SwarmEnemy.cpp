@@ -15,6 +15,7 @@ namespace
 SwarmEnemy::SwarmEnemy(unsigned int color) :
 	Collidable(Priority::Low, GameObjectTag::SwarmEnemy),
 	m_swarm(),
+	m_firstCreateFrame(0),
 	m_isExistMember(false),
 	m_attackerCount(0),
 	m_swarmCenterPos(),

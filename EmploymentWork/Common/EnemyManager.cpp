@@ -25,7 +25,7 @@ namespace
 	const std::string kStageDataPathFront = "data/stageData/";
 	const std::string kStageDataPathBack = ".Way";
 
-	constexpr int kKillStreakResetTime = 300;
+	constexpr int kKillStreakResetTime = 60 * 4;
 }
 
 EnemyManager::EnemyManager():
@@ -290,10 +290,34 @@ void EnemyManager::CreateEnemy(int phaseNum,int count)
 				auto add = std::make_shared<EnemyNormal>();
 				add->SetRoute(GetRoute());
 				add->Init();
-				addSwarm->AddSwarm(add);
 
+				bool isNewCreateSwarm = false;
+
+				//前に生成した群れクラスの最初に追加した生成フレームとの差が180以下ならその群れクラスに追加する
+				if (m_pEnemies.size() > 0)
+				{
+					if (abs(m_pEnemies.back()->GetFirstCreateFrame() - count) < 60 * 3)
+					{
+						m_pEnemies.back()->AddSwarm(add);
+					}
+					else
+					{
+						isNewCreateSwarm = true;
+					}
+				}
+				else
+				{
+					isNewCreateSwarm = true;
+				}
+
+				if(isNewCreateSwarm)
+				{
+					addSwarm->SetFirstCreateFrame(data.appearFrame * 60);
+					addSwarm->AddSwarm(add);
+
+					isAdd = true;
+				}
 				data.isCreated = true;
-				isAdd = true;
 			}
 		}
 

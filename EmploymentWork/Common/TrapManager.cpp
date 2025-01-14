@@ -239,8 +239,8 @@ void TrapManager::Draw()
 		trap->Draw();
 	}
 
-	DrawFormatString(435, 700, 0xffffff, "400");
-	DrawFormatString(520, 700, 0xffffff, "500");
+	DrawFormatString(435, 700, 0xffffff, "300");
+	DrawFormatString(520, 700, 0xffffff, "600");
 
 //#ifdef _DEBUG	//デバッグ描画
 //	for (auto& pos : m_trapPoss)

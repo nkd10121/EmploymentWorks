@@ -90,6 +90,19 @@ public:
 	const bool GetIsKilled()const { return m_isKilled; }
 
 	/// <summary>
+	/// 最初に生成したメンバーの生成フレームを設定
+	/// </summary>
+	/// <param name="frame">生成フレーム</param>
+	/// <returns></returns>
+	const void SetFirstCreateFrame(int frame) { m_firstCreateFrame = frame; }
+
+	/// <summary>
+	/// 最初に生成したメンバーの生成フレームを取得
+	/// </summary>
+	/// <returns></returns>
+	const int GetFirstCreateFrame()const { return m_firstCreateFrame; }
+
+	/// <summary>
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
@@ -101,6 +114,7 @@ public:
 	const std::list<int> GetModelHandles()const;
 private:
 	std::list<std::shared_ptr<EnemyBase>> m_swarm;	//群れの構成員
+	int m_firstCreateFrame;		//最初に追加したメンバーの生成フレーム
 	bool m_isExistMember;		//メンバーが存在するかどうか
 	int m_attackerCount;
 

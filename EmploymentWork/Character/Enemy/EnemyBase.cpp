@@ -9,7 +9,7 @@ namespace
 	constexpr int kRandMax = 12;
 
 	//攻撃してきたオブジェクト名配列をリセットするまでの時間
-	constexpr int kAttackerNameClearLimit = 300;
+	constexpr int kAttackerNameClearLimit = 60 * 6;
 }
 
 /// <summary>
