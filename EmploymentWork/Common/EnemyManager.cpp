@@ -283,7 +283,7 @@ void EnemyManager::CreateEnemy(int phaseNum,int count)
 
 	for (auto& data : m_createEnemyInfo[phaseNum])
 	{
-		if (data.appearFrame == count / 60)
+		if (abs(data.appearFrame * 60 - count) < 0.01f)
 		{
 			if (data.enemyName == "EnemyNormal" && !data.isCreated)
 			{

@@ -19,7 +19,7 @@ public:
 	struct EnemyCreateInfo
 	{
 		std::string enemyName;		//敵の名前
-		int appearFrame;			//出現フレーム
+		float appearFrame;			//出現フレーム
 		//int appearPos;			//生成場所(現在は未使用)
 
 		bool isCreated = false;		//生成済みかどうか
