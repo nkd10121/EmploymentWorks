@@ -26,7 +26,8 @@ TrapManager::TrapManager() :
 	m_cameraDir(),
 	m_trapPoint(0),
 	m_rightTriggerPushCount(0),
-	m_bgHandle(-1)
+	m_bgHandle(-1),
+	m_iconHandle(-1)
 {
 
 }
@@ -269,7 +270,8 @@ void TrapManager::Draw()
 //#endif
 
 	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
-	DrawFormatString(64, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
+	DrawRotaGraph(40, 660, 0.72f, 0.0f, m_iconHandle, true);
+	DrawFormatString(76, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 
 void TrapManager::PreviewDraw()
@@ -342,6 +344,7 @@ void TrapManager::SetUp(int point)
 	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("ArrowWall").kind);
 
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
+	m_iconHandle = ResourceManager::GetInstance().GetHandle("I_TRAPICON");
 	m_trapPoint = point;
 }
 
@@ -360,6 +363,7 @@ void TrapManager::Clear()
 	m_trapPoint = 0;
 
 	DeleteGraph(m_bgHandle);
+	DeleteGraph(m_iconHandle);
 	m_trapPoint = 0;
 
 	for (auto& h : m_trapModelHandles)

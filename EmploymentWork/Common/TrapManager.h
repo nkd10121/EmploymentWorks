@@ -109,7 +109,7 @@ private:
 	int m_rightTriggerPushCount;
 
 	int m_bgHandle;
-
+	int m_iconHandle;
 	//デバッグ用
 	std::shared_ptr<Trap> debugTrap;
 };
