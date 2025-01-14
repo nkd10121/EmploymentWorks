@@ -354,7 +354,8 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 				auto damage = col->GetAtk() - m_status.def;
 				if (damage > 0)
 				{
-					m_status.hp -= damage * 2;
+					//通常の3倍のダメージを与える
+					m_status.hp -= damage * 3;
 				}
 				//攻撃してきたタグを保存
 				m_lastAttackTag = m_hitObjectTag;
