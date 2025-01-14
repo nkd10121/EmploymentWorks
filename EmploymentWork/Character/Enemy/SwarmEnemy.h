@@ -77,17 +77,12 @@ public:
 	/// <returns></returns>
 	const void GetKilledData(int& playerKill, int& trapKill);
 
-	/// <summary>
-	/// 攻撃者カウントを取得する
-	/// </summary>
-	/// <returns></returns>
-	const int GetAttackerCount()const { return m_attackerCount; }
 
 	/// <summary>
 	/// 直前に敵が倒されたかどうかを取得する
 	/// </summary>
 	/// <returns></returns>
-	const bool GetIsKilled()const { return m_isKilled; }
+	const bool GetIsKilled(Vec3& pos);
 
 	/// <summary>
 	/// 最初に生成したメンバーの生成フレームを設定
@@ -116,7 +111,6 @@ private:
 	std::list<std::shared_ptr<EnemyBase>> m_swarm;	//群れの構成員
 	int m_firstCreateFrame;		//最初に追加したメンバーの生成フレーム
 	bool m_isExistMember;		//メンバーが存在するかどうか
-	int m_attackerCount;
 
 	Vec3 m_swarmCenterPos;	//群れ全体の中心座標
 	float m_swarmRadius;	//群れ全体の半径
@@ -131,6 +125,7 @@ private:
 	int m_killedByPlayerNum;	//プレイヤーによって倒された敵の数
 
 	bool m_isKilled;			//直前に敵が倒されたかどうか
+	Vec3 m_killedPos;			//殺された座標
 
 	unsigned int m_memberColor;	//DEBUG用。誰がどの群れなのか見たい
 };

@@ -56,7 +56,7 @@ GameManager::~GameManager()
 	m_pPlayer->Finalize();
 
 	m_pEnemyManager->Finalize();
-	
+
 
 	m_pCrystal->Finalize();
 
@@ -174,7 +174,7 @@ void GameManager::Update()
 	//現在のフェーズが0以上(戦闘フェーズ)の時、敵を生成していなかったら敵を生成する
 	if (m_phaseNum.front() >= 0)
 	{
-		m_pEnemyManager->CreateEnemy(m_phaseNum.front(),m_phaseCount);
+		m_pEnemyManager->CreateEnemy(m_phaseNum.front(), m_phaseCount);
 	}
 	//0以下(準備フェーズ)の時
 	else
@@ -187,7 +187,7 @@ void GameManager::Update()
 	TrapManager::GetInstance().SetCameraInfo(m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
 
 	//敵の更新処理
-	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front(),m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
+	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front(), m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
 
 	//レイキャストの結果変数
 	Vec3 rayCastRet;
@@ -218,6 +218,14 @@ void GameManager::Update()
 			//地形とのヒット座標を保存する
 			rayCastRet = m_pCamera->GetMapHitPosition();
 		}
+	}
+
+	Vec3 createPos;
+	if (m_pEnemyManager->GetIsCreatePortion(createPos))
+	{
+		m_pObjects.emplace_back(std::make_shared<HealPortion>());
+		m_pObjects.back()->Init();
+		m_pObjects.back()->SetPosition(createPos);
 	}
 
 	//プレイヤーの更新
@@ -311,7 +319,7 @@ void GameManager::Update()
 	//エフェクトの更新
 	EffectManager::GetInstance().Update();
 
-	MV1SetPosition(m_skyBoxHandle,m_pPlayer->GetPos().ToVECTOR());
+	MV1SetPosition(m_skyBoxHandle, m_pPlayer->GetPos().ToVECTOR());
 
 	if (m_pCrystal->GetHp() <= 0)
 	{
@@ -377,10 +385,10 @@ void GameManager::Draw()
 		int x = 362 + i * 85;
 		int y = 655;
 		//DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
-		DrawRotaGraph(x,y,0.08f,0.0f,m_slotBgHandle,true);
+		DrawRotaGraph(x, y, 0.08f, 0.0f, m_slotBgHandle, true);
 		//if (i == 0)
 		{
-			DrawRotaGraph(x,y,0.5f,0.0f, m_slotIconHandle[i], true);
+			DrawRotaGraph(x, y, 0.5f, 0.0f, m_slotIconHandle[i], true);
 		}
 	}
 
@@ -392,7 +400,7 @@ void GameManager::Draw()
 	DrawRotaGraph(1180, 45, 0.75f, 0.0f, m_slotIconHandle[4], true);
 	DrawRotaGraph(1180, 40, 0.65f, 0.0f, m_slotIconHandle[3], true);
 
-	DrawFormatString(1160,240,0xffffff,"%d / 3",abs(m_phaseNum.front()));
+	DrawFormatString(1160, 240, 0xffffff, "%d / 3", abs(m_phaseNum.front()));
 
 	m_pHpUi->Draw();
 

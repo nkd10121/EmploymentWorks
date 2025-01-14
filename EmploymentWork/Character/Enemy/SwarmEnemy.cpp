@@ -17,7 +17,6 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 	m_swarm(),
 	m_firstCreateFrame(0),
 	m_isExistMember(false),
-	m_attackerCount(0),
 	m_swarmCenterPos(),
 	m_swarmRadius(0.0f),
 	m_maxSearchCollisionRadius(0.0f),
@@ -25,6 +24,7 @@ SwarmEnemy::SwarmEnemy(unsigned int color) :
 	m_killedByTrapNum(0),
 	m_killedByPlayerNum(0),
 	m_isKilled(false),
+	m_killedPos(),
 	m_memberColor(color)
 {
 	//物理データの初期化
@@ -66,7 +66,6 @@ void SwarmEnemy::Finalize()
 void SwarmEnemy::Update(Vec3 start,Vec3 end)
 {
 	m_isCameraRayHit = false;
-	m_attackerCount = 0;
 
 	std::list<Vec3> pos;
 
@@ -77,11 +76,11 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 	{
 		enemy->Update();
 
-		m_attackerCount += enemy->GetAttackerNaneNum();
-		
 		if (!enemy->GetIsExist())
 		{
 			m_isKilled = true;
+
+			m_killedPos = enemy->GetPos();
 
 			if (enemy->GetLastAttackTag() == GameObjectTag::Player)
 			{
@@ -91,6 +90,8 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 			{
 				m_killedByTrapNum++;
 			}
+
+			continue;
 		}
 
 		auto p = enemy->GetRigidbody()->GetPos();
@@ -284,6 +285,16 @@ const void SwarmEnemy::GetKilledData(int& playerKill, int& trapKill)
 {
 	playerKill += m_killedByPlayerNum;
 	trapKill += m_killedByTrapNum;
+}
+
+const bool SwarmEnemy::GetIsKilled(Vec3& pos)
+{
+	if (m_isKilled)
+	{
+		pos = m_killedPos;
+		return true;
+	}
+	return false;
 }
 
 /// <summary>

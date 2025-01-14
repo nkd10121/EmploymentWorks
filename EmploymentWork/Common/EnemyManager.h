@@ -60,6 +60,8 @@ public:
 
 	const void SetScoreData()const;
 
+	const bool GetIsCreatePortion(Vec3& createPos);
+
 private:
 	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列
 	std::map<int, std::list<EnemyCreateInfo>> m_createEnemyInfo;
@@ -75,4 +77,7 @@ private:
 	int m_deadEnemyNum;
 	int m_killedByPlayerNum;
 	int m_killedByTrapNum;
+
+	Vec3 m_createPortionPos;
+	bool m_isCreatePortion;
 };

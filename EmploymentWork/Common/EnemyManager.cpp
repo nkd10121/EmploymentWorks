@@ -33,7 +33,9 @@ EnemyManager::EnemyManager():
 	m_killStreakTime(0),
 	m_deadEnemyNum(0),
 	m_killedByPlayerNum(0),
-	m_killedByTrapNum(0)
+	m_killedByTrapNum(0),
+	m_createPortionPos(),
+	m_isCreatePortion(false)
 {
 }
 
@@ -70,8 +72,10 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 		enemy->Update(cameraPos,endPos);
 
 		//上のUpdate内で敵が死んだかどうかを取得する
-		if (enemy->GetIsKilled())
+		if (enemy->GetIsKilled(m_createPortionPos))
 		{
+			m_isCreatePortion = true;
+
 			//死んでいたらキルストリークカウントを更新する
 			m_killStreakCount++;
 		}
@@ -343,4 +347,21 @@ void EnemyManager::SeparateData(std::vector<std::string> data)
 const void EnemyManager::SetScoreData() const
 {
 	ScoreManager::GetInstance().SetKillData(m_killedByPlayerNum, m_killedByTrapNum);
+}
+
+const bool EnemyManager::GetIsCreatePortion(Vec3& createPos)
+{
+	if (!m_isCreatePortion)
+	{
+		return false;
+	}
+	else
+	{
+		auto ret = m_isCreatePortion;
+		m_isCreatePortion = false;
+
+		createPos = m_createPortionPos;
+
+		return ret;
+	}
 }

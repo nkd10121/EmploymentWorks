@@ -58,6 +58,12 @@ public:
 	void SetPos(Vec3 pos);
 
 	/// <summary>
+	/// 座標を取得
+	/// </summary>
+	/// <returns></returns>
+	const Vec3 GetPos()const { return rigidbody->GetPos(); }
+
+	/// <summary>
 	/// 終了(他から呼ぶ)
 	/// </summary>
 	void End() { m_isExist = false; }
