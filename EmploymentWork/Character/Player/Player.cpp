@@ -47,7 +47,7 @@ namespace
 	constexpr int kAddAttackIneterval = 30;
 	constexpr int kAttackInetervalMax = 300;
 
-	constexpr float kSpreadAngleMax = 40;
+	constexpr int kSpreadAngleMax = 40;
 }
 
 /// <summary>
@@ -199,7 +199,7 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 					if (m_attackIntervalCount > 0)
 					{
 						auto offset = Vec3(static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax/2), static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax / 2), static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax / 2));
-						offset = offset.Normalize() * m_attackIntervalCount / (kAttackInetervalMax * 20);
+						offset = offset.Normalize() * static_cast<float>(m_attackIntervalCount) / static_cast<float>(kAttackInetervalMax * 20);
 						shotVec += offset;
 #ifdef _DEBUG
 						printf("攻撃オフセット:{%f,%f,%f}\n", offset.x, offset.y, offset.z);

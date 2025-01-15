@@ -70,7 +70,7 @@ void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int 
 		return;
 	}
 
-	int textWidth = GetDrawStringWidthToHandle(text.c_str(), text.length(), drawFont.handle);
+	int textWidth = GetDrawStringWidthToHandle(text.c_str(), static_cast<int>(text.length()), drawFont.handle);
 	int textHeight = GetFontSizeToHandle(drawFont.handle);
 	DrawStringToHandle(x - textWidth / 2, y - textHeight / 2, text.c_str(), color, drawFont.handle);
 }
@@ -97,7 +97,7 @@ void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned i
 		return;
 	}
 
-	int textWidth = GetDrawStringWidthToHandle(text.c_str(), text.length(), drawFont.handle);
+	int textWidth = GetDrawStringWidthToHandle(text.c_str(), static_cast<int>(text.length()), drawFont.handle);
 	int textHeight = GetFontSizeToHandle(drawFont.handle);
 	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle);
 }
@@ -134,11 +134,11 @@ void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, un
 		x += shakeOffset;
 
 		int sub = 0xff0000 - color;
-		float per = shakeAmplitude / 30;
-		color += sub * per;
+		float per = static_cast<float>(shakeAmplitude) / 30.0f;
+		color += static_cast<unsigned int>(sub * per);
 	}
 
-	int textWidth = GetDrawStringWidthToHandle(text.c_str(), text.length(), drawFont.handle);
+	int textWidth = GetDrawStringWidthToHandle(text.c_str(), static_cast<int>(text.length()), drawFont.handle);
 	int textHeight = GetFontSizeToHandle(drawFont.handle);
 	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle);
 }

@@ -1,6 +1,5 @@
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\vc143.pdb
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\vc143.idb
-c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\enemynormal.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\enemybase.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\crystal.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\hpbar.obj
@@ -20,7 +19,7 @@ c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\enem
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\effectmanager.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\soundmanager.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\arrowwalltrap.obj
-c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\playerstatedeath.obj
+c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\fontmanager.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\playerstatedash.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\playerstatejump.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\rigidbody.obj
@@ -40,7 +39,7 @@ c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\coll
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\collidable.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\characterbase.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\mathhelp.obj
-c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\scenemanager.obj
+c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\enemynormal.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\scenegame.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\scenebase.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\main.obj
@@ -60,9 +59,11 @@ c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\scen
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\sceneresult.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\sceneranking.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\sceneoption.obj
+c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\playerstatedeath.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\vec2.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\vec3.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\scenetitle.obj
+c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\scenemanager.obj
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\data\shader\pixelshader.pso
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\data\shader\vertexshader.vso
 c:\users\fko2347087\desktop\github\employmentworks\employmentwork\x64\debug\employmentwork.ilk

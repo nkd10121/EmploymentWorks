@@ -338,7 +338,7 @@ void EnemyManager::CreateEnemy(int phaseNum,int count)
 
 				if(isNewCreateSwarm)
 				{
-					addSwarm->SetFirstCreateFrame(data.appearFrame * 60);
+					addSwarm->SetFirstCreateFrame(static_cast<int>(data.appearFrame * 60));
 					addSwarm->AddSwarm(add);
 
 					isAdd = true;
@@ -360,7 +360,7 @@ void EnemyManager::SeparateData(std::vector<std::string> data)
 {
 	EnemyCreateInfo add;
 	add.enemyName = data[1];
-	add.appearFrame = stoi(data[2]);
+	add.appearFrame = stof(data[2]);
 	add.isCreated = false;
 
 	m_createEnemyInfo[std::stoi(data[0])].push_back(add);
