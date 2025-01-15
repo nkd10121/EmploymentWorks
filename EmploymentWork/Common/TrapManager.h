@@ -86,7 +86,6 @@ public:
 
 	const void SetCameraInfo(Vec3 cameraPos, Vec3 dirVec);
 	const void SetSlotIdx(int idx) { m_slotIdx = idx; }
-
 private:
 	std::list<std::shared_ptr<Trap>> m_trapPoss;
 

@@ -5,8 +5,11 @@
 
 #include "TrapManager.h"
 
+#include "Game.h"
+
 #include "LoadCSV.h"
 #include "ScoreManager.h"
+#include "FontManager.h"
 
 #include <cassert>
 
@@ -160,6 +163,11 @@ void EnemyManager::Draw()
 		enemy->Draw();
 	}
 
+	if (m_killStreakCount)
+	{
+		FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル", 0xffffff, 24);
+		FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 24);
+	}
 
 #ifdef _DEBUG
 	DrawFormatString(0, 296, 0xffffff, "連続キルカウント:%d", m_killStreakCount);

@@ -175,46 +175,53 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		bottomPos.y -= 1.0f;
 	}
 
-	//ZLボタンを押している
-	if (Input::GetInstance().GetIsPushedTriggerButton(true))
-	{
-		if (m_slotNum == 0)
-		{
-			//一定間隔で向いている方向に弾を撃つ
-			if (m_attackButtonPushCount % 20 == 0)
-			{
-				std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
-				shot->Init();
-				shot->Set(m_stageId,m_crossbowPos, (cameraRayCastRet - m_crossbowPos).Normalize(), m_status.atk);
 
-				//弾の管理をゲームシーンに任せる
-				pGameManager->AddObject(shot);
+	if (m_pState->GetKind() == StateBase::StateKind::Idle || m_pState->GetKind() == StateBase::StateKind::Walk || m_pState->GetKind() == StateBase::StateKind::Jump)
+	{
+		//ZLボタンを押している
+		if (Input::GetInstance().GetIsPushedTriggerButton(true))
+		{
+			if (m_slotNum == 0)
+			{
+				//一定間隔で向いている方向に弾を撃つ
+				if (m_attackButtonPushCount % 20 == 0)
+				{
+					std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
+					shot->Init();
+					shot->Set(m_stageId, m_crossbowPos, (cameraRayCastRet - m_crossbowPos).Normalize(), m_status.atk);
+
+					//弾の管理をゲームシーンに任せる
+					pGameManager->AddObject(shot);
+				}
+			}
+			//押しているカウントを更新
+			m_attackButtonPushCount++;
+		}
+		else
+		{
+			//押していないときは0にする
+			m_attackButtonPushCount = 0;
+		}
+	}
+
+	if (m_pState->GetKind() == StateBase::StateKind::Death || m_pState->GetKind() == StateBase::StateKind::Clear)
+	{
+		//スロットの選択
+		if (Input::GetInstance().IsTriggered("RB"))
+		{
+			m_slotNum++;
+			if (m_slotNum > 2)
+			{
+				m_slotNum = 2;
 			}
 		}
-		//押しているカウントを更新
-		m_attackButtonPushCount++;
-	}
-	else
-	{
-		//押していないときは0にする
-		m_attackButtonPushCount = 0;
-	}
-
-	//スロットの選択
-	if (Input::GetInstance().IsTriggered("RB"))
-	{
-		m_slotNum++;
-		if (m_slotNum > 2)
+		if (Input::GetInstance().IsTriggered("LB"))
 		{
-			m_slotNum = 2;
-		}
-	}
-	if (Input::GetInstance().IsTriggered("LB"))
-	{
-		m_slotNum--;
-		if (m_slotNum < 0)
-		{
-			m_slotNum = 0;
+			m_slotNum--;
+			if (m_slotNum < 0)
+			{
+				m_slotNum = 0;
+			}
 		}
 	}
 
