@@ -82,6 +82,18 @@ void TrapManager::Update()
 		m_trapPoint += (m_targetTrapPoint > m_trapPoint) ? 1 : -1; // 1フレームごとに追従
 	}
 
+	if (m_isTextShake)
+	{
+		if (m_textShakeFrame > 0)
+		{
+			m_textShakeFrame--;
+		}
+		else
+		{
+			m_isTextShake = false;
+		}
+	}
+
 	//現在プレイヤーが選択しているスロット番号、カメラの座標と向きベクトルを事前にもらっておく
 
 	//スロット番号が0(クロスボウなら何もしない)
@@ -258,17 +270,7 @@ void TrapManager::Update()
 		m_rightTriggerPushCount = 0;
 	}
 
-	if (m_isTextShake)
-	{
-		if (m_textShakeFrame > 0)
-		{
-			m_textShakeFrame--;
-		}
-		else
-		{
-			m_isTextShake = false;
-		}
-	}
+
 }
 
 void TrapManager::Draw()
