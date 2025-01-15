@@ -79,7 +79,15 @@ void TrapManager::Update()
 	// 現在値を更新
 	if (m_trapPoint != m_targetTrapPoint)
 	{
+		if (m_targetTrapPoint - m_trapPoint > 100)
+		{
+			auto difference = m_targetTrapPoint - m_trapPoint;
+			difference = difference / 10;
+
+			m_trapPoint += (m_targetTrapPoint > m_trapPoint) ? difference : -difference; // 1フレームごとに追従
+		}
 		m_trapPoint += (m_targetTrapPoint > m_trapPoint) ? 1 : -1; // 1フレームごとに追従
+
 	}
 
 	//テキストが揺れているなら
@@ -285,37 +293,37 @@ void TrapManager::Draw()
 	DrawFormatString(435, 700, 0xffffff, "300");
 	DrawFormatString(520, 700, 0xffffff, "600");
 
-//#ifdef _DEBUG	//デバッグ描画
-//	for (auto& pos : m_trapPoss)
-//	{
-//		if (pos->isPlaced)
-//		{
-//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
-//		}
-//		else
-//		{
-//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
-//		}
-//	}
-//
-//	if (debugTrap != nullptr)
-//	{
-//		if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
-//		{
-//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
-//		}
-//		else
-//		{
-//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
-//		}
-//	}
-//#endif
+	//#ifdef _DEBUG	//デバッグ描画
+	//	for (auto& pos : m_trapPoss)
+	//	{
+	//		if (pos->isPlaced)
+	//		{
+	//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
+	//		}
+	//		else
+	//		{
+	//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
+	//		}
+	//	}
+	//
+	//	if (debugTrap != nullptr)
+	//	{
+	//		if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
+	//		{
+	//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
+	//		}
+	//		else
+	//		{
+	//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
+	//		}
+	//	}
+	//#endif
 
 	DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x), static_cast<int>(kTrapPointBgDrawPos.y), 0.72f, 0.0f, m_bgHandle, true);
 	DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x) - kTrapPointIconOffsetX, static_cast<int>(kTrapPointBgDrawPos.y), 0.66f, 0.0f, m_iconHandle, true);
 
 	auto drawPos = kTrapPointBgDrawPos + kTrapPointOffsetPos;
-	FontManager::GetInstance().DrawBottomRightAndQuakeText(drawPos.x, drawPos.y, std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake,m_textShakeFrame);
+	FontManager::GetInstance().DrawBottomRightAndQuakeText(drawPos.x, drawPos.y, std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake, m_textShakeFrame);
 	//DrawFormatString(76, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 
