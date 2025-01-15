@@ -48,14 +48,14 @@ void FontManager::LoadFont()
 	}
 }
 
-void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int color,unsigned int edgeColor,std::string fontName, int size)
+void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int color, int size)
 {
 	Font drawFont;
 	bool isFound = false;
 
 	for (auto& font : m_fonts)
 	{
-		if (font.fontName == fontName && font.size == size)
+		if (/*font.fontName == fontName &&*/ font.size == size)
 		{
 			isFound = true;
 			drawFont = font;
@@ -72,17 +72,17 @@ void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int 
 
 	int textWidth = GetDrawStringWidthToHandle(text.c_str(), text.length(), drawFont.handle);
 	int textHeight = GetFontSizeToHandle(drawFont.handle);
-	DrawStringToHandle(x - textWidth / 2, y - textHeight / 2, text.c_str(), color, drawFont.handle, edgeColor);
+	DrawStringToHandle(x - textWidth / 2, y - textHeight / 2, text.c_str(), color, drawFont.handle);
 }
 
-void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned int color, unsigned int edgeColor, std::string fontName, int size)
+void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned int color, int size)
 {
 	Font drawFont;
 	bool isFound = false;
 
 	for (auto& font : m_fonts)
 	{
-		if (font.fontName == fontName && font.size == size)
+		if (/*font.fontName == fontName && */font.size == size)
 		{
 			isFound = true;
 			drawFont = font;
@@ -95,6 +95,47 @@ void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned i
 		assert(0 && "フォントデータが見つかりませんでした");
 #endif
 		return;
+	}
+
+	int textWidth = GetDrawStringWidthToHandle(text.c_str(), text.length(), drawFont.handle);
+	int textHeight = GetFontSizeToHandle(drawFont.handle);
+	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle);
+}
+
+void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color, int size,bool isShake, int shakeAmplitude, int shakeSpeed)
+{
+	Font drawFont;
+	bool isFound = false;
+
+	for (auto& font : m_fonts)
+	{
+		if (/*font.fontName == fontName && */font.size == size)
+		{
+			isFound = true;
+			drawFont = font;
+		}
+	}
+
+	if (!isFound)
+	{
+#ifdef _DEBUG
+		assert(0 && "フォントデータが見つかりませんでした");
+#endif
+		return;
+	}
+
+	if (isShake)
+	{
+		// 現在のフレーム数を取得
+		int frameCount = GetNowCount() / shakeSpeed / 5;
+		// 揺れの計算 (sinを使用して滑らかに左右に動く)
+		int shakeOffset = static_cast<int>(sin(frameCount) * shakeAmplitude/10);
+
+		x += shakeOffset;
+
+		int sub = 0xff0000 - color;
+		float per = shakeAmplitude / 30;
+		color += sub * per;
 	}
 
 	int textWidth = GetDrawStringWidthToHandle(text.c_str(), text.length(), drawFont.handle);

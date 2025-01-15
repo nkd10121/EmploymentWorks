@@ -16,6 +16,8 @@ namespace
 {
 	const std::string kStageDataPathFront = "data/stageData/";
 	const std::string kStageDataPathBack = ".tLoc";
+
+	constexpr int kTextShakeFrame = 30;
 }
 
 TrapManager::TrapManager() :
@@ -28,7 +30,9 @@ TrapManager::TrapManager() :
 	m_trapPoint(0),
 	m_rightTriggerPushCount(0),
 	m_bgHandle(-1),
-	m_iconHandle(-1)
+	m_iconHandle(-1),
+	m_isTextShake(false),
+	m_textShakeFrame(0)
 {
 
 }
@@ -170,6 +174,9 @@ void TrapManager::Update()
 		//トリガーボタンを押した瞬間なら
 		if (m_rightTriggerPushCount == 0)
 		{
+			//トリガーボタンを押したカウントを更新する
+			m_rightTriggerPushCount++;
+
 			switch (m_slotIdx)
 			{
 			case 1:
@@ -178,6 +185,8 @@ void TrapManager::Update()
 				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
 				if (m_trapPoint < add->GetCost())
 				{
+					m_isTextShake = true;
+					m_textShakeFrame = kTextShakeFrame;
 					//何もしない
 					return;
 				}
@@ -206,6 +215,8 @@ void TrapManager::Update()
 				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
 				if (m_trapPoint < add->GetCost())
 				{
+					m_isTextShake = true;
+					m_textShakeFrame = kTextShakeFrame;
 					//何もしない
 					return;
 				}
@@ -233,12 +244,22 @@ void TrapManager::Update()
 			}
 		}
 
-		//トリガーボタンを押したカウントを更新する
-		m_rightTriggerPushCount++;
 	}
 	else
 	{
 		m_rightTriggerPushCount = 0;
+	}
+
+	if (m_isTextShake)
+	{
+		if (m_textShakeFrame > 0)
+		{
+			m_textShakeFrame--;
+		}
+		else
+		{
+			m_isTextShake = false;
+		}
 	}
 }
 
@@ -281,7 +302,7 @@ void TrapManager::Draw()
 	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
 	DrawRotaGraph(34, 660, 0.66f, 0.0f, m_iconHandle, true);
 
-	FontManager::GetInstance().DrawBottomRightText(140, 673, std::to_string(m_trapPoint), 0x9effff, 0xffffff, "やさしさゴシックボールドV2", 32);
+	FontManager::GetInstance().DrawBottomRightAndQuakeText(140, 673, std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake,m_textShakeFrame);
 	//DrawFormatString(76, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 

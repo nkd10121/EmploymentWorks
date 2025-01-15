@@ -112,6 +112,10 @@ private:
 
 	int m_bgHandle;
 	int m_iconHandle;
+
+	bool m_isTextShake;
+	int m_textShakeFrame;
+
 	//デバッグ用
 	std::shared_ptr<Trap> debugTrap;
 };
