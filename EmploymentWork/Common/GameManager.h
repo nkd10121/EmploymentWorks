@@ -60,6 +60,9 @@ private:
 	int m_phaseCount;
 	int m_allPhaseCount;
 
+	int m_initTrapPoint;
+	int m_allPhaseNum;
+
 	int m_portionCount;
 	int m_portionMax;
 

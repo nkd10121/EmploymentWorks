@@ -87,7 +87,8 @@ void GameManager::Init(int stageIdx)
 	auto stageName = info[0];
 	m_stageId = info[1];
 
-	for (int i = 1; i < std::stoi(info[3]) + 1; i++)
+	m_allPhaseNum = std::stoi(info[3]);
+	for (int i = 1; i < m_allPhaseNum + 1; i++)
 	{
 		m_phaseNum.push_back(-i);
 		m_phaseNum.push_back(i);
@@ -147,8 +148,9 @@ void GameManager::Init(int stageIdx)
 	m_pHpUi = std::make_shared<HPBar>();
 	m_pHpUi->Init(m_pPlayer->GetHp());
 
+	m_initTrapPoint = std::stoi(info[4]);
 	TrapManager::GetInstance().Load(stageName.c_str());
-	TrapManager::GetInstance().SetUp(std::stoi(info[4]));
+	TrapManager::GetInstance().SetUp(m_initTrapPoint);
 
 	//目標クリアタイムの設定
 	ScoreManager::GetInstance().SetTargetClearTime(std::stoi(info[6]));
@@ -272,7 +274,10 @@ void GameManager::Update()
 			m_allPhaseCount += m_phaseCount;
 			m_phaseCount = 0;
 
-			//次のフェーズに進む
+			auto addPoint = m_initTrapPoint / m_allPhaseNum * (m_phaseNum.front());
+			TrapManager::GetInstance().AddTrapPoint(addPoint);
+
+			//次の準備フェーズに進む
 			m_phaseNum.pop_front();
 		}
 	}
