@@ -7,6 +7,7 @@
 #include "ImageManager.h"
 #include "Input.h"
 #include "ResourceManager.h"
+#include "FontManager.h"
 #include "LoadCSV.h"
 
 TrapManager* TrapManager::m_instance = nullptr;
@@ -278,8 +279,10 @@ void TrapManager::Draw()
 //#endif
 
 	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
-	DrawRotaGraph(40, 660, 0.72f, 0.0f, m_iconHandle, true);
-	DrawFormatString(76, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
+	DrawRotaGraph(34, 660, 0.66f, 0.0f, m_iconHandle, true);
+
+	FontManager::GetInstance().DrawBottomRightText(140, 673, std::to_string(m_trapPoint), 0x9effff, 0xffffff, "やさしさゴシックボールドV2", 32);
+	//DrawFormatString(76, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 
 void TrapManager::PreviewDraw()

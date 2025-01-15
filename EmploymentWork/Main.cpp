@@ -7,6 +7,7 @@
 #include "ModelManager.h"
 #include "ImageManager.h"
 #include "ShaderManager.h"
+#include "FontManager.h"
 #include "LoadCSV.h"
 #include <memory>
 
@@ -52,6 +53,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	FontManager::GetInstance().LoadFont();
+
 #ifdef _DEBUG
 	//最初にタイトルシーンに遷移する
 	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneDebug>());
@@ -94,6 +97,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MyLib::Physics::GetInstance().Destroy();
 	ImageManager::GetInstance().Destroy();
 	ShaderManager::GetInstance().Clear();
+	FontManager::GetInstance().Destroy();
 
 	Effkseer_End();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
