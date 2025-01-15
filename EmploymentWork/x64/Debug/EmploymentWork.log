@@ -1,4 +1,7 @@
-﻿  TrapManager.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(314,75): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(314,64): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+﻿  FontManager.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\FontManager.cpp(73,70): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\FontManager.cpp(100,70): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\FontManager.cpp(137,13): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\FontManager.cpp(138,16): warning C4244: '+=': 'float' から 'unsigned int' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\FontManager.cpp(141,70): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

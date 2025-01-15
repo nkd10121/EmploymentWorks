@@ -84,6 +84,7 @@ public:
 	/// <param name="shakeAmplitude">振れ幅</param>
 	/// <param name="shakeSpeed">揺れの速さ</param>
 	void DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color ,int size,bool isShake = false, int shakeAmplitude = 5, int shakeSpeed = 2);
+
 public:
 	std::list<Font> m_fonts;
 };

@@ -129,7 +129,7 @@ void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, un
 		// 現在のフレーム数を取得
 		int frameCount = GetNowCount() / shakeSpeed / 5;
 		// 揺れの計算 (sinを使用して滑らかに左右に動く)
-		int shakeOffset = static_cast<int>(sin(frameCount) * shakeAmplitude/10);
+		int shakeOffset = static_cast<int>(sin(frameCount) * shakeAmplitude/6);
 
 		x += shakeOffset;
 
