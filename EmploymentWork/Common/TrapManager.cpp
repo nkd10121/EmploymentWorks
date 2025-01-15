@@ -10,6 +10,8 @@
 #include "FontManager.h"
 #include "LoadCSV.h"
 
+#include "Vec2.h"
+
 TrapManager* TrapManager::m_instance = nullptr;
 
 namespace
@@ -17,7 +19,13 @@ namespace
 	const std::string kStageDataPathFront = "data/stageData/";
 	const std::string kStageDataPathBack = ".tLoc";
 
+	//テキストを揺らすフレーム数
 	constexpr int kTextShakeFrame = 30;
+
+	//罠ポイントの背景の描画座標
+	const Vec2 kTrapPointBgDrawPos = Vec2(80, 660);
+	const int kTrapPointIconOffsetX = 46;
+	const Vec2 kTrapPointOffsetPos = Vec2(60, 13);
 }
 
 TrapManager::TrapManager() :
@@ -299,10 +307,11 @@ void TrapManager::Draw()
 //	}
 //#endif
 
-	DrawRotaGraph(80, 660, 0.72f, 0.0f, m_bgHandle, true);
-	DrawRotaGraph(34, 660, 0.66f, 0.0f, m_iconHandle, true);
+	DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x), static_cast<int>(kTrapPointBgDrawPos.y), 0.72f, 0.0f, m_bgHandle, true);
+	DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x) - kTrapPointIconOffsetX, static_cast<int>(kTrapPointBgDrawPos.y), 0.66f, 0.0f, m_iconHandle, true);
 
-	FontManager::GetInstance().DrawBottomRightAndQuakeText(140, 673, std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake,m_textShakeFrame);
+	auto drawPos = kTrapPointBgDrawPos + kTrapPointOffsetPos;
+	FontManager::GetInstance().DrawBottomRightAndQuakeText(drawPos.x, drawPos.y, std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake,m_textShakeFrame);
 	//DrawFormatString(76, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 
