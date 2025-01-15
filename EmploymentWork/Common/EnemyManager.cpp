@@ -126,21 +126,28 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 	//もし連続キルカウントが0以上なら
 	if (m_killStreakCount > 0)
 	{
+		//もしキルカウントが更新されていたらカウントをリセットする
 		if (preKillStreakCount != m_killStreakCount)
 		{
 			m_killStreakTime = 0;
 		}
 
-		if (m_killStreakTime > kKillStreakResetTime)
+		auto limitTime = kKillStreakResetTime - (10 * m_killStreakCount);
+
+		//キルカウントの受付時間を超えたら
+		if (m_killStreakTime > limitTime)
 		{
 			//キルストリークカウントの2乗をポイントとして取得する
 			TrapManager::GetInstance().AddTrapPoint(m_killStreakCount * m_killStreakCount);
 
+			//値をリセットする
 			m_killStreakCount = 0;
 			m_killStreakTime = 0;
 		}
+		//受付時間を超えていなかったら
 		else
 		{
+			//カウントを更新する
 			m_killStreakTime++;
 		}
 
