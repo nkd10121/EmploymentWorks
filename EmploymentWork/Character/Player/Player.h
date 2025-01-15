@@ -116,6 +116,8 @@ private:
 	float m_angle;				//プレイヤーが向いている方向
 
 	int m_attackButtonPushCount;
+	int m_attackIntervalCount;		//攻撃するたびにこのカウントを増やす。カウントの大きさに比例して弾の拡散をする用。
+
 
 	bool m_isStartDeathAnimation;
 	bool m_isDeath;

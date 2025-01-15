@@ -43,7 +43,11 @@ namespace
 	constexpr float kAnimChangeRateSpeed = 1.0f / kAnimChangeFrame;		//1フレーム当たりのアニメーション切り替えが進む速さ
 	constexpr float kAnimBlendRateMax = 1.0f;							//アニメーションブレンド率の最大
 
+	/*弾関係*/
+	constexpr int kAddAttackIneterval = 30;
+	constexpr int kAttackInetervalMax = 300;
 
+	constexpr float kSpreadAngleMax = 40;
 }
 
 /// <summary>
@@ -59,6 +63,7 @@ Player::Player() :
 	m_cameraAngle(0.0f),
 	m_angle(0.0f),
 	m_attackButtonPushCount(0),
+	m_attackIntervalCount(0),
 	m_isStartDeathAnimation(false),
 	m_isDeath(false),
 	m_slotNum(0)
@@ -175,6 +180,10 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		bottomPos.y -= 1.0f;
 	}
 
+	if (m_attackIntervalCount > 0)
+	{
+		m_attackIntervalCount--;
+	}
 
 	if (m_pState->GetKind() == StateBase::StateKind::Idle || m_pState->GetKind() == StateBase::StateKind::Walk || m_pState->GetKind() == StateBase::StateKind::Jump)
 	{
@@ -186,9 +195,26 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 				//一定間隔で向いている方向に弾を撃つ
 				if (m_attackButtonPushCount % 20 == 0)
 				{
+					auto shotVec = (cameraRayCastRet - m_crossbowPos).Normalize();
+					if (m_attackIntervalCount > 0)
+					{
+						auto offset = Vec3(static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax/2), static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax / 2), static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax / 2));
+						offset = offset.Normalize() * m_attackIntervalCount / (kAttackInetervalMax * 20);
+						shotVec += offset;
+#ifdef _DEBUG
+						printf("攻撃オフセット:{%f,%f,%f}\n", offset.x, offset.y, offset.z);
+#endif
+					}
+
 					std::shared_ptr<Shot> shot = std::make_shared<Shot>(GameObjectTag::PlayerShot);
 					shot->Init();
-					shot->Set(m_stageId, m_crossbowPos, (cameraRayCastRet - m_crossbowPos).Normalize(), m_status.atk);
+					shot->Set(m_stageId, m_crossbowPos, shotVec.Normalize(), m_status.atk);
+
+					m_attackIntervalCount += kAddAttackIneterval;
+					if (m_attackIntervalCount > kAttackInetervalMax)
+					{
+						m_attackIntervalCount = kAttackInetervalMax;
+					}
 
 					//弾の管理をゲームシーンに任せる
 					pGameManager->AddObject(shot);
@@ -204,7 +230,7 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		}
 	}
 
-	if (m_pState->GetKind() == StateBase::StateKind::Death || m_pState->GetKind() == StateBase::StateKind::Clear)
+	if (m_pState->GetKind() != StateBase::StateKind::Death || m_pState->GetKind() != StateBase::StateKind::Clear)
 	{
 		//スロットの選択
 		if (Input::GetInstance().IsTriggered("RB"))
