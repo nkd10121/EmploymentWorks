@@ -242,8 +242,8 @@
     <ClCompile Include="Util\Input.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="FontManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Common\FontManager.cpp">
+      <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -442,7 +442,9 @@
     <ClInclude Include="Util\Input.h">
       <Filter>ソース ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="FontManager.h" />
+    <ClInclude Include="Common\FontManager.h">
+      <Filter>ソース ファイル\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">

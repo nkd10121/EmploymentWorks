@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="Common\FontManager.cpp" />
     <ClCompile Include="Object\Trap\ArrowWallTrap.cpp" />
     <ClCompile Include="Common\SoundManager.cpp" />
     <ClCompile Include="Common\EffectManager.cpp" />
@@ -85,7 +85,7 @@
     <ClCompile Include="Geometry\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FontManager.h" />
+    <ClInclude Include="Common\FontManager.h" />
     <ClInclude Include="Object\Trap\ArrowWallTrap.h" />
     <ClInclude Include="Common\SoundManager.h" />
     <ClInclude Include="Common\EffectManager.h" />
