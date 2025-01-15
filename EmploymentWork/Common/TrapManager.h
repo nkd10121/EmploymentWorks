@@ -81,7 +81,7 @@ public:
 	/// トラップポイントを追加する
 	/// </summary>
 	/// <param name="addPoint"></param>
-	void AddTrapPoint(int addPoint) { m_trapPoint += addPoint; }
+	void AddTrapPoint(int addPoint);
 
 
 	const void SetCameraInfo(Vec3 cameraPos, Vec3 dirVec);
@@ -104,7 +104,9 @@ private:
 	int m_slotIdx;		//プレイヤーのスロット番号
 	Vec3 m_cameraPos;	//カメラ座標
 	Vec3 m_cameraDir;	//カメラの向いている方向
+
 	int m_trapPoint;	//罠ポイント
+	int m_targetTrapPoint;	//増減後罠ポイント
 
 	int m_rightTriggerPushCount;
 

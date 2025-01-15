@@ -63,6 +63,12 @@ void TrapManager::Update()
 		trap->Update();
 	}
 
+	// 現在値を更新
+	if (m_trapPoint != m_targetTrapPoint)
+	{
+		m_trapPoint += (m_targetTrapPoint > m_trapPoint) ? 1 : -1; // 1フレームごとに追従
+	}
+
 	//現在プレイヤーが選択しているスロット番号、カメラの座標と向きベクトルを事前にもらっておく
 
 	//スロット番号が0(クロスボウなら何もしない)
@@ -177,6 +183,7 @@ void TrapManager::Update()
 
 				//所持トラップポイントをコスト分減らす
 				m_trapPoint -= add->GetCost();
+				m_targetTrapPoint = m_trapPoint;
 
 				//初期化
 				add->Init(debugTrap->pos, debugTrap->norm);
@@ -204,6 +211,7 @@ void TrapManager::Update()
 
 				//所持トラップポイントをコスト分減らす
 				m_trapPoint -= add->GetCost();
+				m_targetTrapPoint = m_trapPoint;
 
 				//初期化
 				add->Init(debugTrap->pos, debugTrap->norm);
@@ -345,7 +353,9 @@ void TrapManager::SetUp(int point)
 
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_iconHandle = ResourceManager::GetInstance().GetHandle("I_TRAPICON");
+
 	m_trapPoint = point;
+	m_targetTrapPoint = m_trapPoint;
 }
 
 void TrapManager::Clear()
@@ -374,6 +384,11 @@ void TrapManager::Clear()
 
 	m_trapKind.clear();
 
+}
+
+void TrapManager::AddTrapPoint(int addPoint)
+{
+	m_targetTrapPoint += addPoint;
 }
 
 const void TrapManager::SetCameraInfo(Vec3 cameraPos, Vec3 dirVec)
