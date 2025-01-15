@@ -82,8 +82,10 @@ void TrapManager::Update()
 		m_trapPoint += (m_targetTrapPoint > m_trapPoint) ? 1 : -1; // 1フレームごとに追従
 	}
 
+	//テキストが揺れているなら
 	if (m_isTextShake)
 	{
+		//揺れるフレーム数を0に近づける
 		if (m_textShakeFrame > 0)
 		{
 			m_textShakeFrame--;
