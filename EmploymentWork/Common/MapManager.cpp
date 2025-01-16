@@ -3,7 +3,6 @@
 #include <sstream>
 #include <map>
 
-#include "ModelManager.h"
 #include "ResourceManager.h"
 #include "TrapManager.h"
 

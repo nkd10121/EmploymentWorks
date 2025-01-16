@@ -4,7 +4,6 @@
 #include "SpikeTrap.h"
 #include "ArrowWallTrap.h"
 
-#include "ImageManager.h"
 #include "Input.h"
 #include "ResourceManager.h"
 #include "FontManager.h"

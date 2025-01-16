@@ -11,7 +11,6 @@
 #include "Shot.h"
 
 #include "LoadCSV.h"
-#include "ModelManager.h"
 #include "ResourceManager.h"
 #include "TrapManager.h"
 

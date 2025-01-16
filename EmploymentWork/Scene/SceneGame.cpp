@@ -5,11 +5,8 @@
 
 #include "GameManager.h"
 
-#include "ModelManager.h"
 #include "SoundManager.h"
-#include "ImageManager.h"
 #include "EffectManager.h"
-#include "ShaderManager.h"
 #include "MapManager.h"
 #include "TrapManager.h"
 

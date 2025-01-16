@@ -4,9 +4,6 @@
 #include "Camera.h"
 #include "Input.h"
 #include "SceneManager.h"
-#include "ModelManager.h"
-#include "ImageManager.h"
-#include "ShaderManager.h"
 #include "FontManager.h"
 #include "ResourceManager.h"
 #include "LoadCSV.h"
@@ -93,11 +90,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//staticクラスの削除
 	SceneManager::GetInstance().Destroy();
 	Input::GetInstance().Destroy();
-	ModelManager::GetInstance().Destroy();
 	LoadCSV::GetInstance().Destroy();
 	MyLib::Physics::GetInstance().Destroy();
-	ImageManager::GetInstance().Destroy();
-	ShaderManager::GetInstance().Clear();
 	FontManager::GetInstance().Destroy();
 	ResourceManager::GetInstance().AllClear();
 	ResourceManager::GetInstance().Destroy();

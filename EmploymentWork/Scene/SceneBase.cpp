@@ -1,13 +1,10 @@
 ﻿#include "SceneBase.h"
 #include "Game.h"
 
-#include "ModelManager.h"
 #include "EffectManager.h"
 #include "SoundManager.h"
 #include "MapManager.h"
 #include "TrapManager.h"
-#include "ImageManager.h"
-#include "ShaderManager.h"
 
 #include "ResourceManager.h"
 

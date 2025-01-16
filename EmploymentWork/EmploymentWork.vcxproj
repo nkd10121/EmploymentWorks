@@ -30,8 +30,6 @@
     <ClCompile Include="Common\GameManager.cpp" />
     <ClCompile Include="Common\EnemyManager.cpp" />
     <ClCompile Include="Geometry\LocalPos.cpp" />
-    <ClCompile Include="Common\ImageManager.cpp" />
-    <ClCompile Include="Common\ShaderManager.cpp" />
     <ClCompile Include="Character\Player\State\PlayerStateClear.cpp" />
     <ClCompile Include="Common\ResourceManager.cpp" />
     <ClCompile Include="Object\Trap\HammerTrap.cpp" />
@@ -50,7 +48,6 @@
     <ClCompile Include="Object\HealPortion.cpp" />
     <ClCompile Include="Common\LoadCSV.cpp" />
     <ClCompile Include="Common\MapManager.cpp" />
-    <ClCompile Include="Common\ModelManager.cpp" />
     <ClCompile Include="Object\ObjectBase.cpp" />
     <ClCompile Include="MyLib\Physics.cpp" />
     <ClCompile Include="Character\Player\Player.cpp" />
@@ -96,8 +93,6 @@
     <ClInclude Include="Common\GameManager.h" />
     <ClInclude Include="Common\EnemyManager.h" />
     <ClInclude Include="Geometry\LocalPos.h" />
-    <ClInclude Include="Common\ImageManager.h" />
-    <ClInclude Include="Common\ShaderManager.h" />
     <ClInclude Include="Character\Player\State\PlayerStateClear.h" />
     <ClInclude Include="Common\ResourceManager.h" />
     <ClInclude Include="Object\Trap\HammerTrap.h" />
@@ -117,7 +112,6 @@
     <ClInclude Include="Object\HealPortion.h" />
     <ClInclude Include="Common\LoadCSV.h" />
     <ClInclude Include="Common\MapManager.h" />
-    <ClInclude Include="Common\ModelManager.h" />
     <ClInclude Include="MyLib\MyLib.h" />
     <ClInclude Include="Object\ObjectBase.h" />
     <ClInclude Include="MyLib\Physics.h" />

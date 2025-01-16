@@ -6,7 +6,6 @@
 #include "CharacterBase.h"
 
 //おそらく一時的な実装
-#include "ModelManager.h"
 #include "ResourceManager.h"
 #include "TrapManager.h"
 

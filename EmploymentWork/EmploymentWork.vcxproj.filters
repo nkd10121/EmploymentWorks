@@ -119,9 +119,6 @@
     <ClCompile Include="Common\MapManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\ModelManager.cpp">
-      <Filter>ソース ファイル\Common</Filter>
-    </ClCompile>
     <ClCompile Include="Common\LoadCSV.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
@@ -197,9 +194,6 @@
     <ClCompile Include="Object\Trap\TrapBase.cpp">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
-    <ClCompile Include="Common\ImageManager.cpp">
-      <Filter>ソース ファイル\Common</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\MathHelp.cpp">
       <Filter>ソース ファイル\Geometry</Filter>
     </ClCompile>
@@ -219,9 +213,6 @@
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
     <ClCompile Include="Common\EnemyManager.cpp">
-      <Filter>ソース ファイル\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\ShaderManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
     <ClCompile Include="Character\Player\State\PlayerStateClear.cpp">
@@ -299,9 +290,6 @@
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\MapManager.h">
-      <Filter>ソース ファイル\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\ModelManager.h">
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\SoundManager.h">
@@ -397,9 +385,6 @@
     <ClInclude Include="Util\Game.h">
       <Filter>ソース ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ImageManager.h">
-      <Filter>ソース ファイル\Common</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\MathHelp.h">
       <Filter>ソース ファイル\Geometry</Filter>
     </ClInclude>
@@ -419,9 +404,6 @@
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\EnemyManager.h">
-      <Filter>ソース ファイル\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\ShaderManager.h">
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="Character\Player\State\PlayerStateClear.h">

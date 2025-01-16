@@ -1,6 +1,5 @@
 ﻿#include "HPBar.h"
 
-#include "ImageManager.h"
 #include "ResourceManager.h"
 
 namespace

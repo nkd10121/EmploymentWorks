@@ -1,6 +1,5 @@
 ﻿#include "HealPortion.h"
 #include "DxLib.h"
-#include "ModelManager.h"
 #include "ResourceManager.h"
 
 namespace

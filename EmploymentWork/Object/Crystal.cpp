@@ -1,8 +1,6 @@
 ﻿#include "Crystal.h"
 #include <string>
 #include "ResourceManager.h"
-#include "ImageManager.h"
-#include "ShaderManager.h"
 
 #include "EnemyBase.h"
 

@@ -1,6 +1,5 @@
 ﻿#include "SpikeTrap.h"
 
-#include "ModelManager.h"
 #include "ResourceManager.h"
 #include "LoadCSV.h"
 

@@ -7,12 +7,10 @@
 #include "EnemyManager.h"
 #include "HPBar.h"
 
-#include "ModelManager.h"
 #include "ResourceManager.h"
 #include "MapManager.h"
 #include "TrapManager.h"
 #include "EffectManager.h"
-#include "ImageManager.h"
 #include "ScoreManager.h"
 #include "LoadCSV.h"
 #include "Input.h"

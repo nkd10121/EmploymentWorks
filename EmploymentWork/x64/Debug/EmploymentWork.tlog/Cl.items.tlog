@@ -9,8 +9,6 @@ C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Character\Enem
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\GameManager.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EnemyManager.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Geometry\LocalPos.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\LocalPos.obj
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\ImageManager.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\ImageManager.obj
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\ShaderManager.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\ShaderManager.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Character\Player\State\PlayerStateClear.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\PlayerStateClear.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\ResourceManager.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\ResourceManager.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Object\Trap\HammerTrap.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\HammerTrap.obj
@@ -29,7 +27,6 @@ C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\MyLib\DebugDra
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Object\HealPortion.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\HealPortion.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\LoadCSV.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\LoadCSV.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\MapManager.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\MapManager.obj
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\ModelManager.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\ModelManager.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Object\ObjectBase.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\ObjectBase.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\MyLib\Physics.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\Physics.obj
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Character\Player\Player.cpp;C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\Player.obj

@@ -1,6 +1,5 @@
 ﻿#include "Shot.h"
 
-#include "ModelManager.h"
 #include "ResourceManager.h"
 #include "MapManager.h"
 
