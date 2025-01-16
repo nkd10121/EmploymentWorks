@@ -146,6 +146,35 @@ void ResourceManager::Clear(std::string sceneName)
 	m_resources.erase(it, m_resources.end());
 }
 
+void ResourceManager::AllClear()
+{
+	for (auto& resource : m_resources)
+	{
+		if (resource->kind == Kind::Image)
+		{
+			DeleteGraph(resource->handle);
+		}
+		else if (resource->kind == Kind::Sound)
+		{
+			DeleteSoundMem(resource->handle);
+		}
+		else if (resource->kind == Kind::Model)
+		{
+			MV1DeleteModel(resource->handle);
+		}
+		else if (resource->kind == Kind::Effect)
+		{
+			//エフェクトはDelete処理なし
+		}
+		else if (resource->kind == Kind::Shader)
+		{
+			//シェーダーもDelete処理なし
+		}
+	}
+
+	m_resources.clear();
+}
+
 bool ResourceManager::IsLoaded()
 {
 	for (auto& resource : m_resources)

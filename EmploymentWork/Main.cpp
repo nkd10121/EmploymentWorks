@@ -8,6 +8,7 @@
 #include "ImageManager.h"
 #include "ShaderManager.h"
 #include "FontManager.h"
+#include "ResourceManager.h"
 #include "LoadCSV.h"
 #include <memory>
 
@@ -98,6 +99,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ImageManager::GetInstance().Destroy();
 	ShaderManager::GetInstance().Clear();
 	FontManager::GetInstance().Destroy();
+	ResourceManager::GetInstance().AllClear();
+	ResourceManager::GetInstance().Destroy();
+
+
 
 	Effkseer_End();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理

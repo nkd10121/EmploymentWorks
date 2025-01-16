@@ -93,6 +93,9 @@ public:
 	/// </summary>
 	void Clear(std::string sceneName);
 
+	//すべてのハンドルを削除する
+	void AllClear();
+
 	/// <summary>
 	/// ハンドルが読み込まれているかどうか確認
 	/// </summary>
