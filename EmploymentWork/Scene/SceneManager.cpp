@@ -131,3 +131,8 @@ void SceneManager::PopScene()
 {
 	m_pScene.pop_back();
 }
+
+void SceneManager::StartLoadThisScene()
+{
+	m_pScene.back()->StartLoad();
+}

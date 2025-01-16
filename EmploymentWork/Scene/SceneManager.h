@@ -86,6 +86,11 @@ public:
 	/// <returns></returns>
 	const std::shared_ptr<SceneBase> GetBackScenePointer()const { return m_pScene[m_pScene.size()-1]; }
 
+	/// <summary>
+	/// 最初のシーンがロードできないため応急処置
+	/// </summary>
+	void StartLoadThisScene();
+
 	const int GetStageIdx()const { return m_stageIndex; }
 	const void SetStageIdx(int idx) { m_stageIndex = idx; }
 private:

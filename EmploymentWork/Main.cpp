@@ -60,6 +60,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//最初にタイトルシーンに遷移する
 	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneTitle>());
 #endif
+	//タイトルシーンに必要なリソースをロードする
+	SceneManager::GetInstance().StartLoadThisScene();
 
 	while (ProcessMessage() == 0)
 	{
