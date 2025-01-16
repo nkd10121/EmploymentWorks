@@ -32,6 +32,8 @@ SceneTitle::SceneTitle():
 /// </summary>
 SceneTitle::~SceneTitle()
 {
+	//staticクラスのデータのリセット
+	ResourceManager::GetInstance().Clear(GetNowSceneName());
 }
 
 /// <summary>
@@ -55,7 +57,7 @@ void SceneTitle::StartLoad()
 bool SceneTitle::IsLoaded() const
 {
 	//TODO:ここでリソースがロード中かどうかを判断する
-	//if (CheckHandleASyncLoad(m_bgTile))	return false;
+	if (!ResourceManager::GetInstance().IsLoaded())	return false;
 
 	return true;
 }
