@@ -1,6 +1,10 @@
 ﻿#include "SceneTitle.h"
 #include "SceneMainMenu.h"
 
+#include "Game.h"
+
+#include "ResourceManager.h"
+
 namespace
 {
 //#ifdef _DEBUG	//デバッグ描画
@@ -9,6 +13,9 @@ namespace
 	constexpr int kTextY = 32;			//テキスト描画Y座標
 	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
 //#endif
+
+	//ロゴ描画関係
+	constexpr float kRogoSize = 0.65f;	//サイズ
 }
 
 /// <summary>
@@ -35,7 +42,8 @@ void SceneTitle::StartLoad()
 	// 非同期読み込みを開始する
 	SetUseASyncLoadFlag(true);
 
-	//TODO:この間でリソースをロードする
+	//リソースデータ群をみてリソースのロードを開始する
+	ResourceManager::GetInstance().Load(GetNowSceneName());
 
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);
@@ -59,6 +67,8 @@ void SceneTitle::Init()
 {
 	//TODO:ここで実態の生成などをする
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
+
+	m_rogoHandle = ResourceManager::GetInstance().GetHandle("I_ROGO");
 }
 
 /// <summary>
@@ -89,6 +99,9 @@ void SceneTitle::Draw()
 #endif
 	DrawString(kTextX, kTextY, "ゲームを始める", 0xffffff);
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
+
+	//ロゴの描画
+	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 3, kRogoSize, 0.0f, m_rogoHandle, true);
 }
 
 /// <summary>
