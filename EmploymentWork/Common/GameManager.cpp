@@ -315,6 +315,7 @@ void GameManager::Update()
 		m_pObjects.erase(it, m_pObjects.end());
 	}
 
+	TrapManager::GetInstance().SetIsPrePhase(m_phaseNum.front() < 0);
 	TrapManager::GetInstance().Update();
 
 	//物理更新

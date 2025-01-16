@@ -253,11 +253,11 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 	TrapManager::GetInstance().SetSlotIdx(m_slotNum);
 
 #ifdef _DEBUG
-	//DEBUG:自決用
-	if (Input::GetInstance().IsTriggered("X"))
-	{
-		m_status.hp -= 10;
-	}
+	////DEBUG:自決用
+	//if (Input::GetInstance().IsTriggered("X"))
+	//{
+	//	m_status.hp -= 10;
+	//}
 
 	printf("プレイヤーHP:%d\n", m_status.hp);
 #endif

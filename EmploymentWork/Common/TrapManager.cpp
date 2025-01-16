@@ -39,7 +39,8 @@ TrapManager::TrapManager() :
 	m_bgHandle(-1),
 	m_iconHandle(-1),
 	m_isTextShake(false),
-	m_textShakeFrame(0)
+	m_textShakeFrame(0),
+	m_isPrePhase(false)
 {
 
 }
@@ -183,7 +184,7 @@ void TrapManager::Update()
 	for (auto& trapPos : hit)
 	{
 		//トラップが置かれていないかつ、周囲に8個のトラップがおかれていない候補地があるとき
-		if (/*!trapPos->isPlaced &&*//* trapPos->neighborTraps.size() == 8 && */CheckNeighbor(trapPos->neighborTraps))
+		//if (!trapPos->isPlaced &&/* trapPos->neighborTraps.size() == 8 && */CheckNeighbor(trapPos->neighborTraps))
 		{
 			//線分と座標の距離を計算する
 			float length = Segment_Point_MinLength(start.ToVECTOR(), end.ToVECTOR(), trapPos->pos.ToVECTOR());
@@ -203,76 +204,92 @@ void TrapManager::Update()
 		//トリガーボタンを押した瞬間なら
 		if (m_rightTriggerPushCount == 0)
 		{
-			//トリガーボタンを押したカウントを更新する
-			m_rightTriggerPushCount++;
-
-			switch (m_slotIdx)
+			if (!debugTrap->isPlaced)
 			{
-			case 1:
-			{
-				auto add = std::make_shared<SpikeTrap>();
-				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
-				if (m_trapPoint < add->GetCost())
+				//トリガーボタンを押したカウントを更新する
+				m_rightTriggerPushCount++;
+
+				switch (m_slotIdx)
 				{
-					m_isTextShake = true;
-					m_textShakeFrame = kTextShakeFrame;
-					//何もしない
-					return;
-				}
-
-				//所持トラップポイントをコスト分減らす
-				m_trapPoint -= add->GetCost();
-				m_targetTrapPoint = m_trapPoint;
-
-				//初期化
-				add->Init(debugTrap->pos, debugTrap->norm);
-
-				//追加
-				m_traps.emplace_back(add);
-
-				//トラップを設置済みにする
-				debugTrap->isPlaced = true;
-				for (auto& trap : debugTrap->neighborTraps)
+				case 1:
 				{
-					trap.lock()->isPlaced = true;
+					auto add = std::make_shared<SpikeTrap>();
+					//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+					if (m_trapPoint < add->GetCost())
+					{
+						m_isTextShake = true;
+						m_textShakeFrame = kTextShakeFrame;
+						//何もしない
+						return;
+					}
+
+					//所持トラップポイントをコスト分減らす
+					m_trapPoint -= add->GetCost();
+					if (m_trapPoint == m_targetTrapPoint)
+					{
+						m_targetTrapPoint = m_trapPoint;
+					}
+					else
+					{
+						m_targetTrapPoint -= add->GetCost();
+					}
+
+					//初期化
+					add->Init(debugTrap->pos, debugTrap->norm);
+
+					//追加
+					m_traps.emplace_back(add);
+
+					//トラップを設置済みにする
+					debugTrap->isPlaced = true;
+					for (auto& trap : debugTrap->neighborTraps)
+					{
+						trap.lock()->isPlaced = true;
+					}
 				}
-			}
-			break;
-			case 2:
-			{
-				auto add = std::make_shared<ArrowWallTrap>();
-				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
-				if (m_trapPoint < add->GetCost())
-				{
-					m_isTextShake = true;
-					m_textShakeFrame = kTextShakeFrame;
-					//何もしない
-					return;
-				}
-
-				//所持トラップポイントをコスト分減らす
-				m_trapPoint -= add->GetCost();
-				m_targetTrapPoint = m_trapPoint;
-
-				//初期化
-				add->Init(debugTrap->pos, debugTrap->norm);
-
-				//追加
-				m_traps.emplace_back(add);
-
-				//トラップを設置済みにする
-				debugTrap->isPlaced = true;
-				for (auto& trap : debugTrap->neighborTraps)
-				{
-					trap.lock()->isPlaced = true;
-				}
-			}
-			break;
-			default:
 				break;
+				case 2:
+				{
+					auto add = std::make_shared<ArrowWallTrap>();
+					//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+					if (m_trapPoint < add->GetCost())
+					{
+						m_isTextShake = true;
+						m_textShakeFrame = kTextShakeFrame;
+						//何もしない
+						return;
+					}
+
+					//所持トラップポイントをコスト分減らす
+					m_trapPoint -= add->GetCost();
+					if (m_trapPoint == m_targetTrapPoint)
+					{
+						m_targetTrapPoint = m_trapPoint;
+					}
+					else
+					{
+						m_targetTrapPoint -= add->GetCost();
+					}
+
+					//初期化
+					add->Init(debugTrap->pos, debugTrap->norm);
+
+					//追加
+					m_traps.emplace_back(add);
+
+					//トラップを設置済みにする
+					debugTrap->isPlaced = true;
+					for (auto& trap : debugTrap->neighborTraps)
+					{
+						trap.lock()->isPlaced = true;
+					}
+				}
+				break;
+				default:
+					break;
+				}
 			}
 		}
-
 	}
 	else
 	{
@@ -280,6 +297,44 @@ void TrapManager::Update()
 	}
 
 
+	if (m_isPrePhase)
+	{
+		bool isRemove = false;
+		if (Input::GetInstance().IsTriggered("X"))
+		{
+			for (auto& t : m_traps)
+			{
+				if (isRemove)	break;
+
+				if (abs((t->GetPos() - debugTrap->pos).Length()) < 1.0f)
+				{
+					//撤去したフラグをオンにする
+					isRemove = true;
+
+					//使用したコスト分追加する
+					AddTrapPoint(t->GetCost());
+
+					//削除する
+					t->Finalize();
+					t.reset();
+					t = nullptr;
+
+					//設置していた座標を設置可能状態に戻す
+					debugTrap->isPlaced = false;
+					for (auto& pos : debugTrap->neighborTraps)
+					{
+						pos.lock()->isPlaced = false;
+					}
+				}
+			}
+		}
+
+		//不要になった罠をここで削除処理する
+		auto it = remove_if(m_traps.begin(), m_traps.end(), [](auto& v) {
+			return v == nullptr;
+			});
+		m_traps.erase(it, m_traps.end());
+	}
 }
 
 void TrapManager::Draw()

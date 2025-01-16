@@ -62,6 +62,12 @@ public:
 	/// <returns></returns>
 	const int GetCost()const { return m_status.cost; }
 
+	/// <summary>
+	/// 地震の座標を取得
+	/// </summary>
+	/// <returns></returns>
+	const Vec3 GetPos()const { return rigidbody->GetPos(); }
+
 	const std::string GetTrapName()const { return m_trapName; }
 
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
