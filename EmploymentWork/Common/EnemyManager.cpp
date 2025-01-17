@@ -40,6 +40,9 @@ namespace
 		"I_ENEMY_HPGAUGE",
 		"I_ENEMY_HPFRAME",
 	};
+
+	//HPバーの描画サイズ
+	constexpr float kHpBarUISize = 0.2f;
 }
 
 EnemyManager::EnemyManager() :
@@ -222,9 +225,9 @@ void EnemyManager::Draw()
 
 		//HPの割合を計算する
 		float per = static_cast<float>(m_rayHitEnemyNowHP) / static_cast<float>(m_rayHitEnemyMaxHP);
-		DrawRotaGraph(screenPos.x, screenPos.y, 0.2f, 0.0f, m_enemyHpHandle[0], true);
-		DrawRectRotaGraph(screenPos.x, screenPos.y, 0, 0, m_gaugeWidth * per, m_gaugeHeight, 0.2f, 0.0f, m_enemyHpHandle[1], true);
-		DrawRotaGraph(screenPos.x, screenPos.y, 0.2f, 0.0f, m_enemyHpHandle[2], true);
+		DrawRotaGraph(static_cast<int>(screenPos.x), static_cast<int>(screenPos.y), 0.2f, 0.0f, m_enemyHpHandle[0], true);
+		DrawRectRotaGraph(static_cast<int>(screenPos.x - (m_gaugeWidth - m_gaugeWidth * per) * 0.5f * kHpBarUISize), static_cast<int>(screenPos.y), 0, 0, static_cast<int>(m_gaugeWidth * per), m_gaugeHeight, kHpBarUISize, 0.0f, m_enemyHpHandle[1], true);
+		DrawRotaGraph(static_cast<int>(screenPos.x), static_cast<int>(screenPos.y), 0.2f, 0.0f, m_enemyHpHandle[2], true);
 
 		//auto text = "残りHP:" + std::to_string(m_rayHitEnemyNowHP) + "/" + std::to_string(m_rayHitEnemyMaxHP);
 		//FontManager::GetInstance().DrawCenteredText(screenPos.x, screenPos.y, text, 0xffffff, 16);

@@ -1,3 +1,4 @@
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\FontManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\FontManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Object\Trap\ArrowWallTrap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ArrowWallTrap.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\SoundManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\SoundManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\EffectManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EffectManager.obj
@@ -8,8 +9,6 @@ C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Enemy\S
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\GameManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Geometry\LocalPos.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\LocalPos.obj
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\ImageManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ImageManager.obj
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\ShaderManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ShaderManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Player\State\PlayerStateClear.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\PlayerStateClear.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\ResourceManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ResourceManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Object\Trap\HammerTrap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\HammerTrap.obj
@@ -28,7 +27,6 @@ C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\MyLib\DebugDraw.c
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Object\HealPortion.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\HealPortion.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\LoadCSV.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\LoadCSV.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\MapManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\MapManager.obj
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\ModelManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ModelManager.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Object\ObjectBase.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\ObjectBase.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\MyLib\Physics.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\Physics.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Player\Player.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\Player.obj
