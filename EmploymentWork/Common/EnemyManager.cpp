@@ -212,8 +212,15 @@ void EnemyManager::Draw()
 	if (m_isRayHit)
 	{
 		auto screenPos = ConvWorldPosToScreenPos(m_rayCastRetPos.ToVECTOR());
+		screenPos.y -= 60;
+
+		for (auto& h : m_enemyHpHandle)
+		{
+			DrawRotaGraph(screenPos.x, screenPos.y, 0.2f, 0.0f, h, true);
+		}
+
 		auto text = "残りHP:" + std::to_string(m_rayHitEnemyNowHP) + "/" + std::to_string(m_rayHitEnemyMaxHP);
-		FontManager::GetInstance().DrawCenteredText(screenPos.x, screenPos.y - 40, text, 0xffffff, 16);
+		FontManager::GetInstance().DrawCenteredText(screenPos.x, screenPos.y, text, 0xffffff, 16);
 
 	}
 

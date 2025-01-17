@@ -120,13 +120,13 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 
 				if (l1 > l2)
 				{
-					m_cameraRayHitPos = closestOnLine;
+					m_cameraRayHitPos = p;
 					m_reyHitEnemy = enemy;
 				}
 			}
 			else
 			{
-				m_cameraRayHitPos = closestOnLine;
+				m_cameraRayHitPos = p;
 				m_reyHitEnemy = enemy;
 			}
 
