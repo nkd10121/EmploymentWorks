@@ -65,11 +65,14 @@ void SwarmEnemy::Finalize()
 /// </summary>
 void SwarmEnemy::Update(Vec3 start,Vec3 end)
 {
+	//毎回リセットする変数をリセット
 	m_isCameraRayHit = false;
+	m_reyHitEnemy.reset();
+	m_isKilled = false;
+
 
 	std::list<Vec3> pos;
 
-	m_isKilled = false;
 
 	//構成メンバーの更新
 	for (auto& enemy : m_swarm)
@@ -102,6 +105,7 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 		auto size = enemy->GetCollisionSize();
 		auto radius = enemy->GetCollisionRadius();
 
+		//レイ上の敵との最近接点の座標を計算する
 		Vec3 closestOnLine = ClosestPointOnLineSegment(start, end, p);
 
 		// 距離の二乗を計算
@@ -111,14 +115,19 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 		{
 			if (m_isCameraRayHit)
 			{
-				if (m_cameraRayHitPos.SqLength() > closestOnLine.SqLength())
+				auto l1 = (m_cameraRayHitPos - start).SqLength();
+				auto l2 = (closestOnLine - start).SqLength();
+
+				if (l1 > l2)
 				{
 					m_cameraRayHitPos = closestOnLine;
+					m_reyHitEnemy = enemy;
 				}
 			}
 			else
 			{
 				m_cameraRayHitPos = closestOnLine;
+				m_reyHitEnemy = enemy;
 			}
 
 			m_isCameraRayHit = true;

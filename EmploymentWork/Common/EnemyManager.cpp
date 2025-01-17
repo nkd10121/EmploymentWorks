@@ -34,7 +34,10 @@ namespace
 	constexpr int kPortionDropPercent = 12;	//12%
 }
 
-EnemyManager::EnemyManager():
+EnemyManager::EnemyManager() :
+	m_isRayHit(false),
+	m_rayHitEnemyNowHP(0),
+	m_rayHitEnemyMaxHP(0),
 	m_killStreakCount(0),
 	m_killStreakTime(0),
 	m_deadEnemyNum(0),
@@ -64,18 +67,24 @@ void EnemyManager::Init(std::string stageName)
 	}
 }
 
-bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
+bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 {
+	//初期化
+	m_rayCastRetPos = Vec3();
+	m_isRayHit = false;
+
+
 	auto endPos = cameraPos + angle * 100000.0f;
-	Vec3 returnPos;
 	float length = 10000.0f;
 
 	int preKillStreakCount = m_killStreakCount;
 
+	std::weak_ptr<EnemyBase> retRayHitEnemy;
+
 	//敵の更新
 	for (auto& enemy : m_pEnemies)
 	{
-		enemy->Update(cameraPos,endPos);
+		enemy->Update(cameraPos, endPos);
 
 		//上のUpdate内で敵が死んだかどうかを取得する
 		if (enemy->GetIsKilled(m_createPortionPos))
@@ -99,17 +108,23 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 
 		if (enemy->GetIsCameraRayHit())
 		{
-			if (returnPos.Length() == 0.0f)
+			auto hitPos = enemy->GetCameraRayHitPos();
+
+			if (m_isRayHit)
 			{
-				returnPos = enemy->GetCameraRayHitPos();
+				if ((m_rayCastRetPos - cameraPos).Length() > (hitPos - cameraPos).Length())
+				{
+					m_rayCastRetPos = hitPos;
+					retRayHitEnemy = enemy->GetRayHitEnemy();
+				}
 			}
 			else
 			{
-				if (returnPos.Length() > enemy->GetCameraRayHitPos().Length())
-				{
-					returnPos = enemy->GetCameraRayHitPos();
-				}
+				m_rayCastRetPos = hitPos;
+				retRayHitEnemy = enemy->GetRayHitEnemy();
 			}
+
+			m_isRayHit = true;
 		}
 	}
 	//isExistがfalseのオブジェクトを削除
@@ -121,7 +136,15 @@ bool EnemyManager::Update(int phase,Vec3 cameraPos ,Vec3 angle)
 		m_pEnemies.erase(it, m_pEnemies.end());
 	}
 
-	m_rayCastRetPos = returnPos;
+	//レイに当たっている敵のHPをその敵の上らへんに描画したい
+
+	//レイに敵が当たっていたら
+	if (m_isRayHit)
+	{
+		m_rayHitEnemyNowHP = retRayHitEnemy.lock()->GetHp();
+		m_rayHitEnemyMaxHP = retRayHitEnemy.lock()->GetMaxHp();
+	}
+
 
 	//もし連続キルカウントが0以上なら
 	if (m_killStreakCount > 0)
@@ -169,6 +192,15 @@ void EnemyManager::Draw()
 	{
 		enemy->Draw();
 	}
+
+	if (m_isRayHit)
+	{
+		auto screenPos = ConvWorldPosToScreenPos(m_rayCastRetPos.ToVECTOR());
+		auto text = "残りHP:" + std::to_string(m_rayHitEnemyNowHP);
+		FontManager::GetInstance().DrawCenteredText(screenPos.x, screenPos.y - 40, text, 0xffffff, 16);
+
+	}
+
 
 	if (m_killStreakCount)
 	{
@@ -300,7 +332,7 @@ void EnemyManager::UpdateModelPos()
 	}
 }
 
-void EnemyManager::CreateEnemy(int phaseNum,int count)
+void EnemyManager::CreateEnemy(int phaseNum, int count)
 {
 	int i = 0;
 	auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
@@ -336,7 +368,7 @@ void EnemyManager::CreateEnemy(int phaseNum,int count)
 					isNewCreateSwarm = true;
 				}
 
-				if(isNewCreateSwarm)
+				if (isNewCreateSwarm)
 				{
 					addSwarm->SetFirstCreateFrame(static_cast<int>(data.appearFrame * 60));
 					addSwarm->AddSwarm(add);

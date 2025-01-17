@@ -70,6 +70,12 @@ public:
 	const Vec3 GetCameraRayHitPos()const { return m_cameraRayHitPos; }
 
 	/// <summary>
+	/// レイキャストに当たった敵を取得
+	/// </summary>
+	/// <returns></returns>
+	const std::weak_ptr<EnemyBase> GetRayHitEnemy()const { return m_reyHitEnemy; }
+
+	/// <summary>
 	/// 敵が何によって殺されたかの数値データを取得
 	/// </summary>
 	/// <param name="playerKill">プレイヤーのキル数の参照</param>
@@ -119,7 +125,8 @@ private:
 	bool m_isInPlayer;		//プレイヤーが当たり判定内に入っているかどうか
 
 	bool m_isCameraRayHit;	//メンバーの誰かがカメラからのレイに当たったかどうか
-	Vec3 m_cameraRayHitPos;	//カメラからのレイと敵の当たり判定カプセルとのヒット座標
+	Vec3 m_cameraRayHitPos;	//カメラからのレイと敵の当たり判定カプセルとのヒット座標]
+	std::weak_ptr<EnemyBase> m_reyHitEnemy;	//レイに当たった敵
 
 	int m_killedByTrapNum;		//罠によって倒された敵の数
 	int m_killedByPlayerNum;	//プレイヤーによって倒された敵の数

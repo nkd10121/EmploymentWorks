@@ -70,6 +70,9 @@ private:
 	std::list<WayPoint> m_wayPoints;
 
 	Vec3 m_rayCastRetPos;
+	bool m_isRayHit;
+	int m_rayHitEnemyNowHP;
+	int m_rayHitEnemyMaxHP;
 
 	int m_killStreakCount;
 	int m_killStreakTime;

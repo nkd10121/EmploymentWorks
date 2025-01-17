@@ -45,11 +45,11 @@ public:
 	/// </summary>
 	/// <returns>現在のHP</returns>
 	const int GetHp()const { return m_status.hp; }
-	///// <summary>
-	///// 自身の最大HPを取得
-	///// </summary>
-	///// <returns>最大HP</returns>
-	//const int GetMaxHp()const { return m_maxHp; }
+	/// <summary>
+	/// 自身の最大HPを取得
+	/// </summary>
+	/// <returns>最大HP</returns>
+	const int GetMaxHp()const { return m_hpMax; }
 	/// <summary>
 	/// 自身の移動速度を取得
 	/// </summary>
