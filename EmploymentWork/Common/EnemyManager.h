@@ -74,6 +74,8 @@ private:
 	int m_rayHitEnemyNowHP;
 	int m_rayHitEnemyMaxHP;
 
+	std::vector<int> m_enemyHpHandle;
+
 	int m_killStreakCount;
 	int m_killStreakTime;
 

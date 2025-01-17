@@ -9,6 +9,7 @@
 
 #include "LoadCSV.h"
 #include "ScoreManager.h"
+#include "ResourceManager.h"
 #include "FontManager.h"
 
 #include <cassert>
@@ -32,6 +33,13 @@ namespace
 
 	//ポーションがドロップする確率
 	constexpr int kPortionDropPercent = 12;	//12%
+
+	const std::vector<std::string> kImageName =
+	{
+		"I_ENEMY_HPGAUGEBG",
+		"I_ENEMY_HPGAUGE",
+		"I_ENEMY_HPFRAME",
+	};
 }
 
 EnemyManager::EnemyManager() :
@@ -46,11 +54,19 @@ EnemyManager::EnemyManager() :
 	m_createPortionPos(),
 	m_isCreatePortion(false)
 {
+	for (auto& name : kImageName)
+	{
+		m_enemyHpHandle.push_back(ResourceManager::GetInstance().GetHandle(name));
+	}
 }
 
 EnemyManager::~EnemyManager()
 {
-
+	for (auto& h : m_enemyHpHandle)
+	{
+		DeleteGraph(h);
+	}
+	m_enemyHpHandle.clear();
 }
 
 void EnemyManager::Init(std::string stageName)
