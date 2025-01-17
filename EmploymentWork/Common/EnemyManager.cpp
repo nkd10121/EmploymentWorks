@@ -57,6 +57,12 @@ EnemyManager::EnemyManager() :
 	for (auto& name : kImageName)
 	{
 		m_enemyHpHandle.push_back(ResourceManager::GetInstance().GetHandle(name));
+
+		if (name == "I_ENEMY_HPGAUGE")
+		{
+			//HPバーの画像サイズを取得する
+			GetGraphSize(m_enemyHpHandle.back(), &m_gaugeWidth, &m_gaugeHeight);
+		}
 	}
 }
 
@@ -214,13 +220,14 @@ void EnemyManager::Draw()
 		auto screenPos = ConvWorldPosToScreenPos(m_rayCastRetPos.ToVECTOR());
 		screenPos.y -= 60;
 
-		for (auto& h : m_enemyHpHandle)
-		{
-			DrawRotaGraph(screenPos.x, screenPos.y, 0.2f, 0.0f, h, true);
-		}
+		//HPの割合を計算する
+		float per = static_cast<float>(m_rayHitEnemyNowHP) / static_cast<float>(m_rayHitEnemyMaxHP);
+		DrawRotaGraph(screenPos.x, screenPos.y, 0.2f, 0.0f, m_enemyHpHandle[0], true);
+		DrawRectRotaGraph(screenPos.x, screenPos.y, 0, 0, m_gaugeWidth * per, m_gaugeHeight, 0.2f, 0.0f, m_enemyHpHandle[1], true);
+		DrawRotaGraph(screenPos.x, screenPos.y, 0.2f, 0.0f, m_enemyHpHandle[2], true);
 
-		auto text = "残りHP:" + std::to_string(m_rayHitEnemyNowHP) + "/" + std::to_string(m_rayHitEnemyMaxHP);
-		FontManager::GetInstance().DrawCenteredText(screenPos.x, screenPos.y, text, 0xffffff, 16);
+		//auto text = "残りHP:" + std::to_string(m_rayHitEnemyNowHP) + "/" + std::to_string(m_rayHitEnemyMaxHP);
+		//FontManager::GetInstance().DrawCenteredText(screenPos.x, screenPos.y, text, 0xffffff, 16);
 
 	}
 
