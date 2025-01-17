@@ -15,6 +15,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
+	/// <param name="pos">設置座標</param>
 	void Init(Vec3 pos);
 	/// <summary>
 	/// 更新

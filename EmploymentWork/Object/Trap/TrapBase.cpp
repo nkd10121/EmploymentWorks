@@ -1,10 +1,14 @@
 ﻿#include "TrapBase.h"
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 TrapBase::TrapBase():
 	ObjectBase(Collidable::Priority::Low, GameObjectTag::Trap),
 	m_status(),
 	m_isExist(false),
-	m_isAttack(false)
+	m_isAttack(false),
+	m_trapName()
 {
 	//敵以外のオブジェクトとは当たり判定をとらない
 	AddThroughTag(GameObjectTag::Crystal);
@@ -15,26 +19,12 @@ TrapBase::TrapBase():
 	AddThroughTag(GameObjectTag::Trap);
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 TrapBase::~TrapBase()
 {
 	MV1DeleteModel(m_modelHandle);
-}
-
-void TrapBase::Update()
-{
-}
-
-void TrapBase::Draw()
-{
-}
-
-void TrapBase::LoadModel()
-{
-}
-
-
-void TrapBase::End()
-{
 }
 
 void TrapBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)

@@ -23,15 +23,27 @@ namespace
 
 	//ボーン（フレーム）の名前を指定
 	const char* kTargetFrameName = "wooden_spikes.001"; 
+	
 
+	//攻撃アニメーションの速度。大きくすると早くなる。
+	constexpr float kAttackAnimationMoveSpeed = 0.0125f;
+	//攻撃アニメーションの範囲。大きくすると1フレームあたりのアニメーションの移動幅が大きくなる。結果早くなる。
+	constexpr float kAttackAnimationRange = 0.4f;
+
+	//サイン波の下限(この値を下回ると攻撃を終了する)
+	constexpr float kSinLowerLimit = -0.2f;
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 SpikeTrap::SpikeTrap() :
 	TrapBase(),
 	m_attackCount(0),
 	m_coolTimeCount(0),
 	m_frameIdx(0),
 	m_spikePos(),
+	m_spikePosInit(),
 	m_norm(),
 	m_movedPos()
 {
@@ -46,12 +58,17 @@ SpikeTrap::SpikeTrap() :
 }
 
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SpikeTrap::~SpikeTrap()
 {
 	//MEMO:モデルの削除はTrapBaseでしているためしなくて大丈夫
 }
 
-
+/// <summary>
+/// 初期化
+/// </summary>
 void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 {
 	//当たり判定を取るようにする
@@ -84,7 +101,7 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 	m_frameIdx = MV1SearchFrame(m_modelHandle, kTargetFrameName);
 
 	//そのままだとスパイク部分が飛び出たままだから地面に埋めるために下げる
-	m_spikePosInit.y -= 7.5f;
+	m_spikePosInit.y -= kSpikePosYOffset;
 
 	//スパイク部分の座標を下げる
 	auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
@@ -99,7 +116,9 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 	m_isExist = true;
 }
 
-
+/// <summary>
+/// 更新
+/// </summary>
 void SpikeTrap::Update()
 {
 	//存在していない状態なら何もさせない
@@ -120,8 +139,8 @@ void SpikeTrap::Update()
 		m_attackCount++;
 
 		//現在の攻撃フレームと1フレーム前のsinカーブを計算する
-		auto presin = sinf(DX_PI_F * (m_attackCount - 1) * 0.0125f) * 0.4f;
-		auto sin = sinf(DX_PI_F * m_attackCount * 0.0125f) * 0.4f;
+		auto presin = sinf(DX_PI_F * (m_attackCount - 1) * kAttackAnimationMoveSpeed) * kAttackAnimationRange;
+		auto sin = sinf(DX_PI_F * m_attackCount * kAttackAnimationMoveSpeed) * kAttackAnimationRange;
 
 		//二つのsinカーブを比較して上昇か下降かを計算する
 		auto move = (sin - presin) * kSpikeModelMoveRange;
@@ -140,7 +159,7 @@ void SpikeTrap::Update()
 		}
 
 		//サインカーブが0以下になった時に攻撃中から抜け出す
-		if (sin < -0.2f)
+		if (sin < kSinLowerLimit)
 		{
 			m_isAttack = false;
 
@@ -176,13 +195,12 @@ void SpikeTrap::Update()
 			m_coolTimeCount = 0;
 			m_attackCount = 0;
 		}
-
 	}
-
-
 }
 
-
+/// <summary>
+/// 描画
+/// </summary>
 void SpikeTrap::Draw()
 {
 	//存在していない状態なら何もさせない

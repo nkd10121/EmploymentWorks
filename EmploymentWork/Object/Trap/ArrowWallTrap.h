@@ -34,6 +34,6 @@ private:
 	Vec3 m_arrowPos;		//矢モデルの座標	
 	Vec3 m_arrowPosInit;	//矢モデルの初期座標
 
-	Vec3 m_norm;
+	Vec3 m_norm;		//法線ベクトル
 };
 

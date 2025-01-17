@@ -13,8 +13,21 @@ namespace
 	//ボーン（フレーム）の名前を指定
 	const char* kTargetFrameName = "Obstacle_16_1";
 
+	//索敵判定の間隔
+	constexpr float kSearchCollisionInterval = 20.0f;
+	//矢の移動速度
+	constexpr float kArrowMoveSpeed = 2.0f;
+
+	//攻撃を終えるまでのフレーム数
+	constexpr int kEndAttackFrame = 60;
+
+	//初期座標からどのくらい法線方向に動かすか
+	constexpr float kArrowOffsetPower = 6.0f;
 }
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 ArrowWallTrap::ArrowWallTrap() :
 	m_attackCount(0),
 	m_coolTimeCount(0),
@@ -28,10 +41,16 @@ ArrowWallTrap::ArrowWallTrap() :
 	m_status = LoadCSV::GetInstance().LoadTrapStatus(m_trapName.c_str());
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 ArrowWallTrap::~ArrowWallTrap()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void ArrowWallTrap::Init(Vec3 pos,Vec3 norm)
 {
 	//当たり判定を取るようにする
@@ -68,7 +87,7 @@ void ArrowWallTrap::Init(Vec3 pos,Vec3 norm)
 		sphereCol->m_radius = kCollisionRadius;
 
 
-		auto searchPos = norm * static_cast<float>(i * 20.0f);
+		auto searchPos = norm * static_cast<float>(i * kSearchCollisionInterval);
 		sphereCol->SetOffsetPos(searchPos);
 
 		//索敵判定は動かすつもりがないため、先に中心座標を設定して動かないようにする
@@ -84,6 +103,9 @@ void ArrowWallTrap::Init(Vec3 pos,Vec3 norm)
 	m_isExist = true;
 }
 
+/// <summary>
+/// 更新
+/// </summary>
 void ArrowWallTrap::Update()
 {
 	//存在していない状態なら何もさせない
@@ -102,17 +124,17 @@ void ArrowWallTrap::Update()
 		}
 
 		auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
-		mat.m[3][0] += (m_norm).x * 2.0f;
-		mat.m[3][1] += (m_norm).y * 2.0f;
-		mat.m[3][2] += (m_norm).z * 2.0f;
+		mat.m[3][0] += (m_norm).x * kArrowMoveSpeed;
+		mat.m[3][1] += (m_norm).y * kArrowMoveSpeed;
+		mat.m[3][2] += (m_norm).z * kArrowMoveSpeed;
 
 		MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 
 		Vec3 prevVelocity = rigidbody->GetVelocity();
 		Vec3 newVelocity = Vec3(mat.m[3][0], mat.m[3][1], mat.m[3][2]);
-		rigidbody->SetVelocity(m_norm * 2.0f);
+		rigidbody->SetVelocity(m_norm * kArrowMoveSpeed);
 
-		if (m_attackCount >= 60)
+		if (m_attackCount >= kEndAttackFrame)
 		{
 			m_isAttack = false;
 
@@ -124,9 +146,9 @@ void ArrowWallTrap::Update()
 
 			//矢の部分の座標を初期化する
 			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
-			mat.m[3][0] = m_arrowPosInit.x - m_norm.x * 6.0f;
-			mat.m[3][1] = m_arrowPosInit.y - m_norm.y * 6.0f;
-			mat.m[3][2] = m_arrowPosInit.z - m_norm.z * 6.0f;
+			mat.m[3][0] = m_arrowPosInit.x - m_norm.x * kArrowOffsetPower;
+			mat.m[3][1] = m_arrowPosInit.y - m_norm.y * kArrowOffsetPower;
+			mat.m[3][2] = m_arrowPosInit.z - m_norm.z * kArrowOffsetPower;
 			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 		}
 
@@ -167,6 +189,9 @@ void ArrowWallTrap::Update()
 
 }
 
+/// <summary>
+/// 描画
+/// </summary>
 void ArrowWallTrap::Draw()
 {
 	//存在していない状態なら何もさせない
