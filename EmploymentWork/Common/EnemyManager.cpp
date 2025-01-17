@@ -196,7 +196,7 @@ void EnemyManager::Draw()
 	if (m_isRayHit)
 	{
 		auto screenPos = ConvWorldPosToScreenPos(m_rayCastRetPos.ToVECTOR());
-		auto text = "残りHP:" + std::to_string(m_rayHitEnemyNowHP);
+		auto text = "残りHP:" + std::to_string(m_rayHitEnemyNowHP) + "/" + std::to_string(m_rayHitEnemyMaxHP);
 		FontManager::GetInstance().DrawCenteredText(screenPos.x, screenPos.y - 40, text, 0xffffff, 16);
 
 	}

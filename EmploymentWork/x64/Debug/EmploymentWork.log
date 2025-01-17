@@ -1,2 +1,6 @@
 ﻿  SwarmEnemy.cpp
+  EnemyManager.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(200,72): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(200,56): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  コードを生成中...
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe
