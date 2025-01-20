@@ -80,10 +80,10 @@ void TrapManager::Update()
 	// 現在値を更新
 	if (m_trapPoint != m_targetTrapPoint)
 	{
-		if (m_targetTrapPoint - m_trapPoint > 100)
+		if (abs(m_targetTrapPoint - m_trapPoint) > 50)
 		{
-			auto difference = m_targetTrapPoint - m_trapPoint;
-			difference = difference / 10;
+			auto difference = abs(m_targetTrapPoint - m_trapPoint);
+			difference = difference / 5;
 
 			m_trapPoint += (m_targetTrapPoint > m_trapPoint) ? difference : -difference; // 1フレームごとに追従
 		}
@@ -225,15 +225,7 @@ void TrapManager::Update()
 					}
 
 					//所持トラップポイントをコスト分減らす
-					m_trapPoint -= add->GetCost();
-					if (m_trapPoint == m_targetTrapPoint)
-					{
-						m_targetTrapPoint = m_trapPoint;
-					}
-					else
-					{
-						m_targetTrapPoint -= add->GetCost();
-					}
+					AddTrapPoint(-add->GetCost());
 
 					//初期化
 					add->Init(debugTrap->pos, debugTrap->norm);
@@ -262,15 +254,7 @@ void TrapManager::Update()
 					}
 
 					//所持トラップポイントをコスト分減らす
-					m_trapPoint -= add->GetCost();
-					if (m_trapPoint == m_targetTrapPoint)
-					{
-						m_targetTrapPoint = m_trapPoint;
-					}
-					else
-					{
-						m_targetTrapPoint -= add->GetCost();
-					}
+					AddTrapPoint(-add->GetCost());
 
 					//初期化
 					add->Init(debugTrap->pos, debugTrap->norm);
