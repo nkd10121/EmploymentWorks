@@ -43,6 +43,9 @@ namespace
 
 	//HPバーの描画サイズ
 	constexpr float kHpBarUISize = 0.2f;
+
+	//連続キルの罠ポイント倍率
+	constexpr int kTrapPointMag = 11;
 }
 
 EnemyManager::EnemyManager() :
@@ -185,8 +188,8 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 		//キルカウントの受付時間を超えたら
 		if (m_killStreakTime > limitTime)
 		{
-			//キルストリークカウントの2乗をポイントとして取得する
-			TrapManager::GetInstance().AddTrapPoint(m_killStreakCount * m_killStreakCount);
+			//キルストリークカウント*11をポイントとして取得する
+			TrapManager::GetInstance().AddTrapPoint(m_killStreakCount * kTrapPointMag);
 
 			//値をリセットする
 			m_killStreakCount = 0;
@@ -198,9 +201,7 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 			//カウントを更新する
 			m_killStreakTime++;
 		}
-
 	}
-
 
 	//もし群れの数が0になった(敵が全滅した)ら、次のフェーズに行く
 	if (m_pEnemies.size() == 0)
