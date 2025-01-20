@@ -47,7 +47,7 @@ void EnemyStateDeath::Update()
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - 6 * m_frame);
-		FontManager::GetInstance().DrawCenteredText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y) - 80 - m_frame / 4, std::to_string(point), 0x9effff, 32);
+		FontManager::GetInstance().DrawCenteredText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y) - 80 - m_frame / 4, std::to_string(point), 0x91cdd9, 32, 0x395f62);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}, 2);
 

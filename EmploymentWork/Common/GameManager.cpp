@@ -420,7 +420,7 @@ void GameManager::Draw()
 	//クリスタルの残りHPの描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
-		FontManager::GetInstance().DrawCenteredText(1180, 40, std::to_string(m_pCrystal->GetHp()), 0xffffff, 24);
+		FontManager::GetInstance().DrawCenteredText(1180, 36, std::to_string(m_pCrystal->GetHp()), 0xffffff, 24, 0x395f62);
 	}, 2);
 
 	DrawFormatString(1160, 240, 0xffffff, "%d / 3", abs(m_phaseNum.front()));

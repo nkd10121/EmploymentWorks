@@ -50,12 +50,6 @@ void FontManager::LoadFont()
 
 void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor)
 {
-	//エッジカラーがデフォルトだったら
-	if (edgeColor == -1)
-	{
-		edgeColor = color;
-	}
-
 	Font drawFont;
 	bool isFound = false;
 
@@ -83,12 +77,6 @@ void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int 
 
 void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor)
 {
-	//エッジカラーがデフォルトだったら
-	if (edgeColor == -1)
-	{
-		edgeColor = color;
-	}
-
 	Font drawFont;
 	bool isFound = false;
 
@@ -114,14 +102,8 @@ void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned i
 	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle, edgeColor);
 }
 
-void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color, int size,bool isShake, int shakeAmplitude, int shakeSpeed, unsigned int edgeColor)
+void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor,bool isShake, int shakeAmplitude, int shakeSpeed)
 {
-	//エッジカラーがデフォルトだったら
-	if (edgeColor == -1)
-	{
-		edgeColor = color;
-	}
-
 	Font drawFont;
 	bool isFound = false;
 

@@ -68,9 +68,9 @@ public:
 	void LoadFont();
 
 	// 指定座標を中心とする文字列を描画
-	void DrawCenteredText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor = -1);
+	void DrawCenteredText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor);
 	// 指定座標を右下とする文字列を描画
-	void DrawBottomRightText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor = -1);
+	void DrawBottomRightText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor);
 
 	/// <summary>
 	/// 指定座標を右下とする文字列を描画し、フラグがtrueになると文字を揺らす
@@ -83,7 +83,7 @@ public:
 	/// <param name="isShake"></param>
 	/// <param name="shakeAmplitude">振れ幅</param>
 	/// <param name="shakeSpeed">揺れの速さ</param>
-	void DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color ,int size,bool isShake = false, int shakeAmplitude = 5, int shakeSpeed = 2, unsigned int edgeColor = -1);
+	void DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor, bool isShake = false, int shakeAmplitude = 5, int shakeSpeed = 2);
 
 public:
 	std::list<Font> m_fonts;

@@ -267,12 +267,12 @@ void EnemyManager::Draw()
 	{
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
-			FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル", 0xffffff, 24);
+			FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル!", 0xfebe41, 32,0xcc0000);
 		}, 2);
 		
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
-			FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 24);
+			FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 32,0x0000cc);
 		}, 2);
 	}
 
