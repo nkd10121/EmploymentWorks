@@ -43,13 +43,19 @@ void FontManager::LoadFont()
 		Font add;
 		add.fontName = kFontName;
 		add.size = size;
-		add.handle = CreateFontToHandle(kFontName, size, -1);
+		add.handle = CreateFontToHandle(kFontName, size, -1, DX_FONTTYPE_EDGE,-1,1);
 		m_fonts.push_back(add);
 	}
 }
 
-void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int color, int size)
+void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor)
 {
+	//エッジカラーがデフォルトだったら
+	if (edgeColor == -1)
+	{
+		edgeColor = color;
+	}
+
 	Font drawFont;
 	bool isFound = false;
 
@@ -72,11 +78,17 @@ void FontManager::DrawCenteredText(int x, int y, std::string text, unsigned int 
 
 	int textWidth = GetDrawStringWidthToHandle(text.c_str(), static_cast<int>(text.length()), drawFont.handle);
 	int textHeight = GetFontSizeToHandle(drawFont.handle);
-	DrawStringToHandle(x - textWidth / 2, y - textHeight / 2, text.c_str(), color, drawFont.handle);
+	DrawStringToHandle(x - textWidth / 2, y - textHeight / 2, text.c_str(), color, drawFont.handle, edgeColor);
 }
 
-void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned int color, int size)
+void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor)
 {
+	//エッジカラーがデフォルトだったら
+	if (edgeColor == -1)
+	{
+		edgeColor = color;
+	}
+
 	Font drawFont;
 	bool isFound = false;
 
@@ -99,11 +111,17 @@ void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned i
 
 	int textWidth = GetDrawStringWidthToHandle(text.c_str(), static_cast<int>(text.length()), drawFont.handle);
 	int textHeight = GetFontSizeToHandle(drawFont.handle);
-	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle);
+	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle, edgeColor);
 }
 
-void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color, int size,bool isShake, int shakeAmplitude, int shakeSpeed)
+void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color, int size,bool isShake, int shakeAmplitude, int shakeSpeed, unsigned int edgeColor)
 {
+	//エッジカラーがデフォルトだったら
+	if (edgeColor == -1)
+	{
+		edgeColor = color;
+	}
+
 	Font drawFont;
 	bool isFound = false;
 
@@ -140,5 +158,5 @@ void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, un
 
 	int textWidth = GetDrawStringWidthToHandle(text.c_str(), static_cast<int>(text.length()), drawFont.handle);
 	int textHeight = GetFontSizeToHandle(drawFont.handle);
-	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle);
+	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle, edgeColor);
 }

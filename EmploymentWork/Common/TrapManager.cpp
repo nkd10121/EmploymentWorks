@@ -372,7 +372,7 @@ void TrapManager::Draw()
 	//罠ポイントの描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
-		FontManager::GetInstance().DrawBottomRightAndQuakeText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y), std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake, m_textShakeFrame);
+		FontManager::GetInstance().DrawBottomRightAndQuakeText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y), std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake, m_textShakeFrame,0x000000);
 	}, 2);
 }
 
