@@ -80,8 +80,10 @@ void TrapManager::Update()
 	// 現在値を更新
 	if (m_trapPoint != m_targetTrapPoint)
 	{
+		//差が50以上あったら
 		if (abs(m_targetTrapPoint - m_trapPoint) > 50)
 		{
+			//差に応じて増減アニメーションを早める
 			auto difference = abs(m_targetTrapPoint - m_trapPoint);
 			difference = difference / 5;
 
