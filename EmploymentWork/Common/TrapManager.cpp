@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "ResourceManager.h"
 #include "FontManager.h"
+#include "DrawUI.h"
 #include "LoadCSV.h"
 
 #include "Vec2.h"
@@ -377,7 +378,10 @@ void TrapManager::Draw()
 	DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x) - kTrapPointIconOffsetX, static_cast<int>(kTrapPointBgDrawPos.y), 0.66f, 0.0f, m_iconHandle, true);
 
 	auto drawPos = kTrapPointBgDrawPos + kTrapPointOffsetPos;
-	FontManager::GetInstance().DrawBottomRightAndQuakeText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y), std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake, m_textShakeFrame);
+	DrawUI::GetInstance().RegisterDrawRequest([=]()
+	{
+		FontManager::GetInstance().DrawBottomRightAndQuakeText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y), std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake, m_textShakeFrame);
+	}, 2);
 	//DrawFormatString(76, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 

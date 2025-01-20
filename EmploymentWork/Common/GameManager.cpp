@@ -15,6 +15,9 @@
 #include "LoadCSV.h"
 #include "Input.h"
 
+#include "DrawUI.h"
+#include "FontManager.h"
+
 #include "Game.h"
 
 namespace
@@ -390,6 +393,8 @@ void GameManager::Draw()
 	TrapManager::GetInstance().Draw();
 	TrapManager::GetInstance().PreviewDraw();
 
+
+
 	//TODO:UIクラスみたいなのを作ってそこに移動させる
 	//装備スロットの描画
 	for (int i = 0; i < 3; i++)
@@ -411,6 +416,12 @@ void GameManager::Draw()
 	DrawRotaGraph(1180, 150, 0.9f, 0.0f, m_slotIconHandle[5], true);
 	DrawRotaGraph(1180, 45, 0.75f, 0.0f, m_slotIconHandle[4], true);
 	DrawRotaGraph(1180, 40, 0.65f, 0.0f, m_slotIconHandle[3], true);
+
+	//クリスタルの残りHPの描画
+	DrawUI::GetInstance().RegisterDrawRequest([=]()
+	{
+		FontManager::GetInstance().DrawCenteredText(1180, 40, std::to_string(m_pCrystal->GetHp()), 0xffffff, 24);
+	}, 2);
 
 	DrawFormatString(1160, 240, 0xffffff, "%d / 3", abs(m_phaseNum.front()));
 
@@ -440,7 +451,11 @@ void GameManager::Draw()
 	DrawFormatString(640, 16, 0xffffff, "現在のフェーズの経過フレーム:%d", m_phaseCount);
 	DrawFormatString(640, 32, 0xffffff, "すべてのフェーズの経過フレーム:%d", m_allPhaseCount);
 #endif
-	DrawFormatString(1172, 32, 0xffffff, "%d", m_pCrystal->GetHp());
+
+
+	//UIの描画
+	DrawUI::GetInstance().Draw();
+
 }
 
 /// <summary>

@@ -11,6 +11,7 @@
 #include "ScoreManager.h"
 #include "ResourceManager.h"
 #include "FontManager.h"
+#include "DrawUI.h"
 
 #include <cassert>
 
@@ -226,20 +227,53 @@ void EnemyManager::Draw()
 
 		//HPの割合を計算する
 		float per = static_cast<float>(m_rayHitEnemyNowHP) / static_cast<float>(m_rayHitEnemyMaxHP);
-		DrawRotaGraph(static_cast<int>(screenPos.x), static_cast<int>(screenPos.y), 0.2f, 0.0f, m_enemyHpHandle[0], true);
-		DrawRectRotaGraph(static_cast<int>(screenPos.x - (m_gaugeWidth - m_gaugeWidth * per) * 0.5f * kHpBarUISize), static_cast<int>(screenPos.y), 0, 0, static_cast<int>(m_gaugeWidth * per), m_gaugeHeight, kHpBarUISize, 0.0f, m_enemyHpHandle[1], true);
-		DrawRotaGraph(static_cast<int>(screenPos.x), static_cast<int>(screenPos.y), 0.2f, 0.0f, m_enemyHpHandle[2], true);
 
-		//auto text = "残りHP:" + std::to_string(m_rayHitEnemyNowHP) + "/" + std::to_string(m_rayHitEnemyMaxHP);
-		//FontManager::GetInstance().DrawCenteredText(screenPos.x, screenPos.y, text, 0xffffff, 16);
+		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		{
+			DrawRotaGraph(
+				static_cast<int>(screenPos.x),	//X座標
+				static_cast<int>(screenPos.y),	//Y座標
+				0.2f, 0.0f,						//拡大率、回転
+				m_enemyHpHandle[0],				//ハンドル
+				true);							//背景透明化
+		}, 0);									//レイヤー番号
 
+		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		{
+			DrawRectRotaGraph(
+				static_cast<int>(screenPos.x - (m_gaugeWidth - m_gaugeWidth * per) * 0.5f * kHpBarUISize),
+				static_cast<int>(screenPos.y),
+				0, 0,
+				static_cast<int>(m_gaugeWidth * per), m_gaugeHeight,
+				kHpBarUISize,
+				0.0f,
+				m_enemyHpHandle[1],
+				true);
+		}, 1);
+
+		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		{
+			DrawRotaGraph(
+				static_cast<int>(screenPos.x),	//X座標
+				static_cast<int>(screenPos.y),	//Y座標
+				0.2f, 0.0f,						//拡大率、回転
+				m_enemyHpHandle[2],				//ハンドル
+				true);							//背景透明化
+		}, 2);									//レイヤー番号
 	}
 
 
 	if (m_killStreakCount)
 	{
-		FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル", 0xffffff, 24);
-		FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 24);
+		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		{
+			FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル", 0xffffff, 24);
+		}, 2);
+		
+		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		{
+			FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 24);
+		}, 2);
 	}
 
 #ifdef _DEBUG
