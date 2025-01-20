@@ -374,15 +374,20 @@ void TrapManager::Draw()
 	//	}
 	//#endif
 
-	DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x), static_cast<int>(kTrapPointBgDrawPos.y), 0.72f, 0.0f, m_bgHandle, true);
-	DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x) - kTrapPointIconOffsetX, static_cast<int>(kTrapPointBgDrawPos.y), 0.66f, 0.0f, m_iconHandle, true);
+	//罠ポイントの背景画像の描画
+	DrawUI::GetInstance().RegisterDrawRequest([=]()
+	{
+		DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x), static_cast<int>(kTrapPointBgDrawPos.y), 0.72f, 0.0f, m_bgHandle, true);
+		DrawRotaGraph(static_cast<int>(kTrapPointBgDrawPos.x) - kTrapPointIconOffsetX, static_cast<int>(kTrapPointBgDrawPos.y), 0.66f, 0.0f, m_iconHandle, true);
+	}, 0);
 
+	//背景画像の座標 + 相対座標で罠ポイントの描画座標を計算
 	auto drawPos = kTrapPointBgDrawPos + kTrapPointOffsetPos;
+	//罠ポイントの描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
 		FontManager::GetInstance().DrawBottomRightAndQuakeText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y), std::to_string(m_trapPoint), 0x9effff, 32, m_isTextShake, m_textShakeFrame);
 	}, 2);
-	//DrawFormatString(76, 720 - 16 * 4, 0xffffff, "%d", m_trapPoint);
 }
 
 void TrapManager::PreviewDraw()
