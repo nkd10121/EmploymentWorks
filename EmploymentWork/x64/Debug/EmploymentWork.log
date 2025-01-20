@@ -1,9 +1,43 @@
-﻿  EnemyManager.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(225,39): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(225,26): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(226,102): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(226,73): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(226,33): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(227,39): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(227,26): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+﻿  EnemyNormal.cpp
+  EnemyStateAttack.cpp
+  EnemyStateDeath.cpp
+  EnemyStateIdle.cpp
+  EnemyStateWalk.cpp
+  SwarmEnemy.cpp
+  Player.cpp
+  PlayerStateClear.cpp
+  PlayerStateDash.cpp
+  PlayerStateDeath.cpp
+  PlayerStateIdle.cpp
+  PlayerStateJump.cpp
+  PlayerStateWalk.cpp
+  StateBase.cpp
+  EnemyManager.cpp
+  GameManager.cpp
+  LoadCSV.cpp
+  MapManager.cpp
+  ResourceManager.cpp
+  TrapManager.cpp
+  コードを生成中...
+  コンパイル中...
+  MathHelp.cpp
+  Main.cpp
+  Physics.cpp
+  ArrowWallTrap.cpp
+  HammerTrap.cpp
+  SpikeTrap.cpp
+  TrapBase.cpp
+  SceneBase.cpp
+  SceneDebug.cpp
+  SceneGame.cpp
+  SceneMainMenu.cpp
+  SceneManager.cpp
+  SceneOption.cpp
+  ScenePause.cpp
+  SceneRanking.cpp
+  SceneResult.cpp
+  SceneStageSelect.cpp
+  SceneStrengthen.cpp
+  SceneTitle.cpp
+  コードを生成中...
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe
