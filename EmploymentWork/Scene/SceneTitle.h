@@ -55,6 +55,8 @@ private:
 		Start,		
 
 		Select,		//セレクト
+		Option,			//オプション
+		Quit,			//やめる
 
 		Last,
 	};

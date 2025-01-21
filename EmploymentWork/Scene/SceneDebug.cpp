@@ -18,14 +18,15 @@ namespace
 	const std::string kSceneName[] =
 	{
 		"SceneTitle",
-		"SceneMainMenu",
 		"SceneStageSelect",
-		"SceneStrengthen",
-		"SceneRanking",
 		"SceneGame",
 		"SceneResult",
 		"ScenePause",
 		"SceneOption",
+
+		"SceneMainMenu",
+		"SceneRanking",
+		"SceneStrengthen",
 	};
 
 	/*テキスト描画関係*/

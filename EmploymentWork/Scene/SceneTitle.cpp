@@ -1,5 +1,6 @@
 ﻿#include "SceneTitle.h"
-#include "SceneMainMenu.h"
+#include "SceneStageSelect.h"
+#include "SceneOption.h"
 
 #include "Game.h"
 
@@ -15,7 +16,7 @@ namespace
 //#endif
 
 	//ロゴ描画関係
-	constexpr float kRogoSize = 0.65f;	//サイズ
+	constexpr float kRogoSize = 0.4f;	//サイズ
 }
 
 /// <summary>
@@ -100,10 +101,12 @@ void SceneTitle::Draw()
 
 #endif
 	DrawString(kTextX, kTextY, "ゲームを始める", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval, "オプション", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 2, "やめる", 0xffffff);
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
 
 	//ロゴの描画
-	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 3, kRogoSize, 0.0f, m_rogoHandle, true);
+	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 4, kRogoSize, 0.0f, m_rogoHandle, true);
 }
 
 /// <summary>
@@ -145,8 +148,19 @@ void SceneTitle::SelectNextSceneUpdate()
 		//ゲームシーンに遷移する
 		if (m_destinationScene == eDestination::Select)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneMainMenu>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
 			EndThisScene();
+			return;
+		}
+		else if (m_destinationScene == eDestination::Option)
+		{
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
+			EndThisScene(true);
+			return;
+		}
+		else if (m_destinationScene == eDestination::Quit)
+		{
+			SetIsGameEnd();
 			return;
 		}
 	}

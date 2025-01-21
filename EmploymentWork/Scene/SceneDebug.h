@@ -51,14 +51,15 @@ private:
 		Start,
 
 		Title,			//タイトル
-		Select,			//セレクト
 		StageSelect,	//ステージセレクト
-		Strengthen,		//強化
-		Ranking,		//ランキング
 		InGame,			//インゲーム
 		Result,			//リザルト
 		Pause,			//ポーズ
 		Option,			//オプション
+
+		Select,			//セレクト
+		Ranking,		//ランキング
+		Strengthen,		//強化
 
 		Last,
 	};

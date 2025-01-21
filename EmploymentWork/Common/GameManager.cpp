@@ -31,6 +31,63 @@ namespace
 		0x0000ff,
 		0xffff00
 	};
+
+	// ステージモデルのスケール
+	constexpr float kStageModelScale = 0.01f;
+	// スカイボックスのスケール
+	constexpr float kSkyBoxScale = 0.6f;
+	// 初期フェーズ
+	constexpr int kInitialPhase = -1;
+	// フェーズ遷移時間（10秒）
+	constexpr int kPhaseTransitionTime = 600;
+	// プレイヤー復活時のクリスタルHP閾値
+	constexpr int kPlayerReviveHpThreshold = 5;
+
+	// 装備スロットの描画位置とスケール
+	constexpr int kSlotBgX = 362;
+	constexpr int kSlotBgY = 655;
+	constexpr int kSlotBgOffset = 85;
+	constexpr float kSlotBgScale = 0.08f;
+	constexpr float kSlotIconScale = 0.5f;
+	constexpr int kSlotBoxSize = 35;
+
+	// 右上のUI描画位置とスケール
+	constexpr int kRightUiX = 1180;
+	constexpr int kRightUiY1 = 150;
+	constexpr int kRightUiY2 = 45;
+	constexpr int kRightUiY3 = 40;
+	constexpr float kRightUiScale1 = 0.9f;
+	constexpr float kRightUiScale2 = 0.75f;
+	constexpr float kRightUiScale3 = 0.65f;
+
+	// クリスタルHPの描画位置とフォントサイズ
+	constexpr int kCrystalHpX = 1180;
+	constexpr int kCrystalHpY = 36;
+	constexpr int kCrystalHpFontSize = 24;
+
+	// フェーズ番号の描画位置
+	constexpr int kPhaseNumX = 1160;
+	constexpr int kPhaseNumY = 240;
+
+	// クロスヘアの描画位置とサイズ
+	constexpr int kCrosshairWidth = 14;
+	constexpr int kCrosshairHeight = 2;
+
+	// ゲーム開始メッセージの描画位置
+	constexpr int kStartMessageX = 580;
+	constexpr int kStartMessageY = 20;
+
+	// フェーズメッセージの描画位置
+	constexpr int kPhaseMessageX = 580;
+	constexpr int kPhaseMessageY = 20;
+
+	// デバッグ描画位置
+	constexpr int kDebugPhaseNumX = 640;
+	constexpr int kDebugPhaseNumY = 0;
+	constexpr int kDebugPhaseCountX = 640;
+	constexpr int kDebugPhaseCountY = 16;
+	constexpr int kDebugAllPhaseCountX = 640;
+	constexpr int kDebugAllPhaseCountY = 32;
 }
 
 /// <summary>
@@ -84,60 +141,59 @@ GameManager::~GameManager()
 /// </summary>
 void GameManager::Init(int stageIdx)
 {
+	// ステージ情報をCSVから読み込む
 	auto info = LoadCSV::GetInstance().LoadStageInfo(stageIdx);
 	auto stageName = info[0];
 	m_stageId = info[1];
 
+	// 全フェーズ数を設定
 	m_allPhaseNum = std::stoi(info[3]);
 	for (int i = 1; i < m_allPhaseNum + 1; i++)
 	{
 		m_phaseNum.push_back(-i);
 		m_phaseNum.push_back(i);
 	}
-	//クリア番号として0を最後に入れておく
+	// クリア番号として0を最後に入れておく
 	m_phaseNum.push_back(0);
 
-	//ステージの当たり判定モデルを取得する(描画するため)
+	// ステージの当たり判定モデルを取得する(描画するため)
 	m_stageModel = ResourceManager::GetInstance().GetHandle(m_stageId);
-	MV1SetScale(m_stageModel, VGet(0.01f, 0.01f, 0.01f));		//サイズの変更
-	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f));	//回転
+	MV1SetScale(m_stageModel, VGet(kStageModelScale, kStageModelScale, kStageModelScale)); // サイズの変更
+	MV1SetRotationXYZ(m_stageModel, VGet(0.0f, DX_PI_F, 0.0f)); // 回転
 
-	//ステージの当たり判定を設定
+	// ステージの当たり判定を設定
 	MyLib::Physics::GetInstance().SetStageCollisionModel(info[1], info[2]);
 
-	//プレイヤーの生成
+	// プレイヤーの生成
 	m_pPlayer = std::make_shared<Player>();
 	m_pPlayer->Init(m_stageId);
 
-	//敵管理クラスの生成
+	// 敵管理クラスの生成
 	m_pEnemyManager = std::make_shared<EnemyManager>();
 	m_pEnemyManager->Init(stageName.c_str());
 	m_pEnemyManager->LoadWayPoint(stageName.c_str());
 
-	//カメラの生成
+	// カメラの生成
 	m_pCamera = std::make_shared<Camera>();
 	m_pCamera->Init(m_stageModel);
 
-	//ステージ情報をロード
+	// ステージ情報をロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load(stageName.c_str());
 
-	//クリスタルの生成
+	// クリスタルの生成
 	m_pCrystal = std::make_shared<Crystal>(std::stoi(info[5]));
 	m_pCrystal->Init();
 	m_pCrystal->Set(MapManager::GetInstance().GetCrystalPos());
 
-	////DEBUG:ポーションを生成
-	//m_pObjects.emplace_back(std::make_shared<HealPortion>());
-	//m_pObjects.back()->Init();
-	//m_pObjects.back()->SetPosition(Vec3(0.0f, 0.0f, -10.0f));
+	// ポーションの最大数を設定
+	m_portionMax = std::stoi(info[7]);
 
-	m_portionMax = stoi(info[7]);
-
+	// スカイボックスの設定
 	m_skyBoxHandle = ResourceManager::GetInstance().GetHandle("M_SKYBOX");
-	float scale = 0.6f;
-	MV1SetScale(m_skyBoxHandle, VGet(scale, scale, scale));
+	MV1SetScale(m_skyBoxHandle, VGet(kSkyBoxScale, kSkyBoxScale, kSkyBoxScale));
 
+	// スロット背景とアイコンの設定
 	m_slotBgHandle = ResourceManager::GetInstance().GetHandle("I_SLOTBG");
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SPIKE"));
@@ -146,14 +202,16 @@ void GameManager::Init(int stageIdx)
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_IRONUI"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_MINIMAPBG"));
 
+	// HPバーのUIを設定
 	m_pHpUi = std::make_shared<HPBar>();
 	m_pHpUi->Init(m_pPlayer->GetHp());
 
+	// トラップポイントの初期値を設定
 	m_initTrapPoint = std::stoi(info[4]);
 	TrapManager::GetInstance().Load(stageName.c_str());
 	TrapManager::GetInstance().SetUp(m_initTrapPoint);
 
-	//目標クリアタイムの設定
+	// 目標クリアタイムの設定
 	ScoreManager::GetInstance().SetTargetClearTime(std::stoi(info[6]));
 }
 
@@ -162,71 +220,70 @@ void GameManager::Init(int stageIdx)
 /// </summary>
 void GameManager::Update()
 {
-	//Yボタンを押した時かつ最初のフェーズの時(コメント化している部分はデバッグでフェーズをスキップするためにされている。)
-	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front() == -1)
+	// Yボタンを押した時かつ最初のフェーズの時
+	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front() == kInitialPhase)
 	{
-		//次のフェーズに進む
+		// 次のフェーズに進む
 		m_phaseNum.pop_front();
 	}
 
 	m_pCrystal->Update();
 
-
-	//カメラの更新
+	// カメラの更新
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
 	m_pCamera->Update();
 	auto hitPos = m_pCamera->GetMapHitPosition();
 
-	//現在のフェーズが0以上(戦闘フェーズ)の時、敵を生成していなかったら敵を生成する
+	// 現在のフェーズが0以上(戦闘フェーズ)の時、敵を生成していなかったら敵を生成する
 	if (m_phaseNum.front() >= 0)
 	{
 		m_pEnemyManager->CreateEnemy(m_phaseNum.front(), m_phaseCount);
 	}
-	//0以下(準備フェーズ)の時
+	// 0以下(準備フェーズ)の時
 	else
 	{
-		//敵生成フラグをリセットする
+		// 敵生成フラグをリセットする
 		m_isCreateEnemy = false;
 	}
 
-	//カメラの座標と向きを取得
+	// カメラの座標と向きを取得
 	TrapManager::GetInstance().SetCameraInfo(m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
 
-	//敵の更新処理
+	// 敵の更新処理
 	auto isNextPhase = m_pEnemyManager->Update(m_phaseNum.front(), m_pCamera->GetCameraPos(), m_pCamera->GetDirection());
 
-	//レイキャストの結果変数
+	// レイキャストの結果変数
 	Vec3 rayCastRet;
-	//カメラから敵までの距離
+	// カメラから敵までの距離
 	auto cameraToEnemy = (m_pEnemyManager->GetRayCastRetPos() - m_pCamera->GetCameraPos()).Length();
-	//カメラから地形までの距離
+	// カメラから地形までの距離
 	auto cameraToMap = (m_pCamera->GetMapHitPosition() - m_pCamera->GetCameraPos()).Length();
-	//もし、カメラから地形までの距離よりカメラから敵までの距離が大きかったら
+	// もし、カメラから地形までの距離よりカメラから敵までの距離が大きかったら
 	if (cameraToEnemy > cameraToMap)
 	{
-		//近い方(地形とのヒット座標)を保存する
+		// 近い方(地形とのヒット座標)を保存する
 		rayCastRet = m_pCamera->GetMapHitPosition();
 	}
 	else
 	{
-		//近い方(敵とのヒット座標)を保存するが、
-		//そもそも敵と当たっているかどうかを判断する
+		// 近い方(敵とのヒット座標)を保存するが、
+		// そもそも敵と当たっているかどうかを判断する
 
-		//敵と当たっていたら
+		// 敵と当たっていたら
 		if (m_pEnemyManager->GetRayCastRetPos().Length() != 0.0f)
 		{
-			//敵とのヒット座標を保存する
+			// 敵とのヒット座標を保存する
 			rayCastRet = m_pEnemyManager->GetRayCastRetPos();
 		}
-		//当たっていなかったら
+		// 当たっていなかったら
 		else
 		{
-			//地形とのヒット座標を保存する
+			// 地形とのヒット座標を保存する
 			rayCastRet = m_pCamera->GetMapHitPosition();
 		}
 	}
 
-	//ポーションの生成
+	// ポーションの生成
 	Vec3 createPos;
 	if (m_pEnemyManager->GetIsCreatePortion(createPos))
 	{
@@ -239,24 +296,23 @@ void GameManager::Update()
 		m_portionCount++;
 	}
 
-	//プレイヤーの更新
+	// プレイヤーの更新
 	m_pPlayer->SetCameraAngle(m_pCamera->GetDirection());
 	m_pPlayer->Update(this, rayCastRet);
 	if (m_pPlayer->GetIsDeath())
 	{
-		//クリスタルの残りHPが5以上あればクリスタルHPを消費してプレイヤーを復活させる
-		//TODO:画面を黒にフェードさせたい
-		if (m_pCrystal->GetHp() > 5)
+		// クリスタルの残りHPが5以上あればクリスタルHPを消費してプレイヤーを復活させる
+		if (m_pCrystal->GetHp() > kPlayerReviveHpThreshold)
 		{
-			//クリスタルのHPを減らす
+			// クリスタルのHPを減らす
 			m_pCrystal->PlayerDead();
 
-			//プレイヤーの生成
+			// プレイヤーの生成
 			m_pPlayer = std::make_shared<Player>();
 			m_pPlayer->Init(m_stageId);
 			m_pHpUi->Init(m_pPlayer->GetHp());
 		}
-		//クリスタルの残りHPが5以下ならゲームオーバーにする
+		// クリスタルの残りHPが5以下ならゲームオーバーにする
 		else
 		{
 			m_isEnd = true;
@@ -265,41 +321,40 @@ void GameManager::Update()
 		}
 	}
 
-	//敵が全滅した時、次のフェーズに進む
+	// 敵が全滅した時、次のフェーズに進む
 	if (isNextPhase)
 	{
-		//念のため、現在が戦闘フェーズであるか確認
+		// 念のため、現在が戦闘フェーズであるか確認
 		if (m_phaseNum.front() > 0)
 		{
-			//フェーズカウントをリセット
+			// フェーズカウントをリセット
 			m_allPhaseCount += m_phaseCount;
 			m_phaseCount = 0;
 
 			auto addPoint = m_initTrapPoint / m_allPhaseNum * (m_phaseNum.front());
 			TrapManager::GetInstance().AddTrapPoint(addPoint);
 
-			//次の準備フェーズに進む
+			// 次の準備フェーズに進む
 			m_phaseNum.pop_front();
 		}
 	}
 
-	//最初の準備フレームでなければフェーズカウントを進める
-	if (m_phaseNum.front() != -1)
+	// 最初の準備フレームでなければフェーズカウントを進める
+	if (m_phaseNum.front() != kInitialPhase)
 	{
 		m_phaseCount++;
 	}
 
-
-	//10秒経ったら次のフェーズに進める
-	if (m_phaseNum.front() < 0 && m_phaseNum.front() != -1 && m_phaseCount >= 600)
+	// 10秒経ったら次のフェーズに進める
+	if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase && m_phaseCount >= kPhaseTransitionTime)
 	{
 		m_phaseNum.pop_front();
-		//フェーズカウントをリセット
+		// フェーズカウントをリセット
 		m_allPhaseCount += m_phaseCount;
 		m_phaseCount = 0;
 	}
 
-	//ポーションの更新
+	// ポーションの更新
 	for (auto& object : m_pObjects)
 	{
 		object->Update();
@@ -309,29 +364,27 @@ void GameManager::Update()
 			object->Finalize();
 		}
 	}
-	//isExistがfalseのオブジェクトを削除
+	// isExistがfalseのオブジェクトを削除
 	{
 		auto it = std::remove_if(m_pObjects.begin(), m_pObjects.end(), [](auto& v)
-			{
-				return v->GetIsExist() == false;
-			});
+		{
+			return v->GetIsExist() == false;
+		});
 		m_pObjects.erase(it, m_pObjects.end());
 	}
 
 	TrapManager::GetInstance().SetIsPrePhase(m_phaseNum.front() < 0);
 	TrapManager::GetInstance().Update();
 
-	//物理更新
+	// 物理更新
 	MyLib::Physics::GetInstance().Update();
 
-	//モデル座標の更新
+	// モデル座標の更新
 	m_pPlayer->UpdateModelPos();
-
 	m_pEnemyManager->UpdateModelPos();
-
 	m_pHpUi->Update(m_pPlayer->GetHp());
 
-	//エフェクトの更新
+	// エフェクトの更新
 	EffectManager::GetInstance().Update();
 
 	MV1SetPosition(m_skyBoxHandle, m_pPlayer->GetPos().ToVECTOR());
@@ -348,17 +401,16 @@ void GameManager::Update()
 
 		if (m_pPlayer->GetNowAnimEndFrame() - 1 == m_pPlayer->GetAnimNowFrame())
 		{
-			//クリスタルの残りHPをスコア計算用に保存
+			// クリスタルの残りHPをスコア計算用に保存
 			ScoreManager::GetInstance().SetCrystalHp(m_pCrystal->GetHp());
 			ScoreManager::GetInstance().SetClearTime(m_allPhaseCount);
 			m_pEnemyManager->SetScoreData();
-			//スコアを計算
+			// スコアを計算
 			ScoreManager::GetInstance().CalculationScore();
 			m_isClear = true;
 			m_isEnd = true;
 		}
 	}
-
 }
 
 /// <summary>
@@ -393,71 +445,60 @@ void GameManager::Draw()
 	TrapManager::GetInstance().Draw();
 	TrapManager::GetInstance().PreviewDraw();
 
-
-
 	//TODO:UIクラスみたいなのを作ってそこに移動させる
 	//装備スロットの描画
 	for (int i = 0; i < 3; i++)
 	{
-		int x = 362 + i * 85;
-		int y = 655;
-		//DrawBox(x - 30, y - 30, x + 30, y + 30, 0xffffff, false);
-		DrawRotaGraph(x, y, 0.08f, 0.0f, m_slotBgHandle, true);
-		//if (i == 0)
-		{
-			DrawRotaGraph(x, y, 0.5f, 0.0f, m_slotIconHandle[i], true);
-		}
+		int x = kSlotBgX + i * kSlotBgOffset;
+		int y = kSlotBgY;
+		DrawRotaGraph(x, y, kSlotBgScale, 0.0f, m_slotBgHandle, true);
+		DrawRotaGraph(x, y, kSlotIconScale, 0.0f, m_slotIconHandle[i], true);
 	}
 
 	//現在選択しているスロット枠の描画
-	DrawBox(362 + m_pPlayer->GetNowSlotNumber() * 85 - 35, 655 - 35, 362 + m_pPlayer->GetNowSlotNumber() * 85 + 35, 655 + 35, 0xff0000, false);
+	DrawBox(kSlotBgX + m_pPlayer->GetNowSlotNumber() * kSlotBgOffset - kSlotBoxSize, kSlotBgY - kSlotBoxSize, kSlotBgX + m_pPlayer->GetNowSlotNumber() * kSlotBgOffset + kSlotBoxSize, kSlotBgY + kSlotBoxSize, 0xff0000, false);
 
 	//右上のUI描画
-	DrawRotaGraph(1180, 150, 0.9f, 0.0f, m_slotIconHandle[5], true);
-	DrawRotaGraph(1180, 45, 0.75f, 0.0f, m_slotIconHandle[4], true);
-	DrawRotaGraph(1180, 40, 0.65f, 0.0f, m_slotIconHandle[3], true);
+	DrawRotaGraph(kRightUiX, kRightUiY1, kRightUiScale1, 0.0f, m_slotIconHandle[5], true);
+	DrawRotaGraph(kRightUiX, kRightUiY2, kRightUiScale2, 0.0f, m_slotIconHandle[4], true);
+	DrawRotaGraph(kRightUiX, kRightUiY3, kRightUiScale3, 0.0f, m_slotIconHandle[3], true);
 
 	//クリスタルの残りHPの描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
-		FontManager::GetInstance().DrawCenteredText(1180, 36, std::to_string(m_pCrystal->GetHp()), 0xffffff, 24, 0x395f62);
+		FontManager::GetInstance().DrawCenteredText(kCrystalHpX, kCrystalHpY, std::to_string(m_pCrystal->GetHp()), 0xffffff, kCrystalHpFontSize, 0x395f62);
 	}, 2);
 
-	DrawFormatString(1160, 240, 0xffffff, "%d / 3", abs(m_phaseNum.front()));
+	DrawFormatString(kPhaseNumX, kPhaseNumY, 0xffffff, "%d / 3", abs(m_phaseNum.front()));
 
 	m_pHpUi->Draw();
 
 	//クロスヘアの描画
 	auto centerX = Game::kWindowWidth / 2;
 	auto centerY = Game::kWindowHeight / 2;
-	auto wid = 14;
-	auto hei = 2;
-	DrawBox(centerX - wid, centerY - hei, centerX + wid, centerY + hei, 0xaaaaaa, true);
-	DrawBox(centerX - hei, centerY - wid, centerX + hei, centerY + wid, 0xaaaaaa, true);
+	DrawBox(centerX - kCrosshairWidth, centerY - kCrosshairHeight, centerX + kCrosshairWidth, centerY + kCrosshairHeight, 0xaaaaaa, true);
+	DrawBox(centerX - kCrosshairHeight, centerY - kCrosshairWidth, centerX + kCrosshairHeight, centerY + kCrosshairWidth, 0xaaaaaa, true);
 
-	if (m_phaseNum.front() == -1)
+	if (m_phaseNum.front() == kInitialPhase)
 	{
-		DrawString(580, 20, "Yボタンでゲーム開始", 0xffffff);
+		DrawString(kStartMessageX, kStartMessageY, "Yボタンでゲーム開始", 0xffffff);
 	}
 
 	//準備フェーズなら
-	if (m_phaseNum.front() < 0 && m_phaseNum.front() != -1)
+	if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase)
 	{
-		DrawFormatString(580, 20, 0xffffff, "次のフェーズまで %d", (660 - m_phaseCount) / 60);
+		DrawFormatString(kPhaseMessageX, kPhaseMessageY, 0xffffff, "次のフェーズまで %d", (660 - m_phaseCount) / 60);
 	}
 
 #ifdef _DEBUG	//デバッグ描画
-	DrawFormatString(640, 0, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
-	DrawFormatString(640, 16, 0xffffff, "現在のフェーズの経過フレーム:%d", m_phaseCount);
-	DrawFormatString(640, 32, 0xffffff, "すべてのフェーズの経過フレーム:%d", m_allPhaseCount);
+	DrawFormatString(kDebugPhaseNumX, kDebugPhaseNumY, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
+	DrawFormatString(kDebugPhaseCountX, kDebugPhaseCountY, 0xffffff, "現在のフェーズの経過フレーム:%d", m_phaseCount);
+	DrawFormatString(kDebugAllPhaseCountX, kDebugAllPhaseCountY, 0xffffff, "すべてのフェーズの経過フレーム:%d", m_allPhaseCount);
 #endif
-
 
 	//UIの描画
 	DrawUI::GetInstance().Draw();
-
 }
-
 /// <summary>
 /// オブジェクトを追加する
 /// </summary>

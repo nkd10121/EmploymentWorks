@@ -1,6 +1,6 @@
 ﻿#include "ScenePause.h"
 #include "Game.h"
-#include "SceneMainMenu.h"
+#include "SceneStageSelect.h"
 #include "SceneGame.h"
 
 namespace
@@ -143,9 +143,9 @@ void ScenePause::SelectNextSceneUpdate()
 			return;
 		}
 		//ポーズシーンを上に表示する
-		else if (m_destinationScene == eDestination::Title)
+		else if (m_destinationScene == eDestination::StageSelect)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneMainMenu>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
 			EndThisScene();
 			return;
 		}

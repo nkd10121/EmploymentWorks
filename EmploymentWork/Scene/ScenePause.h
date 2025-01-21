@@ -56,7 +56,7 @@ private:
 
 		InGame,			//インゲーム
 		ReStart,		//リスタート
-		Title,			//タイトル
+		StageSelect,	//ステージ選択
 
 		Last,
 	};

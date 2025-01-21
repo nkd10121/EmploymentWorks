@@ -1,9 +1,9 @@
 ﻿#include "SceneResult.h"
 
 #include "SceneGame.h"
-#include "SceneStrengthen.h"
-#include "SceneRanking.h"
-#include "SceneMainMenu.h"
+//#include "SceneStrengthen.h"
+//#include "SceneRanking.h"
+#include "SceneStageSelect.h"
 
 #include "ScoreManager.h"
 
@@ -158,24 +158,24 @@ void SceneResult::SelectNextSceneUpdate()
 		{
 
 		}
-		//強化シーンに遷移する
-		else if (m_destinationScene == eDestination::Strengthen)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStrengthen>());
-			EndThisScene(true);
-			return;
-		}
-		//ランキングシーンに遷移する
-		else if (m_destinationScene == eDestination::Ranking)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneRanking>());
-			EndThisScene(true);
-			return;
-		}
+		////強化シーンに遷移する
+		//else if (m_destinationScene == eDestination::Strengthen)
+		//{
+		//	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStrengthen>());
+		//	EndThisScene(true);
+		//	return;
+		//}
+		////ランキングシーンに遷移する
+		//else if (m_destinationScene == eDestination::Ranking)
+		//{
+		//	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneRanking>());
+		//	EndThisScene(true);
+		//	return;
+		//}
 		//セレクトシーンに遷移する
 		else if (m_destinationScene == eDestination::Select)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneMainMenu>());
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
 			EndThisScene();
 			return;
 		}

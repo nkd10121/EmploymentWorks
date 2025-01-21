@@ -58,8 +58,6 @@ private:
 
 		InGame,			//インゲーム(次のステージ)
 		ScoreDetail,	//スコア詳細
-		Strengthen,		//強化
-		Ranking,		//ランキング
 		Select,			//セレクト
 
 		Last,
