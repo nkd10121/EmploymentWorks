@@ -72,6 +72,9 @@ private:
 	std::shared_ptr<EnemyManager> m_pEnemyManager;	//敵管理クラスポインタ
 	std::shared_ptr<MyLib::Physics> m_pPhysics;		//物理クラスポインタ
 
+	bool isNextScene;	//次のシーンに遷移するかどうか
+	Vec3 m_cameraTarget;	//カメラのターゲット
+
 	int m_enemyCreateFrame;	//敵生成フレーム
 
 	int m_lightHandle;	//ライトハンドル

@@ -29,6 +29,7 @@ namespace
 /// </summary>
 SceneTitle::SceneTitle():
 	SceneBase("SCENE_TITLE"),
+	isNextScene(false),
 	m_enemyCreateFrame(0)
 {
 
@@ -95,8 +96,9 @@ void SceneTitle::Init()
 	m_pEnemyManager->LoadWayPoint("title");
 
 	SetCameraNearFar(1.0f, 120.0f);
-	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), VGet(0.0f, 0.0f, 0.0f));
-	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 0.0f, 0.0f), VGet(0.0f, 20.0f, -72.0f)));
+	m_cameraTarget = Vec3(0.0f, 0.0f, 0.0f);
+	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
+	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 50.0f, 0.0f), VGet(0.0f, 20.0f, -72.0f)));
 }
 
 /// <summary>
@@ -104,7 +106,7 @@ void SceneTitle::Init()
 /// </summary>
 void SceneTitle::End()
 {
-	//m_pEnemyManager->Finalize();
+	m_pEnemyManager->Finalize();
 	m_pCrystal->Finalize();
 	MyLib::Physics::GetInstance().Clear();
 
@@ -124,6 +126,13 @@ void SceneTitle::Update()
 	// 物理更新
 	MyLib::Physics::GetInstance().Update();
 	m_pEnemyManager->UpdateModelPos();
+
+	if (isNextScene)
+	{
+		m_cameraTarget.y -= 2.5f;
+		SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
+	}
+
 
 	m_enemyCreateFrame++;
 }
@@ -194,6 +203,7 @@ void SceneTitle::SelectNextSceneUpdate()
 		//ゲームシーンに遷移する
 		if (m_destinationScene == eDestination::Select)
 		{
+			isNextScene = true;
 			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
 			EndThisScene();
 			return;
