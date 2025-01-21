@@ -87,6 +87,9 @@ void SceneTitle::Init()
 	m_pCrystal->Init();
 	m_pCrystal->Set(MapManager::GetInstance().GetCrystalPos());
 
+	// ステージの当たり判定を設定
+	MyLib::Physics::GetInstance().SetStageCollisionModel("M_STAGECOLLISIONTITLE", "M_STAGECOLLISIONTITLE");
+
 	// 敵管理クラスの生成
 	m_pEnemyManager = std::make_shared<EnemyManager>(false);
 	m_pEnemyManager->LoadWayPoint("title");
@@ -113,6 +116,10 @@ void SceneTitle::Update()
 	m_pCrystal->Update();
 	m_pEnemyManager->Update(0, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 	m_pEnemyManager->CreateEnemy(0, m_enemyCreateFrame);
+
+	// 物理更新
+	MyLib::Physics::GetInstance().Update();
+	m_pEnemyManager->UpdateModelPos();
 
 	m_enemyCreateFrame++;
 }

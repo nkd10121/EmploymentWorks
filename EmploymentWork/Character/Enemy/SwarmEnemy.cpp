@@ -199,13 +199,13 @@ void SwarmEnemy::Draw()
 	{
 		enemy->Draw();
 
-#ifdef _DEBUG
-		auto pos = enemy->GetRigidbody()->GetPosVECTOR();
-		pos.y += 6.0f;
-		DrawSphere3D(pos, 1, 8, m_memberColor, m_memberColor, true);
-
-		DrawSphere3D(m_swarmCenterPos.ToVECTOR(), 4, 12, m_memberColor, m_memberColor, true);
-#endif
+//#ifdef _DEBUG
+//		auto pos = enemy->GetRigidbody()->GetPosVECTOR();
+//		pos.y += 6.0f;
+//		DrawSphere3D(pos, 1, 8, m_memberColor, m_memberColor, true);
+//
+//		DrawSphere3D(m_swarmCenterPos.ToVECTOR(), 4, 12, m_memberColor, m_memberColor, true);
+//#endif
 	}
 
 #ifdef _DEBUG

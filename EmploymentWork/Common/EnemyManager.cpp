@@ -79,11 +79,14 @@ EnemyManager::EnemyManager(bool isGame) :
 	else
 	{
 		m_createEnemyInfo[0] = std::list<EnemyCreateInfo>();
-		EnemyCreateInfo add;
-		add.appearFrame = 0;
-		add.isCreated = false;
-		add.enemyName = "EnemyNormal";
-		m_createEnemyInfo[0].push_back(add);
+		for (int i = 0; i < 10; i++)
+		{
+			EnemyCreateInfo add;
+			add.appearFrame = i;
+			add.isCreated = false;
+			add.enemyName = "EnemyNormal";
+			m_createEnemyInfo[0].push_back(add);
+		}
 	}
 }
 
