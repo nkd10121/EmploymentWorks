@@ -49,7 +49,8 @@ namespace
 	constexpr int kTrapPointMag = 11;
 }
 
-EnemyManager::EnemyManager() :
+EnemyManager::EnemyManager(bool isGame) :
+	m_isGame(isGame),
 	m_isRayHit(false),
 	m_rayHitEnemyNowHP(0),
 	m_rayHitEnemyMaxHP(0),
@@ -61,28 +62,44 @@ EnemyManager::EnemyManager() :
 	m_createPortionPos(),
 	m_isCreatePortion(false)
 {
-	for (auto& name : kImageName)
+	//ゲームシーンならロードする
+	if (m_isGame)
 	{
-		m_enemyHpHandle.push_back(ResourceManager::GetInstance().GetHandle(name));
-
-		if (name == "I_ENEMY_HPGAUGE")
+		for (auto& name : kImageName)
 		{
-			//HPバーの画像サイズを取得する
-			GetGraphSize(m_enemyHpHandle.back(), &m_gaugeWidth, &m_gaugeHeight);
+			m_enemyHpHandle.push_back(ResourceManager::GetInstance().GetHandle(name));
+
+			if (name == "I_ENEMY_HPGAUGE")
+			{
+				//HPバーの画像サイズを取得する
+				GetGraphSize(m_enemyHpHandle.back(), &m_gaugeWidth, &m_gaugeHeight);
+			}
 		}
+	}
+	else
+	{
+		m_createEnemyInfo[0] = std::list<EnemyCreateInfo>();
+		EnemyCreateInfo add;
+		add.appearFrame = 0;
+		add.isCreated = false;
+		add.enemyName = "EnemyNormal";
+		m_createEnemyInfo[0].push_back(add);
 	}
 }
 
 EnemyManager::~EnemyManager()
 {
-	for (auto& h : m_enemyHpHandle)
+	if (m_isGame)
 	{
-		DeleteGraph(h);
+		for (auto& h : m_enemyHpHandle)
+		{
+			DeleteGraph(h);
+		}
+		m_enemyHpHandle.clear();
 	}
-	m_enemyHpHandle.clear();
 }
 
-void EnemyManager::Init(std::string stageName)
+void EnemyManager::LoadCreateData(std::string stageName)
 {
 	auto info = LoadCSV::GetInstance().LoadEnemyCreateData(stageName);
 	for (auto& inf : info)
@@ -123,6 +140,8 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 			{
 				m_isCreatePortion = true;
 			}
+
+			m_deadEnemyNum++;
 
 			//死んでいたらキルストリークカウントを更新する
 			m_killStreakCount++;
@@ -204,8 +223,12 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 		}
 	}
 
-	//もし群れの数が0になった(敵が全滅した)ら、次のフェーズに行く
-	if (m_pEnemies.size() == 0)
+	////もし群れの数が0になった(敵が全滅した)ら、次のフェーズに行く
+	//if (m_pEnemies.size() == 0)
+	//{
+	//	return true;
+	//}
+	if (m_deadEnemyNum == m_enemyNum[phase])
 	{
 		return true;
 	}
@@ -222,44 +245,47 @@ void EnemyManager::Draw()
 
 	if (m_isRayHit)
 	{
-		auto screenPos = ConvWorldPosToScreenPos(m_rayCastRetPos.ToVECTOR());
-		screenPos.y -= 60;
-
-		//HPの割合を計算する
-		float per = static_cast<float>(m_rayHitEnemyNowHP) / static_cast<float>(m_rayHitEnemyMaxHP);
-
-		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		if (m_isGame)
 		{
-			DrawRotaGraph(
-				static_cast<int>(screenPos.x),	//X座標
-				static_cast<int>(screenPos.y),	//Y座標
-				0.2f, 0.0f,						//拡大率、回転
-				m_enemyHpHandle[0],				//ハンドル
-				true);							//背景透明化
-		}, 0);									//レイヤー番号
+			auto screenPos = ConvWorldPosToScreenPos(m_rayCastRetPos.ToVECTOR());
+			screenPos.y -= 60;
 
-		DrawUI::GetInstance().RegisterDrawRequest([=]()
-		{
-			DrawRectRotaGraph(
-				static_cast<int>(screenPos.x - (m_gaugeWidth - m_gaugeWidth * per) * 0.5f * kHpBarUISize),
-				static_cast<int>(screenPos.y),
-				0, 0,
-				static_cast<int>(m_gaugeWidth * per), m_gaugeHeight,
-				kHpBarUISize,
-				0.0f,
-				m_enemyHpHandle[1],
-				true);
-		}, 1);
+			//HPの割合を計算する
+			float per = static_cast<float>(m_rayHitEnemyNowHP) / static_cast<float>(m_rayHitEnemyMaxHP);
 
-		DrawUI::GetInstance().RegisterDrawRequest([=]()
-		{
-			DrawRotaGraph(
-				static_cast<int>(screenPos.x),	//X座標
-				static_cast<int>(screenPos.y),	//Y座標
-				0.2f, 0.0f,						//拡大率、回転
-				m_enemyHpHandle[2],				//ハンドル
-				true);							//背景透明化
-		}, 2);									//レイヤー番号
+			DrawUI::GetInstance().RegisterDrawRequest([=]()
+			{
+					DrawRotaGraph(
+						static_cast<int>(screenPos.x),	//X座標
+						static_cast<int>(screenPos.y),	//Y座標
+						0.2f, 0.0f,						//拡大率、回転
+						m_enemyHpHandle[0],				//ハンドル
+						true);							//背景透明化
+			}, 0);									//レイヤー番号
+
+			DrawUI::GetInstance().RegisterDrawRequest([=]()
+			{
+					DrawRectRotaGraph(
+						static_cast<int>(screenPos.x - (m_gaugeWidth - m_gaugeWidth * per) * 0.5f * kHpBarUISize),
+						static_cast<int>(screenPos.y),
+						0, 0,
+						static_cast<int>(m_gaugeWidth * per), m_gaugeHeight,
+						kHpBarUISize,
+						0.0f,
+						m_enemyHpHandle[1],
+						true);
+			}, 1);
+
+			DrawUI::GetInstance().RegisterDrawRequest([=]()
+			{
+					DrawRotaGraph(
+						static_cast<int>(screenPos.x),	//X座標
+						static_cast<int>(screenPos.y),	//Y座標
+						0.2f, 0.0f,						//拡大率、回転
+						m_enemyHpHandle[2],				//ハンドル
+						true);							//背景透明化
+			}, 2);									//レイヤー番号
+		}
 	}
 
 
@@ -285,7 +311,8 @@ void EnemyManager::Draw()
 void EnemyManager::LoadWayPoint(const char* stageName)
 {
 	//開くファイルのハンドルを取得
-	int handle = FileRead_open((kStageDataPathFront + stageName + kStageDataPathBack).c_str());
+	auto fileName = (kStageDataPathFront + stageName + kStageDataPathBack);
+	int handle = FileRead_open(fileName.c_str());
 #ifdef _DEBUG
 	assert(handle != 0 && "ウェイポイントデータファイルが開けませんでした");
 #endif

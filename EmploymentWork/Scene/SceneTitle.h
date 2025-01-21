@@ -3,6 +3,7 @@
 #include <memory>
 
 class Crystal;
+class EnemyManager;
 
 /// <summary>
 /// タイトルシーン
@@ -67,8 +68,12 @@ private:
 	//遷移先
 	eDestination m_destinationScene;
 
-	std::shared_ptr<Crystal> m_pCrystal;		//クリスタルポインタ
+	std::shared_ptr<Crystal> m_pCrystal;			//クリスタルポインタ
+	std::shared_ptr<EnemyManager> m_pEnemyManager;	//敵管理クラスポインタ
+	std::shared_ptr<MyLib::Physics> m_pPhysics;		//物理クラスポインタ
+
+	int m_enemyCreateFrame;	//敵生成フレーム
+
 	int m_lightHandle;	//ライトハンドル
 	int m_rogoHandle;
 };
-

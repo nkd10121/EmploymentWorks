@@ -3,6 +3,8 @@
 #include "SceneOption.h"
 
 #include "Crystal.h"
+#include "EnemyManager.h"
+#include "Physics.h"
 
 #include "Game.h"
 
@@ -26,7 +28,8 @@ namespace
 /// コンストラクタ
 /// </summary>
 SceneTitle::SceneTitle():
-	SceneBase("SCENE_TITLE")
+	SceneBase("SCENE_TITLE"),
+	m_enemyCreateFrame(0)
 {
 
 }
@@ -84,6 +87,10 @@ void SceneTitle::Init()
 	m_pCrystal->Init();
 	m_pCrystal->Set(MapManager::GetInstance().GetCrystalPos());
 
+	// 敵管理クラスの生成
+	m_pEnemyManager = std::make_shared<EnemyManager>(false);
+	m_pEnemyManager->LoadWayPoint("title");
+
 	SetCameraNearFar(1.0f, 120.0f);
 	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), VGet(0.0f, 0.0f, 0.0f));
 	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 0.0f, 0.0f), VGet(0.0f, 20.0f, -72.0f)));
@@ -104,6 +111,10 @@ void SceneTitle::End()
 void SceneTitle::Update()
 {
 	m_pCrystal->Update();
+	m_pEnemyManager->Update(0, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
+	m_pEnemyManager->CreateEnemy(0, m_enemyCreateFrame);
+
+	m_enemyCreateFrame++;
 }
 
 /// <summary>
@@ -119,6 +130,7 @@ void SceneTitle::Draw()
 	// ステージの描画
 	MapManager::GetInstance().Draw();
 	m_pCrystal->Draw();
+	m_pEnemyManager->Draw();
 
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());

@@ -49,25 +49,25 @@ private:
 	std::shared_ptr<Crystal> m_pCrystal;		//クリスタルポインタ
 	std::shared_ptr<MyLib::Physics> m_pPhysics;	//物理クラスポインタ
 	std::list<std::shared_ptr<ObjectBase>> m_pObjects;	//オブジェクトポインタの配列
-	std::shared_ptr<EnemyManager> m_pEnemyManager;
+	std::shared_ptr<EnemyManager> m_pEnemyManager;		//敵管理クラスポインタ
 
-	std::shared_ptr<HPBar> m_pHpUi;
+	std::shared_ptr<HPBar> m_pHpUi;	//HPバー
 
-	std::string m_stageId;
+	std::string m_stageId;	//ステージID
 
-	std::list<int> m_phaseNum;
-	bool m_isCreateEnemy;
-	int m_phaseCount;
-	int m_allPhaseCount;
+	std::list<int> m_phaseNum;	//フェーズ番号
+	bool m_isCreateEnemy;	//敵生成フラグ
+	int m_phaseCount;	//フェーズカウント
+	int m_allPhaseCount;	//全フェーズカウント
 
-	int m_initTrapPoint;
-	int m_allPhaseNum;
+	int m_initTrapPoint;	//初期トラップポイント
+	int m_allPhaseNum;	//全フェーズ数
 
-	int m_portionCount;
-	int m_portionMax;
+	int m_portionCount;	//ポーション数
+	int m_portionMax;	//ポーション最大数
 
-	int m_slotBgHandle;
-	std::vector<int> m_slotIconHandle;
+	int m_slotBgHandle;	//スロット背景ハンドル
+	std::vector<int> m_slotIconHandle;	//スロットアイコンハンドル
 
 	bool m_isEnd;
 	bool m_isClear;

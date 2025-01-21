@@ -177,7 +177,7 @@ void GameManager::Init(int stageIdx)
 
 	// 敵管理クラスの生成
 	m_pEnemyManager = std::make_shared<EnemyManager>();
-	m_pEnemyManager->Init(stageName.c_str());
+	m_pEnemyManager->LoadCreateData(stageName.c_str());
 	m_pEnemyManager->LoadWayPoint(stageName.c_str());
 
 	// カメラの生成

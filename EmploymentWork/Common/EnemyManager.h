@@ -33,19 +33,20 @@ public:
 	};
 
 public:
-	EnemyManager();
+	EnemyManager(bool isGame = true);
 	virtual ~EnemyManager();
 
-	void Init(std::string stageName);
-	bool Update(int phase, Vec3 cameraPos, Vec3 angle);
-	void Draw();
-
+	void LoadCreateData(std::string stageName);
 	/// <summary>
 	/// ウェイポイントをロード
 	/// </summary>
 	/// <param name="stageName">ステージ名</param>
 	void LoadWayPoint(const char* stageName);
-	//
+	bool Update(int phase, Vec3 cameraPos, Vec3 angle);
+	void Draw();
+
+
+	
 	std::vector<WayPoint> GetRoute();
 
 	void Finalize();
@@ -63,8 +64,10 @@ public:
 	const bool GetIsCreatePortion(Vec3& createPos);
 
 private:
+	bool m_isGame;
+
 	std::list<std::shared_ptr<SwarmEnemy>> m_pEnemies;	//敵ポインタの配列
-	std::map<int, std::list<EnemyCreateInfo>> m_createEnemyInfo;
+	std::map<int, std::list<EnemyCreateInfo>> m_createEnemyInfo;	//敵生成情報
 	std::unordered_map<int, int> m_enemyNum;	//それぞれのフェーズで何体の敵を生成する予定か保存
 
 	std::list<WayPoint> m_wayPoints;
