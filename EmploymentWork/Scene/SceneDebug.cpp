@@ -89,6 +89,23 @@ void SceneDebug::Init()
 	//通常状態に設定しておく
 	m_updateFunc = &SceneDebug::UpdateItemSelect;
 	m_drawFunc = &SceneDebug::DrawNormal;
+
+	// シーン遷移のマップを初期化
+	m_sceneTransitionMap = {
+		{eDestination::Title, []() { return std::make_shared<SceneTitle>(); }},
+		{eDestination::Select, []() { return std::make_shared<SceneMainMenu>(); }},
+		{eDestination::StageSelect, []() { return std::make_shared<SceneStageSelect>(); }},
+		{eDestination::Strengthen, []() { return std::make_shared<SceneStrengthen>(); }},
+		{eDestination::Ranking, []() { return std::make_shared<SceneRanking>(); }},
+		{eDestination::InGame, [this]() { 
+			m_updateFunc = &SceneDebug::UpdateStageSelect;
+			m_drawFunc = &SceneDebug::DrawStageName;
+			return nullptr; 
+		}},
+		{eDestination::Result, []() { return std::make_shared<SceneResult>(); }},
+		{eDestination::Pause, []() { return std::make_shared<ScenePause>(); }},
+		{eDestination::Option, []() { return std::make_shared<SceneOption>(); }},
+	};
 }
 
 /// <summary>
@@ -103,7 +120,6 @@ void SceneDebug::End()
 /// </summary>
 void SceneDebug::Update()
 {
-
 }
 
 /// <summary>
@@ -111,12 +127,10 @@ void SceneDebug::Update()
 /// </summary>
 void SceneDebug::Draw()
 {
-
 	int y = kTextY;
 	for (auto& name : kSceneName)
 	{
-		DrawString(kTextX,y,name.c_str(),0xffffff);
-
+		DrawString(kTextX, y, name.c_str(), 0xffffff);
 		y += kTextYInterval;
 	}
 
@@ -124,7 +138,7 @@ void SceneDebug::Draw()
 	(this->*m_drawFunc)();
 
 #ifdef _DEBUG	//デバッグ描画
-	DrawFormatString(0, 0, 0xffffff,"%s", GetNowSceneName());
+	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 #endif
 }
 
@@ -170,70 +184,15 @@ void SceneDebug::UpdateItemSelect()
 	//決定ボタンを押したら現在選択しているシーンに遷移する
 	if (Input::GetInstance().IsTriggered("OK"))
 	{
-		//タイトルシーンに遷移する
-		if (m_destinationScene == eDestination::Title)
+		auto it = m_sceneTransitionMap.find(m_destinationScene);
+		if (it != m_sceneTransitionMap.end())
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneTitle>());
-			EndThisScene();
-			return;
-		}
-		//セレクトシーンに遷移する
-		else if (m_destinationScene == eDestination::Select)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneMainMenu>());
-			EndThisScene();
-			return;
-		}
-		//ステージセレクトシーンに遷移する
-		else if (m_destinationScene == eDestination::StageSelect)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
-			EndThisScene();
-			return;
-		}
-		//強化シーンに遷移する
-		else if (m_destinationScene == eDestination::Strengthen)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStrengthen>());
-			EndThisScene(true);
-			return;
-		}
-		//強化シーンに遷移する
-		else if (m_destinationScene == eDestination::Ranking)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneRanking>());
-			EndThisScene(true);
-			return;
-		}
-		//ゲームシーンに遷移する
-		else if (m_destinationScene == eDestination::InGame)
-		{
-			//通常状態に設定しておく
-			m_updateFunc = &SceneDebug::UpdateStageSelect;
-			m_drawFunc = &SceneDebug::DrawStageName;
-
-
-		}
-		//ゲームシーンに遷移する
-		else if (m_destinationScene == eDestination::Result)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneResult>());
-			EndThisScene(true);
-			return;
-		}
-		//ポーズシーンを上に表示する
-		else if (m_destinationScene == eDestination::Pause)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<ScenePause>());
-			EndThisScene(true);
-			return;
-		}
-		//オプションシーンに遷移する
-		else if (m_destinationScene == eDestination::Option)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
-			EndThisScene(true);
-			return;
+			auto nextScene = it->second();
+			if (nextScene)
+			{
+				SceneManager::GetInstance().SetNextScene(nextScene);
+				EndThisScene();
+			}
 		}
 	}
 }
@@ -292,7 +251,6 @@ void SceneDebug::DrawNormal()
 
 void SceneDebug::DrawStageName()
 {
-
 	DrawString(kTextX * 4 - 24, kTextY + kTextYInterval * m_selectingStageIdx, "→", 0xff0000);
 
 	for (int i = 0; i < m_stageNames.size(); i++)

@@ -1,5 +1,8 @@
 ﻿#pragma once
 #include "SceneBase.h"
+#include <functional>
+#include <unordered_map>
+
 class SceneDebug : public SceneBase
 {
 public:
@@ -42,7 +45,7 @@ public:
 	/// <summary>
 	/// 次のシーンを選択する更新処理
 	/// </summary>
-	virtual void SelectNextSceneUpdate()override;
+	virtual void SelectNextSceneUpdate() override;
 
 private:
 	//遷移先列挙型
@@ -75,12 +78,14 @@ private:
 	using DrawFunc_t = void (SceneDebug::*)();
 	UpdateFunc_t m_updateFunc;
 	DrawFunc_t m_drawFunc;
+
+	// シーン遷移のマップ
+	std::unordered_map<eDestination, std::function<std::shared_ptr<SceneBase>()>> m_sceneTransitionMap;
+
 	/*状態関数*/
 	void UpdateItemSelect();
 	void UpdateStageSelect();
 
 	void DrawNormal();
 	void DrawStageName();
-
 };
-
