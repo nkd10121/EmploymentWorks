@@ -94,12 +94,19 @@ namespace
 /// コンストラクタ
 /// </summary>
 GameManager::GameManager() :
+	m_stageId(""), // ステージIDの初期化
 	m_isCreateEnemy(false),
 	m_phaseCount(0),
 	m_allPhaseCount(0),
+	m_initTrapPoint(0),
+	m_allPhaseNum(0),
 	m_portionCount(0),
+	m_portionMax(0),
+	m_slotBgHandle(-1), 
 	m_isEnd(false),
-	m_isClear(false)
+	m_isClear(false),
+	m_stageModel(-1),
+	m_skyBoxHandle(-1)
 {
 
 }
@@ -227,6 +234,7 @@ void GameManager::Update()
 		m_phaseNum.pop_front();
 	}
 
+	// クリスタルの更新
 	m_pCrystal->Update();
 
 	// カメラの更新
@@ -373,6 +381,7 @@ void GameManager::Update()
 		m_pObjects.erase(it, m_pObjects.end());
 	}
 
+	// トラップマネージャーの更新
 	TrapManager::GetInstance().SetIsPrePhase(m_phaseNum.front() < 0);
 	TrapManager::GetInstance().Update();
 
@@ -387,14 +396,17 @@ void GameManager::Update()
 	// エフェクトの更新
 	EffectManager::GetInstance().Update();
 
+	// スカイボックスの位置をプレイヤーの位置に合わせる
 	MV1SetPosition(m_skyBoxHandle, m_pPlayer->GetPos().ToVECTOR());
 
+	// クリスタルのHPが0以下ならゲームオーバー
 	if (m_pCrystal->GetHp() <= 0)
 	{
 		m_isClear = false;
 		m_isEnd = true;
 	}
 
+	// フェーズが0ならゲームクリア
 	if (m_phaseNum.front() == 0)
 	{
 		m_pPlayer->SetClearState();
@@ -418,35 +430,42 @@ void GameManager::Update()
 /// </summary>
 void GameManager::Draw()
 {
+	// スカイボックスの描画
 	MV1DrawModel(m_skyBoxHandle);
-	//ステージの描画
+
+	// ステージの描画
 	MapManager::GetInstance().Draw();
 
-#ifdef _DEBUG	//デバッグ描画
-	//MV1DrawModel(m_stageModel);
+#ifdef _DEBUG	// デバッグ描画
+	// ステージモデルのデバッグ描画
+	// MV1DrawModel(m_stageModel);
 	MyLib::DebugDraw::Draw3D();
 #endif
 
+	// クリスタルの描画
 	m_pCrystal->Draw();
 
+	// エフェクトの描画
 	EffectManager::GetInstance().Draw();
 
-	//プレイヤーの描画
+	// プレイヤーの描画
 	m_pPlayer->Draw();
 
+	// 敵の描画
 	m_pEnemyManager->Draw();
 
-	//ポーションの描画
+	// ポーションの描画
 	for (auto& object : m_pObjects)
 	{
 		object->Draw();
 	}
 
+	// トラップの描画
 	TrapManager::GetInstance().Draw();
 	TrapManager::GetInstance().PreviewDraw();
 
-	//TODO:UIクラスみたいなのを作ってそこに移動させる
-	//装備スロットの描画
+	// TODO: UIクラスみたいなのを作ってそこに移動させる
+	// 装備スロットの描画
 	for (int i = 0; i < 3; i++)
 	{
 		int x = kSlotBgX + i * kSlotBgOffset;
@@ -455,50 +474,57 @@ void GameManager::Draw()
 		DrawRotaGraph(x, y, kSlotIconScale, 0.0f, m_slotIconHandle[i], true);
 	}
 
-	//現在選択しているスロット枠の描画
+	// 現在選択しているスロット枠の描画
 	DrawBox(kSlotBgX + m_pPlayer->GetNowSlotNumber() * kSlotBgOffset - kSlotBoxSize, kSlotBgY - kSlotBoxSize, kSlotBgX + m_pPlayer->GetNowSlotNumber() * kSlotBgOffset + kSlotBoxSize, kSlotBgY + kSlotBoxSize, 0xff0000, false);
 
-	//右上のUI描画
+	// 右上のUI描画
 	DrawRotaGraph(kRightUiX, kRightUiY1, kRightUiScale1, 0.0f, m_slotIconHandle[5], true);
 	DrawRotaGraph(kRightUiX, kRightUiY2, kRightUiScale2, 0.0f, m_slotIconHandle[4], true);
 	DrawRotaGraph(kRightUiX, kRightUiY3, kRightUiScale3, 0.0f, m_slotIconHandle[3], true);
 
-	//クリスタルの残りHPの描画
+	// クリスタルの残りHPの描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
 		FontManager::GetInstance().DrawCenteredText(kCrystalHpX, kCrystalHpY, std::to_string(m_pCrystal->GetHp()), 0xffffff, kCrystalHpFontSize, 0x395f62);
 	}, 2);
 
+	// フェーズ番号の描画
 	DrawFormatString(kPhaseNumX, kPhaseNumY, 0xffffff, "%d / 3", abs(m_phaseNum.front()));
 
+	// HPバーの描画
 	m_pHpUi->Draw();
 
-	//クロスヘアの描画
+	// クロスヘアの描画
 	auto centerX = Game::kWindowWidth / 2;
 	auto centerY = Game::kWindowHeight / 2;
 	DrawBox(centerX - kCrosshairWidth, centerY - kCrosshairHeight, centerX + kCrosshairWidth, centerY + kCrosshairHeight, 0xaaaaaa, true);
 	DrawBox(centerX - kCrosshairHeight, centerY - kCrosshairWidth, centerX + kCrosshairHeight, centerY + kCrosshairWidth, 0xaaaaaa, true);
 
+	// ゲーム開始メッセージの描画
 	if (m_phaseNum.front() == kInitialPhase)
 	{
 		DrawString(kStartMessageX, kStartMessageY, "Yボタンでゲーム開始", 0xffffff);
 	}
 
-	//準備フェーズなら
+	// 準備フェーズなら次のフェーズまでの時間を描画
 	if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase)
 	{
 		DrawFormatString(kPhaseMessageX, kPhaseMessageY, 0xffffff, "次のフェーズまで %d", (660 - m_phaseCount) / 60);
 	}
 
-#ifdef _DEBUG	//デバッグ描画
+#ifdef _DEBUG	// デバッグ描画
+	// フェーズ番号のデバッグ描画
 	DrawFormatString(kDebugPhaseNumX, kDebugPhaseNumY, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
+	// 現在のフェーズの経過フレームのデバッグ描画
 	DrawFormatString(kDebugPhaseCountX, kDebugPhaseCountY, 0xffffff, "現在のフェーズの経過フレーム:%d", m_phaseCount);
+	// すべてのフェーズの経過フレームのデバッグ描画
 	DrawFormatString(kDebugAllPhaseCountX, kDebugAllPhaseCountY, 0xffffff, "すべてのフェーズの経過フレーム:%d", m_allPhaseCount);
 #endif
 
-	//UIの描画
+	// UIの描画
 	DrawUI::GetInstance().Draw();
 }
+
 /// <summary>
 /// オブジェクトを追加する
 /// </summary>
