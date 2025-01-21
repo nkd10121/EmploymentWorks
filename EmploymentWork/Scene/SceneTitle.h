@@ -1,5 +1,8 @@
 ﻿#pragma once
 #include "SceneBase.h"
+#include <memory>
+
+class Crystal;
 
 /// <summary>
 /// タイトルシーン
@@ -64,6 +67,8 @@ private:
 	//遷移先
 	eDestination m_destinationScene;
 
+	std::shared_ptr<Crystal> m_pCrystal;		//クリスタルポインタ
+	int m_lightHandle;	//ライトハンドル
 	int m_rogoHandle;
 };
 

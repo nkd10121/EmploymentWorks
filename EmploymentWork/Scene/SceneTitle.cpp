@@ -2,9 +2,12 @@
 #include "SceneStageSelect.h"
 #include "SceneOption.h"
 
+#include "Crystal.h"
+
 #include "Game.h"
 
 #include "ResourceManager.h"
+#include "MapManager.h"
 
 namespace
 {
@@ -16,7 +19,7 @@ namespace
 //#endif
 
 	//ロゴ描画関係
-	constexpr float kRogoSize = 0.4f;	//サイズ
+	constexpr float kRogoSize = 0.55f;	//サイズ
 }
 
 /// <summary>
@@ -72,6 +75,18 @@ void SceneTitle::Init()
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
 
 	m_rogoHandle = ResourceManager::GetInstance().GetHandle("I_ROGO");
+
+	// ステージ情報をロード
+	MapManager::GetInstance().Init();
+	MapManager::GetInstance().Load("title");
+
+	m_pCrystal = std::make_shared<Crystal>(1);
+	m_pCrystal->Init();
+	m_pCrystal->Set(MapManager::GetInstance().GetCrystalPos());
+
+	SetCameraNearFar(1.0f, 120.0f);
+	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), VGet(0.0f, 0.0f, 0.0f));
+	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 0.0f, 0.0f), VGet(0.0f, 20.0f, -72.0f)));
 }
 
 /// <summary>
@@ -80,6 +95,7 @@ void SceneTitle::Init()
 void SceneTitle::End()
 {
 	//TODO:ここでリソースのメモリ開放などをする
+	DeleteLightHandle(m_lightHandle);
 }
 
 /// <summary>
@@ -87,7 +103,7 @@ void SceneTitle::End()
 /// </summary>
 void SceneTitle::Update()
 {
-
+	m_pCrystal->Update();
 }
 
 /// <summary>
@@ -95,10 +111,17 @@ void SceneTitle::Update()
 /// </summary>
 void SceneTitle::Draw()
 {
+	// リソースのロードが終わるまでは描画しないのがよさそう
+	// (どちらにしろフェード仕切っているので何も見えないはず)
+	if (!IsLoaded())	return;
+	if (!IsInitialized())	return;
+
+	// ステージの描画
+	MapManager::GetInstance().Draw();
+	m_pCrystal->Draw();
+
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
-
-
 #endif
 	DrawString(kTextX, kTextY, "ゲームを始める", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval, "オプション", 0xffffff);

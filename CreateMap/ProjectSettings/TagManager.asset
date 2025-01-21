@@ -17,6 +17,7 @@ TagManager:
   - wallWIndowGate
   - wallBrokenEnd
   - wallBroken
+  - pillar
   layers:
   - Default
   - TransparentFX

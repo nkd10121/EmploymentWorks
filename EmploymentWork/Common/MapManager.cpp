@@ -30,6 +30,7 @@ namespace
 		{"stairsWall","M_SMOOTHBLOCK"},
 		{"wallDecoA","M_WALLDECB"},
 		{"wallWIndowGate","M_WINDOWGATE"},
+		{"pillar","M_PILLAR"},
 	};
 }
 
