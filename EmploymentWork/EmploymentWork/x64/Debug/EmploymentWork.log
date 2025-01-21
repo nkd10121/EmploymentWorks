@@ -1,2 +1,3 @@
-﻿  EnemyManager.cpp
+﻿  SceneTitle.cpp
+  LINK : 前回のインクリメンタル リンクで C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

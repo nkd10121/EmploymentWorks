@@ -10,10 +10,9 @@ using UnityEngine.SceneManagement; // コレ重要
 
 public class ExportWaypoints : MonoBehaviour
 {
-    private static List<GameObject> waypoints = new List<GameObject>();
+    private List<GameObject> waypoints = new List<GameObject>();
 
-    [MenuItem("メニュー/ウェイポイントデータ出力")]
-    public static void OutPutWayPointData()
+    public void Start()
     {
         //ウェイポイントを取得
         CollectWaypoints();
@@ -22,7 +21,7 @@ public class ExportWaypoints : MonoBehaviour
     }
 
     // タグ付きオブジェクトを収集する関数
-    private static void CollectWaypoints()
+    private void CollectWaypoints()
     {
         //念のためClearしておく
         waypoints.Clear();
@@ -37,7 +36,7 @@ public class ExportWaypoints : MonoBehaviour
         UnityEngine.Debug.Log($"収集したウェイポイントの数: {waypoints.Count}");
     }
 
-    private static void Export()
+    private void Export()
     {
         //出力先を指定する
         string fileName = EditorUtility.SaveFilePanel("敵のウェイポイントデータの出力先を選んでください", "", SceneManager.GetActiveScene().name, "Way");
