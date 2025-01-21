@@ -43,7 +43,7 @@ Crystal::~Crystal()
 	MV1DeleteModel(m_modelHandle);
 	MV1DeleteModel(m_crystalStandHandle);
 
-	DeleteGraph(m_noizeTexHandle);
+	//DeleteGraph(m_noizeTexHandle);
 }
 
 /// <summary>

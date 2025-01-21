@@ -258,35 +258,35 @@ void EnemyManager::Draw()
 
 			DrawUI::GetInstance().RegisterDrawRequest([=]()
 			{
-					DrawRotaGraph(
-						static_cast<int>(screenPos.x),	//X座標
-						static_cast<int>(screenPos.y),	//Y座標
-						0.2f, 0.0f,						//拡大率、回転
-						m_enemyHpHandle[0],				//ハンドル
-						true);							//背景透明化
+				DrawRotaGraph(
+					static_cast<int>(screenPos.x),	//X座標
+					static_cast<int>(screenPos.y),	//Y座標
+					0.2f, 0.0f,						//拡大率、回転
+					m_enemyHpHandle[0],				//ハンドル
+					true);							//背景透明化
 			}, 0);									//レイヤー番号
 
 			DrawUI::GetInstance().RegisterDrawRequest([=]()
 			{
-					DrawRectRotaGraph(
-						static_cast<int>(screenPos.x - (m_gaugeWidth - m_gaugeWidth * per) * 0.5f * kHpBarUISize),
-						static_cast<int>(screenPos.y),
-						0, 0,
-						static_cast<int>(m_gaugeWidth * per), m_gaugeHeight,
-						kHpBarUISize,
-						0.0f,
-						m_enemyHpHandle[1],
-						true);
+				DrawRectRotaGraph(
+					static_cast<int>(screenPos.x - (m_gaugeWidth - m_gaugeWidth * per) * 0.5f * kHpBarUISize),
+					static_cast<int>(screenPos.y),
+					0, 0,
+					static_cast<int>(m_gaugeWidth * per), m_gaugeHeight,
+					kHpBarUISize,
+					0.0f,
+					m_enemyHpHandle[1],
+					true);
 			}, 1);
 
 			DrawUI::GetInstance().RegisterDrawRequest([=]()
 			{
-					DrawRotaGraph(
-						static_cast<int>(screenPos.x),	//X座標
-						static_cast<int>(screenPos.y),	//Y座標
-						0.2f, 0.0f,						//拡大率、回転
-						m_enemyHpHandle[2],				//ハンドル
-						true);							//背景透明化
+				DrawRotaGraph(
+					static_cast<int>(screenPos.x),	//X座標
+					static_cast<int>(screenPos.y),	//Y座標
+					0.2f, 0.0f,						//拡大率、回転
+					m_enemyHpHandle[2],				//ハンドル
+					true);							//背景透明化
 			}, 2);									//レイヤー番号
 		}
 	}
@@ -296,12 +296,12 @@ void EnemyManager::Draw()
 	{
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
-			FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル!", 0xfebe41, 32,0xcc0000);
+			FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル!", 0xfebe41, 32, 0xcc0000);
 		}, 2);
-		
+
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
-			FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 32,0x0000cc);
+			FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 32, 0x0000cc);
 		}, 2);
 	}
 
@@ -430,7 +430,7 @@ void EnemyManager::UpdateModelPos()
 	}
 }
 
-void EnemyManager::CreateEnemy(int phaseNum, int count)
+void EnemyManager::CreateEnemy(int phaseNum, int count, bool isInGame)
 {
 	int i = 0;
 	auto addSwarm = std::make_shared<SwarmEnemy>(kColor[i]);
@@ -474,11 +474,22 @@ void EnemyManager::CreateEnemy(int phaseNum, int count)
 					isAdd = true;
 				}
 				data.isCreated = true;
+
+				if (!isInGame)
+				{
+					EnemyCreateInfo add;
+					add.appearFrame = count / 60 + GetRand(2) + 12;
+					add.isCreated = false;
+					add.enemyName = "EnemyNormal";
+					m_createEnemyInfo[0].push_back(add);
+				}
 			}
 		}
 
 		i++;
 	}
+
+
 
 	if (!isAdd)	return;
 

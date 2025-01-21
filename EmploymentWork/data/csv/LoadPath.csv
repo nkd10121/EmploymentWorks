@@ -1,7 +1,6 @@
 ﻿ステージID,識別ID,パス,拡張子,"常駐フラグ(0:F,1:T)",BGMかどうか
 SCENE_GAME,M_PORTION,data/model/object/portion/bottle_red,.mv1,0,
 SCENE_TITLE,M_CRYSTAL,data/model/stage/crystal,.mv1,1,
-SCENE_GAME,M_CRYSTAL,data/model/stage/crystal,.mv1,1,
 SCENE_TITLE,M_CRYSTALSTAND,data/model/stage/crystalStand,.mv1,1,
 SCENE_TITLE,M_FRAME,data/model/stage/doorFrame,.mv1,1,
 SCENE_TITLE,M_FLOOR,data/model/stage/floor,.mv1,1,

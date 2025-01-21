@@ -45,15 +45,13 @@ public:
 	bool Update(int phase, Vec3 cameraPos, Vec3 angle);
 	void Draw();
 
-
-	
 	std::vector<WayPoint> GetRoute();
 
 	void Finalize();
 
 	void UpdateModelPos();
 
-	void CreateEnemy(int phaseNum, int count);
+	void CreateEnemy(int phaseNum, int count, bool isInGame = true);
 
 	void SeparateData(std::vector<std::string> data);
 

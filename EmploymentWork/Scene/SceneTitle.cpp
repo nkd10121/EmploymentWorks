@@ -104,6 +104,10 @@ void SceneTitle::Init()
 /// </summary>
 void SceneTitle::End()
 {
+	//m_pEnemyManager->Finalize();
+	m_pCrystal->Finalize();
+	MyLib::Physics::GetInstance().Clear();
+
 	//TODO:ここでリソースのメモリ開放などをする
 	DeleteLightHandle(m_lightHandle);
 }
@@ -115,7 +119,7 @@ void SceneTitle::Update()
 {
 	m_pCrystal->Update();
 	m_pEnemyManager->Update(0, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
-	m_pEnemyManager->CreateEnemy(0, m_enemyCreateFrame);
+	m_pEnemyManager->CreateEnemy(0, m_enemyCreateFrame,false);
 
 	// 物理更新
 	MyLib::Physics::GetInstance().Update();

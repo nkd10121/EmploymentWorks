@@ -123,7 +123,6 @@ GameManager::~GameManager()
 
 	m_pEnemyManager->Finalize();
 
-
 	m_pCrystal->Finalize();
 
 	//ポーションの解放
