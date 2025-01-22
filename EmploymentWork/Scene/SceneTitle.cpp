@@ -12,6 +12,7 @@
 #include "ResourceManager.h"
 #include "FontManager.h"
 #include "MapManager.h"
+#include "SoundManager.h"
 
 namespace
 {
@@ -106,6 +107,8 @@ void SceneTitle::Init()
 	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 40.0f, 0.0f), m_cameraTarget.ToVECTOR()));
 
 	m_buttonHandle = ResourceManager::GetInstance().GetHandle("I_BUTTON");
+
+	SoundManager::GetInstance().PlayBGM("S_TITLEBGM",true);
 }
 
 /// <summary>
@@ -135,11 +138,11 @@ void SceneTitle::Update()
 	MyLib::Physics::GetInstance().Update();
 	m_pEnemyManager->UpdateModelPos();
 
-	if (isNextScene)
-	{
-		m_cameraTarget.y -= 4.0f;
-		SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
-	}
+	//if (isNextScene)
+	//{
+	//	m_cameraTarget.y -= 4.0f;
+	//	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
+	//}
 
 	// エフェクトの更新
 	EffectManager::GetInstance().Update();
@@ -211,6 +214,11 @@ void SceneTitle::SelectNextSceneUpdate()
 			//一個下にずらす
 			m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) + 1);
 		}
+		else
+		{
+			//SEを流す
+			SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
+		}
 	}
 
 	//下を入力したら
@@ -225,11 +233,19 @@ void SceneTitle::SelectNextSceneUpdate()
 			//一個上にずらす
 			m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) - 1);
 		}
+		else
+		{
+			//SEを流す
+			SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
+		}
 	}
 
 	//決定ボタンを押したら現在選択しているシーンに遷移する
 	if (Input::GetInstance().IsTriggered("OK"))
 	{
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORENTER");
+
 		//ゲームシーンに遷移する
 		if (m_destinationScene == eDestination::Select)
 		{

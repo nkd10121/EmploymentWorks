@@ -106,16 +106,19 @@ void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 			handle = effects.second->emitterHandle;
 		}
 	}
-	handle = ResourceManager::GetInstance().GetHandle(name);
+	if (handle == -1)
 	{
-		//ここまで来たらエフェクトをロードする
-		std::shared_ptr<EffectEmitter> add = std::make_shared<EffectEmitter>();
-		add->emitterHandle = handle;
-		assert(add->emitterHandle != -1 && "エフェクトロード失敗");
-		add->endFrame = 600;
-		add->isEternal = false;
+		handle = ResourceManager::GetInstance().GetHandle(name);
+		{
+			//ここまで来たらエフェクトをロードする
+			std::shared_ptr<EffectEmitter> add = std::make_shared<EffectEmitter>();
+			add->emitterHandle = handle;
+			assert(add->emitterHandle != -1 && "エフェクトロード失敗");
+			add->endFrame = 600;
+			add->isEternal = false;
 
-		m_effect[name] = add;
+			m_effect[name] = add;
+		}
 	}
 
 	//もし追加しようとしているエフェクトの名前のハンドルがなければ終わる

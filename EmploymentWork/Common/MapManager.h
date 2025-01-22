@@ -99,5 +99,7 @@ private:
 	std::unordered_map<std::string, int> m_handles;	//モデルハンドル
 
 	Vec3 m_crystalPos;
+
+	int m_count;
 };
 

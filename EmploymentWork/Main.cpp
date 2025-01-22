@@ -44,7 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWriteZBuffer3D(true);
 	SetUseBackCulling(true);
 
-	Effekseer_Init(800);
+	Effekseer_Init(8000);
 	Effekseer_InitDistortion();
 	SetChangeScreenModeGraphicsSystemResetFlag(false);
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();

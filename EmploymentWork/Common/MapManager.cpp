@@ -5,6 +5,7 @@
 
 #include "ResourceManager.h"
 #include "TrapManager.h"
+#include "EffectManager.h"
 
 MapManager* MapManager::m_instance = nullptr;
 
@@ -39,7 +40,8 @@ namespace
 /// <summary>
 /// コンストラクタ
 /// </summary>
-MapManager::MapManager()
+MapManager::MapManager():
+	m_count(0)
 {
 }
 
@@ -174,5 +176,20 @@ void MapManager::Draw()
 		{
 			MV1DrawModel(loc.handle);
 		}
+
+		if (loc.tag == "torch")
+		{
+			if (m_count % 560 == 0)
+			{
+				auto pos = loc.pos;
+				pos.y += 2.0f;
+				pos.z -= 2.0f;
+
+				//エフェクトの描画
+				EffectManager::GetInstance().CreateEffect("E_TORCHFIRE", pos);
+			}
+		}
 	}
+
+	m_count++;
 }
