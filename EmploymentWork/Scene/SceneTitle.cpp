@@ -189,8 +189,8 @@ void SceneTitle::Draw()
 			graphSize = 1.2f + addSize;
 			fontSize = 48;
 		}
-		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 + 80 +  i * 100, graphSize, 0.0f, m_buttonHandle, true);
-		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 2 + 75 + i * 100, kItemName[i], 0xffffff, fontSize, 0x000000);
+		DrawRotaGraph(Game::kWindowWidth / 5 + 378 * i, Game::kWindowHeight / 2 + 260, graphSize, 0.0f, m_buttonHandle, true);
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 5 + 378 * i, Game::kWindowHeight / 2 + 260 -5, kItemName[i], 0xffffff, fontSize, 0x000000);
 	}
 
 	//ロゴの描画
@@ -203,7 +203,7 @@ void SceneTitle::Draw()
 void SceneTitle::SelectNextSceneUpdate()
 {
 	//上を入力したら
-	if (Input::GetInstance().IsTriggered("UP"))
+	if (Input::GetInstance().IsTriggered("LEFT"))
 	{
 		//現在選択している項目から一個上にずらす
 		m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) - 1);
@@ -222,7 +222,7 @@ void SceneTitle::SelectNextSceneUpdate()
 	}
 
 	//下を入力したら
-	if (Input::GetInstance().IsTriggered("DOWN"))
+	if (Input::GetInstance().IsTriggered("RIGHT"))
 	{
 		//現在選択している項目から一個下にずらす
 		m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) + 1);
