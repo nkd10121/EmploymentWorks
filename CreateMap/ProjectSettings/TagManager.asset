@@ -18,6 +18,8 @@ TagManager:
   - wallBrokenEnd
   - wallBroken
   - pillar
+  - torch
+  - banner
   layers:
   - Default
   - TransparentFX

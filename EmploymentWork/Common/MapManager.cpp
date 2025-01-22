@@ -31,6 +31,8 @@ namespace
 		{"wallDecoA","M_WALLDECB"},
 		{"wallWIndowGate","M_WINDOWGATE"},
 		{"pillar","M_PILLAR"},
+		{"banner","M_BANNER"},
+		{"torch","M_TORCH"},
 	};
 }
 
