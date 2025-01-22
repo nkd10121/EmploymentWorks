@@ -93,8 +93,9 @@ void Crystal::Update()
 
 	if (m_effectCreateCount % 600 == 0)
 	{
-		//敵ヒットエフェクトを出す
-		EffectManager::GetInstance().CreateEffect("E_CRYSTALDEFAULT", rigidbody->GetPos());
+		//エフェクトを出す
+		//EffectManager::GetInstance().CreateEffect("E_CRYSTALDEFAULT", rigidbody->GetPos());
+		//EffectManager::GetInstance().CreateEffect("E_CRYSTALLIGHTNING", rigidbody->GetPos());
 	}
 
 	m_angle += 0.025f;

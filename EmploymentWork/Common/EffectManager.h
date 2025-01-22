@@ -113,6 +113,8 @@ public:
 	/// <param name="rot">回転角度</param>
 	void CreateEffect(std::string name, Vec3 pos, Vec3 rot = Vec3());
 
+	void AllStopEffect();
+
 	/// <summary>
 	/// 指定した名前のすべてのエフェクトの座標を移動させる
 	/// </summary>

@@ -110,6 +110,7 @@ void SceneTitle::End()
 	m_pEnemyManager->Finalize();
 	m_pCrystal->Finalize();
 	MyLib::Physics::GetInstance().Clear();
+	//EffectManager::GetInstance().AllStopEffect();
 
 	//TODO:ここでリソースのメモリ開放などをする
 	DeleteLightHandle(m_lightHandle);

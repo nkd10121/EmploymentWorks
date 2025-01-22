@@ -48,7 +48,7 @@ SceneGame::~SceneGame()
 {
 	//staticクラスのデータのリセット
 	ResourceManager::GetInstance().Clear(GetNowSceneName());
-
+	EffectManager::GetInstance().AllStopEffect();
 	MapManager::GetInstance().DeleteModel();
 	TrapManager::GetInstance().Clear();
 }

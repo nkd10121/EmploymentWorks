@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "FontManager.h"
 #include "ResourceManager.h"
+#include "EffectManager.h"
 #include "LoadCSV.h"
 #include <memory>
 
@@ -96,7 +97,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MyLib::Physics::GetInstance().Destroy();
 	FontManager::GetInstance().Destroy();
 	ResourceManager::GetInstance().AllClear();
-	ResourceManager::GetInstance().Destroy();
+	EffectManager::GetInstance().Destroy();
 
 
 

@@ -143,6 +143,19 @@ void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 	return;
 }
 
+void EffectManager::AllStopEffect()
+{
+	for (auto& emitter : m_effect)
+	{
+		for (auto& ef : emitter.second->effects)
+		{
+			StopEffekseer3DEffect(ef.handle);
+		}
+
+		emitter.second->effects.clear();
+	}
+}
+
 /// <summary>
 /// 指定した名前のすべてのエフェクトの座標を移動させる
 /// </summary>
