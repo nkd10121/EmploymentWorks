@@ -10,6 +10,7 @@
 #include "Game.h"
 
 #include "ResourceManager.h"
+#include "FontManager.h"
 #include "MapManager.h"
 
 namespace
@@ -23,6 +24,8 @@ namespace
 
 	//ロゴ描画関係
 	constexpr float kRogoSize = 0.55f;	//サイズ
+
+	const char* kItemName[] = { "スタート","オプション","やめる" };
 }
 
 /// <summary>
@@ -31,7 +34,8 @@ namespace
 SceneTitle::SceneTitle():
 	SceneBase("SCENE_TITLE"),
 	isNextScene(false),
-	m_enemyCreateFrame(0)
+	m_enemyCreateFrame(0),
+	m_angle(0.0f)
 {
 
 }
@@ -100,6 +104,8 @@ void SceneTitle::Init()
 	m_cameraTarget = Vec3(0.0f, 20.0f, 0.0f);
 	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 32.0f, -80.0f), m_cameraTarget.ToVECTOR());
 	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 40.0f, 0.0f), m_cameraTarget.ToVECTOR()));
+
+	m_buttonHandle = ResourceManager::GetInstance().GetHandle("I_BUTTON");
 }
 
 /// <summary>
@@ -162,11 +168,27 @@ void SceneTitle::Draw()
 
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
-#endif
 	DrawString(kTextX, kTextY, "ゲームを始める", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval, "オプション", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 2, "やめる", 0xffffff);
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
+#endif
+
+	m_angle += 0.05f;
+	auto addSize = sinf(m_angle) / 16;
+
+	for (int i = 0; i < 3; i++)
+	{
+		float graphSize = 1.0f;
+		int fontSize = 40;
+		if (i == m_destinationScene-1)
+		{
+			graphSize = 1.2f + addSize;
+			fontSize = 48;
+		}
+		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 + 80 +  i * 100, graphSize, 0.0f, m_buttonHandle, true);
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 2 + 75 + i * 100, kItemName[i], 0xffffff, fontSize, 0x000000);
+	}
 
 	//ロゴの描画
 	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 4, kRogoSize, 0.0f, m_rogoHandle, true);

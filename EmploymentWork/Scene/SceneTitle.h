@@ -78,5 +78,9 @@ private:
 	int m_enemyCreateFrame;	//敵生成フレーム
 
 	int m_lightHandle;	//ライトハンドル
-	int m_rogoHandle;
+	int m_rogoHandle;	//ロゴハンドル
+	int m_buttonHandle;	//ボタンハンドル
+
+	float m_angle;	//UIを動かすための角度
+
 };
