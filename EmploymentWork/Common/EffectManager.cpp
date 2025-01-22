@@ -86,7 +86,7 @@ void EffectManager::Clear()
 		{
 			StopEffekseer3DEffect(ef.handle);
 		}
-		DeleteEffekseerEffect(emitter.second->emitterHandle);
+		//DeleteEffekseerEffect(emitter.second->emitterHandle);
 		emitter.second->effects.clear();
 	}
 
@@ -99,13 +99,13 @@ void EffectManager::Clear()
 void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 {
 	int handle = -1;
-	//for (auto& effects : m_effect)
-	//{
-	//	if (effects.first == name)
-	//	{
-	//		handle = effects.second->emitterHandle;
-	//	}
-	//}
+	for (auto& effects : m_effect)
+	{
+		if (effects.first == name)
+		{
+			handle = effects.second->emitterHandle;
+		}
+	}
 	handle = ResourceManager::GetInstance().GetHandle(name);
 	{
 		//ここまで来たらエフェクトをロードする
