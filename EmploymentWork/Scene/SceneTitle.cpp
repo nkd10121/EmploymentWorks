@@ -84,7 +84,7 @@ void SceneTitle::Init()
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("title");
 
-	m_pCrystal = std::make_shared<Crystal>(1);
+	m_pCrystal = std::make_shared<Crystal>(999999);
 	m_pCrystal->Init();
 	m_pCrystal->Set(MapManager::GetInstance().GetCrystalPos());
 
@@ -95,10 +95,10 @@ void SceneTitle::Init()
 	m_pEnemyManager = std::make_shared<EnemyManager>(false);
 	m_pEnemyManager->LoadWayPoint("title");
 
-	SetCameraNearFar(1.0f, 120.0f);
-	m_cameraTarget = Vec3(0.0f, 0.0f, 0.0f);
-	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
-	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 50.0f, 0.0f), VGet(0.0f, 20.0f, -72.0f)));
+	SetCameraNearFar(1.0f, 140.0f);
+	m_cameraTarget = Vec3(0.0f, 18.0f, 0.0f);
+	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 32.0f, -76.0f), m_cameraTarget.ToVECTOR());
+	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 40.0f, 0.0f), m_cameraTarget.ToVECTOR()));
 }
 
 /// <summary>
@@ -129,7 +129,7 @@ void SceneTitle::Update()
 
 	if (isNextScene)
 	{
-		m_cameraTarget.y -= 2.5f;
+		m_cameraTarget.y -= 4.0f;
 		SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
 	}
 
