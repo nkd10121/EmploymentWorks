@@ -4,6 +4,7 @@
 
 #include "Crystal.h"
 #include "EnemyManager.h"
+#include "EffectManager.h"
 #include "Physics.h"
 
 #include "Game.h"
@@ -133,6 +134,8 @@ void SceneTitle::Update()
 		SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
 	}
 
+	// エフェクトの更新
+	EffectManager::GetInstance().Update();
 
 	m_enemyCreateFrame++;
 }
@@ -151,6 +154,10 @@ void SceneTitle::Draw()
 	MapManager::GetInstance().Draw();
 	m_pCrystal->Draw();
 	m_pEnemyManager->Draw();
+
+
+	// エフェクトの描画
+	EffectManager::GetInstance().Draw();
 
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());

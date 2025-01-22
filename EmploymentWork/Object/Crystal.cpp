@@ -1,6 +1,7 @@
 ﻿#include "Crystal.h"
 #include <string>
 #include "ResourceManager.h"
+#include "EffectManager.h"
 
 #include "EnemyBase.h"
 
@@ -26,13 +27,16 @@ Crystal::Crystal(int hp):
 	m_hp(hp),
 	m_isBreak(false),
 	m_crystalStandHandle(-1),
-	m_angle(0.0f)
+	m_angle(0.0f),
+	m_effectCreateCount(0)
 {
 	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, true);
 	auto sphereCol = dynamic_cast<MyLib::ColliderCupsule*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius;
 	sphereCol->m_size = kCollisionSize;
+
+
 }
 
 /// <summary>
@@ -71,6 +75,8 @@ void Crystal::Init()
 	cBufferHandle = CreateShaderConstantBuffer(sizeof(UserData));
 	pUserData = static_cast<UserData*>(GetBufferShaderConstantBuffer(cBufferHandle));
 	pUserData->time = 0.0f;
+
+
 }
 
 /// <summary>
@@ -85,6 +91,12 @@ void Crystal::Update()
 		m_isBreak = true;
 	}
 
+	if (m_effectCreateCount % 600 == 0)
+	{
+		//敵ヒットエフェクトを出す
+		EffectManager::GetInstance().CreateEffect("E_CRYSTALDEFAULT", rigidbody->GetPos());
+	}
+
 	m_angle += 0.025f;
 	auto posY = sinf(m_angle);
 
@@ -92,6 +104,7 @@ void Crystal::Update()
 	MV1SetRotationXYZ(m_modelHandle, VECTOR(0.0f, m_angle / 4, 0.0f));
 
 	pUserData->time += 0.01f;  // 時間を進める
+	m_effectCreateCount++;
 }
 
 /// <summary>

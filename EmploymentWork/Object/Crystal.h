@@ -67,10 +67,12 @@ private:
 
 	float m_angle;	//クリスタルを動かすための角度
 
+	int m_effectCreateCount;
 private:
 	int m_psHandle;
 	int m_vsHandle;
 	int m_noizeTexHandle;
+
 
 	// シェーダーに渡すデータ構造体
 	struct UserData
