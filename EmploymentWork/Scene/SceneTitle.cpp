@@ -97,8 +97,8 @@ void SceneTitle::Init()
 	m_pEnemyManager->LoadWayPoint("title");
 
 	SetCameraNearFar(1.0f, 140.0f);
-	m_cameraTarget = Vec3(0.0f, 18.0f, 0.0f);
-	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 32.0f, -76.0f), m_cameraTarget.ToVECTOR());
+	m_cameraTarget = Vec3(0.0f, 20.0f, 0.0f);
+	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 32.0f, -80.0f), m_cameraTarget.ToVECTOR());
 	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 40.0f, 0.0f), m_cameraTarget.ToVECTOR()));
 }
 
