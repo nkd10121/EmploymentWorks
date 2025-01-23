@@ -82,5 +82,4 @@ private:
 	int m_buttonHandle;	//ボタンハンドル
 
 	float m_angle;	//UIを動かすための角度
-
 };

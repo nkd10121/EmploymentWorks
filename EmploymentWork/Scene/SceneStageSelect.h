@@ -50,5 +50,11 @@ public:
 
 private:
 	std::vector<std::string> m_stageNames;
+
+	bool isNextScene;	//次のシーンに遷移するかどうか
 	int m_nowCursor;
+
+	Vec3 m_cameraPos;	//カメラのターゲット
+	Vec3 m_cameraTarget;	//カメラのターゲット
+
 };

@@ -3,6 +3,9 @@
 #include "SceneGame.h"
 #include "SceneTitle.h"
 
+#include "MapManager.h"
+#include "EffectManager.h"
+
 namespace
 {
 //#ifdef _DEBUG	//デバッグ描画
@@ -18,6 +21,7 @@ namespace
 /// </summary>
 SceneStageSelect::SceneStageSelect():
 	SceneBase("SCENE_STAGESELECT"),
+	isNextScene(false),
 	m_nowCursor(0)
 {
 }
@@ -50,6 +54,14 @@ bool SceneStageSelect::IsLoaded() const
 void SceneStageSelect::Init()
 {
 	m_stageNames = LoadCSV::GetInstance().GetAllStageName();
+
+	MapManager::GetInstance().Init();
+	MapManager::GetInstance().Load("StageSelect");
+
+	//カメラの初期化
+	m_cameraPos = VGet(0.0f, 32.0f, -80.0f);
+	m_cameraTarget = VGet(0.0f, 0.0f, 0.0f);
+	SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
 }
 
 /// <summary>
@@ -57,6 +69,7 @@ void SceneStageSelect::Init()
 /// </summary>
 void SceneStageSelect::End()
 {
+	EffectManager::GetInstance().AllStopEffect();
 }
 
 /// <summary>
@@ -64,6 +77,30 @@ void SceneStageSelect::End()
 /// </summary>
 void SceneStageSelect::Update()
 {
+	if (IsLoaded() && m_cameraTarget.y < 20.0f)
+	{
+		m_cameraTarget.y += 1.0f;
+		SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
+	}
+
+	if (isNextScene)
+	{
+		if (m_nowCursor >= 0)
+		{
+			auto vec = m_cameraTarget - m_cameraPos;
+			vec = vec.Normalize();
+			m_cameraPos += vec;
+			SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
+		}
+		else
+		{
+			m_nowCursor = 0;
+			m_cameraTarget.y -= 4.0f;
+			SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
+		}
+	}
+	// エフェクトの更新
+	EffectManager::GetInstance().Update();
 }
 
 /// <summary>
@@ -71,6 +108,17 @@ void SceneStageSelect::Update()
 /// </summary>
 void SceneStageSelect::Draw()
 {
+	// リソースのロードが終わるまでは描画しないのがよさそう
+	// (どちらにしろフェード仕切っているので何も見えないはず)
+	if (!IsLoaded())	return;
+	if (!IsInitialized())	return;
+
+	// ステージの描画
+	MapManager::GetInstance().Draw();
+
+	// エフェクトの描画
+	EffectManager::GetInstance().Draw();
+
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 #endif
@@ -119,6 +167,7 @@ void SceneStageSelect::SelectNextSceneUpdate()
 	//決定ボタンを押したら現在選択しているシーンに遷移する
 	if (Input::GetInstance().IsTriggered("OK"))
 	{
+		isNextScene = true;
 		//ゲームシーンに遷移する
 		SceneManager::GetInstance().SetStageIdx(m_nowCursor);
 		SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
@@ -129,6 +178,8 @@ void SceneStageSelect::SelectNextSceneUpdate()
 	//Bボタンを押したらセレクトシーンに戻る
 	if (Input::GetInstance().IsTriggered("CANCEL"))
 	{
+		m_nowCursor = -1;
+		isNextScene = true;
 		SceneManager::GetInstance().SetNextScene(std::make_shared<SceneTitle>());
 		EndThisScene();
 		return;

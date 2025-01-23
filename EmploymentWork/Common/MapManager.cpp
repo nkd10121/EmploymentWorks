@@ -62,6 +62,8 @@ void MapManager::Init()
 	{
 		m_handles[path.first] = ResourceManager::GetInstance().GetHandle(path.second);
 	}
+
+	m_count = 0;
 }
 
 /// <summary>

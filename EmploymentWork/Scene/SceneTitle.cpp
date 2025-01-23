@@ -119,7 +119,7 @@ void SceneTitle::End()
 	m_pEnemyManager->Finalize();
 	m_pCrystal->Finalize();
 	MyLib::Physics::GetInstance().Clear();
-	//EffectManager::GetInstance().AllStopEffect();
+	EffectManager::GetInstance().AllStopEffect();
 
 	//TODO:ここでリソースのメモリ開放などをする
 	DeleteLightHandle(m_lightHandle);
@@ -138,10 +138,11 @@ void SceneTitle::Update()
 	MyLib::Physics::GetInstance().Update();
 	m_pEnemyManager->UpdateModelPos();
 
+	//つぎのシーンに遷移するときにカメラの向きを変える
 	if (isNextScene)
 	{
 		m_cameraTarget.y -= 4.0f;
-		SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
+		SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 32.0f, -80.0f), m_cameraTarget.ToVECTOR());
 	}
 
 	// エフェクトの更新
@@ -164,7 +165,6 @@ void SceneTitle::Draw()
 	MapManager::GetInstance().Draw();
 	m_pCrystal->Draw();
 	m_pEnemyManager->Draw();
-
 
 	// エフェクトの描画
 	EffectManager::GetInstance().Draw();
