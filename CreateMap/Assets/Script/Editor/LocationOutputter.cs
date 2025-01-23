@@ -4,13 +4,16 @@ using UnityEditor;          //メニューなどを出すために必要なもの
 using System.IO;            //出力するために必要
 //using Unity.VisualScripting;
 
+//Unityの現在のシーン名を取得したいため
+using UnityEngine.SceneManagement; // コレ重要
+
 public class LocationOutputter : MonoBehaviour
 {
     [MenuItem("メニュー/配置データ出力")]
     public static void OutPutLocationData()
     {
         //出力先を指定する
-        string fileName = EditorUtility.SaveFilePanel("出力ファイル", "", "data", "loc");
+        string fileName = EditorUtility.SaveFilePanel("配置情報の出力先を選んでください", "", SceneManager.GetActiveScene().name, "loc");
 
         //出力先がなにも指定されなかったとき(キャンセルされたとき)
         if (fileName == "")

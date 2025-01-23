@@ -104,7 +104,7 @@ void SceneTitle::Init()
 	SetCameraNearFar(1.0f, 140.0f);
 	m_cameraTarget = Vec3(0.0f, 20.0f, 0.0f);
 	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 32.0f, -80.0f), m_cameraTarget.ToVECTOR());
-	m_lightHandle = CreateDirLightHandle(VSub(VGet(0.0f, 40.0f, 0.0f), m_cameraTarget.ToVECTOR()));
+	m_lightHandle = CreateDirLightHandle(VSub(VGet(10.0f, 30.0f, 0.0f), m_cameraTarget.ToVECTOR()));
 
 	m_buttonHandle = ResourceManager::GetInstance().GetHandle("I_BUTTON");
 
@@ -138,11 +138,11 @@ void SceneTitle::Update()
 	MyLib::Physics::GetInstance().Update();
 	m_pEnemyManager->UpdateModelPos();
 
-	//if (isNextScene)
-	//{
-	//	m_cameraTarget.y -= 4.0f;
-	//	SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
-	//}
+	if (isNextScene)
+	{
+		m_cameraTarget.y -= 4.0f;
+		SetCameraPositionAndTarget_UpVecY(VGet(0.0f, 20.0f, -72.0f), m_cameraTarget.ToVECTOR());
+	}
 
 	// エフェクトの更新
 	EffectManager::GetInstance().Update();
