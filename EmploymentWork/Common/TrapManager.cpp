@@ -3,6 +3,7 @@
 
 #include "SpikeTrap.h"
 #include "ArrowWallTrap.h"
+#include "FrameTrap.h"
 
 #include "Input.h"
 #include "ResourceManager.h"
@@ -212,68 +213,34 @@ void TrapManager::Update()
 				//トリガーボタンを押したカウントを更新する
 				m_rightTriggerPushCount++;
 
-				switch (m_slotIdx)
+				auto add = std::make_shared<TrapBase>();
+				if (m_slotIdx == 1)			add = std::make_shared<SpikeTrap>();
+				else if (m_slotIdx == 2)	add = std::make_shared<ArrowWallTrap>();
+				else if (m_slotIdx == 3)	add = std::make_shared<FrameTrap>();
+
+				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+				if (m_trapPoint < add->GetCost())
 				{
-				case 1:
-				{
-					auto add = std::make_shared<SpikeTrap>();
-					//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
-					if (m_trapPoint < add->GetCost())
-					{
-						m_isTextShake = true;
-						m_textShakeFrame = kTextShakeFrame;
-						//何もしない
-						return;
-					}
-
-					//所持トラップポイントをコスト分減らす
-					AddTrapPoint(-add->GetCost());
-
-					//初期化
-					add->Init(debugTrap->pos, debugTrap->norm);
-
-					//追加
-					m_traps.emplace_back(add);
-
-					//トラップを設置済みにする
-					debugTrap->isPlaced = true;
-					for (auto& trap : debugTrap->neighborTraps)
-					{
-						trap.lock()->isPlaced = true;
-					}
+					m_isTextShake = true;
+					m_textShakeFrame = kTextShakeFrame;
+					//何もしない
+					return;
 				}
-				break;
-				case 2:
+
+				//所持トラップポイントをコスト分減らす
+				AddTrapPoint(-add->GetCost());
+
+				//初期化
+				add->Init(debugTrap->pos, debugTrap->norm);
+
+				//追加
+				m_traps.emplace_back(add);
+
+				//トラップを設置済みにする
+				debugTrap->isPlaced = true;
+				for (auto& trap : debugTrap->neighborTraps)
 				{
-					auto add = std::make_shared<ArrowWallTrap>();
-					//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
-					if (m_trapPoint < add->GetCost())
-					{
-						m_isTextShake = true;
-						m_textShakeFrame = kTextShakeFrame;
-						//何もしない
-						return;
-					}
-
-					//所持トラップポイントをコスト分減らす
-					AddTrapPoint(-add->GetCost());
-
-					//初期化
-					add->Init(debugTrap->pos, debugTrap->norm);
-
-					//追加
-					m_traps.emplace_back(add);
-
-					//トラップを設置済みにする
-					debugTrap->isPlaced = true;
-					for (auto& trap : debugTrap->neighborTraps)
-					{
-						trap.lock()->isPlaced = true;
-					}
-				}
-				break;
-				default:
-					break;
+					trap.lock()->isPlaced = true;
 				}
 			}
 		}
@@ -372,7 +339,7 @@ void TrapManager::Draw()
 	//罠ポイントの描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
-		FontManager::GetInstance().DrawBottomRightAndQuakeText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y), std::to_string(m_trapPoint), 0x91cdd9, 32, 0x395f62,m_isTextShake, m_textShakeFrame);
+		FontManager::GetInstance().DrawBottomRightAndQuakeText(static_cast<int>(drawPos.x), static_cast<int>(drawPos.y), std::to_string(m_trapPoint), 0x91cdd9, 32, 0x395f62, m_isTextShake, m_textShakeFrame);
 	}, 2);
 }
 
@@ -440,10 +407,12 @@ void TrapManager::SetUp(int point)
 		}
 	}
 
-	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.8f));
+	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.6f));
 	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_ARROWWALL"), 1.0f));
+	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_FLAME"), 16.0f));
 	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("Spike").kind);
 	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("ArrowWall").kind);
+	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("Frame").kind);
 
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_iconHandle = ResourceManager::GetInstance().GetHandle("I_TRAPICON");

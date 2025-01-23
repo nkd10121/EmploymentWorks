@@ -235,18 +235,15 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		if (Input::GetInstance().IsTriggered("RB"))
 		{
 			m_slotNum++;
-			if (m_slotNum > 2)
-			{
-				m_slotNum = 2;
-			}
+			
+			m_slotNum = min(m_slotNum, 3);
 		}
 		if (Input::GetInstance().IsTriggered("LB"))
 		{
 			m_slotNum--;
-			if (m_slotNum < 0)
-			{
-				m_slotNum = 0;
-			}
+
+			m_slotNum = max(m_slotNum, 0);
+
 		}
 	}
 

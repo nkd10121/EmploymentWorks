@@ -15,7 +15,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init(Vec3 pos,Vec3 norm);
+	void Init(Vec3 pos,Vec3 norm)override;
 	/// <summary>
 	/// 更新
 	/// </summary>

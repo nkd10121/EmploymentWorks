@@ -15,6 +15,7 @@ public:
 	//ステータス構造体
 	struct Status
 	{
+		std::string name;	//名前
 		int atk;			//攻撃力
 		float searchRange;	//索敵判定の大きさ
 		float atkRange;		//攻撃判定の大きさ
@@ -32,6 +33,7 @@ public:
 	/// </summary>
 	virtual ~TrapBase();
 
+	void Init(Vec3 pos, Vec3 vec)override {};
 	/// <summary>
 	/// 更新
 	/// </summary>

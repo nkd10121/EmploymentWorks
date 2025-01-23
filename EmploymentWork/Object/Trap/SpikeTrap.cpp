@@ -9,7 +9,7 @@ namespace
 	constexpr float kCollisionRadius = 11.0f;
 
 	//モデルサイズ
-	constexpr float kModelScale = 1.8f;
+	constexpr float kModelScale = 1.6f;
 
 	constexpr float kSpikeMoveSpeed = 0.8f;
 

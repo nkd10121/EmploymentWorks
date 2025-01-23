@@ -309,6 +309,7 @@ TrapBase::Status LoadCSV::LoadTrapStatus(const char* trapName)
 		{
 			isGet = true;
 
+			ret.name = strConmaBuf[0];
 			ret.atk = std::stoi(strConmaBuf[1]);
 			ret.searchRange = std::stof(strConmaBuf[2]);
 			ret.atkRange = std::stof(strConmaBuf[3]);

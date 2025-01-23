@@ -1,2 +1,14 @@
-﻿  SceneTitle.cpp
+﻿  SwarmEnemy.cpp
+  Player.cpp
+  EnemyManager.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(85,22): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(481,48): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  GameManager.cpp
+  MapManager.cpp
+  TrapManager.cpp
+  MathHelp.cpp
+  Physics.cpp
+  SceneBase.cpp
+  SceneGame.cpp
+  コードを生成中...
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

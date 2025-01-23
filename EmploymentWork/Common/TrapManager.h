@@ -17,6 +17,14 @@ public:
 		bool isPlaced;
 		std::list<std::weak_ptr<Trap>> neighborTraps;
 	};
+
+	struct TrapInfo
+	{
+		int kind;
+		std::string trapName;
+		std::string modelId;
+		float modelSize;
+	};
 private:
 	/// <summary>
 	/// コンストラクタ

@@ -25,6 +25,7 @@ public:
 	/// 初期化
 	/// </summary>
 	virtual void Init() {};
+	virtual void Init(Vec3 pos, Vec3 vec) {};
 
 	virtual void Finalize();
 	/// <summary>
