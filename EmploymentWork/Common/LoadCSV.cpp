@@ -148,13 +148,6 @@ std::list<std::vector<std::string>> LoadCSV::GetLoadResourcePath(std::string sta
 		//取得した文字列をカンマ区切りの配列(情報群)にする
 		strConmaBuf = Split(strBuf, ',');
 
-		//[0] ステージID
-		//[1] 識別ID
-		//[2] パス
-		//[3] 拡張子
-		//[4] 常駐フラグ
-		//[5] BGMフラグ(soundデータの場合のみ)
-
 		//指定したステージIDと一致していたら
 		if (stageId == strConmaBuf[0])
 		{
@@ -418,7 +411,7 @@ std::vector<std::string> LoadCSV::GetAllStageName()
 		strConmaBuf = Split(strBuf, ',');
 
 		//ステージ名がはいっているインデックスは1
-		ret.push_back(strConmaBuf[1]);
+		ret.push_back(strConmaBuf[9]);
 
 	}
 

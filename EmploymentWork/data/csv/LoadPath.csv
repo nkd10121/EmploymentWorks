@@ -25,6 +25,9 @@ SCENE_TITLE,S_CURSORMOVE,data/sound/se/select,.mp3,0,0
 SCENE_TITLE,S_CURSORENTER,data/sound/se/enter,.mp3,0,0
 SCENE_TITLE,S_TITLEBGM,data/sound/bgm/title,.mp3,0,1
 ,,,,,
+SCENE_STAGESELECT,I_BIGWINDOW,data/img/ui_bigWindow,.png,0,
+SCENE_STAGESELECT,I_SMALLWINDOW,data/img/ui_smallWindow,.png,0,
+,,,,,
 SCENE_GAME,I_OPERATION,data/img/OperationExplanation,.png,0,
 SCENE_GAME,M_PORTION,data/model/object/portion/bottle_red,.mv1,0,
 SCENE_GAME,M_ARROW,data/model/object/arrow,.mv1,0,

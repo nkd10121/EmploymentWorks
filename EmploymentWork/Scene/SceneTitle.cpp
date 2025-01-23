@@ -149,6 +149,8 @@ void SceneTitle::Update()
 	EffectManager::GetInstance().Update();
 
 	m_enemyCreateFrame++;
+
+	m_angle += 0.05f;
 }
 
 /// <summary>
@@ -177,7 +179,7 @@ void SceneTitle::Draw()
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
 #endif
 
-	m_angle += 0.05f;
+
 	auto addSize = sinf(m_angle) / 16;
 
 	for (int i = 0; i < 3; i++)
