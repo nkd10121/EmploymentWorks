@@ -240,7 +240,7 @@ void SceneBase::DrawAll()
 	LONGLONG start = GetNowHiPerformanceCount();
 #endif
 
-#ifdef TRUE	//グリッドを描画する
+#ifdef _DEBUG	//グリッドを描画する
 	for (int x = -50; x <= 50; x += 10)
 	{
 		DrawLine3D(VGet(static_cast<float>(x), 0, -50), VGet(static_cast<float>(x), 0, 50), 0xffff00);

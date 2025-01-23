@@ -8,110 +8,102 @@
 
 namespace
 {
-//#ifdef _DEBUG	//デバッグ描画
-	/*テキスト描画関係*/
-	constexpr int kTextX = 64;			//テキスト描画X座標
-	constexpr int kTextY = 32;			//テキスト描画Y座標
-	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
-//#endif
+	// テキスト描画のX座標
+	constexpr int kTextX = 64;
+	// テキスト描画のY座標
+	constexpr int kTextY = 32;
+	// テキスト描画のY座標の空白
+	constexpr int kTextYInterval = 16;
+	// カメラの初期位置
+	const Vec3 kInitialCameraPos = Vec3(0.0f, 32.0f, -80.0f);
+	// カメラのターゲット初期位置
+	const Vec3 kInitialCameraTargetPos = Vec3(0.0f, 0.0f, 0.0f);
+	// カメラのターゲットY座標の最大値
+	constexpr float kMaxCameraTargetY = 20.0f;
+	// カメラの移動速度
+	constexpr float kCameraMoveSpeed = 1.6f;
+	// カメラのターゲットY座標の減少量
+	constexpr float kCameraTargetYDecrease = 4.0f;
 }
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-SceneStageSelect::SceneStageSelect():
+SceneStageSelect::SceneStageSelect() :
 	SceneBase("SCENE_STAGESELECT"),
 	isNextScene(false),
-	m_nowCursor(0)
+	m_nowCursor(0),
+	m_cameraPos(kInitialCameraPos),
+	m_cameraTarget(kInitialCameraTargetPos)
 {
 }
 
-/// <summary>
-/// デストラクタ
-/// </summary>
 SceneStageSelect::~SceneStageSelect()
 {
 }
 
-/// <summary>
-/// //リソースのロード開始
-/// </summary>
 void SceneStageSelect::StartLoad()
 {
+	// リソースのロード開始処理
 }
 
-/// <summary>
-/// リソースのロードが終了したかどうか
-/// </summary>
 bool SceneStageSelect::IsLoaded() const
 {
+	// リソースのロードが終了したかどうかを返す
 	return true;
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
 void SceneStageSelect::Init()
 {
+	// ステージ名のロード
 	m_stageNames = LoadCSV::GetInstance().GetAllStageName();
 
+	// マップマネージャーの初期化とロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("StageSelect");
 
-	//カメラの初期化
-	m_cameraPos = VGet(0.0f, 32.0f, -80.0f);
-	m_cameraTarget = VGet(0.0f, 0.0f, 0.0f);
+	// カメラの初期化
 	SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
 }
 
-/// <summary>
-/// 終了
-/// </summary>
 void SceneStageSelect::End()
 {
+	// エフェクトの停止
 	EffectManager::GetInstance().AllStopEffect();
 }
 
-/// <summary>
-/// 更新
-/// </summary>
 void SceneStageSelect::Update()
 {
-	if (IsLoaded() && m_cameraTarget.y < 20.0f)
+	// カメラのターゲットY座標の更新
+	if (IsLoaded() && m_cameraTarget.y < kMaxCameraTargetY)
 	{
 		m_cameraTarget.y += 1.0f;
 		SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
 	}
 
+	// 次のシーンへの遷移処理
 	if (isNextScene)
 	{
 		if (m_nowCursor >= 0)
 		{
 			auto vec = m_cameraTarget - m_cameraPos;
-			vec = vec.Normalize();
+			vec = vec.Normalize() * kCameraMoveSpeed;
 			m_cameraPos += vec;
 			SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
 		}
 		else
 		{
 			m_nowCursor = 0;
-			m_cameraTarget.y -= 4.0f;
+			m_cameraTarget.y -= kCameraTargetYDecrease;
 			SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
 		}
 	}
+
 	// エフェクトの更新
 	EffectManager::GetInstance().Update();
 }
 
-/// <summary>
-/// 描画
-/// </summary>
 void SceneStageSelect::Draw()
 {
-	// リソースのロードが終わるまでは描画しないのがよさそう
-	// (どちらにしろフェード仕切っているので何も見えないはず)
-	if (!IsLoaded())	return;
-	if (!IsInitialized())	return;
+	// リソースのロードが終わるまでは描画しない
+	if (!IsLoaded() || !IsInitialized()) return;
 
 	// ステージの描画
 	MapManager::GetInstance().Draw();
@@ -119,63 +111,45 @@ void SceneStageSelect::Draw()
 	// エフェクトの描画
 	EffectManager::GetInstance().Draw();
 
-#ifdef _DEBUG	//デバッグ描画
+#ifdef _DEBUG	// デバッグ描画
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 #endif
-	
+
+	// カーソルの描画
 	DrawString(kTextX - 24, kTextY + kTextYInterval * m_nowCursor, "→", 0xff0000);
 
-	for (int i = 0;i < m_stageNames.size();i++)
+	// ステージ名の描画
+	for (int i = 0; i < m_stageNames.size(); i++)
 	{
-		DrawFormatString(kTextX,kTextY + kTextYInterval*i,0xffffff,"%s",m_stageNames[i].c_str());
+		DrawFormatString(kTextX, kTextY + kTextYInterval * i, 0xffffff, "%s", m_stageNames[i].c_str());
 	}
 }
 
-/// <summary>
-/// 次のシーンを選択する更新処理
-/// </summary>
 void SceneStageSelect::SelectNextSceneUpdate()
 {
-	//上を入力したら
+	// 上キーが押された場合の処理
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
-		//現在選択している項目から一個上にずらす
-		m_nowCursor--;
-
-		//もし一番上の項目を選択している状態になっていたら
-		if (m_nowCursor < 0)
-		{
-			//一個下にずらす
-			m_nowCursor++;
-		}
+		m_nowCursor = max(0, m_nowCursor - 1);
 	}
 
-	//下を入力したら
+	// 下キーが押された場合の処理
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
-		//現在選択している項目から一個下にずらす
-		m_nowCursor++;
-
-		//もし一番下の項目を選択している状態になっていたら
-		if (m_nowCursor == m_stageNames.size())
-		{
-			//一個上にずらす
-			m_nowCursor--;
-		}
+		m_nowCursor = min(static_cast<int>(m_stageNames.size()) - 1, m_nowCursor + 1);
 	}
 
-	//決定ボタンを押したら現在選択しているシーンに遷移する
+	// OKキーが押された場合の処理
 	if (Input::GetInstance().IsTriggered("OK"))
 	{
 		isNextScene = true;
-		//ゲームシーンに遷移する
 		SceneManager::GetInstance().SetStageIdx(m_nowCursor);
 		SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
 		EndThisScene();
 		return;
 	}
 
-	//Bボタンを押したらセレクトシーンに戻る
+	// キャンセルキーが押された場合の処理
 	if (Input::GetInstance().IsTriggered("CANCEL"))
 	{
 		m_nowCursor = -1;
