@@ -184,13 +184,15 @@ void SceneTitle::Draw()
 	{
 		float graphSize = 1.0f;
 		int fontSize = 40;
+		float fontExtendRate = 1.0f;
 		if (i == m_destinationScene-1)
 		{
 			graphSize = 1.2f + addSize;
 			fontSize = 48;
+			fontExtendRate += addSize;
 		}
 		DrawRotaGraph(Game::kWindowWidth / 5 + 378 * i, Game::kWindowHeight / 2 + 260, graphSize, 0.0f, m_buttonHandle, true);
-		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 5 + 378 * i, Game::kWindowHeight / 2 + 260 -5, kItemName[i], 0xffffff, fontSize, 0x000000);
+		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 5 + 378 * i, Game::kWindowHeight / 2 + 260 -5, kItemName[i], 0xffffff, fontSize, 0x000000, fontExtendRate);
 	}
 
 	//ロゴの描画

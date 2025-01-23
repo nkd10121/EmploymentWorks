@@ -102,6 +102,33 @@ void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned i
 	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle, edgeColor);
 }
 
+void FontManager::DrawCenteredExtendText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor, float extendRate)
+{
+	Font drawFont;
+	bool isFound = false;
+
+	for (auto& font : m_fonts)
+	{
+		if (/*font.fontName == fontName &&*/ font.size == size)
+		{
+			isFound = true;
+			drawFont = font;
+		}
+	}
+
+	if (!isFound)
+	{
+#ifdef _DEBUG
+		assert(0 && "フォントデータが見つかりませんでした");
+#endif
+		return;
+	}
+
+	int textWidth = GetDrawStringWidthToHandle(text.c_str(), static_cast<int>(text.length()), drawFont.handle) * extendRate;
+	int textHeight = GetFontSizeToHandle(drawFont.handle) ;
+	DrawExtendStringToHandle(x - textWidth / 2, y - textHeight / 2,extendRate, extendRate, text.c_str(), color, drawFont.handle, edgeColor);
+}
+
 void FontManager::DrawBottomRightAndQuakeText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor,bool isShake, int shakeAmplitude, int shakeSpeed)
 {
 	Font drawFont;

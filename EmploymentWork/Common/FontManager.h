@@ -72,6 +72,8 @@ public:
 	// 指定座標を右下とする文字列を描画
 	void DrawBottomRightText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor);
 
+
+	void DrawCenteredExtendText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor, float extendRate);
 	/// <summary>
 	/// 指定座標を右下とする文字列を描画し、フラグがtrueになると文字を揺らす
 	/// </summary>
