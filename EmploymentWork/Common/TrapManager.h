@@ -73,8 +73,6 @@ public:
 private:
 	const bool CheckNeighbor(std::list<std::weak_ptr<Trap>> check)const;
 public:
-	void AddTrapPos(Vec3 pos);
-
 	void Update();
 	void Draw();
 
@@ -115,8 +113,6 @@ private:
 	int m_trapPoint;	//罠ポイント
 	int m_targetTrapPoint;	//増減後罠ポイント
 
-	int m_rightTriggerPushCount;
-
 	int m_slotBgHandle;
 
 	int m_bgHandle;
@@ -126,6 +122,8 @@ private:
 	int m_textShakeFrame;
 
 	bool m_isPrePhase;
+
+	float m_trapRotationAngle;
 
 	//デバッグ用
 	std::shared_ptr<Trap> debugTrap;

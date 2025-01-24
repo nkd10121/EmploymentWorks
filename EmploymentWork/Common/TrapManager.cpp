@@ -45,12 +45,12 @@ TrapManager::TrapManager() :
 	m_cameraPos(),
 	m_cameraDir(),
 	m_trapPoint(0),
-	m_rightTriggerPushCount(0),
 	m_bgHandle(-1),
 	m_iconHandle(-1),
 	m_isTextShake(false),
 	m_textShakeFrame(0),
-	m_isPrePhase(false)
+	m_isPrePhase(false),
+	m_trapRotationAngle(0.0f)
 {
 }
 
@@ -66,15 +66,6 @@ const bool TrapManager::CheckNeighbor(std::list<std::weak_ptr<Trap>> check) cons
 		if (t.lock()->isPlaced)	return false;
 	}
 	return true;
-}
-
-void TrapManager::AddTrapPos(Vec3 pos)
-{
-	//std::shared_ptr<Trap> add = std::make_shared<Trap>();
-	//add->isPlaced = false;
-	//add->pos = pos;
-	//add->neighborTraps.clear();
-	//m_trapPoss.emplace_back(add);
 }
 
 void TrapManager::Update()
@@ -210,58 +201,63 @@ void TrapManager::Update()
 	}
 
 	//もしライトトリガーボタン(RT)が押されたら
-	if (Input::GetInstance().GetIsPushedTriggerButton(true))
+	if (Input::GetInstance().GetIsTriggeredTriggerButton(true))
 	{
-		//トリガーボタンを押した瞬間なら
-		if (m_rightTriggerPushCount == 0)
+		if (!debugTrap->isPlaced)
 		{
-			if (!debugTrap->isPlaced)
+			auto add = std::make_shared<TrapBase>();
+			if (m_slotIdx == 1)			add = std::make_shared<SpikeTrap>();
+			else if (m_slotIdx == 2)	add = std::make_shared<ArrowWallTrap>();
+			else if (m_slotIdx == 3)	add = std::make_shared<FlameTrap>();
+
+			//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+			if (m_trapPoint < add->GetCost())
 			{
-				//トリガーボタンを押したカウントを更新する
-				m_rightTriggerPushCount++;
+				m_isTextShake = true;
+				m_textShakeFrame = kTextShakeFrame;
+				//何もしない
+				return;
+			}
 
-				auto add = std::make_shared<TrapBase>();
-				if (m_slotIdx == 1)			add = std::make_shared<SpikeTrap>();
-				else if (m_slotIdx == 2)	add = std::make_shared<ArrowWallTrap>();
-				else if (m_slotIdx == 3)	add = std::make_shared<FlameTrap>();
+			//所持トラップポイントをコスト分減らす
+			AddTrapPoint(-add->GetCost());
 
-				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
-				if (m_trapPoint < add->GetCost())
-				{
-					m_isTextShake = true;
-					m_textShakeFrame = kTextShakeFrame;
-					//何もしない
-					return;
-				}
+			auto vector = debugTrap->norm;
+			if (m_trapInfos[m_slotIdx - 1].kind == 0)
+			{
+				vector = Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f);
+			}
 
-				//所持トラップポイントをコスト分減らす
-				AddTrapPoint(-add->GetCost());
+			//初期化
+			add->Init(debugTrap->pos, vector);
 
-				//初期化
-				add->Init(debugTrap->pos, debugTrap->norm);
+			//追加
+			m_traps.emplace_back(add);
 
-				//追加
-				m_traps.emplace_back(add);
-
-				//トラップを設置済みにする
-				debugTrap->isPlaced = true;
-				for (auto& trap : debugTrap->neighborTraps)
-				{
-					trap.lock()->isPlaced = true;
-				}
+			//トラップを設置済みにする
+			debugTrap->isPlaced = true;
+			for (auto& trap : debugTrap->neighborTraps)
+			{
+				trap.lock()->isPlaced = true;
 			}
 		}
 	}
-	else
+
+	if (Input::GetInstance().IsTriggered("X"))
 	{
-		m_rightTriggerPushCount = 0;
+		m_trapRotationAngle += 90.0f;
+
+		if (m_trapRotationAngle >= 360.0f)
+		{
+			m_trapRotationAngle = 0.0f;
+		}
 	}
 
 
 	if (m_isPrePhase)
 	{
 		bool isRemove = false;
-		if (Input::GetInstance().IsTriggered("X"))
+		if (Input::GetInstance().GetIsTriggeredTriggerButton(false))
 		{
 			for (auto& t : m_traps)
 			{
@@ -377,10 +373,19 @@ void TrapManager::PreviewDraw()
 	if (!debugTrap)	return;
 
 	MV1SetPosition(m_trapInfos[m_slotIdx - 1].modelHandle, debugTrap->pos.ToVECTOR());
-	//回転させる
-	auto angle = atan2(debugTrap->norm.x, debugTrap->norm.z);
-	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
-	MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rotation);
+
+	if (m_trapInfos[m_slotIdx - 1].kind == 0)
+	{
+		auto rot = Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f);
+		MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rot.ToVECTOR());
+	}
+	else if (m_trapInfos[m_slotIdx - 1].kind == 1)
+	{
+		//回転させる
+		auto angle = atan2(debugTrap->norm.x, debugTrap->norm.z);
+		auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
+		MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rotation);
+	}
 
 	//モデルの半透明設定
 	MV1SetOpacityRate(m_trapInfos[m_slotIdx - 1].modelHandle, m_transparency);

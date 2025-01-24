@@ -87,6 +87,25 @@ void Input::Update()
 	GetJoypadDirectInputState(DX_INPUT_PAD1, &m_padState);
 	//ZR,ZLの入力を取得
 	GetJoypadXInputState(DX_INPUT_PAD1, XInputState);
+
+	//ZRの入力情報を返す
+	if (XInputState->RightTrigger > kTriggerDeadZone)
+	{
+		m_rightTriggerPushFrameCount++;
+	}
+	else
+	{
+		m_rightTriggerPushFrameCount = 0;
+	}
+
+	if (XInputState->LeftTrigger > kTriggerDeadZone)
+	{
+		m_leftTriggerPushFrameCount++;
+	}
+	else
+	{
+		m_leftTriggerPushFrameCount = 0;
+	}
 }
 
 /// <summary>
@@ -141,26 +160,22 @@ bool Input::GetIsPushedTriggerButton(bool isRight)const
 {
 	if (isRight)
 	{
-		//ZRの入力情報を返す
-		if (XInputState->RightTrigger > kTriggerDeadZone)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return m_rightTriggerPushFrameCount > 0;
 	}
 	else
 	{
-		//ZRの入力情報を返す
-		if (XInputState->LeftTrigger > kTriggerDeadZone)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return m_leftTriggerPushFrameCount > 0;
+	}
+}
+
+bool Input::GetIsTriggeredTriggerButton(bool isRight) const
+{
+	if (isRight)
+	{
+		return m_rightTriggerPushFrameCount == 1;
+	}
+	else
+	{
+		return m_leftTriggerPushFrameCount == 1;
 	}
 }

@@ -93,6 +93,8 @@ public:
 	/// <returns>true:押されている,false:押されていない</returns>
 	bool GetIsPushedTriggerButton(bool isRight)const;
 
+	bool GetIsTriggeredTriggerButton(bool isRight)const;
+
 private:
 	InputTable_t m_commandTable;	//コマンド配列
 
@@ -103,6 +105,9 @@ private:
 	//コントローラーの入力情報
 	DINPUT_JOYSTATE m_padState;
 	XINPUT_STATE* XInputState;
+
+	int m_rightTriggerPushFrameCount;	//右トリガーの押されたフレーム数
+	int m_leftTriggerPushFrameCount;	//左トリガーの押されたフレーム数
 
 };
 
