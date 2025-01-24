@@ -97,6 +97,10 @@ public:
 	/// <returns></returns>
 	TrapBase::Status LoadTrapStatus(const char* trapName);
 
+	std::string GetTrapImageId(const char* trapName);
+
+	std::vector<std::string> GetAllTrapName();
+
 	std::vector<std::string> LoadStageInfo(int stageIdx);
 	std::vector<std::string> GetAllStageName();
 

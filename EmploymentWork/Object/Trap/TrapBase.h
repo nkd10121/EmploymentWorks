@@ -22,6 +22,9 @@ public:
 		int coolTime;		//クールタイム
 		int cost;			//設置コスト
 		Kind kind;			//設置種類
+
+		std::string modelId;	//モデルID
+		float modelSize;		//モデルサイズ
 	};
 public:
 	/// <summary>

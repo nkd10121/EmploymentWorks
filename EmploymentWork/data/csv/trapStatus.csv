@@ -1,4 +1,4 @@
-名前,攻撃力,索敵範囲,攻撃範囲,クールタイム,設置コスト,設置場所,モデルID,モデルサイズ
-Spike,25,6.5,8,260,350,0,M_SPIKE,1.6
-ArrowWall,35,5.5,8,360,600,1,M_ARROWWALL,1
-Frame,14,6,8,600,800,0,M_FLAME,16
+名前,攻撃力,索敵範囲,攻撃範囲,クールタイム,設置コスト,設置場所,モデルID,モデルサイズ,画像ID
+Spike,25,6.5,8,260,350,0,M_SPIKE,1.6,I_SPIKE
+ArrowWall,35,5.5,8,360,600,1,M_ARROWWALL,1,I_SLOTARROWWALL
+Frame,14,6,8,600,800,0,M_FLAME,16,I_FLAME

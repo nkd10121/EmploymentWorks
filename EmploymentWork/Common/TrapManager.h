@@ -20,10 +20,11 @@ public:
 
 	struct TrapInfo
 	{
-		int kind;
-		std::string trapName;
-		std::string modelId;
-		float modelSize;
+		int kind;				//設置種類
+		std::string trapName;	//名前
+		int modelHandle;	//モデルID
+		int imageHandle;			//画像ID
+		int cost;				//設置コスト
 	};
 private:
 	/// <summary>
@@ -99,10 +100,8 @@ private:
 	std::list<std::shared_ptr<Trap>> m_trapPoss;
 
 	std::list<std::shared_ptr<TrapBase>> m_traps;
-
-	std::vector<std::pair<int,float>> m_trapModelHandles;
-	int m_previewTrapModelHandle;
-	std::vector<int> m_trapKind;
+	std::vector<TrapInfo> m_trapInfos;
+	std::vector<std::string> m_trapNames;
 
 	//罠を点滅させるためのアングル
 	float m_angle;
@@ -117,6 +116,8 @@ private:
 	int m_targetTrapPoint;	//増減後罠ポイント
 
 	int m_rightTriggerPushCount;
+
+	int m_slotBgHandle;
 
 	int m_bgHandle;
 	int m_iconHandle;

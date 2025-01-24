@@ -239,7 +239,7 @@
     <ClCompile Include="Ui\DrawUI.cpp">
       <Filter>ソース ファイル\Ui</Filter>
     </ClCompile>
-    <ClCompile Include="FrameTrap.cpp">
+    <ClCompile Include="FlameTrap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -436,7 +436,7 @@
     <ClInclude Include="Ui\DrawUI.h">
       <Filter>ソース ファイル\Ui</Filter>
     </ClInclude>
-    <ClInclude Include="FrameTrap.h" />
+    <ClInclude Include="FlameTrap.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">

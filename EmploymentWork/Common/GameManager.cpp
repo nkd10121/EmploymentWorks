@@ -465,7 +465,7 @@ void GameManager::Draw()
 
 	// TODO: UIクラスみたいなのを作ってそこに移動させる
 	// 装備スロットの描画
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		int x = kSlotBgX + i * kSlotBgOffset;
 		int y = kSlotBgY;

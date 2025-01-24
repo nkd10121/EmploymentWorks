@@ -316,6 +316,8 @@ TrapBase::Status LoadCSV::LoadTrapStatus(const char* trapName)
 			ret.coolTime = std::stoi(strConmaBuf[4]);
 			ret.cost = std::stoi(strConmaBuf[5]);
 			ret.kind = static_cast<TrapBase::Kind>(std::stoi(strConmaBuf[6]));
+			ret.modelId = strConmaBuf[7];
+			ret.modelSize = std::stof(strConmaBuf[8]);
 		}
 	}
 
@@ -326,6 +328,100 @@ TrapBase::Status LoadCSV::LoadTrapStatus(const char* trapName)
 		assert(0 && "指定した罠のステータス情報を取得できませんでした");
 	}
 #endif
+
+	return ret;
+}
+
+std::string LoadCSV::GetTrapImageId(const char* trapName)
+{
+	std::string ret;
+
+	bool isExistTrapName = false;
+	auto allTrapName = GetAllTrapName();
+	for (auto& name : allTrapName)
+	{
+		if (isExistTrapName) break;
+		if (name == trapName)	isExistTrapName = true;
+	}
+
+	if (!isExistTrapName)
+	{
+		assert(0 && "指定した罠の名前が見つかりませんでした");
+		return ret;
+	}
+
+	// 一時保存用string
+	std::string strBuf;
+	// カンマ分け一時保存用string
+	std::vector<std::string> strConmaBuf;
+
+	// ファイル読み込み
+	std::ifstream ifs("data/csv/trapStatus.csv");
+	if (!ifs)
+	{
+		assert(false);
+		return ret;
+	}
+
+	//情報を取得できたかどうかのフラグ
+	bool isGet = false;
+
+	//最初は対応表情報が入っているだけなので無視する
+	std::getline(ifs, strBuf);
+
+	while (getline(ifs, strBuf))
+	{
+		if (isGet) break;
+
+		//取得した文字列をカンマ区切りの配列(情報群)にする
+		strConmaBuf = Split(strBuf, ',');
+
+		//[0]:キャラクター名
+		//[1]:攻撃力
+		//[2]:索敵範囲
+		//[3]:攻撃範囲
+		//[4]:クールタイム
+		//[5]:設置コスト
+
+		//指定したキャラクター名と一致するデータがあれば情報を取得する
+		if (strConmaBuf[0] == trapName)
+		{
+			isGet = true;
+			ret = strConmaBuf[9];
+		}
+	}
+
+	return ret;
+}
+
+std::vector<std::string> LoadCSV::GetAllTrapName()
+{
+	std::vector<std::string> ret;
+
+	// 一時保存用string
+	std::string strBuf;
+	// カンマ分け一時保存用string
+	std::vector<std::string> strConmaBuf;
+
+	// ファイル読み込み
+	std::ifstream ifs("data/csv/trapStatus.csv");
+	if (!ifs)
+	{
+		assert(false);
+		return ret;
+	}
+
+	//最初は対応表情報が入っているだけなので無視する
+	std::getline(ifs, strBuf);
+
+	while (getline(ifs, strBuf))
+	{
+		//取得した文字列をカンマ区切りの配列(情報群)にする
+		strConmaBuf = Split(strBuf, ',');
+
+		//[0]:キャラクター名
+		ret.push_back(strConmaBuf[0]);
+	}
 
 	return ret;
 }

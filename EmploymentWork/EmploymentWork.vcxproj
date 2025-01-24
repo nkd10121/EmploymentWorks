@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\FontManager.cpp" />
-    <ClCompile Include="FrameTrap.cpp" />
+    <ClCompile Include="FlameTrap.cpp" />
     <ClCompile Include="Ui\DrawUI.cpp" />
     <ClCompile Include="Object\Trap\ArrowWallTrap.cpp" />
     <ClCompile Include="Common\SoundManager.cpp" />
@@ -85,7 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\FontManager.h" />
-    <ClInclude Include="FrameTrap.h" />
+    <ClInclude Include="FlameTrap.h" />
     <ClInclude Include="Ui\DrawUI.h" />
     <ClInclude Include="Object\Trap\ArrowWallTrap.h" />
     <ClInclude Include="Common\SoundManager.h" />

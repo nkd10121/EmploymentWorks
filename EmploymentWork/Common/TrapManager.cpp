@@ -3,7 +3,7 @@
 
 #include "SpikeTrap.h"
 #include "ArrowWallTrap.h"
-#include "FrameTrap.h"
+#include "FlameTrap.h"
 
 #include "Input.h"
 #include "ResourceManager.h"
@@ -27,10 +27,18 @@ namespace
 	const Vec2 kTrapPointBgDrawPos = Vec2(80, 660);
 	const int kTrapPointIconOffsetX = 46;
 	const Vec2 kTrapPointOffsetPos = Vec2(60, 13);
+
+
+	// 装備スロットの描画位置とスケール
+	constexpr int kSlotBgX = 362;
+	constexpr int kSlotBgY = 655;
+	constexpr int kSlotBgOffset = 85;
+	constexpr float kSlotBgScale = 0.08f;
+	constexpr float kSlotIconScale = 0.5f;
+	constexpr int kSlotBoxSize = 35;
 }
 
 TrapManager::TrapManager() :
-	m_previewTrapModelHandle(-1),
 	m_angle(0.0f),
 	m_transparency(0.0f),
 	m_slotIdx(-1),
@@ -44,7 +52,6 @@ TrapManager::TrapManager() :
 	m_textShakeFrame(0),
 	m_isPrePhase(false)
 {
-
 }
 
 TrapManager::~TrapManager()
@@ -132,14 +139,14 @@ void TrapManager::Update()
 		for (auto& p : m_trapPoss)
 		{
 			//現在のスロット番号の罠の種類と法線ベクトルを見て計算するかしないかを決める
-			if (m_trapKind[m_slotIdx - 1] == 0)
+			if (m_trapInfos[m_slotIdx - 1].kind == 0)
 			{
 				if (abs(p->norm.y - 1.0f) > 0.1f)
 				{
 					continue;
 				}
 			}
-			else if (m_trapKind[m_slotIdx - 1] == 1)
+			else if (m_trapInfos[m_slotIdx - 1].kind == 1)
 			{
 				if (abs(p->norm.y) > 0.1f)
 				{
@@ -216,7 +223,7 @@ void TrapManager::Update()
 				auto add = std::make_shared<TrapBase>();
 				if (m_slotIdx == 1)			add = std::make_shared<SpikeTrap>();
 				else if (m_slotIdx == 2)	add = std::make_shared<ArrowWallTrap>();
-				else if (m_slotIdx == 3)	add = std::make_shared<FrameTrap>();
+				else if (m_slotIdx == 3)	add = std::make_shared<FlameTrap>();
 
 				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
 				if (m_trapPoint < add->GetCost())
@@ -298,9 +305,6 @@ void TrapManager::Draw()
 		trap->Draw();
 	}
 
-	DrawFormatString(435, 700, 0xffffff, "350");
-	DrawFormatString(520, 700, 0xffffff, "600");
-
 	//#ifdef _DEBUG	//デバッグ描画
 	//	for (auto& pos : m_trapPoss)
 	//	{
@@ -327,6 +331,26 @@ void TrapManager::Draw()
 	//	}
 	//#endif
 
+	// 装備スロットの描画
+	DrawUI::GetInstance().RegisterDrawRequest([=]()
+	{
+		for (int i = 1; i <= m_trapNames.size(); i++)
+		{
+			int x = kSlotBgX + i * kSlotBgOffset;
+			int y = kSlotBgY;
+			DrawRotaGraph(x, y, kSlotBgScale, 0.0f, m_slotBgHandle, true);
+			DrawRotaGraph(x, y, kSlotIconScale, 0.0f, m_trapInfos[i - 1].imageHandle, true);
+
+			FontManager::GetInstance().DrawCenteredText(x, y + 45, std::to_string(m_trapInfos[i - 1].cost), 0x91cdd9, 24, 0x395f62);
+		}
+	}, 0);
+
+	DrawUI::GetInstance().RegisterDrawRequest([=]()
+	{
+		// 現在選択しているスロット枠の描画
+		DrawBox(kSlotBgX + m_slotIdx * kSlotBgOffset - kSlotBoxSize, kSlotBgY - kSlotBoxSize, kSlotBgX + m_slotIdx * kSlotBgOffset + kSlotBoxSize, kSlotBgY + kSlotBoxSize, 0xff0000, false);
+	}, 1);
+
 	//罠ポイントの背景画像の描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
@@ -352,20 +376,16 @@ void TrapManager::PreviewDraw()
 	if (m_slotIdx == 0) return;
 	if (!debugTrap)	return;
 
-	m_previewTrapModelHandle = m_trapModelHandles[m_slotIdx - 1].first;
-	auto scale = m_trapModelHandles[m_slotIdx - 1].second;
-	MV1SetScale(m_previewTrapModelHandle, VGet(scale, scale, scale));
-	MV1SetPosition(m_previewTrapModelHandle, debugTrap->pos.ToVECTOR());
+	MV1SetPosition(m_trapInfos[m_slotIdx - 1].modelHandle, debugTrap->pos.ToVECTOR());
 	//回転させる
 	auto angle = atan2(debugTrap->norm.x, debugTrap->norm.z);
 	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
-	MV1SetRotationXYZ(m_previewTrapModelHandle, rotation);
+	MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rotation);
 
 	//モデルの半透明設定
-	MV1SetOpacityRate(m_previewTrapModelHandle, m_transparency);
+	MV1SetOpacityRate(m_trapInfos[m_slotIdx - 1].modelHandle, m_transparency);
 
-	MV1DrawModel(m_previewTrapModelHandle);
-
+	MV1DrawModel(m_trapInfos[m_slotIdx - 1].modelHandle);
 }
 
 void TrapManager::Load(const char* stageName)
@@ -407,12 +427,22 @@ void TrapManager::SetUp(int point)
 		}
 	}
 
-	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_SPIKE"), 1.6f));
-	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_ARROWWALL"), 1.0f));
-	m_trapModelHandles.push_back(std::make_pair(ResourceManager::GetInstance().GetHandle("M_FLAME"), 16.0f));
-	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("Spike").kind);
-	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("ArrowWall").kind);
-	m_trapKind.push_back(LoadCSV::GetInstance().LoadTrapStatus("Frame").kind);
+	m_trapNames = LoadCSV::GetInstance().GetAllTrapName();
+	for (auto& trapName : m_trapNames)
+	{
+		TrapInfo addInfo;
+		auto status = LoadCSV::GetInstance().LoadTrapStatus(trapName.c_str());
+		addInfo.kind = status.kind;
+		addInfo.trapName = trapName;
+		addInfo.modelHandle = ResourceManager::GetInstance().GetHandle(status.modelId);
+		addInfo.imageHandle = ResourceManager::GetInstance().GetHandle(LoadCSV::GetInstance().GetTrapImageId(trapName.c_str()));
+		addInfo.cost = status.cost;
+		m_trapInfos.push_back(addInfo);
+
+		MV1SetScale(addInfo.modelHandle, VGet(status.modelSize, status.modelSize, status.modelSize));
+	}
+
+	m_slotBgHandle = ResourceManager::GetInstance().GetHandle("I_SLOTBG");
 
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_iconHandle = ResourceManager::GetInstance().GetHandle("I_TRAPICON");
@@ -430,6 +460,8 @@ void TrapManager::Clear()
 	m_trapPoss.clear();
 	m_traps.clear();
 
+	m_trapNames.clear();
+
 	m_slotIdx = 0;
 	m_cameraPos = Vec3();
 	m_cameraDir = Vec3();
@@ -439,14 +471,12 @@ void TrapManager::Clear()
 	DeleteGraph(m_iconHandle);
 	m_trapPoint = 0;
 
-	for (auto& h : m_trapModelHandles)
+	for (auto& h : m_trapInfos)
 	{
-		MV1DeleteModel(h.first);
+		MV1DeleteModel(h.modelHandle);
+		DeleteGraph(h.imageHandle);
 	}
-	m_trapModelHandles.clear();
-
-	m_trapKind.clear();
-
+	m_trapInfos.clear();
 }
 
 void TrapManager::AddTrapPoint(int addPoint)
