@@ -153,9 +153,7 @@ void SpikeTrap::Update()
 		if (sin < kSinLimit)
 		{
 			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
-			mat.m[3][0] += (m_norm * move).x;
-			mat.m[3][1] += (m_norm * move).y;
-			mat.m[3][2] += (m_norm * move).z;
+			mat.m[3][1] += move;
 
 			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 		}
@@ -188,9 +186,7 @@ void SpikeTrap::Update()
 		{
 			//スパイク部分の座標を初期化する
 			auto mat = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_frameIdx);
-			mat.m[3][0] = m_spikePosInit.x;
 			mat.m[3][1] = m_spikePosInit.y;
-			mat.m[3][2] = m_spikePosInit.z;
 			MV1SetFrameUserLocalWorldMatrix(m_modelHandle, m_frameIdx, mat);
 
 			m_spikePos = m_spikePosInit;
