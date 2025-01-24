@@ -22,8 +22,8 @@ public:
 	{
 		int kind;				//設置種類
 		std::string trapName;	//名前
-		int modelHandle;	//モデルID
-		int imageHandle;			//画像ID
+		int modelHandle;		//モデルID
+		int imageHandle;		//画像ID
 		int cost;				//設置コスト
 	};
 private:
@@ -98,8 +98,10 @@ private:
 	std::list<std::shared_ptr<Trap>> m_trapPoss;
 
 	std::list<std::shared_ptr<TrapBase>> m_traps;
-	std::vector<TrapInfo> m_trapInfos;
 	std::vector<std::string> m_trapNames;
+
+	std::vector<std::shared_ptr<TrapBase>> m_previewTraps;
+
 
 	//罠を点滅させるためのアングル
 	float m_angle;

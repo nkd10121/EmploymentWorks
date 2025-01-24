@@ -9,6 +9,9 @@ FlameTrap::FlameTrap() :
 	m_trapName = "Frame";
 	//罠のステータスを取得
 	m_status = LoadCSV::GetInstance().LoadTrapStatus(m_trapName.c_str());
+	//モデルのハンドルを取得
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_FLAME");
+	MV1SetScale(m_modelHandle, Vec3(m_status.modelSize, m_status.modelSize, m_status.modelSize).ToVECTOR());
 }
 
 FlameTrap::~FlameTrap()
@@ -30,15 +33,9 @@ void FlameTrap::Init(Vec3 pos, Vec3 direction)
 	//設置場所に座標を移動させる
 	m_direction = direction;
 
-	//モデルのハンドルを取得
-	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_FLAME");
 	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
-	MV1SetScale(m_modelHandle, Vec3(16.0f, 16.0f, 16.0f).ToVECTOR());
 	//回転させる
-	//atan2を使用して向いている角度を取得
-	auto angle = atan2(direction.x, direction.z);
-	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
-	MV1SetRotationXYZ(m_modelHandle, rotation);
+	SetRot(direction);
 
 	//索敵判定の作成(3つ作成)
 	for (int i = 1; i < 4; i++)
@@ -72,4 +69,9 @@ void FlameTrap::Draw()
 
 	//モデルの描画
 	MV1DrawModel(m_modelHandle);
+}
+
+void FlameTrap::SetRot(Vec3 vec)
+{
+	MV1SetRotationXYZ(m_modelHandle, vec.ToVECTOR());
 }

@@ -13,7 +13,7 @@ public:
 	};
 
 	//ステータス構造体
-	struct Status
+	struct TrapInfo
 	{
 		std::string name;	//名前
 		int atk;			//攻撃力
@@ -25,6 +25,7 @@ public:
 
 		std::string modelId;	//モデルID
 		float modelSize;		//モデルサイズ
+		std::string imageId;	//画像ID
 	};
 public:
 	/// <summary>
@@ -47,6 +48,11 @@ public:
 	void Draw()override {};
 
 	/// <summary>
+	/// 仮描画
+	/// </summary>
+	void PreviewDraw();
+
+	/// <summary>
 	/// 自身の攻撃力を取得
 	/// </summary>
 	/// <returns>攻撃力</returns>
@@ -57,11 +63,14 @@ public:
 	/// <returns></returns>
 	const int GetCost()const { return m_status.cost; }
 
+	void SetPos(Vec3 pos);
 	/// <summary>
 	/// 地震の座標を取得
 	/// </summary>
 	/// <returns></returns>
 	const Vec3 GetPos()const { return rigidbody->GetPos(); }
+
+	virtual void SetRot(Vec3 vec) {};
 
 	/// <summary>
 	/// 自身の名前を取得
@@ -69,13 +78,19 @@ public:
 	/// <returns></returns>
 	const std::string GetTrapName()const { return m_trapName; }
 
+	const int GetTrapKind()const { return static_cast<int>(m_status.kind); }
+	const std::string GetImageId()const { return m_status.imageId; }
+
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
 protected:
-	Status m_status;	//ステータス
+	TrapInfo m_status;	//ステータス
 	bool m_isExist;		//存在フラグ
 	bool m_isAttack;	//攻撃フラグ
 
 	std::string m_trapName;	//トラップ名
+
+private:
+	float m_angle;
 };
 

@@ -8,7 +8,8 @@ TrapBase::TrapBase():
 	m_status(),
 	m_isExist(false),
 	m_isAttack(false),
-	m_trapName()
+	m_trapName(),
+	m_angle(0.0f)
 {
 	//敵以外のオブジェクトとは当たり判定をとらない
 	AddThroughTag(GameObjectTag::Crystal);
@@ -26,6 +27,22 @@ TrapBase::~TrapBase()
 {
 	MV1DeleteModel(m_modelHandle);
 }
+
+void TrapBase::PreviewDraw()
+{
+	m_angle += 0.04f;
+	auto transparency = abs(sinf(m_angle) / 2.5f) + 0.1f;
+
+	MV1SetOpacityRate(m_modelHandle, transparency);
+	MV1DrawModel(m_modelHandle);
+}
+
+void TrapBase::SetPos(Vec3 pos)
+{
+	rigidbody->SetPos(pos);
+	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
+}
+
 
 void TrapBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {

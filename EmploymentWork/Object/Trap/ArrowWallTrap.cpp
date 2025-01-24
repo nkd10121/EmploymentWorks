@@ -7,8 +7,6 @@ namespace
 {
 	//当たり判定の円の半径
 	constexpr float kCollisionRadius = 11.0f;
-	//モデルサイズ
-	constexpr float kModelScale = 1.8f;
 
 	//ボーン（フレーム）の名前を指定
 	const char* kTargetFrameName = "Obstacle_16_1";
@@ -39,6 +37,10 @@ ArrowWallTrap::ArrowWallTrap() :
 	m_trapName = "ArrowWall";
 	//罠のステータスを取得
 	m_status = LoadCSV::GetInstance().LoadTrapStatus(m_trapName.c_str());
+	//モデルのハンドルを取得
+	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_ARROWWALL");
+	//モデルのスケールを設定
+	MV1SetScale(m_modelHandle, VGet(m_status.modelSize, m_status.modelSize, m_status.modelSize));
 }
 
 /// <summary>
@@ -70,14 +72,10 @@ void ArrowWallTrap::Init(Vec3 pos,Vec3 norm)
 	//法線ベクトルの設定
 	m_norm = norm;
 
-	//モデルのハンドルを取得
-	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_ARROWWALL");
+
 	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
 	//回転させる
-	//atan2を使用して向いている角度を取得
-	auto angle = atan2(norm.x, norm.z);
-	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
-	MV1SetRotationXYZ(m_modelHandle, rotation);
+	SetRot(norm);
 
 	//索敵判定の作成(3つ作成)
 	for (int i = 1; i < 4; i++)
@@ -199,4 +197,12 @@ void ArrowWallTrap::Draw()
 
 	//モデルの描画
 	MV1DrawModel(m_modelHandle);
+}
+
+void ArrowWallTrap::SetRot(Vec3 vec)
+{
+	//atan2を使用して向いている角度を取得
+	auto angle = atan2(vec.x, vec.z);
+	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
+	MV1SetRotationXYZ(m_modelHandle, rotation);
 }

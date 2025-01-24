@@ -25,6 +25,9 @@ public:
 	/// </summary>
 	void Draw()override;
 
+
+	void SetRot(Vec3 vec)override;
+
 private:
 	int m_attackCount;		//攻撃カウント
 	int m_coolTimeCount;	//クールタイム

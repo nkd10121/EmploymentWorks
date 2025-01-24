@@ -47,14 +47,12 @@ SpikeTrap::SpikeTrap() :
 	m_norm(),
 	m_movedPos()
 {
-	//当たり判定の生成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
-	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-	sphereCol->m_radius = kCollisionRadius;
-
 	m_trapName = "Spike";
 	//罠のステータスを取得
 	m_status = LoadCSV::GetInstance().LoadTrapStatus(m_trapName.c_str());
+	//モデルのハンドルを取得
+	m_modelHandle = ResourceManager::GetInstance().GetHandle(m_status.modelId);
+	MV1SetScale(m_modelHandle, VECTOR(m_status.modelSize, m_status.modelSize, m_status.modelSize));
 }
 
 
@@ -77,6 +75,11 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 	//物理挙動の初期化
 	rigidbody->Init();
 
+	//当たり判定の生成
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
+	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+	sphereCol->m_radius = kCollisionRadius;
+
 	//座標の更新
 	rigidbody->SetPos(pos);
 	rigidbody->SetNextPos(pos);
@@ -86,8 +89,6 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 	m_spikePosInit = m_spikePos;	//初期座標を保存
 
 	//モデルのハンドルを取得
-	m_modelHandle = ResourceManager::GetInstance().GetHandle("M_SPIKE");
-	MV1SetScale(m_modelHandle, VECTOR(kModelScale, kModelScale, kModelScale));
 	MV1SetPosition(m_modelHandle, m_spikePos.ToVECTOR());
 
 	//第二引数の法線ベクトルに沿ってモデルの向きを回転させたい
@@ -95,7 +96,7 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 
 	//回転させる
 	//MEMO:この罠は床にのみ設置できる罠にすると思うため、壁に設置する処理をなくす可能性あり
-	MV1SetRotationXYZ(m_modelHandle, VGet(norm.z * (DX_PI_F / 2), 0.0f, -norm.x * (DX_PI_F / 2)));
+	SetRot(norm);
 
 	//3Dモデルからスパイク部分のフレーム番号を取得
 	m_frameIdx = MV1SearchFrame(m_modelHandle, kTargetFrameName);
@@ -208,4 +209,9 @@ void SpikeTrap::Draw()
 
 	//モデルの描画
 	MV1DrawModel(m_modelHandle);
+}
+
+void SpikeTrap::SetRot(Vec3 vec)
+{
+	MV1SetRotationXYZ(m_modelHandle, vec.ToVECTOR());
 }

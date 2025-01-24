@@ -12,6 +12,8 @@
 #include "LoadCSV.h"
 
 #include "Vec2.h"
+#include <unordered_map>
+#include <algorithm>
 
 TrapManager* TrapManager::m_instance = nullptr;
 
@@ -130,14 +132,14 @@ void TrapManager::Update()
 		for (auto& p : m_trapPoss)
 		{
 			//現在のスロット番号の罠の種類と法線ベクトルを見て計算するかしないかを決める
-			if (m_trapInfos[m_slotIdx - 1].kind == 0)
+			if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
 			{
 				if (abs(p->norm.y - 1.0f) > 0.1f)
 				{
 					continue;
 				}
 			}
-			else if (m_trapInfos[m_slotIdx - 1].kind == 1)
+			else if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 1)
 			{
 				if (abs(p->norm.y) > 0.1f)
 				{
@@ -223,7 +225,7 @@ void TrapManager::Update()
 			AddTrapPoint(-add->GetCost());
 
 			auto vector = debugTrap->norm;
-			if (m_trapInfos[m_slotIdx - 1].kind == 0)
+			if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
 			{
 				vector = Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f);
 			}
@@ -335,9 +337,9 @@ void TrapManager::Draw()
 			int x = kSlotBgX + i * kSlotBgOffset;
 			int y = kSlotBgY;
 			DrawRotaGraph(x, y, kSlotBgScale, 0.0f, m_slotBgHandle, true);
-			DrawRotaGraph(x, y, kSlotIconScale, 0.0f, m_trapInfos[i - 1].imageHandle, true);
+			DrawRotaGraph(x, y, kSlotIconScale, 0.0f, ResourceManager::GetInstance().GetHandle(m_previewTraps[i - 1]->GetImageId()), true);
 
-			FontManager::GetInstance().DrawCenteredText(x, y + 45, std::to_string(m_trapInfos[i - 1].cost), 0x91cdd9, 24, 0x395f62);
+			FontManager::GetInstance().DrawCenteredText(x, y + 45, std::to_string(m_previewTraps[i - 1]->GetCost()), 0x91cdd9, 24, 0x395f62);
 		}
 	}, 0);
 
@@ -372,25 +374,36 @@ void TrapManager::PreviewDraw()
 	if (m_slotIdx == 0) return;
 	if (!debugTrap)	return;
 
-	MV1SetPosition(m_trapInfos[m_slotIdx - 1].modelHandle, debugTrap->pos.ToVECTOR());
 
-	if (m_trapInfos[m_slotIdx - 1].kind == 0)
+
+	//MV1SetPosition(m_trapInfos[m_slotIdx - 1].modelHandle, debugTrap->pos.ToVECTOR());
+
+	//if (m_trapInfos[m_slotIdx - 1].kind == 0)
+	//{
+	//	auto rot = Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f);
+	//	MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rot.ToVECTOR());
+	//}
+	//else if (m_trapInfos[m_slotIdx - 1].kind == 1)
+	//{
+	//	//回転させる
+	//	auto angle = atan2(debugTrap->norm.x, debugTrap->norm.z);
+	//	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
+	//	MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rotation);
+	//}
+
+	////モデルの半透明設定
+	//MV1SetOpacityRate(m_trapInfos[m_slotIdx - 1].modelHandle, m_transparency);
+
+	m_previewTraps[m_slotIdx - 1]->SetPos(debugTrap->pos.ToVECTOR());
+	if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
 	{
-		auto rot = Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f);
-		MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rot.ToVECTOR());
+		m_previewTraps[m_slotIdx - 1]->SetRot(Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f));
 	}
-	else if (m_trapInfos[m_slotIdx - 1].kind == 1)
+	else if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 1)
 	{
-		//回転させる
-		auto angle = atan2(debugTrap->norm.x, debugTrap->norm.z);
-		auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
-		MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rotation);
+		m_previewTraps[m_slotIdx - 1]->SetRot(debugTrap->norm.ToVECTOR());
 	}
-
-	//モデルの半透明設定
-	MV1SetOpacityRate(m_trapInfos[m_slotIdx - 1].modelHandle, m_transparency);
-
-	MV1DrawModel(m_trapInfos[m_slotIdx - 1].modelHandle);
+	m_previewTraps[m_slotIdx - 1]->PreviewDraw();
 }
 
 void TrapManager::Load(const char* stageName)
@@ -433,22 +446,24 @@ void TrapManager::SetUp(int point)
 	}
 
 	m_trapNames = LoadCSV::GetInstance().GetAllTrapName();
-	for (auto& trapName : m_trapNames)
-	{
-		TrapInfo addInfo;
-		auto status = LoadCSV::GetInstance().LoadTrapStatus(trapName.c_str());
-		addInfo.kind = status.kind;
-		addInfo.trapName = trapName;
-		addInfo.modelHandle = ResourceManager::GetInstance().GetHandle(status.modelId);
-		addInfo.imageHandle = ResourceManager::GetInstance().GetHandle(LoadCSV::GetInstance().GetTrapImageId(trapName.c_str()));
-		addInfo.cost = status.cost;
-		m_trapInfos.push_back(addInfo);
 
-		MV1SetScale(addInfo.modelHandle, VGet(status.modelSize, status.modelSize, status.modelSize));
+	m_previewTraps.push_back(std::make_shared<SpikeTrap>());
+	m_previewTraps.push_back(std::make_shared<ArrowWallTrap>());
+	m_previewTraps.push_back(std::make_shared<FlameTrap>());
+
+	// 順序を保持するマップを作成
+	std::unordered_map<std::string, int> orderMap;
+	for (int i = 0; i < m_trapNames.size(); ++i)
+	{
+		orderMap[m_trapNames[i]] = i;
 	}
 
-	m_slotBgHandle = ResourceManager::GetInstance().GetHandle("I_SLOTBG");
+	// 並び替え
+	std::sort(m_previewTraps.begin(), m_previewTraps.end(), [&orderMap](const std::shared_ptr<TrapBase>& a, const std::shared_ptr<TrapBase>& b) {
+		return orderMap[a->GetTrapName()] < orderMap[b->GetTrapName()];
+	});
 
+	m_slotBgHandle = ResourceManager::GetInstance().GetHandle("I_SLOTBG");
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_TRAPPOINTBG");
 	m_iconHandle = ResourceManager::GetInstance().GetHandle("I_TRAPICON");
 
@@ -475,13 +490,6 @@ void TrapManager::Clear()
 	DeleteGraph(m_bgHandle);
 	DeleteGraph(m_iconHandle);
 	m_trapPoint = 0;
-
-	for (auto& h : m_trapInfos)
-	{
-		MV1DeleteModel(h.modelHandle);
-		DeleteGraph(h.imageHandle);
-	}
-	m_trapInfos.clear();
 }
 
 void TrapManager::AddTrapPoint(int addPoint)

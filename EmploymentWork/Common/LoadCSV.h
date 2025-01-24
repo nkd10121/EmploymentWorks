@@ -95,9 +95,7 @@ public:
 	/// </summary>
 	/// <param name="trapName">取得したいトラップ名</param>
 	/// <returns></returns>
-	TrapBase::Status LoadTrapStatus(const char* trapName);
-
-	std::string GetTrapImageId(const char* trapName);
+	TrapBase::TrapInfo LoadTrapStatus(const char* trapName);
 
 	std::vector<std::string> GetAllTrapName();
 

@@ -25,6 +25,8 @@ public:
 	/// </summary>
 	void Draw()override;
 
+	void SetRot(Vec3 vec)override;
+
 private:
 	Vec3 m_direction;
 };
