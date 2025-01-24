@@ -9,6 +9,7 @@ TrapBase::TrapBase():
 	m_isExist(false),
 	m_isAttack(false),
 	m_trapName(),
+	m_isPreview(false),
 	m_angle(0.0f)
 {
 	//敵以外のオブジェクトとは当たり判定をとらない

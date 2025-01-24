@@ -127,13 +127,16 @@ void SpikeTrap::Update()
 
 	if (m_isAttack)
 	{
-		//攻撃用当たり判定を生成する
-		if (m_attackCount == 0)
+		if (!m_isPreview)
 		{
-			//当たり判定の生成
-			auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
-			auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-			sphereCol->m_radius = kCollisionRadius;
+			//攻撃用当たり判定を生成する
+			if (m_attackCount == 0)
+			{
+				//当たり判定の生成
+				auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
+				auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+				sphereCol->m_radius = kCollisionRadius;
+			}
 		}
 
 		//攻撃カウントを更新
@@ -145,8 +148,6 @@ void SpikeTrap::Update()
 
 		//二つのsinカーブを比較して上昇か下降かを計算する
 		auto move = (sin - presin) * kSpikeModelMoveRange;
-
-
 
 		//制限より小さいときはモデルを動かす
 		if (sin < kSinLimit)
@@ -164,10 +165,13 @@ void SpikeTrap::Update()
 		{
 			m_isAttack = false;
 
-			auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
-			if (col != nullptr)
+			if (!m_isPreview)
 			{
-				Collidable::DeleteRequestCollider(col);
+				auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
+				if (col != nullptr)
+				{
+					Collidable::DeleteRequestCollider(col);
+				}
 			}
 		}
 	}

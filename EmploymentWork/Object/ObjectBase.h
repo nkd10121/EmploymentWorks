@@ -25,7 +25,7 @@ public:
 	/// 初期化
 	/// </summary>
 	virtual void Init() {};
-	virtual void Init(Vec3 pos, Vec3 vec) {};
+	virtual void Init(Vec3 pos, Vec3 vec) {};	//トラップ系用
 
 	virtual void Finalize();
 	/// <summary>
@@ -36,6 +36,8 @@ public:
 	/// 描画
 	/// </summary>
 	virtual void Draw() {};
+
+	virtual void UpdateAnim() {};//トラップ系用
 
 	/// <summary>
 	/// 存在しているかどうかを取得
@@ -53,6 +55,7 @@ public:
 	/// </summary>
 	/// <param name="pos">設定座標</param>
 	virtual void SetPosition(Vec3 pos);
+
 
 protected:
 	int m_modelHandle;	//モデルハンドル

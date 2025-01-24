@@ -47,6 +47,8 @@ public:
 	/// </summary>
 	void Draw()override {};
 
+	void UpdateAnim() {};
+
 	/// <summary>
 	/// 仮描画
 	/// </summary>
@@ -81,6 +83,8 @@ public:
 	const int GetTrapKind()const { return static_cast<int>(m_status.kind); }
 	const std::string GetImageId()const { return m_status.imageId; }
 
+	void SetIsPreview() { m_isPreview = true; }
+
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
 protected:
@@ -89,6 +93,8 @@ protected:
 	bool m_isAttack;	//攻撃フラグ
 
 	std::string m_trapName;	//トラップ名
+	
+	bool m_isPreview;
 
 private:
 	float m_angle;

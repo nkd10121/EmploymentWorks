@@ -448,8 +448,11 @@ void TrapManager::SetUp(int point)
 	m_trapNames = LoadCSV::GetInstance().GetAllTrapName();
 
 	m_previewTraps.push_back(std::make_shared<SpikeTrap>());
+	m_previewTraps.back()->SetIsPreview();
 	m_previewTraps.push_back(std::make_shared<ArrowWallTrap>());
+	m_previewTraps.back()->SetIsPreview();
 	m_previewTraps.push_back(std::make_shared<FlameTrap>());
+	m_previewTraps.back()->SetIsPreview();
 
 	// 順序を保持するマップを作成
 	std::unordered_map<std::string, int> orderMap;
