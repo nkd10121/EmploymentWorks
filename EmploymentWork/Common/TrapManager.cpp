@@ -7,6 +7,7 @@
 
 #include "Input.h"
 #include "ResourceManager.h"
+#include "EffectManager.h"
 #include "FontManager.h"
 #include "DrawUI.h"
 #include "LoadCSV.h"
@@ -52,7 +53,8 @@ TrapManager::TrapManager() :
 	m_isTextShake(false),
 	m_textShakeFrame(0),
 	m_isPrePhase(false),
-	m_trapRotationAngle(0.0f)
+	m_trapRotationAngle(0.0f),
+	m_attackEffectCreateCount(0)
 {
 }
 
@@ -112,6 +114,8 @@ void TrapManager::Update()
 
 	//スロット番号が0(クロスボウなら何もしない)
 	if (m_slotIdx == 0) return;
+
+	m_attackEffectCreateCount++;
 
 	m_angle += 0.04f;
 	m_transparency = abs(sinf(m_angle) / 2.5f) + 0.1f;
@@ -374,8 +378,6 @@ void TrapManager::PreviewDraw()
 	if (m_slotIdx == 0) return;
 	if (!debugTrap)	return;
 
-
-
 	//MV1SetPosition(m_trapInfos[m_slotIdx - 1].modelHandle, debugTrap->pos.ToVECTOR());
 
 	//if (m_trapInfos[m_slotIdx - 1].kind == 0)
@@ -398,6 +400,10 @@ void TrapManager::PreviewDraw()
 	if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
 	{
 		m_previewTraps[m_slotIdx - 1]->SetRot(Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f));
+		if (m_attackEffectCreateCount % 60 == 0)
+		{
+			EffectManager::GetInstance().CreateEffect("E_TRAPATTACKAREA", debugTrap->pos);
+		}
 	}
 	else if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 1)
 	{
