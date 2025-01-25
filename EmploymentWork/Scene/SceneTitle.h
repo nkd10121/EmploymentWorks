@@ -58,8 +58,8 @@ private:
 	{
 		Start,		
 
-		Select,		//セレクト
 		Option,			//オプション
+		Select,		//セレクト
 		Quit,			//やめる
 
 		Last,

@@ -26,7 +26,7 @@ namespace
 	//ロゴ描画関係
 	constexpr float kRogoSize = 0.55f;	//サイズ
 
-	const char* kItemName[] = { "スタート","オプション","やめる" };
+	const char* kItemName[] = { "オプション","スタート","やめる" };
 }
 
 /// <summary>
@@ -82,7 +82,7 @@ bool SceneTitle::IsLoaded() const
 void SceneTitle::Init()
 {
 	//TODO:ここで実態の生成などをする
-	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
+	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 2);
 
 	m_rogoHandle = ResourceManager::GetInstance().GetHandle("I_ROGO");
 
