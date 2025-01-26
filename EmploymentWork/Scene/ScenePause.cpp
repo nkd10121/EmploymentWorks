@@ -1,7 +1,9 @@
 ﻿#include "ScenePause.h"
 #include "Game.h"
-#include "SceneStageSelect.h"
+
 #include "SceneGame.h"
+#include "SceneOption.h"
+#include "SceneStageSelect.h"
 
 namespace
 {
@@ -89,7 +91,8 @@ void ScenePause::Draw()
 
 	DrawString(kTextX, kTextY, "ゲームに戻る", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval, "リスタート", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 2, "セレクトに戻る", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 2, "オプション", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 3, "セレクトに戻る", 0xffffff);
 }
 
 /// <summary>
@@ -140,6 +143,13 @@ void ScenePause::SelectNextSceneUpdate()
 		{
 			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
 			EndThisScene();
+			return;
+		}
+		//ゲームシーンに遷移する
+		else if (m_destinationScene == eDestination::Option)
+		{
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
+			EndThisScene(true);
 			return;
 		}
 		//ポーズシーンを上に表示する
