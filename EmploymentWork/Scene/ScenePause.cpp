@@ -5,6 +5,10 @@
 #include "SceneOption.h"
 #include "SceneStageSelect.h"
 
+#include "FontManager.h"
+
+#include <vector>
+
 namespace
 {
 //#ifdef _DEBUG	//デバッグ描画
@@ -13,13 +17,22 @@ namespace
 	constexpr int kTextY = 32;			//テキスト描画Y座標
 	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
 //#endif
+
+	const std::vector<std::string> kItemText =
+	{
+		"ゲームに戻る",
+		"リスタート",
+		"オプション",
+		"ステージセレクトに戻る"
+	};
 }
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 ScenePause::ScenePause():
-	SceneBase("SCENE_PAUSE")
+	SceneBase("SCENE_PAUSE"),
+	m_angle(0.0f)
 {
 }
 
@@ -70,7 +83,7 @@ void ScenePause::End()
 /// </summary>
 void ScenePause::Update()
 {
-
+	m_angle += 0.05f;
 }
 
 /// <summary>
@@ -79,13 +92,26 @@ void ScenePause::Update()
 void ScenePause::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0x000000, true);
+	DrawBox(0 , 0 , Game::kWindowWidth , Game::kWindowHeight , 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
+	DrawBox(0 , 0 , Game::kWindowWidth , Game::kWindowHeight , 0xffffff, false);
+
+	auto addSize = sinf(m_angle) / 16;
+
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 6, "ポーズ", 0xffffff, 64, 0x000000);
+
+	for (int i = 0; i < kItemText.size(); i++)
+	{
+		float rate = 1.0f;
+		if (m_destinationScene - 1 == i)
+		{
+			rate += addSize;
+		}
+		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 2 + 80 * i, kItemText[i], 0xffffff, 40, 0x000000, rate);
+	}
 
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 16, 0xffffff, "%s", GetNowSceneName());
-#endif
 
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
 
@@ -93,6 +119,7 @@ void ScenePause::Draw()
 	DrawString(kTextX, kTextY + kTextYInterval, "リスタート", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 2, "オプション", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 3, "セレクトに戻る", 0xffffff);
+#endif
 }
 
 /// <summary>

@@ -64,5 +64,7 @@ private:
 
 	//遷移先
 	eDestination m_destinationScene;
+
+	float m_angle;
 };
 
