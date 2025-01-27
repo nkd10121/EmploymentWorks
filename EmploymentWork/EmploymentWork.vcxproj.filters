@@ -242,6 +242,9 @@
     <ClCompile Include="Object\Trap\FlameTrap.cpp">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
@@ -439,6 +442,7 @@
     <ClInclude Include="Object\Trap\FlameTrap.h">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClInclude>
+    <ClInclude Include="Setting.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">
