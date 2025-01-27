@@ -47,5 +47,17 @@ public:
 	/// 次のシーンを選択する更新処理
 	/// </summary>
 	virtual void SelectNextSceneUpdate()override;
+
+private:
+	//更新メンバ関数ポインタ
+	void (SceneOption::* m_updateFunc)();
+	//更新(BGM設定)
+	void BgmUpdate();
+	//更新(SE設定)
+	void SeUpdate();
+	//更新(感度設定)
+	void SensitivityUpdate();
+	//更新(フルスクリーン設定)
+	void FullScreenUpdate();
 };
 

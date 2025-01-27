@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetChangeScreenModeGraphicsSystemResetFlag(false);
 
 	Setting::GetInstance().Load();
-	ChangeWindowMode(Setting::GetInstance().GetIsFullScreen());
+	ChangeWindowMode(!Setting::GetInstance().GetIsFullScreen());
 
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{

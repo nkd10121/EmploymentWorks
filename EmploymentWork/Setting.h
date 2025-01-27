@@ -62,7 +62,7 @@ public:
 	//感度を取得する
 	const float GetSensitivity()const { return m_data.sensitivity; }
 	//フルスクリーンを取得する
-	const bool GetIsFullScreen()const { return !m_data.isFullScreen; }
+	const bool GetIsFullScreen()const { return m_data.isFullScreen; }
 
 	//オプションデータを読み込む
 	void Load();
