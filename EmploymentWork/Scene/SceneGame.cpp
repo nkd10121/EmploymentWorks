@@ -187,6 +187,7 @@ void SceneGame::UpdateGame()
 
 		auto resultScene = std::dynamic_pointer_cast<SceneResult>(SceneManager::GetInstance().GetBackScenePointer());
 		resultScene->SetIsClear(isClear);
+		resultScene->SetStageName(m_pGameManager->GetStageName());
 
 		return;
 	}

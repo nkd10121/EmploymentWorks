@@ -46,6 +46,8 @@ public:
 	/// <returns></returns>
 	const void SetIsClear(const bool isClear) { m_isClear = isClear; }
 
+	const void SetStageName(std::string stageName);
+
 	/// <summary>
 	/// 次のシーンを選択する更新処理
 	/// </summary>
@@ -58,6 +60,7 @@ private:
 
 		InGame,			//インゲーム(次のステージ)
 		ScoreDetail,	//スコア詳細
+		Option,			//オプション
 		Select,			//セレクト
 
 		Last,
@@ -67,5 +70,6 @@ private:
 	eDestination m_destinationScene;
 
 	bool m_isClear;
+	int m_score;
 };
 

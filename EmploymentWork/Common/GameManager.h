@@ -43,6 +43,8 @@ public:
 
 	const bool IsEnd(bool& isClear)const { isClear = m_isClear; return m_isEnd; }
 
+	const std::string GetStageName()const { return m_stageName; }
+
 private:
 	std::shared_ptr<Player> m_pPlayer;			//プレイヤーポインタ
 	std::shared_ptr<Camera> m_pCamera;			//カメラポインタ

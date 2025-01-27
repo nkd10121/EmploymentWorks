@@ -3,6 +3,7 @@
 #include "SceneGame.h"
 //#include "SceneStrengthen.h"
 //#include "SceneRanking.h"
+#include "SceneOption.h"
 #include "SceneStageSelect.h"
 
 #include "ScoreManager.h"
@@ -94,7 +95,7 @@ void SceneResult::Draw()
 		DrawString(240, 224, "ゲームオーバー...", 0xffffff);
 	}
 
-	//DrawFormatString(240,240,0xffffff,"Score:%d",ScoreManager::GetInstance().GetScore());
+	DrawFormatString(240,240,0xffffff,"Score:%d", m_score);
 
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
@@ -104,9 +105,13 @@ void SceneResult::Draw()
 
 	DrawString(kTextX, kTextY, "次のステージへ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval, "スコア詳細へ", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 2, "強化へ", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 3, "ランキングへ", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 4, "メインメニューに戻る", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 2, "オプション", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 3, "ステージセレクトに戻る", 0xffffff);
+}
+
+const void SceneResult::SetStageName(std::string stageName)
+{
+	m_score = ScoreManager::GetInstance().GetScore(stageName);
 }
 
 /// <summary>
@@ -156,6 +161,13 @@ void SceneResult::SelectNextSceneUpdate()
 		//スコア詳細が出てくる
 		else if (m_destinationScene == eDestination::ScoreDetail)
 		{
+
+		}
+		else if (m_destinationScene == eDestination::Option)
+		{
+			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
+			EndThisScene(true);
+			return;
 
 		}
 		////強化シーンに遷移する
