@@ -242,8 +242,8 @@
     <ClCompile Include="Object\Trap\FlameTrap.cpp">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
-    <ClCompile Include="Setting.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Util\Setting.cpp">
+      <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -442,7 +442,9 @@
     <ClInclude Include="Object\Trap\FlameTrap.h">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClInclude>
-    <ClInclude Include="Setting.h" />
+    <ClInclude Include="Util\Setting.h">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">

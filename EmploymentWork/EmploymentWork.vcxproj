@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Common\FontManager.cpp" />
     <ClCompile Include="Object\Trap\FlameTrap.cpp" />
-    <ClCompile Include="Setting.cpp" />
+    <ClCompile Include="Util\Setting.cpp" />
     <ClCompile Include="Ui\DrawUI.cpp" />
     <ClCompile Include="Object\Trap\ArrowWallTrap.cpp" />
     <ClCompile Include="Common\SoundManager.cpp" />
@@ -87,7 +87,7 @@
   <ItemGroup>
     <ClInclude Include="Common\FontManager.h" />
     <ClInclude Include="Object\Trap\FlameTrap.h" />
-    <ClInclude Include="Setting.h" />
+    <ClInclude Include="Util\Setting.h" />
     <ClInclude Include="Ui\DrawUI.h" />
     <ClInclude Include="Object\Trap\ArrowWallTrap.h" />
     <ClInclude Include="Common\SoundManager.h" />
