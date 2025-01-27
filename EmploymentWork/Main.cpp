@@ -1,13 +1,14 @@
 ﻿#include "DxLib.h"
 #include "EffekseerForDXLib.h"
 #include "Util/Game.h"
-#include "Camera.h"
+
 #include "Input.h"
 #include "SceneManager.h"
 #include "FontManager.h"
 #include "ResourceManager.h"
 #include "EffectManager.h"
 #include "LoadCSV.h"
+#include "Setting.h"
 #include <memory>
 
 #ifdef _DEBUG
@@ -18,14 +19,15 @@
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// windowモード設定
-	ChangeWindowMode(true);
 	//ウィンドウサイズの変更
 	SetGraphMode(Game::kWindowWidth, Game::kWindowHeight, 32);
 	// ウインドウ名設定
 	SetMainWindowText(Game::kWindowName);
 	//フルスクリーン切り替え時にリソースハンドルをリセットしないように設定する
 	SetChangeScreenModeGraphicsSystemResetFlag(false);
+
+	Setting::GetInstance().Load();
+	ChangeWindowMode(Setting::GetInstance().GetIsFullScreen());
 
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{
@@ -89,6 +91,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 		}
 	}
+
+	//オプションデータを保存する
+	Setting::GetInstance().Save();
 
 	//staticクラスの削除
 	SceneManager::GetInstance().Destroy();
