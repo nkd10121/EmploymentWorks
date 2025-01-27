@@ -9,6 +9,7 @@
 #include "EffectManager.h"
 #include "LoadCSV.h"
 #include "Setting.h"
+#include "ScoreManager.h"
 #include <memory>
 
 #ifdef _DEBUG
@@ -54,6 +55,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	ScoreManager::GetInstance().Load();
 	FontManager::GetInstance().LoadFont();
 
 #ifdef _DEBUG
@@ -94,6 +96,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//オプションデータを保存する
 	Setting::GetInstance().Save();
+	ScoreManager::GetInstance().Save();
+
 
 	//staticクラスの削除
 	SceneManager::GetInstance().Destroy();

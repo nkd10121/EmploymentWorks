@@ -8,6 +8,7 @@
 #include "EffectManager.h"
 #include "ResourceManager.h"
 #include "FontManager.h"
+#include "ScoreManager.h"
 
 namespace
 {
@@ -155,6 +156,7 @@ void SceneStageSelect::Draw()
 #endif
 
     DrawRotaGraph(1000 + m_cameraMoveDistance * 10, 386, 1.0f + m_cameraMoveDistance / kCameraMoveDistanceFactor, 0.0f, m_bigWindowHandle, true);
+    FontManager::GetInstance().DrawCenteredText(1000 + m_cameraMoveDistance * 10, 540, "ハイスコア:" + std::to_string(ScoreManager::GetInstance().GetScore(m_stageNames[m_nowCursor])), 0xffffff, 48, 0x000000);
 
     auto addSize = sinf(m_angle) / 16;
 

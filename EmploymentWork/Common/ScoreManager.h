@@ -98,6 +98,19 @@ public:
 	/// <returns></returns>
 	const int GetScore(std::string stageName)const { return m_score.at(stageName); }
 
+	/// <summary>
+	/// スコアをファイルに保存する
+	/// </summary>
+	void Save() const;
+
+	/// <summary>
+	/// ファイルからスコアを読み込む
+	/// </summary>
+	void Load();
+
+	void CreateNewData();
+	void ClearData();
+
 private:
 	int m_targetClearTime;	//目標クリアタイム
 	int m_clearTime;		//クリアタイム
