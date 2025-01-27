@@ -49,6 +49,10 @@ public:
 	virtual void SelectNextSceneUpdate()override;
 
 private:
+	int m_pushCount;
+	int m_keyRepeatFrame;
+
+private:
 	//更新メンバ関数ポインタ
 	void (SceneOption::* m_updateFunc)();
 	//更新(BGM設定)

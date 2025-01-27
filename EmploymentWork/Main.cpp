@@ -103,6 +103,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	FontManager::GetInstance().Destroy();
 	ResourceManager::GetInstance().AllClear();
 	EffectManager::GetInstance().Destroy();
+	Setting::GetInstance().Destroy();
 
 
 
