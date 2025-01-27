@@ -226,15 +226,15 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 		}
 	}
 
-	////もし群れの数が0になった(敵が全滅した)ら、次のフェーズに行く
-	//if (m_pEnemies.size() == 0)
-	//{
-	//	return true;
-	//}
-	if (m_deadEnemyNum == m_enemyNum[phase])
+	//もし群れの数が0になった(敵が全滅した)ら、次のフェーズに行く
+	if (m_pEnemies.size() == 0)
 	{
 		return true;
 	}
+	//if (m_deadEnemyNum == m_enemyNum[phase])
+	//{
+	//	return true;
+	//}
 
 	return false;
 }
