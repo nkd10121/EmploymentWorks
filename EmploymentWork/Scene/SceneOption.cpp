@@ -1,5 +1,11 @@
 ﻿#include "SceneOption.h"
 
+#include "Setting.h"
+#include "FontManager.h"
+
+#include <sstream>
+#include <iomanip> 
+
 namespace
 {
 }
@@ -55,6 +61,15 @@ void SceneOption::End()
 /// </summary>
 void SceneOption::Update()
 {
+	if (Input::GetInstance().IsTriggered("RIGHT"))
+	{
+		Setting::GetInstance().SetBGMVolume(min(Setting::GetInstance().GetBGMVolume() + 0.1f,1.0f));
+	}
+
+	if (Input::GetInstance().IsTriggered("LEFT"))
+	{
+		Setting::GetInstance().SetBGMVolume(max(Setting::GetInstance().GetBGMVolume() - 0.1f,0.0f));
+	}
 }
 
 /// <summary>
@@ -63,8 +78,12 @@ void SceneOption::Update()
 void SceneOption::Draw()
 {
 #ifdef _DEBUG	//デバッグ描画
-	DrawFormatString(0, 32, 0xffffff, "%s", GetNowSceneName());
+	DrawFormatString(0, 32, 0xffffff, "%f", GetNowSceneName());
 #endif
+	std::stringstream ss;
+	ss << "bgm:" << std::fixed << std::setprecision(2) << Setting::GetInstance().GetBGMVolume();
+	auto text = ss.str();
+	FontManager::GetInstance().DrawCenteredText(200, 200, text, 0xffffff, 32, 0x000000);
 }
 
 /// <summary>
