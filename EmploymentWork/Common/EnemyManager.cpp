@@ -47,6 +47,7 @@ namespace
 
 	//連続キルの罠ポイント倍率
 	constexpr int kTrapPointMag = 11;
+
 }
 
 EnemyManager::EnemyManager(bool isGame) :
@@ -297,11 +298,12 @@ void EnemyManager::Draw()
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
 			FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル!", 0xfebe41, 32, 0xcc0000);
-		}, 2);
-
-		DrawUI::GetInstance().RegisterDrawRequest([=]()
-		{
 			FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 32, 0x0000cc);
+
+			DrawBox(100, 410, 100 + 160, 430, 0xffffff, false);
+			auto limitTime = kKillStreakResetTime - (10 * m_killStreakCount);
+			auto per = static_cast<float>(m_killStreakTime) / static_cast<float>(limitTime);
+			DrawBox(100, 410, 100 + 160 * (1.0f - per), 430, 0xffffff, true);
 		}, 2);
 	}
 

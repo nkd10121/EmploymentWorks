@@ -1,9 +1,5 @@
-﻿  SceneStageSelect.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Scene\SceneStageSelect.cpp(162,21): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Scene\SceneStageSelect.cpp(165,91): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Scene\SceneStageSelect.cpp(165,58): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Scene\SceneStageSelect.cpp(179,64): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Scene\SceneStageSelect.cpp(179,21): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Scene\SceneStageSelect.cpp(180,104): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Scene\SceneStageSelect.cpp(180,57): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+﻿  EnemyManager.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(86,22): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(306,26): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(483,48): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe
