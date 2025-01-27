@@ -3,7 +3,6 @@
 #include "SceneGame.h"
 //#include "SceneStrengthen.h"
 //#include "SceneRanking.h"
-#include "SceneOption.h"
 #include "SceneStageSelect.h"
 
 #include "ScoreManager.h"
@@ -105,8 +104,7 @@ void SceneResult::Draw()
 
 	DrawString(kTextX, kTextY, "次のステージへ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval, "スコア詳細へ", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 2, "オプション", 0xffffff);
-	DrawString(kTextX, kTextY + kTextYInterval * 3, "ステージセレクトに戻る", 0xffffff);
+	DrawString(kTextX, kTextY + kTextYInterval * 2, "ステージセレクトに戻る", 0xffffff);
 }
 
 const void SceneResult::SetStageName(std::string stageName)
@@ -161,13 +159,6 @@ void SceneResult::SelectNextSceneUpdate()
 		//スコア詳細が出てくる
 		else if (m_destinationScene == eDestination::ScoreDetail)
 		{
-
-		}
-		else if (m_destinationScene == eDestination::Option)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
-			EndThisScene(true);
-			return;
 
 		}
 		////強化シーンに遷移する
