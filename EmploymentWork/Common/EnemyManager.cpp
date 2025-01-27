@@ -48,6 +48,12 @@ namespace
 	//連続キルの罠ポイント倍率
 	constexpr int kTrapPointMag = 11;
 
+	constexpr int kDrawKillStreakUIX = 100;
+	constexpr int kDrawKillStreakUIIntervalX = 80;
+
+	constexpr int kDrawKillStreakUIY = 300;
+	constexpr int kDrawKillStreakUIIntervalY = 30;
+	constexpr int kDrawKillStreakUIBoxSize = 20;
 }
 
 EnemyManager::EnemyManager(bool isGame) :
@@ -297,13 +303,16 @@ void EnemyManager::Draw()
 	{
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
-			FontManager::GetInstance().DrawCenteredText(180, 350, "連続キル!", 0xfebe41, 32, 0xcc0000);
-			FontManager::GetInstance().DrawCenteredText(180, 380, "x" + std::to_string(m_killStreakCount), 0xffffff, 32, 0x0000cc);
+			FontManager::GetInstance().DrawCenteredText(kDrawKillStreakUIX + kDrawKillStreakUIIntervalX, kDrawKillStreakUIY, "連続キル!", 0xfebe41, 32, 0xcc0000);
+			FontManager::GetInstance().DrawCenteredText(kDrawKillStreakUIX + kDrawKillStreakUIIntervalX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, "x" + std::to_string(m_killStreakCount), 0xffffff, 32, 0x0000cc);
 
-			DrawBox(100, 410, 100 + 160, 430, 0xffffff, false);
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+			DrawBox(kDrawKillStreakUIX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY * 2, kDrawKillStreakUIX + kDrawKillStreakUIIntervalX * 2, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY * 2 + kDrawKillStreakUIBoxSize, 0x1a1a1a, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+			DrawBox(kDrawKillStreakUIX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY * 2, kDrawKillStreakUIX + kDrawKillStreakUIIntervalX * 2, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY * 2 + kDrawKillStreakUIBoxSize, 0xffffff, false);
 			auto limitTime = kKillStreakResetTime - (10 * m_killStreakCount);
 			auto per = static_cast<float>(m_killStreakTime) / static_cast<float>(limitTime);
-			DrawBox(100, 410, 100 + 160 * (1.0f - per), 430, 0xffffff, true);
+			DrawBox(kDrawKillStreakUIX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY * 2, kDrawKillStreakUIX + kDrawKillStreakUIIntervalX * 2 * (1.0f - per), kDrawKillStreakUIY + kDrawKillStreakUIIntervalY * 2 + kDrawKillStreakUIBoxSize, 0x91cdd9, true);
 		}, 2);
 	}
 
