@@ -149,7 +149,7 @@ private:	/*フェード関係*/
 	/// <summary>
 	/// ロード中描画
 	/// </summary>
-	void DrawLoading() const;
+	void DrawLoading();
 
 public:
 	/// <summary>

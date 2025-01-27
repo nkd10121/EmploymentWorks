@@ -152,7 +152,6 @@ bool SceneBase::InitAll()
 	//ゲームシーンを開始しようとしていたら
 	if (m_sceneName == "SCENE_GAME")
 	{
-		m_isDrawOperation = true;
 
 		if (Input::GetInstance().IsTriggered("OK"))
 		{
@@ -261,7 +260,11 @@ void SceneBase::DrawAll()
 	if (m_isDrawOperation)
 	{
 		DrawGraph(0, 0, ResourceManager::GetInstance().GetHandle("I_OPERATION"), true);
-		DrawString(580, 660, "Aボタンでスタート", 0x000000);
+
+		if (IsLoaded())
+		{
+			DrawString(580, 660, "Aボタンでスタート", 0x000000);
+		}
 	}
 
 	//ロード中画面の描画
@@ -372,10 +375,16 @@ void SceneBase::DrawFade() const
 /// <summary>
 /// ロード中描画
 /// </summary>
-void SceneBase::DrawLoading() const
+void SceneBase::DrawLoading()
 {
 	if (!IsLoaded())
 	{
+		//ゲームシーンを開始しようとしていたら
+		if (m_sceneName == "SCENE_GAME")
+		{
+			m_isDrawOperation = true;
+		}
+
 		//描画座標
 		int x = Game::kWindowWidth - 128;
 		int y = Game::kWindowHeight - 32;
@@ -388,7 +397,7 @@ void SceneBase::DrawLoading() const
 			//ロード中の経過フレームで高さを変える
 			float height = sinf(static_cast<float>(m_loadingFrame - num * 2) / 6);
 			//文字の描画
-			DrawFormatString(x + num * 8, y - static_cast<int>(height * 4), 0xffffff, "%s", text.c_str());
+			DrawFormatString(x + num * 8, y - static_cast<int>(height * 4), 0x000000, "%s", text.c_str());
 
 			//文字数を更新
 			num++;
