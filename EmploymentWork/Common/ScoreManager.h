@@ -1,4 +1,7 @@
 ﻿#pragma once
+#include <unordered_map>
+#include <string>
+
 class ScoreManager
 {
 private:
@@ -87,13 +90,13 @@ public:
 	/// スコアを計算する
 	/// </summary>
 	/// <returns></returns>
-	const void CalculationScore();
+	const void CalculationScore(std::string stageName);
 
 	/// <summary>
 	/// スコアを取得する
 	/// </summary>
 	/// <returns></returns>
-	const int GetScore()const { return m_score; }
+	const int GetScore(std::string stageName)const { return m_score.at(stageName); }
 
 private:
 	int m_targetClearTime;	//目標クリアタイム
@@ -103,6 +106,7 @@ private:
 	int m_crystalHp;		//クリスタルの残りHP
 	int m_maxComboNum;		//最大コンボ数
 
-	int m_score;			//スコア
-};
+	//int m_score;			//スコア
 
+	std::unordered_map<std::string,int> m_score;
+};

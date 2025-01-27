@@ -94,7 +94,7 @@ void SceneResult::Draw()
 		DrawString(240, 224, "ゲームオーバー...", 0xffffff);
 	}
 
-	DrawFormatString(240,240,0xffffff,"Score:%d",ScoreManager::GetInstance().GetScore());
+	//DrawFormatString(240,240,0xffffff,"Score:%d",ScoreManager::GetInstance().GetScore());
 
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());

@@ -221,6 +221,8 @@ void GameManager::Init(int stageIdx)
 
 	// 目標クリアタイムの設定
 	ScoreManager::GetInstance().SetTargetClearTime(std::stoi(info[6]));
+
+	m_stageName = info[8];
 }
 
 /// <summary>
@@ -419,7 +421,7 @@ void GameManager::Update()
 			ScoreManager::GetInstance().SetClearTime(m_allPhaseCount);
 			m_pEnemyManager->SetScoreData();
 			// スコアを計算
-			ScoreManager::GetInstance().CalculationScore();
+			ScoreManager::GetInstance().CalculationScore(m_stageName);
 			m_isClear = true;
 			m_isEnd = true;
 		}

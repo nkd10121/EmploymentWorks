@@ -54,6 +54,7 @@ private:
 	std::shared_ptr<HPBar> m_pHpUi;	//HPバー
 
 	std::string m_stageId;	//ステージID
+	std::string m_stageName;	//ステージ名
 
 	std::list<int> m_phaseNum;	//フェーズ番号
 	bool m_isCreateEnemy;	//敵生成フラグ
