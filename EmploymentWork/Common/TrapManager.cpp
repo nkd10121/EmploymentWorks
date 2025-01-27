@@ -400,10 +400,10 @@ void TrapManager::PreviewDraw()
 	if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
 	{
 		m_previewTraps[m_slotIdx - 1]->SetRot(Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f));
-		if (m_attackEffectCreateCount % 60 == 0)
-		{
-			EffectManager::GetInstance().CreateEffect("E_TRAPATTACKAREA", debugTrap->pos);
-		}
+		//if (m_attackEffectCreateCount % 60 == 0)
+		//{
+		//	EffectManager::GetInstance().CreateEffect("E_TRAPATTACKAREA", debugTrap->pos);
+		//}
 	}
 	else if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 1)
 	{
@@ -499,6 +499,8 @@ void TrapManager::Clear()
 	DeleteGraph(m_bgHandle);
 	DeleteGraph(m_iconHandle);
 	m_trapPoint = 0;
+
+	m_previewTraps.clear();
 }
 
 void TrapManager::AddTrapPoint(int addPoint)

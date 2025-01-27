@@ -140,6 +140,8 @@ GameManager::~GameManager()
 		DeleteGraph(h);
 	}
 
+
+	TrapManager::GetInstance().Clear();
 }
 
 /// <summary>
