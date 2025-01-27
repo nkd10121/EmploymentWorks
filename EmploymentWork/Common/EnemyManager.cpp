@@ -63,6 +63,9 @@ EnemyManager::EnemyManager(bool isGame) :
 	m_rayHitEnemyMaxHP(0),
 	m_killStreakCount(0),
 	m_killStreakTime(0),
+	m_killStreakPoint(0),
+	m_isDrawKillStreakPoint(false),
+	m_drawKillStreakPointCount(0),
 	m_deadEnemyNum(0),
 	m_killedByPlayerNum(0),
 	m_killedByTrapNum(0),
@@ -203,6 +206,16 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 		m_rayHitEnemyMaxHP = retRayHitEnemy.lock()->GetMaxHp();
 	}
 
+	if (m_isDrawKillStreakPoint)
+	{
+		m_drawKillStreakPointCount++;
+		if (m_drawKillStreakPointCount > 90)
+		{
+			m_isDrawKillStreakPoint = false;
+			m_killStreakPoint = 0;
+			m_drawKillStreakPointCount = 0;
+		}
+	}
 
 	//もし連続キルカウントが0以上なら
 	if (m_killStreakCount > 0)
@@ -218,8 +231,10 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 		//キルカウントの受付時間を超えたら
 		if (m_killStreakTime > limitTime)
 		{
+			m_killStreakPoint = m_killStreakCount * kTrapPointMag;
+			m_isDrawKillStreakPoint = true;
 			//キルストリークカウント*11をポイントとして取得する
-			TrapManager::GetInstance().AddTrapPoint(m_killStreakCount * kTrapPointMag);
+			TrapManager::GetInstance().AddTrapPoint(m_killStreakPoint);
 
 			//値をリセットする
 			m_killStreakCount = 0;
@@ -313,6 +328,14 @@ void EnemyManager::Draw()
 			auto limitTime = kKillStreakResetTime - (10 * m_killStreakCount);
 			auto per = static_cast<float>(m_killStreakTime) / static_cast<float>(limitTime);
 			DrawBox(kDrawKillStreakUIX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY * 2, kDrawKillStreakUIX + kDrawKillStreakUIIntervalX * 2 * (1.0f - per), kDrawKillStreakUIY + kDrawKillStreakUIIntervalY * 2 + kDrawKillStreakUIBoxSize, 0x91cdd9, true);
+		}, 2);
+	}
+
+	if (m_isDrawKillStreakPoint)
+	{
+		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		{
+			FontManager::GetInstance().DrawCenteredText(kDrawKillStreakUIX + kDrawKillStreakUIIntervalX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, std::to_string(m_killStreakPoint), 0x91cdd9, 40, 0x395f62);
 		}, 2);
 	}
 

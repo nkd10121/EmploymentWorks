@@ -81,6 +81,9 @@ private:
 
 	int m_killStreakCount;
 	int m_killStreakTime;
+	int m_killStreakPoint;
+	bool m_isDrawKillStreakPoint;
+	int m_drawKillStreakPointCount;
 
 	int m_deadEnemyNum;
 	int m_killedByPlayerNum;
