@@ -23,5 +23,6 @@ public:
 
 private:
 	int m_frame;
+	int m_trapPointGraphHandle;
 };
 
