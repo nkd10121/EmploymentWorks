@@ -34,11 +34,11 @@ public class TrapPlacementDetector : MonoBehaviour
         Vector3[] directions = { Vector3.down, Vector3.forward, Vector3.back, Vector3.left, Vector3.right, Vector3.up };
 
         // サンプリング範囲をループ
-        for (float x = minPos.transform.position.x - gridSize / 2; x <= maxPos.transform.position.x; x += gridSize) // X範囲（適宜変更）
+        for (float x = minPos.transform.position.x - gridSize; x <= maxPos.transform.position.x; x += gridSize) // X範囲（適宜変更）
         {
-            for (float y = minPos.transform.position.y - gridSize / 2; y <= maxPos.transform.position.y; y += gridSize) // Y範囲（高さ）
+            for (float y = minPos.transform.position.y - gridSize; y <= maxPos.transform.position.y; y += gridSize) // Y範囲（高さ）
             {
-                for (float z = minPos.transform.position.z - gridSize / 2; z <= maxPos.transform.position.z; z += gridSize) // Z範囲（適宜変更）
+                for (float z = minPos.transform.position.z - gridSize; z <= maxPos.transform.position.z; z += gridSize) // Z範囲（適宜変更）
                 {
                     Vector3 origin = new Vector3(x, y, z); // サンプリング開始点
 
