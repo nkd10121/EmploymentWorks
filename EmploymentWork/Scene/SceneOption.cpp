@@ -19,7 +19,7 @@ SceneOption::SceneOption():
 	m_pushCount(0),
 	m_keyRepeatFrame(kKeyRepeatInitFrame)
 {
-	m_updateFunc = &SceneOption::BgmUpdate;
+	m_updateFunc = &SceneOption::MasterUpdate;
 }
 
 /// <summary>
@@ -83,17 +83,21 @@ void SceneOption::Draw()
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 32, 0xffffff, "%f", GetNowSceneName());
 #endif
-	std::string text = "BGM:";
-	text += std::to_string(static_cast<int>(Setting::GetInstance().GetBGMVolume() * 100));
+	std::string text = "Master:";
+	text += std::to_string(static_cast<int>(Setting::GetInstance().GetMasterVolume() * 100));
 	FontManager::GetInstance().DrawCenteredText(200, 200, text, 0xffffff, 32, 0x000000);
+
+	text = "BGM:";
+	text += std::to_string(static_cast<int>(Setting::GetInstance().GetBGMVolume() * 100));
+	FontManager::GetInstance().DrawCenteredText(200, 200 + 100, text, 0xffffff, 32, 0x000000);
 
 	text = "SE:";
 	text += std::to_string(static_cast<int>(Setting::GetInstance().GetSEVolume() * 100));
-	FontManager::GetInstance().DrawCenteredText(200, 200 + 100, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 2, text, 0xffffff, 32, 0x000000);
 
 	text = "Sensitivity:";
 	text += std::to_string(static_cast<int>(Setting::GetInstance().GetSensitivity() * 100));
-	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 2, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 3, text, 0xffffff, 32, 0x000000);
 
 	text = "FullScreen:";
 	if (Setting::GetInstance().GetIsFullScreen())
@@ -104,7 +108,18 @@ void SceneOption::Draw()
 	{
 		text += "〇";
 	}
-	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 3, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 4, text, 0xffffff, 32, 0x000000);
+
+	text = "操作説明を描画:";
+	if (Setting::GetInstance().GetIsDrawOperation())
+	{
+		text += "●";
+	}
+	else
+	{
+		text += "〇";
+	}
+	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 5, text, 0xffffff, 32, 0x000000);
 }
 
 /// <summary>
@@ -117,6 +132,41 @@ void SceneOption::SelectNextSceneUpdate()
 	{
 		EndThisScene();
 		return;
+	}
+}
+
+void SceneOption::MasterUpdate()
+{
+	if (Input::GetInstance().IsPushed("RIGHT"))
+	{
+		if (m_pushCount == 0 || m_pushCount > m_keyRepeatFrame)
+		{
+			if (m_pushCount > m_keyRepeatFrame)
+			{
+				m_pushCount = 0;
+				m_keyRepeatFrame = max(m_keyRepeatFrame * 0.6f, 0);
+			}
+			Setting::GetInstance().SetMasterVolume(min(Setting::GetInstance().GetMasterVolume() + 0.01f, 1.0f));
+		}
+		m_pushCount++;
+	}
+	if (Input::GetInstance().IsPushed("LEFT"))
+	{
+		if (m_pushCount == 0 || m_pushCount > m_keyRepeatFrame)
+		{
+			if (m_pushCount > m_keyRepeatFrame)
+			{
+				m_pushCount = 0;
+				m_keyRepeatFrame = max(m_keyRepeatFrame * 0.6f, 0);
+			}
+			Setting::GetInstance().SetMasterVolume(max(Setting::GetInstance().GetMasterVolume() - 0.01f, 0.0f));
+		}
+		m_pushCount++;
+	}
+
+	if (Input::GetInstance().IsTriggered("DOWN"))
+	{
+		m_updateFunc = &SceneOption::BgmUpdate;
 	}
 }
 
@@ -149,6 +199,10 @@ void SceneOption::BgmUpdate()
 		m_pushCount++;
 	}
 
+	if (Input::GetInstance().IsTriggered("UP"))
+	{
+		m_updateFunc = &SceneOption::MasterUpdate;
+	}
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
 		m_updateFunc = &SceneOption::SeUpdate;
@@ -244,5 +298,22 @@ void SceneOption::FullScreenUpdate()
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
 		m_updateFunc = &SceneOption::SensitivityUpdate;
+	}
+	if (Input::GetInstance().IsTriggered("DOWN"))
+	{
+		m_updateFunc = &SceneOption::DrawOperationUpdate;
+	}
+}
+
+void SceneOption::DrawOperationUpdate()
+{
+	if (Input::GetInstance().IsTriggered("OK"))
+	{
+		Setting::GetInstance().SetIsDrawOperation(!Setting::GetInstance().GetIsDrawOperation());
+	}
+
+	if (Input::GetInstance().IsTriggered("UP"))
+	{
+		m_updateFunc = &SceneOption::FullScreenUpdate;
 	}
 }

@@ -75,6 +75,8 @@ private:
 	bool m_isEnd;
 	bool m_isClear;
 
+	int m_operationHandle;
+
 	int m_stageModel;	//モデルハンドル(仮)
 	int m_skyBoxHandle;
 };

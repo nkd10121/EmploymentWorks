@@ -46,6 +46,8 @@ public:
 	}
 
 public:
+	//マスターボリュームを設定する
+	void SetMasterVolume(float volume) { m_data.masterVolume = volume; }
 	//BGMボリュームを設定する
 	void SetBGMVolume(float volume) { m_data.bgmVolume = volume; }
 	//SEボリュームを設定する
@@ -54,7 +56,11 @@ public:
 	void SetSensitivity(float sensitivity) { m_data.sensitivity = sensitivity; }
 	//フルスクリーンを設定する
 	void SetIsFullScreen(bool isFullScreen) { m_data.isFullScreen = isFullScreen; }
+	//操作説明を描画するかを設定する
+	void SetIsDrawOperation(bool isDrawOperation) { m_data.isDrawOperation = isDrawOperation; }
 
+	//マスターボリュームを取得する
+	const float GetMasterVolume()const { return m_data.masterVolume; }
 	//BGMボリュームを取得する
 	const float GetBGMVolume()const { return m_data.bgmVolume; }
 	//SEボリュームを取得する
@@ -63,6 +69,8 @@ public:
 	const float GetSensitivity()const { return m_data.sensitivity; }
 	//フルスクリーンを取得する
 	const bool GetIsFullScreen()const { return m_data.isFullScreen; }
+	//操作説明を描画するかを取得する
+	const bool GetIsDrawOperation()const { return m_data.isDrawOperation; }
 
 	//オプションデータを読み込む
 	void Load();
@@ -85,6 +93,7 @@ private:
 		float sensitivity;
 
 		bool isFullScreen;
+		bool isDrawOperation;
 	};
 private:
 	Data m_data;

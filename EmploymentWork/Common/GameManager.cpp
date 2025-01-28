@@ -14,6 +14,7 @@
 #include "ScoreManager.h"
 #include "LoadCSV.h"
 #include "Input.h"
+#include "Setting.h"
 
 #include "DrawUI.h"
 #include "FontManager.h"
@@ -223,6 +224,8 @@ void GameManager::Init(int stageIdx)
 	ScoreManager::GetInstance().SetTargetClearTime(std::stoi(info[6]));
 
 	m_stageName = info[8];
+
+	m_operationHandle = ResourceManager::GetInstance().GetHandle("I_OPERATIONINGAME");
 }
 
 /// <summary>
@@ -490,6 +493,16 @@ void GameManager::Draw()
 	{
 		FontManager::GetInstance().DrawCenteredText(kCrystalHpX, kCrystalHpY, std::to_string(m_pCrystal->GetHp()), 0xffffff, kCrystalHpFontSize, 0x395f62);
 	}, 2);
+
+	if (Setting::GetInstance().GetIsDrawOperation())
+	{
+		// 操作説明UIの描画
+		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		{
+				DrawRotaGraph(Game::kWindowWidth - 130, Game::kWindowHeight - 130, 1.0f, 0.0f, m_operationHandle, true);
+		}, 2);
+	}
+
 
 	// フェーズ番号の描画
 	DrawFormatString(kPhaseNumX, kPhaseNumY, 0xffffff, "%d / 3", abs(m_phaseNum.front()));

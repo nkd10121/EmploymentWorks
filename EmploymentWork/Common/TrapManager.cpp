@@ -333,6 +333,19 @@ void TrapManager::Draw()
 	//	}
 	//#endif
 
+	if (debugTrap)
+	{
+		if (debugTrap->isPlaced)
+		{
+			//罠ポイントの描画
+			DrawUI::GetInstance().RegisterDrawRequest([=]()
+			{
+					FontManager::GetInstance().DrawCenteredText(120, 300, "ZLボタンで罠を解除", 0x91cdd9, 24, 0x395f62);
+			}, 2);
+		}
+	}
+
+
 	// 装備スロットの描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
