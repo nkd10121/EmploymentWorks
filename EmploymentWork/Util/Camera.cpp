@@ -1,6 +1,7 @@
 ﻿#include "Camera.h"
 #include "DxLib.h"
 #include "Input.h"
+#include "Setting.h"
 #include <cmath>
 
 namespace
@@ -69,9 +70,11 @@ void Camera::Init(int& handle)
 /// </summary>
 void Camera::Update()
 {
-	m_angleMoveScale = 2.0f;
+	auto mag = Setting::GetInstance().GetSensitivity();
+	m_angleMoveScale = max(4.0f * mag,0.1f);
 
 	auto input = Input::GetInstance().GetInputStick(true);
+
 
 	//入力から角度を計算する
 	float inputRateX = input.first / kAnalogInputMax;
