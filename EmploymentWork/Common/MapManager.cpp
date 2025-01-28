@@ -34,6 +34,7 @@ namespace
 		{"pillar","M_PILLAR"},
 		{"banner","M_BANNER"},
 		{"torch","M_TORCH"},
+		{"fence","M_FENCE"},
 	};
 }
 
