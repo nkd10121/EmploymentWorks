@@ -76,6 +76,12 @@ void SceneGame::StartLoad()
 	//リソースデータ群をみてリソースのロードを開始する
 	ResourceManager::GetInstance().Load(GetNowSceneName());
 
+	//auto stageIdx = SceneManager::GetInstance().GetStageIdx();
+	//// ステージ情報をCSVから読み込む
+	//auto info = LoadCSV::GetInstance().LoadStageInfo(stageIdx);
+
+	//MapManager::GetInstance().Load(info[0].c_str());
+
 	// デフォルトに戻す
 	SetUseASyncLoadFlag(false);
 }
