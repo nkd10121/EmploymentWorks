@@ -33,7 +33,7 @@ void SoundManager::Load(std::string id, std::string path, bool isBGM, bool isEte
 		for (auto& bgm : m_BGM)
 		{
 			//同じパスのデータがすでにロードされていたら
-			if (bgm->path == path)
+			if (bgm.path == path)
 			{
 				//何もしない
 #ifdef _DEBUG	//デバッグ描画 
@@ -45,11 +45,11 @@ void SoundManager::Load(std::string id, std::string path, bool isBGM, bool isEte
 		}
 
 		//ここまできたらロードする
-		std::shared_ptr<Sound> add = std::make_shared<Sound>();
-		add->id = id;
-		add->path = path;
-		add->handle = LoadSoundMem(path.c_str());
-		add->isEteral = isEternal;
+		Sound add;
+		add.id = id;
+		add.path = path;
+		add.handle = LoadSoundMem(path.c_str());
+		add.isEteral = isEternal;
 		m_BGM.emplace_back(add);
 
 		return;
@@ -91,7 +91,7 @@ const bool SoundManager::IsLoaded() const
 {
 	for (auto& bgm : m_BGM)
 	{
-		if (CheckHandleASyncLoad(bgm->handle)) return false;
+		if (CheckHandleASyncLoad(bgm.handle)) return false;
 	}
 
 	for (auto& se : m_SE)
@@ -109,7 +109,7 @@ void SoundManager::Clear()
 {
 	for (auto& bgm : m_BGM)
 	{
-		DeleteSoundMem(bgm->handle);
+		DeleteSoundMem(bgm.handle);
 	}
 	m_BGM.clear();
 
@@ -152,6 +152,15 @@ void SoundManager::PlayBGM(std::string id, bool isFromStart)
 	{
 		//流れていなかったら流す
 		PlaySoundMem(playHandle, DX_PLAYTYPE_BACK, isFromStart);
+
+		Sound add;
+		add.handle = playHandle;
+		add.id = id;
+		add.isEteral = false;
+		add.path = "";
+
+		m_BGM.push_back(add);
+
 		return;
 	}
 
@@ -203,14 +212,14 @@ void SoundManager::FadeOutBGM(std::string id, int fadeFrame)
 	for (auto& bgm : m_BGM)
 	{
 		//指定したIDと一致するハンドルが存在していたら
-		if (bgm->id == id)
+		if (bgm.id == id)
 		{
 			//BGMvolume = dif;
-			ChangeVolumeSoundMem(static_cast<int>(255 * dif), bgm->handle);
+			ChangeVolumeSoundMem(static_cast<int>(255 * dif), bgm.handle);
 
 			if (255 * dif <= 0.0f)
 			{
-				StopSoundMem(bgm->handle);
+				StopSoundMem(bgm.handle);
 			}
 			return;
 		}
@@ -226,15 +235,15 @@ void SoundManager::StopBGM(std::string id)
 	for (auto& bgm : m_BGM)
 	{
 		//指定したIDと一致するハンドルが存在していたら
-		if (bgm->id == id)
+		if (bgm.id == id)
 		{
 			//流れていなかったら何もしない
-			if (!CheckPlaying(bgm->handle))
+			if (!CheckPlaying(bgm.handle))
 			{
 				return;
 			}
 
-			StopSoundMem(bgm->handle);
+			StopSoundMem(bgm.handle);
 
 			return;
 		}
@@ -249,10 +258,10 @@ bool SoundManager::isPlayingSound(std::string id)
 	for (auto& bgm : m_BGM)
 	{
 		//指定したIDと一致するハンドルが存在していたら
-		if (bgm->id == id)
+		if (bgm.id == id)
 		{
 			//流れているかどうかを返す
-			return CheckPlaying(bgm->handle);
+			return CheckPlaying(bgm.handle);
 		}
 	}
 
@@ -267,13 +276,13 @@ void SoundManager::BGMChangeVolume()
 	for (auto& bgm : m_BGM)
 	{
 		//もし流れていたら
-		if (CheckPlaying(bgm->handle))
+		if (CheckPlaying(bgm.handle))
 		{
-			StopSoundMem(bgm->handle);
+			StopSoundMem(bgm.handle);
 		}
 
-		ChangeVolumeSoundMem(static_cast<int>(255 * Setting::GetInstance().GetMasterVolume() * Setting::GetInstance().GetBGMVolume()), bgm->handle);
-		PlaySoundMem(bgm->handle, DX_PLAYTYPE_BACK, false);
+		ChangeVolumeSoundMem(static_cast<int>(255 * Setting::GetInstance().GetMasterVolume() * Setting::GetInstance().GetBGMVolume()), bgm.handle);
+		PlaySoundMem(bgm.handle, DX_PLAYTYPE_BACK, false);
 		return;
 	}
 }
