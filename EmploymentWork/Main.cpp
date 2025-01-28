@@ -82,6 +82,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//シーンの描画
 		SceneManager::GetInstance().Draw();
 
+#ifdef _DEBUG
+		//ドローコールの回数を取得
+		printf("DrawCall:%d回\n", GetDrawCallCount());
+#endif
+
 		//裏画面を表画面を入れ替える
 		ScreenFlip();
 

@@ -34,6 +34,13 @@ private:
 		int handle;
 	};
 
+	struct Batch
+	{
+		std::string tag;
+		int handle;
+		Vec3 pos;
+	};
+
 public:
 	//コピーコンストラクタから実体の生成ができてしまうため
 	//コピーコンストラクタを禁止する
