@@ -127,17 +127,7 @@ public:
 	/// <returns>true = 流れている,false = 流れていない</returns>
 	bool isPlayingSound(std::string id);
 
-	/// <summary>
-	/// BGMの音量を変える
-	/// </summary>
-	/// <param name="volume">音量 0.0f～1.0f</param>
-	void ChangeBGMVolume(float volume);
-
-	/// <summary>
-	/// SEの音量を変える
-	/// </summary>
-	/// <param name="volume">音量 0.0f～1.0f</param>
-	void ChangeSEVolume(float volume);
+	void BGMChangeVolume();
 
 private:
 	/// <summary>

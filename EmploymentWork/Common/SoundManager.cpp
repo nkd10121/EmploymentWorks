@@ -1,6 +1,7 @@
 ﻿#include "SoundManager.h"
 #include <cassert>
 
+#include "Setting.h"
 #include "ResourceManager.h"
 
 SoundManager* SoundManager::m_instance = nullptr;
@@ -42,7 +43,7 @@ void SoundManager::Load(std::string id, std::string path, bool isBGM, bool isEte
 				return;
 			}
 		}
-		
+
 		//ここまできたらロードする
 		std::shared_ptr<Sound> add = std::make_shared<Sound>();
 		add->id = id;
@@ -145,7 +146,7 @@ void SoundManager::PlayBGM(std::string id, bool isFromStart)
 	//}
 
 	auto playHandle = ResourceManager::GetInstance().GetHandle(id);
-	ChangeVolumeSoundMem(static_cast<int>(255 * m_BGMvolume), playHandle);
+	ChangeVolumeSoundMem(static_cast<int>(255 * Setting::GetInstance().GetMasterVolume() * Setting::GetInstance().GetBGMVolume()), playHandle);
 	//流れていたら何もしない
 	if (!CheckPlaying(playHandle))
 	{
@@ -179,7 +180,8 @@ void SoundManager::PlaySE(std::string id)
 	//}
 
 	auto playHandle = ResourceManager::GetInstance().GetHandle(id);
-	ChangeVolumeSoundMem(static_cast<int>(255 * m_SEvolume), playHandle);
+	auto volume = static_cast<int>(255 * Setting::GetInstance().GetMasterVolume() * Setting::GetInstance().GetSEVolume());
+	ChangeVolumeSoundMem(volume, playHandle);
 	PlaySoundMem(playHandle, DX_PLAYTYPE_BACK, true);
 
 	return;
@@ -260,28 +262,18 @@ bool SoundManager::isPlayingSound(std::string id)
 	return false;
 }
 
-/// <summary>
-/// BGMの音量を変える
-/// </summary>
-void SoundManager::ChangeBGMVolume(float volume)
+void SoundManager::BGMChangeVolume()
 {
-	m_BGMvolume = volume;
 	for (auto& bgm : m_BGM)
 	{
-		ChangeVolumeSoundMem(static_cast<int>(255 * m_BGMvolume), bgm->handle);
-	}
-	return;
-}
+		//もし流れていたら
+		if (CheckPlaying(bgm->handle))
+		{
+			StopSoundMem(bgm->handle);
+		}
 
-/// <summary>
-/// SEの音量を変える
-/// </summary>
-void SoundManager::ChangeSEVolume(float volume)
-{
-	m_SEvolume = volume;
-	for (auto& se : m_SE)
-	{
-		ChangeVolumeSoundMem(static_cast<int>(255 * m_SEvolume), se->handle);
+		ChangeVolumeSoundMem(static_cast<int>(255 * Setting::GetInstance().GetMasterVolume() * Setting::GetInstance().GetBGMVolume()), bgm->handle);
+		PlaySoundMem(bgm->handle, DX_PLAYTYPE_BACK, false);
+		return;
 	}
-	return;
 }

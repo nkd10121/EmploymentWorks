@@ -1,6 +1,7 @@
 ﻿#include "SceneOption.h"
 
 #include "Setting.h"
+#include "SoundManager.h"
 #include "FontManager.h"
 
 #include <sstream>
@@ -147,6 +148,7 @@ void SceneOption::MasterUpdate()
 				m_keyRepeatFrame = max(m_keyRepeatFrame * 0.6f, 0);
 			}
 			Setting::GetInstance().SetMasterVolume(min(Setting::GetInstance().GetMasterVolume() + 0.01f, 1.0f));
+			SoundManager::GetInstance().BGMChangeVolume();
 		}
 		m_pushCount++;
 	}
@@ -160,6 +162,7 @@ void SceneOption::MasterUpdate()
 				m_keyRepeatFrame = max(m_keyRepeatFrame * 0.6f, 0);
 			}
 			Setting::GetInstance().SetMasterVolume(max(Setting::GetInstance().GetMasterVolume() - 0.01f, 0.0f));
+			SoundManager::GetInstance().BGMChangeVolume();
 		}
 		m_pushCount++;
 	}
@@ -182,6 +185,7 @@ void SceneOption::BgmUpdate()
 				m_keyRepeatFrame = max(m_keyRepeatFrame * 0.6f, 0);
 			}
 			Setting::GetInstance().SetBGMVolume(min(Setting::GetInstance().GetBGMVolume() + 0.01f, 1.0f));
+			SoundManager::GetInstance().BGMChangeVolume();
 		}
 		m_pushCount++;
 	}
@@ -195,6 +199,7 @@ void SceneOption::BgmUpdate()
 				m_keyRepeatFrame = max(m_keyRepeatFrame * 0.6f, 0);
 			}
 			Setting::GetInstance().SetBGMVolume(max(Setting::GetInstance().GetBGMVolume() - 0.01f, 0.0f));
+			SoundManager::GetInstance().BGMChangeVolume();
 		}
 		m_pushCount++;
 	}
