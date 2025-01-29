@@ -196,6 +196,8 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 				//一定間隔で向いている方向に弾を撃つ
 				if (m_attackButtonPushCount % 20 == 0)
 				{
+					SoundManager::GetInstance().PlaySE("S_PLAYERSHOT");
+
 					auto shotVec = (cameraRayCastRet - m_crossbowPos).Normalize();
 					if (m_attackIntervalCount > 0)
 					{

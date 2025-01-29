@@ -325,6 +325,9 @@ void GameManager::Update()
 			// クリスタルのHPを減らす
 			m_pCrystal->PlayerDead();
 
+			//復活SEを流す
+			SoundManager::GetInstance().PlaySE("S_PLAYERREVIVAL");
+
 			// プレイヤーの生成
 			m_pPlayer = std::make_shared<Player>();
 			m_pPlayer->Init(m_stageId);
