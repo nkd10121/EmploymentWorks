@@ -21,6 +21,7 @@ TagManager:
   - torch
   - banner
   - fence
+  - wallColor
   layers:
   - Default
   - TransparentFX

@@ -26,6 +26,7 @@ namespace
 	{
 		{"floor","M_FLOOR"},
 		{"wall","M_WALL"},
+		{"wallColor","M_WALLCOLOR"},
 		{"gate","M_FRAME"},
 		{"stairs","M_STAIRS"},
 		{"stairsWall","M_SMOOTHBLOCK"},

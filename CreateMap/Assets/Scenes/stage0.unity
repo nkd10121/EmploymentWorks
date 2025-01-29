@@ -299,6 +299,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (15)
@@ -717,6 +721,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -2613,6 +2621,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (42)
@@ -2868,6 +2880,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -4957,6 +4973,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (44)
@@ -5018,6 +5038,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -5146,6 +5170,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -5512,6 +5540,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (38)
@@ -5573,6 +5605,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -8989,6 +9025,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (1)
@@ -9167,6 +9207,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (11)
@@ -9294,6 +9338,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -10002,6 +10050,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (24)
@@ -10220,6 +10272,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -11430,6 +11486,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (42)
@@ -11853,6 +11913,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -12396,6 +12460,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -17881,6 +17949,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (18)
@@ -18008,6 +18080,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -18305,6 +18381,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (47)
@@ -18366,6 +18446,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -18505,6 +18589,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -18655,6 +18743,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -19800,6 +19892,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -20973,6 +21069,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (2)
@@ -21141,6 +21241,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -21582,9 +21686,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (30)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21854,6 +21966,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (30)
@@ -21915,6 +22031,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -22081,6 +22201,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
@@ -22872,6 +22996,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
+      objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
       value: prefab_wall (18)
@@ -23148,6 +23276,10 @@ PrefabInstance:
     - target: {fileID: 2747429006653829927, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750747171613596826, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
+      propertyPath: m_TagString
+      value: wallColor
       objectReference: {fileID: 0}
     - target: {fileID: 7599524233578218661, guid: 5ba80bff0cd691b46854ed51c6b6927e, type: 3}
       propertyPath: m_Name
