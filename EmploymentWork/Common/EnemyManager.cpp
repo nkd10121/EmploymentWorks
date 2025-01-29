@@ -335,7 +335,7 @@ void EnemyManager::Draw()
 	{
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
-			auto moveX = max(m_drawKillStreakPointCount - 60, 0) * 2;
+			auto moveX = max(m_drawKillStreakPointCount - 60, 0) * 4;
 
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - moveX * 4);
 			DrawRotaGraph(kDrawKillStreakUIX - moveX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, 0.8f * max(static_cast<float>((90 - m_drawKillStreakPointCount * 3.0f) / 50.0f),1.0f), 0.0f, ResourceManager::GetInstance().GetHandle("I_TRAPICON"), true);
