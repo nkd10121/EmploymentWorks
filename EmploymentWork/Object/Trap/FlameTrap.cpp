@@ -108,7 +108,7 @@ void FlameTrap::Update()
 				{
 					auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
 					auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-					sphereCol->m_radius = m_status.searchRange;
+					sphereCol->m_radius = m_status.atkRange;
 
 					//索敵判定を出す座標を計算
 					auto searchPos = rigidbody->GetPos();
