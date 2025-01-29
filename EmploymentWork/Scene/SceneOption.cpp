@@ -3,6 +3,7 @@
 #include "Setting.h"
 #include "SoundManager.h"
 #include "FontManager.h"
+#include "Game.h"
 
 #include <sstream>
 #include <iomanip> 
@@ -51,7 +52,7 @@ bool SceneOption::IsLoaded() const
 void SceneOption::Init()
 {
 	//フェードアウトをスキップする
-	//SkipFadeOut();
+	SkipFadeOut();
 }
 
 /// <summary>
@@ -81,6 +82,11 @@ void SceneOption::Update()
 /// </summary>
 void SceneOption::Draw()
 {
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0xffffff, false);
+
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 32, 0xffffff, "%f", GetNowSceneName());
 #endif
@@ -132,6 +138,7 @@ void SceneOption::SelectNextSceneUpdate()
 	if (Input::GetInstance().IsTriggered("CANCEL"))
 	{
 		EndThisScene();
+		SkipFadeIn();
 		return;
 	}
 }

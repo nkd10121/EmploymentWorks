@@ -260,8 +260,8 @@ void SceneTitle::SelectNextSceneUpdate()
 		}
 		else if (m_destinationScene == eDestination::Option)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
-			EndThisScene(true);
+			SceneManager::GetInstance().PushScene(std::make_shared<SceneOption>());
+			//EndThisScene(true);
 			return;
 		}
 		else if (m_destinationScene == eDestination::Quit)

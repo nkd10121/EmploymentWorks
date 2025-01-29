@@ -175,8 +175,8 @@ void ScenePause::SelectNextSceneUpdate()
 		//ゲームシーンに遷移する
 		else if (m_destinationScene == eDestination::Option)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneOption>());
-			EndThisScene(true);
+			SceneManager::GetInstance().PushScene(std::make_shared<SceneOption>());
+			//EndThisScene(true);
 			return;
 		}
 		//ポーズシーンを上に表示する
