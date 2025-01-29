@@ -211,6 +211,8 @@ void TrapManager::Update()
 	{
 		if (!debugTrap->isPlaced)
 		{
+			EffectManager::GetInstance().CreateEffect("E_TRAPCREATE", debugTrap->pos);
+
 			auto add = std::make_shared<TrapBase>();
 			if (m_slotIdx == 1)			add = std::make_shared<SpikeTrap>();
 			else if (m_slotIdx == 2)	add = std::make_shared<ArrowWallTrap>();
