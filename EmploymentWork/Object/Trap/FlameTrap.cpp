@@ -5,7 +5,8 @@
 
 FlameTrap::FlameTrap() :
 	TrapBase(),
-	m_waitCount(0)
+	m_waitCount(0),
+	m_attackCount(0)
 {
 	m_trapName = "Frame";
 	//罠のステータスを取得
@@ -46,7 +47,7 @@ void FlameTrap::Init(Vec3 pos, Vec3 direction)
 		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
 		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 		sphereCol->m_radius = m_status.searchRange;
-		
+
 		//索敵判定を出す座標を計算
 		auto searchPos = pos;
 		searchPos.y += 6.0f;
@@ -61,6 +62,8 @@ void FlameTrap::Init(Vec3 pos, Vec3 direction)
 	m_nowAnimIdx = 0;
 	m_animSpeed = 0.5f;
 
+	m_animEndFrame = MV1GetAttachAnimTotalTime(m_modelHandle, m_currentAnimNo);
+
 	//存在フラグをtrueにする
 	m_isExist = true;
 }
@@ -72,15 +75,73 @@ void FlameTrap::Update()
 
 	if (m_isAttack)
 	{
+		bool isAnimEnd = false;
 		if (m_waitCount == 0)
 		{
-			if (UpdateAnim(m_currentAnimNo))
+			isAnimEnd = UpdateAnim(m_currentAnimNo);
+			if (isAnimEnd)
 			{
 				m_waitCount++;
+
+
+			}
+
+			m_attackCount++;
+			if (m_attackCount % 20 == 0 && m_attackCount <= m_animEndFrame / 5 * 2)
+			{
+				//攻撃判定を生成する前にすべての攻撃判定を一回削除
+				while (1)
+				{
+					auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
+					if (col != nullptr)
+					{
+						Collidable::DeleteRequestCollider(col);
+					}
+					else
+					{
+						break;
+					}
+				}
+
+				//攻撃判定の作成(3つ作成)
+				for (int i = 1; i < 4; i++)
+				{
+					auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
+					auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
+					sphereCol->m_radius = m_status.searchRange;
+
+					//索敵判定を出す座標を計算
+					auto searchPos = rigidbody->GetPos();
+					searchPos.y += 6.0f;
+					searchPos += m_direction * 14.0f * i;
+
+					//索敵判定は動かすつもりがないため、先に中心座標を設定して動かないようにする
+					sphereCol->SetCenterPos(searchPos);
+					sphereCol->UseIsStatic();
+				}
+			}
+
+			//最後に出した攻撃判定がだしっぱのままになってしまうためそれを削除
+			if (m_attackCount % 20 == 0 && m_attackCount >= m_animEndFrame / 5 * 2)
+			{
+				//攻撃判定を生成する前にすべての攻撃判定を一回削除
+				//TODO:攻撃判定がないのにここが呼ばれてしまうのが気になる
+				while (1)
+				{
+					auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Attack);
+					if (col != nullptr)
+					{
+						Collidable::DeleteRequestCollider(col);
+					}
+					else
+					{
+						break;
+					}
+				}
 			}
 		}
 	}
-	
+
 
 	if (m_waitCount != 0)
 	{
@@ -88,6 +149,9 @@ void FlameTrap::Update()
 		{
 			m_isAttack = false;
 			m_waitCount = 0;
+			m_attackCount = 0;
+
+
 		}
 		else
 		{
