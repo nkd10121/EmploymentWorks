@@ -455,24 +455,6 @@ void TrapManager::PreviewDraw()
 	if (m_slotIdx == 0) return;
 	if (!debugTrap)	return;
 
-	//MV1SetPosition(m_trapInfos[m_slotIdx - 1].modelHandle, debugTrap->pos.ToVECTOR());
-
-	//if (m_trapInfos[m_slotIdx - 1].kind == 0)
-	//{
-	//	auto rot = Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f);
-	//	MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rot.ToVECTOR());
-	//}
-	//else if (m_trapInfos[m_slotIdx - 1].kind == 1)
-	//{
-	//	//回転させる
-	//	auto angle = atan2(debugTrap->norm.x, debugTrap->norm.z);
-	//	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
-	//	MV1SetRotationXYZ(m_trapInfos[m_slotIdx - 1].modelHandle, rotation);
-	//}
-
-	////モデルの半透明設定
-	//MV1SetOpacityRate(m_trapInfos[m_slotIdx - 1].modelHandle, m_transparency);
-
 	m_previewTraps[m_slotIdx - 1]->SetPos(debugTrap->pos.ToVECTOR());
 	if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
 	{
