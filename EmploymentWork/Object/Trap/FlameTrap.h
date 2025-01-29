@@ -28,6 +28,25 @@ public:
 	void SetRot(Vec3 vec)override;
 
 private:
+	/// <summary>
+	/// アニメーションの更新
+	/// </summary>
+	/// <param name="attachNo">進行させたいアニメーション番号</param>
+	/// <returns>ループしたかどうか</returns>
+	bool UpdateAnim(int attachNo, float startTime = 0.0f);
+	/// <summary>
+	///	アニメーションの変更
+	/// </summary>
+	/// <param name="animIndex">変更後のアニメーション番号</param>
+	void ChangeAnim(int animIndex, float animSpeed = 0.5f);
+
+	/*アニメーション関係*/
+	int m_currentAnimNo;		//現在のアニメーション
+	int m_nowAnimIdx;
+
+	float m_animSpeed;			//アニメーション再生速度
+private:
 	Vec3 m_direction;
+	int m_waitCount;
 };
 
