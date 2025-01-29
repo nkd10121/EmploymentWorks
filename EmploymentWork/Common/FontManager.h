@@ -71,6 +71,8 @@ public:
 	void DrawCenteredText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor);
 	// 指定座標を右下とする文字列を描画
 	void DrawBottomRightText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor);
+	// 指定座標を左端とする文字列を描画
+	void DrawLeftText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor);
 
 
 	void DrawCenteredExtendText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor, float extendRate);

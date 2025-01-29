@@ -102,6 +102,33 @@ void FontManager::DrawBottomRightText(int x, int y, std::string text, unsigned i
 	DrawStringToHandle(x - textWidth, y - textHeight, text.c_str(), color, drawFont.handle, edgeColor);
 }
 
+void FontManager::DrawLeftText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor)
+{
+	Font drawFont;
+	bool isFound = false;
+
+	for (auto& font : m_fonts)
+	{
+		if (/*font.fontName == fontName && */font.size == size)
+		{
+			isFound = true;
+			drawFont = font;
+		}
+	}
+
+	if (!isFound)
+	{
+#ifdef _DEBUG
+		assert(0 && "フォントデータが見つかりませんでした");
+#endif
+		return;
+	}
+
+	int textHeight = GetFontSizeToHandle(drawFont.handle);
+	// 左端揃えの文字列描画
+	DrawStringToHandle(x, y - textHeight/2, text.c_str(), color, drawFont.handle);
+}
+
 void FontManager::DrawCenteredExtendText(int x, int y, std::string text, unsigned int color, int size, unsigned int edgeColor, float extendRate)
 {
 	Font drawFont;

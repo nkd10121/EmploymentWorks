@@ -86,41 +86,41 @@ void SceneOption::Draw()
 #endif
 	std::string text = "Master:";
 	text += std::to_string(static_cast<int>(Setting::GetInstance().GetMasterVolume() * 100));
-	FontManager::GetInstance().DrawCenteredText(200, 200, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawLeftText(200, 100, text, 0xffffff, 32, 0x000000);
 
 	text = "BGM:";
 	text += std::to_string(static_cast<int>(Setting::GetInstance().GetBGMVolume() * 100));
-	FontManager::GetInstance().DrawCenteredText(200, 200 + 100, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawLeftText(200, 100 + 100, text, 0xffffff, 32, 0x000000);
 
 	text = "SE:";
 	text += std::to_string(static_cast<int>(Setting::GetInstance().GetSEVolume() * 100));
-	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 2, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawLeftText(200, 100 + 100 * 2, text, 0xffffff, 32, 0x000000);
 
 	text = "Sensitivity:";
 	text += std::to_string(static_cast<int>(Setting::GetInstance().GetSensitivity() * 100));
-	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 3, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawLeftText(200, 100 + 100 * 3, text, 0xffffff, 32, 0x000000);
 
 	text = "FullScreen:";
 	if (Setting::GetInstance().GetIsFullScreen())
 	{
-		text += "●";
+		text += "フルスクリーン";
 	}
 	else
 	{
-		text += "〇";
+		text += "ウィンドウ";
 	}
-	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 4, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawLeftText(200, 100 + 100 * 4, text, 0xffffff, 32, 0x000000);
 
 	text = "操作説明を描画:";
 	if (Setting::GetInstance().GetIsDrawOperation())
 	{
-		text += "●";
+		text += "描画する";
 	}
 	else
 	{
-		text += "〇";
+		text += "描画しない";
 	}
-	FontManager::GetInstance().DrawCenteredText(200, 200 + 100 * 5, text, 0xffffff, 32, 0x000000);
+	FontManager::GetInstance().DrawLeftText(200, 100 + 100 * 5, text, 0xffffff, 32, 0x000000);
 }
 
 /// <summary>
