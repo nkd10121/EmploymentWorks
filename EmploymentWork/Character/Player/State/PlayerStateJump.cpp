@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Player.h"
 
+#include "SoundManager.h"
 #include "ResourceManager.h"
 #include "LoadCSV.h"
 
@@ -32,6 +33,10 @@ PlayerStateJump::PlayerStateJump(std::shared_ptr<CharacterBase> own) :
 	auto vel = own->GetRigidbody()->GetVelocity();
 	vel.y += kJumpPower;
 	own->GetRigidbody()->SetVelocity(vel);
+
+	//ジャンプ音を流す
+	SoundManager::GetInstance().PlaySE("S_PLAYERWALK");
+
 }
 
 /// <summary>
@@ -144,6 +149,9 @@ void PlayerStateJump::DownUpdate()
 	//ジャンプフレームが上昇アニメーションの終了フレーム以上なら入力に応じてステートを変更する
 	if (m_jumpFrame >= m_pOwn.lock()->GetNowAnimEndFrame() * 0.6f)
 	{
+		//ジャンプ音を流す
+		SoundManager::GetInstance().PlaySE("S_PLAYERWALK");
+
 		//左スティックが入力されていなかったらStateをIdleにする
 		if (Input::GetInstance().GetInputStick(false).first == 0.0f &&
 			Input::GetInstance().GetInputStick(false).second == 0.0f)
