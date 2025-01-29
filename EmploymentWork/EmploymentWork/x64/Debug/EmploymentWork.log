@@ -1,5 +1,5 @@
-﻿  FlameTrap.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Object\Trap\FlameTrap.cpp(57,38): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Object\Trap\FlameTrap.cpp(68,44): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Object\Trap\FlameTrap.cpp(128,35): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+﻿  PlayerStateDash.cpp
+  StateBase.cpp
+  コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

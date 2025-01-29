@@ -25,5 +25,8 @@ public:
 	/// 更新
 	/// </summary>
 	virtual void Update() override;
+
+private:
+	int m_dashCount;
 };
 

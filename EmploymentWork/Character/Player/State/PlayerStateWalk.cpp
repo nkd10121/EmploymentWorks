@@ -4,6 +4,7 @@
 #include "CharacterBase.h"
 
 #include "LoadCSV.h"
+#include "SoundManager.h"
 
 namespace
 {
@@ -21,7 +22,8 @@ namespace
 PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 	StateBase(own),
 	m_dir(),
-	m_noInputFrame(0)
+	m_noInputFrame(0),
+	m_walkCount(0)
 {
 	//現在のステートを歩き状態にする
 	m_nowState = StateKind::Walk;
@@ -55,6 +57,16 @@ void PlayerStateWalk::Update()
 {
 	//持ち主がプレイヤーかどうかをチェックする
 	if (!CheckPlayer())	return;
+
+	//移動SEを流す
+	if (m_walkCount % 28 == 0)
+	{
+		SoundManager::GetInstance().PlaySE("S_PLAYERWALK");
+	}
+
+	//移動フレームをカウントする
+	m_walkCount++;
+
 
 	//ダウンキャスト
 	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());

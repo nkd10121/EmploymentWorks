@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Player.h"
 #include "CharacterBase.h"
+#include "SoundManager.h"
 
 #include "LoadCSV.h"
 
@@ -18,7 +19,8 @@ namespace
 /// コンストラクタ
 /// </summary>
 PlayerStateDash::PlayerStateDash(std::shared_ptr<CharacterBase> own) :
-	StateBase(own)
+	StateBase(own),
+	m_dashCount(0)
 {
 	//現在のステートをダッシュ状態にする
 	m_nowState = StateKind::Dash;
@@ -47,6 +49,15 @@ void PlayerStateDash::Update()
 {
 	//持ち主がプレイヤーかどうかをチェックする
 	if (!CheckPlayer())	return;
+
+	//移動SEを流す
+	if (m_dashCount % 20 == 0)
+	{
+		SoundManager::GetInstance().PlaySE("S_PLAYERWALK");
+	}
+
+	//移動フレームをカウントする
+	m_dashCount++;
 
 	//持っているキャラクターベースクラスをプレイヤークラスにキャストする(ダウンキャスト)
 	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
