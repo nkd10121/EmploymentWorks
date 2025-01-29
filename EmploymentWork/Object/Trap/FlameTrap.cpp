@@ -3,6 +3,7 @@
 #include "LoadCSV.h"
 #include "ResourceManager.h"
 #include "EffectManager.h"
+#include "SoundManager.h"
 
 FlameTrap::FlameTrap() :
 	TrapBase(),
@@ -86,8 +87,13 @@ void FlameTrap::Update()
 				m_waitCount++;
 			}
 
+			//攻撃開始から一定フレーム経ったら
 			if (m_attackCount == 20)
 			{
+				//攻撃SEを流す
+				SoundManager::GetInstance().PlaySE("S_FLAMETRAPATTACK");
+
+				//攻撃の炎エフェクトを描画する
 				auto effectPos = rigidbody->GetPos();
 				effectPos.y += 6.0f;
 				effectPos += m_direction * 4.0f;
