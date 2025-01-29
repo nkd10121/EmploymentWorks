@@ -2,6 +2,7 @@
 
 #include "LoadCSV.h"
 #include "ResourceManager.h"
+#include "EffectManager.h"
 
 FlameTrap::FlameTrap() :
 	TrapBase(),
@@ -36,6 +37,7 @@ void FlameTrap::Init(Vec3 pos, Vec3 direction)
 	//回転させる
 	SetRot(direction);
 
+	m_angle = direction.y;
 	//向きを計算して置く
 	auto radian = -direction.y + DX_PI_F / 2 * 3;
 	m_direction = Vec3(cos(radian), 0.0f, sin(radian));
@@ -82,13 +84,20 @@ void FlameTrap::Update()
 			if (isAnimEnd)
 			{
 				m_waitCount++;
+			}
 
-
+			if (m_attackCount == 20)
+			{
+				auto effectPos = rigidbody->GetPos();
+				effectPos.y += 6.0f;
+				effectPos += m_direction * 4.0f;
+				EffectManager::GetInstance().CreateEffect("E_FLAMETRAP", effectPos, Vec3(0.0f, m_angle, 0.0f));
 			}
 
 			m_attackCount++;
 			if (m_attackCount % 20 == 0 && m_attackCount <= m_animEndFrame / 5 * 2)
 			{
+
 				//攻撃判定を生成する前にすべての攻撃判定を一回削除
 				while (1)
 				{
@@ -111,12 +120,12 @@ void FlameTrap::Update()
 					sphereCol->m_radius = m_status.atkRange;
 
 					//索敵判定を出す座標を計算
-					auto searchPos = rigidbody->GetPos();
-					searchPos.y += 6.0f;
-					searchPos += m_direction * 14.0f * i;
+					auto pos = rigidbody->GetPos();
+					pos.y += 6.0f;
+					pos += m_direction * 14.0f * i;
 
 					//索敵判定は動かすつもりがないため、先に中心座標を設定して動かないようにする
-					sphereCol->SetCenterPos(searchPos);
+					sphereCol->SetCenterPos(pos);
 					sphereCol->UseIsStatic();
 				}
 			}

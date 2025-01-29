@@ -451,8 +451,7 @@ void GameManager::Draw()
 	// クリスタルの描画
 	m_pCrystal->Draw();
 
-	// エフェクトの描画
-	EffectManager::GetInstance().Draw();
+
 
 	// プレイヤーの描画
 	m_pPlayer->Draw();
@@ -469,6 +468,9 @@ void GameManager::Draw()
 	// トラップの描画
 	TrapManager::GetInstance().Draw();
 	TrapManager::GetInstance().PreviewDraw();
+
+	// エフェクトの描画
+	EffectManager::GetInstance().Draw();
 
 	// TODO: UIクラスみたいなのを作ってそこに移動させる
 	// 装備スロットの描画
