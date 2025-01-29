@@ -397,7 +397,7 @@ void TrapManager::Draw()
 	//	}
 	//#endif
 
-	if (debugTrap)
+	if (debugTrap && m_slotIdx != 0)
 	{
 		if (debugTrap->isPlaced)
 		{
