@@ -1,2 +1,3 @@
 ﻿  FlameTrap.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Object\Trap\FlameTrap.cpp(53,38): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

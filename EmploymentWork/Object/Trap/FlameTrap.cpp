@@ -31,12 +31,14 @@ void FlameTrap::Init(Vec3 pos, Vec3 direction)
 	rigidbody->SetPos(pos);
 	rigidbody->SetNextPos(pos);
 
-	//設置場所に座標を移動させる
-	m_direction = direction;
-
 	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
 	//回転させる
 	SetRot(direction);
+
+	//向きを計算して置く
+	auto radian = -direction.y + DX_PI_F / 2 * 3;
+	m_direction = Vec3(cos(radian), 0.0f, sin(radian));
+	m_direction = m_direction.Normalize();
 
 	//索敵判定の作成(3つ作成)
 	for (int i = 1; i < 4; i++)
@@ -44,12 +46,14 @@ void FlameTrap::Init(Vec3 pos, Vec3 direction)
 		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
 		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 		sphereCol->m_radius = m_status.searchRange;
-
-		auto searchPos = direction * static_cast<float>(i * m_status.searchRange * 2);
-		sphereCol->SetOffsetPos(searchPos);
+		
+		//索敵判定を出す座標を計算
+		auto searchPos = pos;
+		searchPos.y += 6.0f;
+		searchPos += m_direction * 14.0f * i;
 
 		//索敵判定は動かすつもりがないため、先に中心座標を設定して動かないようにする
-		sphereCol->SetCenterPos(pos);
+		sphereCol->SetCenterPos(searchPos);
 		sphereCol->UseIsStatic();
 	}
 
