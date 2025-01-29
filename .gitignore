@@ -396,18 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
-# Object files
-*.obj
-
-# Incremental linker files
-*.ilk
-
-# Build log files
-*.tlog
-
-# Intermediate database files
-*.idb
-
-# Executable files
-*.exe
