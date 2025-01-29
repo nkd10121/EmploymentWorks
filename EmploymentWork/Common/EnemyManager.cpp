@@ -335,7 +335,9 @@ void EnemyManager::Draw()
 	{
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
-			FontManager::GetInstance().DrawCenteredText(kDrawKillStreakUIX + kDrawKillStreakUIIntervalX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, std::to_string(m_killStreakPoint), 0x91cdd9, 40, 0x395f62);
+			DrawRotaGraph(kDrawKillStreakUIX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, 0.8f * max(static_cast<float>((90 - m_drawKillStreakPointCount) / 50.0f),1.0f), 0.0f, ResourceManager::GetInstance().GetHandle("I_TRAPICON"), true);
+
+			FontManager::GetInstance().DrawCenteredExtendText(kDrawKillStreakUIX + kDrawKillStreakUIIntervalX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, std::to_string(m_killStreakPoint), 0x91cdd9, 40, 0x395f62,1.0f);
 		}, 2);
 	}
 
