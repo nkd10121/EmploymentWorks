@@ -428,6 +428,9 @@ void TrapManager::Draw()
 	{
 		// 現在選択しているスロット枠の描画
 		DrawBox(kSlotBgX + m_slotIdx * kSlotBgOffset - kSlotBoxSize, kSlotBgY - kSlotBoxSize, kSlotBgX + m_slotIdx * kSlotBgOffset + kSlotBoxSize, kSlotBgY + kSlotBoxSize, 0xff0000, false);
+		
+		//DrawRotaGraph()
+
 	}, 1);
 
 	//罠ポイントの背景画像の描画

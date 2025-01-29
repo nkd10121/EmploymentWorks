@@ -25,9 +25,9 @@ namespace
 	const std::map<std::string,std::string> kId = 
 	{
 		{"floor","M_FLOOR"},
-		{"wall","M_WALL"},
-		{"wallColor","M_WALL"},
-		//{"wallColor","M_WALLCOLOR"},
+		{"wall","M_WALLCOLOR"},
+		//{"wallColor","M_WALL"},
+		{"wallColor","M_WALLCOLOR"},
 		{"gate","M_FRAME"},
 		{"stairs","M_STAIRS"},
 		{"stairsWall","M_SMOOTHBLOCK"},
