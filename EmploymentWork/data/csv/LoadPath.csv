@@ -70,3 +70,6 @@ SCENE_GAME,E_TRAPCREATE,data/effect/trap_create,.efk,0,
 SCENE_GAME,E_PLAYERHEAL,data/effect/player_heal,.efk,0,
 SCENE_GAME,E_PORTION,data/effect/portion,.efk,0,
 SCENE_GAME,S_PLAYERHEAL,data/sound/se/player_heal,.mp3,0,0
+SCENE_GAME,S_ENEMY_APPEAR,data/sound/se/enemy_Appear,.mp3,0,0
+SCENE_GAME,S_SPIKEATTACK,data/sound/se/spikeTrap_attack,.mp3,0,0
+SCENE_GAME,S_TRAPCREATE,data/sound/se/trap_create,.mp3,0,0

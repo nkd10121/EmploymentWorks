@@ -1,6 +1,7 @@
 ﻿#include "SpikeTrap.h"
 
 #include "ResourceManager.h"
+#include "SoundManager.h"
 #include "LoadCSV.h"
 
 namespace
@@ -132,6 +133,9 @@ void SpikeTrap::Update()
 			//攻撃用当たり判定を生成する
 			if (m_attackCount == 0)
 			{
+				//攻撃SEを流す
+				SoundManager::GetInstance().PlaySE("S_SPIKEATTACK");
+
 				//当たり判定の生成
 				auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
 				auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());

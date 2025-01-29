@@ -12,6 +12,7 @@
 #include "TrapManager.h"
 #include "EffectManager.h"
 #include "ScoreManager.h"
+#include "SoundManager.h"
 #include "LoadCSV.h"
 #include "Input.h"
 #include "Setting.h"
@@ -234,10 +235,13 @@ void GameManager::Init(int stageIdx)
 void GameManager::Update()
 {
 	// Yボタンを押した時かつ最初のフェーズの時
-	if (Input::GetInstance().IsTriggered("Y") /*&& m_phaseNum.front() == kInitialPhase*/)
+	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front() == kInitialPhase)
 	{
 		// 次のフェーズに進む
 		m_phaseNum.pop_front();
+
+		//サウンドを流す
+		SoundManager::GetInstance().PlaySE("S_ENEMY_APPEAR");
 	}
 
 	// クリスタルの更新
@@ -366,6 +370,9 @@ void GameManager::Update()
 		// フェーズカウントをリセット
 		m_allPhaseCount += m_phaseCount;
 		m_phaseCount = 0;
+
+		//サウンドを流す
+		SoundManager::GetInstance().PlaySE("S_ENEMY_APPEAR");
 	}
 
 	// ポーションの更新

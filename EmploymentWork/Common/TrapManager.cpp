@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "ResourceManager.h"
 #include "EffectManager.h"
+#include "SoundManager.h"
 #include "FontManager.h"
 #include "DrawUI.h"
 #include "LoadCSV.h"
@@ -227,6 +228,7 @@ void TrapManager::Update()
 
 			//エフェクトの生成
 			EffectManager::GetInstance().CreateEffect("E_TRAPCREATE", debugTrap->pos);
+			SoundManager::GetInstance().PlaySE("S_TRAPCREATE");
 
 			//所持トラップポイントをコスト分減らす
 			AddTrapPoint(-add->GetCost());
