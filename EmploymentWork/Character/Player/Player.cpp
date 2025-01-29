@@ -460,6 +460,8 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::s
 				auto atk = col->GetAttackPower() - m_status.def;
 				//もし攻撃力が0以下なら何もせずに終える
 				if (atk <= 0) return;
+				
+				SoundManager::GetInstance().PlaySE("S_PLAYERHIT");
 
 				//HPからダメージ分引く
 				m_status.hp -= atk;

@@ -77,3 +77,5 @@ SCENE_GAME,S_FLAMETRAPATTACK,data/sound/se/flameTrap_attack,.mp3,0,0
 SCENE_GAME,S_PLAYERWALK,data/sound/se/player_walk,.mp3,0,0
 SCENE_GAME,S_PLAYERREVIVAL,data/sound/se/player_revival,.mp3,0,0
 SCENE_GAME,S_PLAYERSHOT,data/sound/se/player_shot,.mp3,0,0
+SCENE_GAME,S_PLAYERHIT,data/sound/se/player_hit,.mp3,0,0
+SCENE_GAME,S_CRYSTALHIT,data/sound/se/crystal_hit,.mp3,0,0

@@ -2,6 +2,7 @@
 #include <string>
 #include "ResourceManager.h"
 #include "EffectManager.h"
+#include "SoundManager.h"
 
 #include "EnemyBase.h"
 
@@ -166,6 +167,8 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::
 			EnemyBase* col = dynamic_cast<EnemyBase*>(send.get());
 			col->Finalize();
 			col->End();
+
+			SoundManager::GetInstance().PlaySE("S_CRYSTALHIT");
 
 			m_hp--;
 
