@@ -67,3 +67,6 @@ SCENE_GAME,M_E_STAGECOLLISION1,data/model/stage/Collision/stage1Col,.mv1,0,
 SCENE_GAME,M_STAGECOLLISION2,data/model/stage/Collision/p_stage2Col,.mv1,0,
 SCENE_GAME,M_E_STAGECOLLISION2,data/model/stage/Collision/stage2Col,.mv1,0,
 SCENE_GAME,E_TRAPCREATE,data/effect/trap_create,.efk,0,
+SCENE_GAME,E_PLAYERHEAL,data/effect/player_heal,.efk,0,
+SCENE_GAME,E_PORTION,data/effect/portion,.efk,0,
+SCENE_GAME,S_PLAYERHEAL,data/sound/se/player_heal,.mp3,0,0

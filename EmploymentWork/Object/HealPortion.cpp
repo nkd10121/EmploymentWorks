@@ -1,6 +1,8 @@
 ﻿#include "HealPortion.h"
 #include "DxLib.h"
+
 #include "ResourceManager.h"
+#include "EffectManager.h"
 
 namespace
 {
@@ -80,7 +82,7 @@ void HealPortion::Update()
 		//エフェクトの表示座標を取得
 		auto pos = rigidbody->GetPos();
 		//エフェクトを生成
-		//EffectManager::GetInstance().CreateEffect("Portion", pos, pos);
+		EffectManager::GetInstance().CreateEffect("E_PORTION", pos, pos);
 	}
 
 	//エフェクト生成カウントを増やす

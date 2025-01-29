@@ -13,6 +13,8 @@
 #include "LoadCSV.h"
 #include "ResourceManager.h"
 #include "TrapManager.h"
+#include "EffectManager.h"
+#include "SoundManager.h"
 
 #include "GameManager.h"
 namespace
@@ -437,11 +439,11 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::s
 				col->End();
 
 				//回復エフェクトを生成する
-				//auto pos = rigidbody->GetPos();
-				//EffectManager::GetInstance().CreateEffect("Heal", pos);
+				auto pos = rigidbody->GetPos();
+				EffectManager::GetInstance().CreateEffect("E_PLAYERHEAL", pos);
 
 				//回復SEを流す
-				//SoundManager::GetInstance().PlaySE("heal");
+				SoundManager::GetInstance().PlaySE("S_PLAYERHEAL");
 			}
 		}
 		//敵
