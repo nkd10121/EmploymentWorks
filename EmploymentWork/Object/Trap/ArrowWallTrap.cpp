@@ -205,4 +205,22 @@ void ArrowWallTrap::SetRot(Vec3 vec)
 	auto angle = atan2(vec.x, vec.z);
 	auto rotation = VGet(0.0f, angle + DX_PI_F, 0.0f);
 	MV1SetRotationXYZ(m_modelHandle, rotation);
+
+	//法線ベクトルの設定
+	m_norm = vec;
+}
+
+std::vector<Vec3> ArrowWallTrap::GetAttackPos()
+{
+	std::vector<Vec3> ret;
+
+	//索敵判定の作成(3つ作成)
+	for (int i = 1; i < 4; i++)
+	{
+		auto pos = rigidbody->GetPos() + m_norm * static_cast<float>(i * kSearchCollisionInterval);
+		pos.y -= 8.0f;
+		ret.push_back(pos);
+	}
+
+	return ret;
 }

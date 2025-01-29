@@ -219,3 +219,10 @@ void SpikeTrap::SetRot(Vec3 vec)
 {
 	MV1SetRotationXYZ(m_modelHandle, vec.ToVECTOR());
 }
+
+std::vector<Vec3> SpikeTrap::GetAttackPos()
+{
+	std::vector<Vec3> ret;
+	ret.push_back(rigidbody->GetPos());
+	return ret;
+}

@@ -116,6 +116,16 @@ void TrapManager::Update()
 	//スロット番号が0(クロスボウなら何もしない)
 	if (m_slotIdx == 0) return;
 
+	if (m_attackEffectCreateCount % 120 == 0)
+	{
+		auto attackPos = m_previewTraps[m_slotIdx - 1]->GetAttackPos();
+
+		for (auto& pos : attackPos)
+		{
+			EffectManager::GetInstance().CreateEffect("E_TRAPATTACKAREA", pos);
+		}
+	}
+
 	m_attackEffectCreateCount++;
 
 	m_angle += 0.04f;
@@ -188,6 +198,8 @@ void TrapManager::Update()
 
 	//上の二つをつなぐ線分と罠の座標の距離を格納する変数
 	float defaultLength = 100.0f;
+
+	auto preDebugTrap = debugTrap;
 
 	//円と当たったトラップ座標分回す
 	for (auto& trapPos : hit)
@@ -262,6 +274,24 @@ void TrapManager::Update()
 		{
 			m_trapRotationAngle = 0.0f;
 		}
+		m_previewTraps[m_slotIdx - 1]->SetPos(debugTrap->pos.ToVECTOR());
+		m_previewTraps[m_slotIdx - 1]->SetRot(Vec3(0.0f, m_trapRotationAngle* DX_PI_F / 180.0f, 0.0f));
+
+		auto effectHandles = EffectManager::GetInstance().GetIdHandles("E_TRAPATTACKAREA");
+		auto attackPos = m_previewTraps[m_slotIdx - 1]->GetAttackPos();
+		int i = 0;
+
+		for (auto& handle : effectHandles)
+		{
+			if (i > attackPos.size() - 1)
+			{
+				i -= attackPos.size();
+			}
+
+			EffectManager::GetInstance().SetPos(handle, attackPos[i]);
+
+			i++;
+		}
 	}
 
 
@@ -302,6 +332,35 @@ void TrapManager::Update()
 			return v == nullptr;
 			});
 		m_traps.erase(it, m_traps.end());
+	}
+
+	if (preDebugTrap != debugTrap)
+	{
+		m_previewTraps[m_slotIdx - 1]->SetPos(debugTrap->pos.ToVECTOR());
+		if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
+		{
+			m_previewTraps[m_slotIdx - 1]->SetRot(Vec3(0.0f, m_trapRotationAngle* DX_PI_F / 180.0f, 0.0f));
+		}
+		else if(m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 1)
+		{
+			m_previewTraps[m_slotIdx - 1]->SetRot(debugTrap->norm.ToVECTOR());
+		}
+
+		auto effectHandles = EffectManager::GetInstance().GetIdHandles("E_TRAPATTACKAREA");
+		auto attackPos = m_previewTraps[m_slotIdx - 1]->GetAttackPos();
+		int i = 0;
+
+		for (auto& handle : effectHandles)
+		{
+			if (i > attackPos.size() - 1)
+			{
+				i -= attackPos.size();
+			}
+
+			EffectManager::GetInstance().SetPos(handle, attackPos[i]);
+
+			i++;
+		}
 	}
 }
 
@@ -418,10 +477,7 @@ void TrapManager::PreviewDraw()
 	if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
 	{
 		m_previewTraps[m_slotIdx - 1]->SetRot(Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f));
-		//if (m_attackEffectCreateCount % 60 == 0)
-		//{
-		//	EffectManager::GetInstance().CreateEffect("E_TRAPATTACKAREA", debugTrap->pos);
-		//}
+
 	}
 	else if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 1)
 	{

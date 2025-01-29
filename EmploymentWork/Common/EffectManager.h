@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <vector>
+#include <list>
 #include <string>
 #include <map>
 #include <memory>
@@ -121,6 +122,7 @@ public:
 	/// <param name="name">移動させたいエフェクトの名前</param>
 	/// <param name="pos">移動先座標</param>
 	void SetPos(std::string name, Vec3 pos);
+	void SetPos(int handle, Vec3 pos);
 
 	/// <summary>
 	/// 指定した名前のすべてのエフェクトを回転させる
@@ -128,6 +130,8 @@ public:
 	/// <param name="name">エフェクト名</param>
 	/// <param name="rot">回転角度</param>
 	void SetRotation(std::string name, Vec3 rot);
+
+	std::list<int> GetIdHandles(std::string id);
 
 private:
 	std::map<std::string, std::shared_ptr<EffectEmitter>> m_effect;	//エフェクトハンドル

@@ -185,6 +185,11 @@ void EffectManager::SetPos(std::string name, Vec3 pos)
 	return;
 }
 
+void EffectManager::SetPos(int handle, Vec3 pos)
+{
+	SetPosPlayingEffekseer3DEffect(handle, pos.x, pos.y, pos.z);
+}
+
 /// <summary>
 /// 指定した名前のすべてのエフェクトを回転させる
 /// </summary>
@@ -200,4 +205,22 @@ void EffectManager::SetRotation(std::string name, Vec3 rot)
 			}
 		}
 	}
+}
+
+std::list<int> EffectManager::GetIdHandles(std::string id)
+{
+	std::list<int> ret;
+
+	for (auto& effects : m_effect)
+	{
+		if (effects.first == id)
+		{
+			for (auto& ef : effects.second->effects)
+			{
+				ret.push_back(ef.handle);
+			}
+		}
+	}
+
+	return ret;
 }

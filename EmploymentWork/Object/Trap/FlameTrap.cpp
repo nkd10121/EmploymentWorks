@@ -186,7 +186,29 @@ void FlameTrap::Draw()
 
 void FlameTrap::SetRot(Vec3 vec)
 {
+	//向きを計算して置く
+	auto radian = -vec.y + DX_PI_F / 2 * 3;
+	m_direction = Vec3(cos(radian), 0.0f, sin(radian));
+	m_direction = m_direction.Normalize();
+
 	MV1SetRotationXYZ(m_modelHandle, vec.ToVECTOR());
+}
+
+std::vector<Vec3> FlameTrap::GetAttackPos()
+{
+	std::vector<Vec3> ret;
+
+	//攻撃判定の作成(3つ作成)
+	for (int i = 1; i < 4; i++)
+	{
+		//索敵判定を出す座標を計算
+		auto pos = rigidbody->GetPos();
+		pos += m_direction * 14.0f * i;
+
+		ret.push_back(pos);
+	}
+
+	return ret;
 }
 
 bool FlameTrap::UpdateAnim(int attachNo, float startTime)

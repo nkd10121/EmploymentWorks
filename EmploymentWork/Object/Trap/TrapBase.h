@@ -47,6 +47,8 @@ public:
 	/// </summary>
 	void Draw()override {};
 
+	virtual std::vector<Vec3> GetAttackPos() { return std::vector<Vec3>(); }
+
 	void UpdateAnim() {};
 
 	/// <summary>

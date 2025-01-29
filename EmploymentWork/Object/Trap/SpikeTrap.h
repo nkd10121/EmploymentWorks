@@ -27,6 +27,7 @@ public:
 
 	void SetRot(Vec3 vec)override;
 
+	std::vector<Vec3> GetAttackPos()override;
 private:
 	int m_attackCount;	//攻撃カウント
 	int m_coolTimeCount;	//クールタイム

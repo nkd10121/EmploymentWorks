@@ -27,6 +27,8 @@ public:
 
 	void SetRot(Vec3 vec)override;
 
+	std::vector<Vec3> GetAttackPos()override;
+
 private:
 	/// <summary>
 	/// アニメーションの更新
