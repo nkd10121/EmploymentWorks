@@ -205,7 +205,7 @@ void GameManager::Init(int stageIdx)
 	m_pHpUi = std::make_shared<HPBar>();
 	m_pHpUi->Init(m_pPlayer->GetHp());
 
-	m_pMiniMap = std::make_shared<MiniMap>();
+	m_pMiniMap = std::make_shared<MiniMap>(stageIdx);
 	m_pMiniMap->Init(ResourceManager::GetInstance().GetHandle(info[9]), MapManager::GetInstance().GetCrystalPos());
 
 	// トラップポイントの初期値を設定

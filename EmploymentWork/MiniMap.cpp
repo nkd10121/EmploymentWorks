@@ -15,10 +15,24 @@ namespace
 
 	constexpr int kMiniMapWidth = 180;
 	constexpr int kMiniMapHeight = 180;
+
+	const Vec3 kMapOrigine[] =
+	{
+		Vec3(0.0f,0.0f,72.0f),
+		Vec3(0.0f,0.0f,84.0f),
+	};
+
+	const float kScale[] =
+	{
+		0.42f,
+		0.25f,
+	};
 }
 
-MiniMap::MiniMap()
+MiniMap::MiniMap(int stageIdx)
 {
+	m_stageIdx = stageIdx;
+
 	m_ironHandle = ResourceManager::GetInstance().GetHandle("I_IRONUI");
 	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_MINIMAPBG");
 }
@@ -31,26 +45,26 @@ void MiniMap::Init(int mapHandle, Vec3 crystalPos)
 {
 	m_minimapHandle = mapHandle;
 
-	auto mapOrigin = Vec3(0.0f, 0.0f, 72.0f);
+	auto mapOrigin = kMapOrigine[m_stageIdx];
 	// スケーリングを適用
-	float x = (crystalPos.x - mapOrigin.x) * 0.42f;
-	float y = (crystalPos.z - mapOrigin.z) * 0.42f;
+	float x = (crystalPos.x - mapOrigin.x) * kScale[1];
+	float y = (crystalPos.z - mapOrigin.z) * kScale[1];
 
 	// オフセットを適用
-	m_crystalPosOnMinimap = ConvertToMiniMapCoords(crystalPos, mapOrigin, 0.42f, Vec2(kRightUiX, kRightUiY1));
+	m_crystalPosOnMinimap = ConvertToMiniMapCoords(crystalPos, mapOrigin, kScale[m_stageIdx], Vec2(kRightUiX, kRightUiY1));
 }
 
 void MiniMap::Update(Vec3 playerPos, std::list<Vec3> enemyPoss)
 {
 
-	auto mapOrigin = Vec3(0.0f, 0.0f, 72.0f);
+	auto mapOrigin = kMapOrigine[m_stageIdx];
 
-	m_playerPosOnMinimap = ConvertToMiniMapCoords(playerPos, mapOrigin, 0.42f, Vec2(kRightUiX, kRightUiY1));
+	m_playerPosOnMinimap = ConvertToMiniMapCoords(playerPos, mapOrigin, kScale[m_stageIdx], Vec2(kRightUiX, kRightUiY1));
 
 	m_enemyPosOnMinimap.clear();
 	for (auto& pos : enemyPoss)
 	{
-		m_enemyPosOnMinimap.emplace_back(ConvertToMiniMapCoords(pos, mapOrigin, 0.42f, Vec2(kRightUiX, kRightUiY1)));
+		m_enemyPosOnMinimap.emplace_back(ConvertToMiniMapCoords(pos, mapOrigin, kScale[m_stageIdx], Vec2(kRightUiX, kRightUiY1)));
 	}
 }
 

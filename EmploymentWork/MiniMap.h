@@ -6,7 +6,7 @@
 class MiniMap
 {
 public:
-	MiniMap();
+	MiniMap(int stageIdx);
 	virtual ~MiniMap();
 
 	void Init(int mapHandle,Vec3 crystalPos);
@@ -16,6 +16,8 @@ public:
 private:
 	Vec2 ConvertToMiniMapCoords(const Vec3& worldPos, const Vec3& mapOrigin, float scale, const Vec2& miniMapCenter);
 private:
+	int m_stageIdx;
+
 	int m_minimapHandle;
 	int m_bgHandle;
 	int m_ironHandle;

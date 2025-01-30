@@ -56,7 +56,7 @@ public:
 	/// プレイヤーが死亡したら呼ばれる関数
 	/// </summary>
 	/// <returns></returns>
-	const void PlayerDead() { m_hp -= 5; }
+	const void PlayerDead();
 
 private:
 	Vec3 m_pos;	//座標

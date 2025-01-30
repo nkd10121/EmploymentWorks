@@ -221,3 +221,11 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::
 		}
 	}
 }
+
+const void Crystal::PlayerDead()
+{
+	m_preHp = m_hp;
+	m_textMagPower = 4.0f;
+
+	m_hp -= 5;
+}
