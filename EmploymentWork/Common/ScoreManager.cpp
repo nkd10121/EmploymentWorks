@@ -44,8 +44,8 @@ const void ScoreManager::CalculationScore(std::string stageName)
 	score += (m_targetClearTime - m_clearTime) / 6;
 	score += m_playerKillNum * 50;
 	score += m_trapKillNum * 100;
-	score += m_crystalHp + 100;
-	//m_score += m_maxCombo * 100;
+	score += m_crystalHp * 100;
+	score += m_maxComboNum * 100;
 
 	auto it = m_score.find(stageName);
 	//もし、ステージ名のスコアが保存されていたら

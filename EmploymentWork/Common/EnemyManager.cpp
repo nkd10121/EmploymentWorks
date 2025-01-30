@@ -62,6 +62,7 @@ EnemyManager::EnemyManager(bool isGame) :
 	m_rayHitEnemyNowHP(0),
 	m_rayHitEnemyMaxHP(0),
 	m_killStreakCount(0),
+	m_highestKillStreakCount(0),
 	m_killStreakTime(0),
 	m_killStreakPoint(0),
 	m_isDrawKillStreakPoint(false),
@@ -236,6 +237,7 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 			//キルストリークカウント*11をポイントとして取得する
 			TrapManager::GetInstance().AddTrapPoint(m_killStreakPoint);
 
+			m_highestKillStreakCount = max(m_highestKillStreakCount, m_killStreakCount);
 			//値をリセットする
 			m_killStreakCount = 0;
 			m_killStreakTime = 0;
@@ -338,7 +340,7 @@ void EnemyManager::Draw()
 			auto moveX = max(m_drawKillStreakPointCount - 60, 0) * 4;
 
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - moveX * 4);
-			DrawRotaGraph(kDrawKillStreakUIX - moveX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, 0.8f * max(static_cast<float>((90 - m_drawKillStreakPointCount * 3.0f) / 50.0f),1.0f), 0.0f, ResourceManager::GetInstance().GetHandle("I_TRAPICON"), true);
+			DrawRotaGraph(kDrawKillStreakUIX - moveX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, 0.8f * max(static_cast<float>((90 - m_drawKillStreakPointCount * 3.0f) / 50.0f), 1.0f), 0.0f, ResourceManager::GetInstance().GetHandle("I_TRAPICON"), true);
 			FontManager::GetInstance().DrawCenteredExtendText(kDrawKillStreakUIX + kDrawKillStreakUIIntervalX - moveX, kDrawKillStreakUIY + kDrawKillStreakUIIntervalY, std::to_string(m_killStreakPoint), 0x91cdd9, 40, 0x395f62, 1.0f);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}, 2);

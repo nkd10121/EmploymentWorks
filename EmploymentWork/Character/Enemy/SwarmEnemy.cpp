@@ -87,7 +87,7 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 
 				m_killedPos = enemy->GetPos();
 
-				if (enemy->GetLastAttackTag() == GameObjectTag::Player)
+				if (enemy->GetLastAttackTag() == GameObjectTag::PlayerShot)
 				{
 					m_killedByPlayerNum++;
 				}

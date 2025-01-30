@@ -426,6 +426,7 @@ void GameManager::Update()
 			// クリスタルの残りHPをスコア計算用に保存
 			ScoreManager::GetInstance().SetCrystalHp(m_pCrystal->GetHp());
 			ScoreManager::GetInstance().SetClearTime(m_allPhaseCount);
+			ScoreManager::GetInstance().SetMaxComboNum(m_pEnemyManager->GetHighestKillStreakCount());
 			m_pEnemyManager->SetScoreData();
 			// スコアを計算
 			ScoreManager::GetInstance().CalculationScore(m_stageName);

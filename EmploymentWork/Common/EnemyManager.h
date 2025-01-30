@@ -63,6 +63,8 @@ public:
 
 	const std::list<Vec3> GetEnemyPos();
 
+	const int GetHighestKillStreakCount()const { return m_highestKillStreakCount; }
+
 private:
 	bool m_isGame;
 
@@ -82,6 +84,7 @@ private:
 	int m_gaugeHeight;
 
 	int m_killStreakCount;
+	int m_highestKillStreakCount;
 	int m_killStreakTime;
 	int m_killStreakPoint;
 	bool m_isDrawKillStreakPoint;
