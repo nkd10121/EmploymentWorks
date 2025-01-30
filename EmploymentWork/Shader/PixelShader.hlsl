@@ -30,7 +30,8 @@ float4 main(PS_INPUT input) : SV_Target0
     float noizeValue = noizeTex.Sample(smp, uv).r + noizeTex.Sample(smp, uv).g + noizeTex.Sample(smp, uv).b;
     noizeValue = (noizeValue * 2.0f - 1.0f);
     
-    float3 color = tex.Sample(smp, input.TexCoords0).rgb * noizeValue;
+    //float3 color = tex.Sample(smp, input.TexCoords0).rgb * noizeValue;
+    float3 color = tex.Sample(smp, input.TexCoords0).bgr * noizeValue;
     float4 ret;
     ret.rgb = color.rgb;
     ret.a = tex.Sample(smp, input.TexCoords0).a;

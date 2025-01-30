@@ -36,8 +36,7 @@ void MiniMap::Init(int mapHandle, Vec3 crystalPos)
 	float y = (crystalPos.z - mapOrigin.z) * 0.42f;
 
 	// オフセットを適用
-	m_crystalPosOnMinimap.x = x + kRightUiX;
-	m_crystalPosOnMinimap.y = -y + kRightUiY1;
+	m_crystalPosOnMinimap = ConvertToMiniMapCoords(crystalPos, mapOrigin, 0.42f, Vec2(kRightUiX, kRightUiY1));
 }
 
 void MiniMap::Update(Vec3 playerPos, std::list<Vec3> enemyPoss)
