@@ -20,7 +20,7 @@ namespace
 	const std::string kCrystalStandPath = "data/model/stage/crystalStand.mv1";
 
 	// クリスタルHPの描画位置とフォントサイズ
-	constexpr int kCrystalHpX = 1180;
+	constexpr int kCrystalHpX = 450;
 	constexpr int kCrystalHpY = 36;
 	constexpr int kCrystalHpFontSize = 24;
 	constexpr float kBGScale = 0.65f;

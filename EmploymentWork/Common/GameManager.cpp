@@ -58,8 +58,8 @@ namespace
 
 
 	// フェーズ番号の描画位置
-	constexpr int kPhaseNumX = 1160;
-	constexpr int kPhaseNumY = 240;
+	constexpr int kPhaseNumX = 1180;
+	constexpr int kPhaseNumY = 230;
 
 	// クロスヘアの描画位置とサイズ
 	constexpr int kCrosshairWidth = 14;
@@ -503,7 +503,9 @@ void GameManager::Draw()
 
 
 	// フェーズ番号の描画
-	DrawFormatString(kPhaseNumX, kPhaseNumY, 0xffffff, "%d / 3", abs(m_phaseNum.front()));
+	FontManager::GetInstance().DrawCenteredText(kPhaseNumX, kPhaseNumY - 12, "フェーズ", 0xffffff, 24, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(kPhaseNumX, kPhaseNumY + 12, std::to_string(abs(m_phaseNum.front())) + "/" + std::to_string(m_allPhaseNum), 0xffffff, 24, 0x000000);
+
 
 	// HPバーの描画
 	m_pHpUi->Draw();

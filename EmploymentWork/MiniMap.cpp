@@ -6,7 +6,8 @@ namespace
 {
 	// 右上のUI描画位置とスケール
 	constexpr int kRightUiX = 1180;
-	constexpr int kRightUiY1 = 150;
+	constexpr int kRightUiY1 = 120;
+	constexpr int kOffsetY = 80;
 	constexpr int kRightUiY2 = 45;
 	constexpr int kRightUiY3 = 40;
 	constexpr float kRightUiScale1 = 0.9f;
@@ -60,7 +61,7 @@ void MiniMap::Draw()
 	{
 		// 右上のUI描画
 		DrawRotaGraph(kRightUiX, kRightUiY1, kRightUiScale1, 0.0f, m_bgHandle, true);
-		DrawRotaGraph(kRightUiX, kRightUiY2, kRightUiScale2, 0.0f, m_ironHandle, true);
+		//DrawRotaGraph(kRightUiX, kRightUiY2, kRightUiScale2, 0.0f, m_ironHandle, true);
 		DrawRotaGraph(kRightUiX, kRightUiY1, 0.72f, 0.0f, m_minimapHandle, true);
 
 		DrawCircle(m_crystalPosOnMinimap.x, m_crystalPosOnMinimap.y, 4, 0x0000ff, true);
@@ -68,6 +69,8 @@ void MiniMap::Draw()
 
 		for (auto& enemyPos : m_enemyPosOnMinimap)
 		{
+			if (enemyPos.y < kRightUiY1 - kOffsetY)	continue;
+
 			DrawCircle(enemyPos.x, enemyPos.y, 2, 0xff0000, true);
 		}
 	}, 0);
