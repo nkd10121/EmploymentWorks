@@ -401,7 +401,7 @@ void GameManager::Update()
 	m_pEnemyManager->UpdateModelPos();
 	m_pHpUi->Update(m_pPlayer->GetHp());
 
-	m_pMiniMap->Update(m_pPlayer->GetPos(),std::list<Vec3>());
+	m_pMiniMap->Update(m_pPlayer->GetPos(),m_pEnemyManager->GetEnemyPos());
 
 	// エフェクトの更新
 	EffectManager::GetInstance().Update();

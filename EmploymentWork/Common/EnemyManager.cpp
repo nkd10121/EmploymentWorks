@@ -567,3 +567,20 @@ const bool EnemyManager::GetIsCreatePortion(Vec3& createPos)
 		return ret;
 	}
 }
+
+const std::list<Vec3> EnemyManager::GetEnemyPos()
+{
+	std::list<Vec3>ret;
+
+	for (auto& enemy : m_pEnemies)
+	{
+		auto pos = enemy->GetAllEnemyPos();
+
+		for (auto& p : pos)
+		{
+			ret.emplace_back(p);
+		}
+	}
+
+	return ret;
+}

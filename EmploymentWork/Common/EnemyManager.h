@@ -61,6 +61,8 @@ public:
 
 	const bool GetIsCreatePortion(Vec3& createPos);
 
+	const std::list<Vec3> GetEnemyPos();
+
 private:
 	bool m_isGame;
 

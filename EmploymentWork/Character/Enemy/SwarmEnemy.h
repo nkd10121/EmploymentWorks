@@ -53,6 +53,8 @@ public:
 	/// <returns></returns>
 	const int CheckMemberNum()const;
 
+	const std::list<Vec3> GetAllEnemyPos();
+
 	/// <summary>
 	/// 構成メンバーが存在するかどうかを取得
 	/// </summary>

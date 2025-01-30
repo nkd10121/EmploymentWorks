@@ -292,6 +292,17 @@ const int SwarmEnemy::CheckMemberNum() const
 	return static_cast<int>(m_swarm.size());
 }
 
+const std::list<Vec3> SwarmEnemy::GetAllEnemyPos()
+{
+	std::list<Vec3> ret;
+	for (auto& enemy : m_swarm)
+	{
+		ret.push_back(enemy->GetPos());
+	}
+
+	return ret;
+}
+
 const void SwarmEnemy::GetKilledData(int& playerKill, int& trapKill)
 {
 	playerKill += m_killedByPlayerNum;

@@ -14,11 +14,14 @@ public:
 	void Draw();
 
 private:
+	Vec2 ConvertToMiniMapCoords(const Vec3& worldPos, const Vec3& mapOrigin, float scale, const Vec2& miniMapCenter);
+private:
 	int m_minimapHandle;
 	int m_bgHandle;
 	int m_ironHandle;
 
 	Vec2 m_playerPosOnMinimap;
+	Vec2 m_crystalPosOnMinimap;
 	std::list<Vec2> m_enemyPosOnMinimap;
 };
 
