@@ -6,6 +6,7 @@
 #include "HealPortion.h"
 #include "EnemyManager.h"
 #include "HPBar.h"
+#include "MiniMap.h"
 
 #include "ResourceManager.h"
 #include "MapManager.h"
@@ -53,13 +54,7 @@ namespace
 	constexpr float kSlotIconScale = 0.5f;
 	constexpr int kSlotBoxSize = 35;
 
-	// 右上のUI描画位置とスケール
-	constexpr int kRightUiX = 1180;
-	constexpr int kRightUiY1 = 150;
-	constexpr int kRightUiY2 = 45;
-	constexpr int kRightUiY3 = 40;
-	constexpr float kRightUiScale1 = 0.9f;
-	constexpr float kRightUiScale2 = 0.75f;
+
 
 
 	// フェーズ番号の描画位置
@@ -209,6 +204,9 @@ void GameManager::Init(int stageIdx)
 	// HPバーのUIを設定
 	m_pHpUi = std::make_shared<HPBar>();
 	m_pHpUi->Init(m_pPlayer->GetHp());
+
+	m_pMiniMap = std::make_shared<MiniMap>();
+	m_pMiniMap->Init(ResourceManager::GetInstance().GetHandle(info[9]), MapManager::GetInstance().GetCrystalPos());
 
 	// トラップポイントの初期値を設定
 	m_initTrapPoint = std::stoi(info[4]);
@@ -403,6 +401,8 @@ void GameManager::Update()
 	m_pEnemyManager->UpdateModelPos();
 	m_pHpUi->Update(m_pPlayer->GetHp());
 
+	m_pMiniMap->Update(m_pPlayer->GetPos(),std::list<Vec3>());
+
 	// エフェクトの更新
 	EffectManager::GetInstance().Update();
 
@@ -454,7 +454,8 @@ void GameManager::Draw()
 
 	// クリスタルの描画
 	m_pCrystal->Draw();
-	
+	m_pCrystal->DrawHP();
+
 	// プレイヤーの描画
 	m_pPlayer->Draw();
 
@@ -487,10 +488,8 @@ void GameManager::Draw()
 	// 現在選択しているスロット枠の描画
 	DrawBox(kSlotBgX + m_pPlayer->GetNowSlotNumber() * kSlotBgOffset - kSlotBoxSize, kSlotBgY - kSlotBoxSize, kSlotBgX + m_pPlayer->GetNowSlotNumber() * kSlotBgOffset + kSlotBoxSize, kSlotBgY + kSlotBoxSize, 0xff0000, false);
 
-	// 右上のUI描画
-	DrawRotaGraph(kRightUiX, kRightUiY1, kRightUiScale1, 0.0f, m_slotIconHandle[4], true);
-	DrawRotaGraph(kRightUiX, kRightUiY2, kRightUiScale2, 0.0f, m_slotIconHandle[3], true);
 
+	m_pMiniMap->Draw();
 
 
 	if (Setting::GetInstance().GetIsDrawOperation())

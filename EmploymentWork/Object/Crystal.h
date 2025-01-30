@@ -27,6 +27,8 @@ public:
 	/// </summary>
 	void Draw()override;
 
+	void DrawHP();
+
 	/// <summary>
 	/// 生成座標を設定
 	/// </summary>

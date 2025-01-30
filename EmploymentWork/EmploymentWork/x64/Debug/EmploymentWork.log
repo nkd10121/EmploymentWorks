@@ -1,5 +1,4 @@
-﻿  GameManager.cpp
-  Crystal.cpp
-  SceneTitle.cpp
-  コードを生成中...
+﻿  MiniMap.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\MiniMap.cpp(56,58): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\MiniMap.cpp(56,34): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

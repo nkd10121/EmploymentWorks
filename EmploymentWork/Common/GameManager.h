@@ -9,6 +9,7 @@ class ObjectBase;	//回復ポーション
 class Crystal;		//クリスタル
 class EnemyManager;		//敵
 class HPBar;		//HPバー
+class MiniMap;		//ミニマップ
 
 class GameManager
 {
@@ -54,6 +55,7 @@ private:
 	std::shared_ptr<EnemyManager> m_pEnemyManager;		//敵管理クラスポインタ
 
 	std::shared_ptr<HPBar> m_pHpUi;	//HPバー
+	std::shared_ptr<MiniMap> m_pMiniMap;	//ミニマップ
 
 	std::string m_stageId;	//ステージID
 	std::string m_stageName;	//ステージ名

@@ -37,6 +37,7 @@ Crystal::Crystal(int hp):
 	m_crystalStandHandle(-1),
 	m_angle(0.0f),
 	m_effectCreateCount(0),
+	m_bgHandle(-1),
 	m_textMagPower(1.0f),
 	m_isDamaged(false)
 {
@@ -86,7 +87,6 @@ void Crystal::Init()
 	pUserData = static_cast<UserData*>(GetBufferShaderConstantBuffer(cBufferHandle));
 	pUserData->time = 0.0f;
 
-	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_CRYSTALBG");
 
 }
 
@@ -132,13 +132,6 @@ void Crystal::Update()
 /// </summary>
 void Crystal::Draw()
 {
-	// クリスタルの残りHPの描画
-	DrawUI::GetInstance().RegisterDrawRequest([=]()
-	{
-		DrawRotaGraph(kCrystalHpX, kCrystalHpY + 4, kBGScale, 0.0f, m_bgHandle, true);
-		FontManager::GetInstance().DrawCenteredExtendText(kCrystalHpX, kCrystalHpY, std::to_string(m_hp), 0xffffff, kCrystalHpFontSize, 0x395f62, m_textMagPower);
-	}, 2);
-
 	MV1SetUseOrigShader(true);
 
 	// シェーダーをセット
@@ -162,6 +155,20 @@ void Crystal::Draw()
 	MV1SetUseOrigShader(false);
 
 	MV1DrawModel(m_crystalStandHandle);
+}
+
+void Crystal::DrawHP()
+{
+	if (m_bgHandle == -1)
+	{
+		m_bgHandle = ResourceManager::GetInstance().GetHandle("I_CRYSTALBG");
+	}
+	// クリスタルの残りHPの描画
+	DrawUI::GetInstance().RegisterDrawRequest([=]()
+	{
+		DrawRotaGraph(kCrystalHpX, kCrystalHpY + 4, kBGScale, 0.0f, m_bgHandle, true);
+		FontManager::GetInstance().DrawCenteredExtendText(kCrystalHpX, kCrystalHpY, std::to_string(m_hp), 0xffffff, kCrystalHpFontSize, 0x395f62, m_textMagPower);
+	}, 2);
 }
 
 /// <summary>
