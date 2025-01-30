@@ -211,7 +211,7 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::
 			m_isDamaged = true;
 
 			m_preHp = m_hp;
-			m_textMagPower = 3.0f;
+			m_textMagPower = 4.0f;
 
 			m_hp--;
 

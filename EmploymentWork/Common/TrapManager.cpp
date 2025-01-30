@@ -427,9 +427,7 @@ void TrapManager::Draw()
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
 		// 現在選択しているスロット枠の描画
-		DrawBox(kSlotBgX + m_slotIdx * kSlotBgOffset - kSlotBoxSize, kSlotBgY - kSlotBoxSize, kSlotBgX + m_slotIdx * kSlotBgOffset + kSlotBoxSize, kSlotBgY + kSlotBoxSize, 0xff0000, false);
-		
-		//DrawRotaGraph()
+		DrawRotaGraph(kSlotBgX + m_slotIdx * kSlotBgOffset, kSlotBgY, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_SLOTSELECT"), true);
 
 	}, 1);
 
