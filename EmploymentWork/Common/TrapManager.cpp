@@ -94,7 +94,6 @@ void TrapManager::Update()
 			m_trapPoint += (m_targetTrapPoint > m_trapPoint) ? difference : -difference; // 1フレームごとに追従
 		}
 		m_trapPoint += (m_targetTrapPoint > m_trapPoint) ? 1 : -1; // 1フレームごとに追従
-
 	}
 
 	//テキストが揺れているなら

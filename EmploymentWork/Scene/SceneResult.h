@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "SceneBase.h"
+#include "Vec2.h"
+
 class SceneResult : public SceneBase
 {
 public:
@@ -68,7 +70,18 @@ private:
 	//遷移先
 	eDestination m_destinationScene;
 
-	bool m_isClear;
-	int m_score;
+	bool m_isClear;		//クリアしたかどうか
+	int m_score;		//スコア
+	int m_drawScore;	//描画スコア
+
+	int m_count;		//フレームカウント
+
+	int m_alpha;		//α値。背景用
+
+	int m_windowHandle;		//ウィンドウハンドル
+	Vec2 m_windowDrawPos;	//ウィンドウの描画座標
+
+	float m_angle;		//
+	int m_textAlpha;	//テキストのα値
 };
 

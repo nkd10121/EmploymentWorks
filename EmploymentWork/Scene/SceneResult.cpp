@@ -6,24 +6,33 @@
 #include "SceneStageSelect.h"
 
 #include "ScoreManager.h"
+#include "ResourceManager.h"
+#include "FontManager.h"
 
 #include "Game.h"
 namespace
 {
-//#ifdef _DEBUG	//デバッグ描画
-	/*テキスト描画関係*/
+	//#ifdef _DEBUG	//デバッグ描画
+		/*テキスト描画関係*/
 	constexpr int kTextX = 64;			//テキスト描画X座標
 	constexpr int kTextY = 32;			//テキスト描画Y座標
 	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
-//#endif
+	//#endif
 }
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-SceneResult::SceneResult():
+SceneResult::SceneResult() :
 	SceneBase("SCENE_RESULT"),
-	m_isClear(false)
+	m_isClear(false),
+	m_score(0),
+	m_drawScore(0),
+	m_count(0),
+	m_alpha(0),
+	m_windowDrawPos(Game::kWindowWidth / 2, -350),
+	m_angle(0.0f),
+	m_textAlpha(0)
 {
 }
 
@@ -32,6 +41,8 @@ SceneResult::SceneResult():
 /// </summary>
 SceneResult::~SceneResult()
 {
+	////staticクラスのデータのリセット
+	//ResourceManager::GetInstance().Clear(GetNowSceneName());
 }
 
 /// <summary>
@@ -39,6 +50,17 @@ SceneResult::~SceneResult()
 /// </summary>
 void SceneResult::StartLoad()
 {
+	//// 非同期読み込みを開始する
+	//SetUseASyncLoadFlag(true);
+
+	////リソースデータ群をみてリソースのロードを開始する
+	//ResourceManager::GetInstance().Load(GetNowSceneName());
+
+	//// デフォルトに戻す
+	//SetUseASyncLoadFlag(false);
+
+	//ほんとはここでリザルトシーンで必要なリソースをロードしたかったが、
+	//ロードすると画面が一瞬ちらついてしまうためゲームシーンで一緒にロードしてしまっている
 }
 
 /// <summary>
@@ -46,6 +68,9 @@ void SceneResult::StartLoad()
 /// </summary>
 bool SceneResult::IsLoaded() const
 {
+	////TODO:ここでリソースがロード中かどうかを判断する
+	//if (!ResourceManager::GetInstance().IsLoaded())	return false;
+
 	return true;
 }
 
@@ -58,6 +83,8 @@ void SceneResult::Init()
 	SkipFadeOut();
 	//最初は一番上の項目を選んでいる状態にする
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
+
+	m_windowHandle = ResourceManager::GetInstance().GetHandle("I_BIGWINDOW2");
 }
 
 /// <summary>
@@ -73,6 +100,47 @@ void SceneResult::End()
 /// </summary>
 void SceneResult::Update()
 {
+
+	//最初の30フレームで画面を暗くする
+	//次の30フレームで上からウィンドウを落としてくる
+	//Clear!の文字を描画する
+	//スコアを加算して数字をアニメーションをさせながら
+	//遷移先の項目をフェードインさせる
+
+	if (m_count < 30)
+	{
+		m_alpha = min(m_alpha+8,200);
+	}
+	else if (m_count < 70)
+	{
+		m_windowDrawPos.y = min(m_windowDrawPos.y + 40, Game::kWindowHeight / 2);
+	}
+	else if (m_count < 120)
+	{
+		m_angle = min(m_angle + 0.1f, 2.0f);
+	}
+	else if (m_count < 200)
+	{
+		// 現在値を更新
+		if (m_drawScore != m_score)
+		{
+			//差が50以上あったら
+			if (abs(m_drawScore - m_score) > 50)
+			{
+				//差に応じて増減アニメーションを早める
+				auto difference = abs(m_score - m_drawScore);
+				difference = difference / 5;
+
+				m_drawScore += (m_score > m_drawScore) ? difference : -difference; // 1フレームごとに追従
+			}
+			m_drawScore += (m_score > m_drawScore) ? 1 : -1; // 1フレームごとに追従
+		}
+
+		m_textAlpha = min(m_textAlpha + 4, 255);
+	}
+
+
+	m_count++;
 }
 
 /// <summary>
@@ -80,21 +148,32 @@ void SceneResult::Update()
 /// </summary>
 void SceneResult::Draw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
+	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
+	//DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
+
+	DrawRotaGraph(m_windowDrawPos.x, m_windowDrawPos.y, 1.0f, 0.0f, m_windowHandle, true);
 
 	if (m_isClear)
 	{
-		DrawString(240, 224,"クリア!",0xffffff);
+		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 6, "Clear!", 0xffff00, 80, 0xff0000, sin(m_angle));
+
+		//DrawString(240, 224, "クリア!", 0xffffff);
 	}
 	else
 	{
 		DrawString(240, 224, "ゲームオーバー...", 0xffffff);
 	}
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textAlpha);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 3, std::to_string(m_drawScore), 0xffffff, 80, 0xff0000);
 
-	DrawFormatString(240,240,0xffffff,"Score:%d", m_score);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 4, "次のステージへ", 0xffffff, 48, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 5, "スコア詳細へ", 0xffffff, 48, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 6, "セレクトに戻る", 0xffffff, 48, 0x000000);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	DrawFormatString(240, 240, 0xffffff, "Score:%d", m_score);
 
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());

@@ -83,3 +83,5 @@ SCENE_GAME,S_PLAYERSHOT,data/sound/se/player_shot,.mp3,0,0
 SCENE_GAME,S_PLAYERHIT,data/sound/se/player_hit,.mp3,0,0
 SCENE_GAME,I_STAGE1MINIMAP,data/img/stage1_minimap,.png,0,
 SCENE_GAME,I_STAGE2MINIMAP,data/img/stage2_minimap,.png,0,
+,,,,,
+SCENE_GAME,I_BIGWINDOW2,data/img/ui_bigWindow2,.png,0,
