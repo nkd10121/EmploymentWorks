@@ -87,7 +87,7 @@ void Crystal::Init()
 	pUserData = static_cast<UserData*>(GetBufferShaderConstantBuffer(cBufferHandle));
 	pUserData->time = 0.0f;
 
-
+	m_preHp = m_hp;
 }
 
 /// <summary>
@@ -163,6 +163,12 @@ void Crystal::DrawHP()
 	{
 		m_bgHandle = ResourceManager::GetInstance().GetHandle("I_CRYSTALBG");
 	}
+
+	if (m_preHp != m_hp)
+	{
+		m_textMagPower = max(m_textMagPower - 0.1f, 1.0f);
+	}
+
 	// クリスタルの残りHPの描画
 	DrawUI::GetInstance().RegisterDrawRequest([=]()
 	{
@@ -203,6 +209,9 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::
 			SoundManager::GetInstance().PlaySE("S_CRYSTALHIT");
 
 			m_isDamaged = true;
+
+			m_preHp = m_hp;
+			m_textMagPower = 3.0f;
 
 			m_hp--;
 

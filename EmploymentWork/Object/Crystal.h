@@ -61,6 +61,7 @@ public:
 private:
 	Vec3 m_pos;	//座標
 
+	int m_preHp;	//体力
 	int m_hp;	//体力
 
 	bool m_isBreak;		//破壊されたかどうか
