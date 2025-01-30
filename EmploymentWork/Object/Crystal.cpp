@@ -3,6 +3,8 @@
 #include "ResourceManager.h"
 #include "EffectManager.h"
 #include "SoundManager.h"
+#include "DrawUI.h"
+#include "FontManager.h"
 
 #include "EnemyBase.h"
 
@@ -13,10 +15,15 @@ namespace
 	constexpr float kCollisionRadius = kModelSize * 30;
 	constexpr float kCollisionSize = kModelSize * 20;
 	
-
 	//パス
 	const std::string kCrystalPath = "data/model/stage/crystal.mv1";
 	const std::string kCrystalStandPath = "data/model/stage/crystalStand.mv1";
+
+	// クリスタルHPの描画位置とフォントサイズ
+	constexpr int kCrystalHpX = 1180;
+	constexpr int kCrystalHpY = 36;
+	constexpr int kCrystalHpFontSize = 24;
+	constexpr float kBGScale = 0.65f;
 }
 
 /// <summary>
@@ -29,7 +36,9 @@ Crystal::Crystal(int hp):
 	m_isBreak(false),
 	m_crystalStandHandle(-1),
 	m_angle(0.0f),
-	m_effectCreateCount(0)
+	m_effectCreateCount(0),
+	m_textMagPower(1.0f),
+	m_isDamaged(false)
 {
 	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, true);
@@ -77,6 +86,7 @@ void Crystal::Init()
 	pUserData = static_cast<UserData*>(GetBufferShaderConstantBuffer(cBufferHandle));
 	pUserData->time = 0.0f;
 
+	m_bgHandle = ResourceManager::GetInstance().GetHandle("I_CRYSTALBG");
 
 }
 
@@ -107,6 +117,14 @@ void Crystal::Update()
 
 	pUserData->time += 0.01f;  // 時間を進める
 	m_effectCreateCount++;
+
+	//if (m_isDamaged)
+	//{
+	//	auto sin = sinf(m_textMagPower);
+
+
+	//	m_textMagPower += 1.0f;
+	//}
 }
 
 /// <summary>
@@ -114,6 +132,13 @@ void Crystal::Update()
 /// </summary>
 void Crystal::Draw()
 {
+	// クリスタルの残りHPの描画
+	DrawUI::GetInstance().RegisterDrawRequest([=]()
+	{
+		DrawRotaGraph(kCrystalHpX, kCrystalHpY + 4, kBGScale, 0.0f, m_bgHandle, true);
+		FontManager::GetInstance().DrawCenteredExtendText(kCrystalHpX, kCrystalHpY, std::to_string(m_hp), 0xffffff, kCrystalHpFontSize, 0x395f62, m_textMagPower);
+	}, 2);
+
 	MV1SetUseOrigShader(true);
 
 	// シェーダーをセット
@@ -169,6 +194,8 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::
 			col->End();
 
 			SoundManager::GetInstance().PlaySE("S_CRYSTALHIT");
+
+			m_isDamaged = true;
 
 			m_hp--;
 

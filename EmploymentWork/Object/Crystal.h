@@ -66,8 +66,12 @@ private:
 	int m_crystalStandHandle;	//クリスタルスタンドのモデルハンドル
 
 	float m_angle;	//クリスタルを動かすための角度
-
 	int m_effectCreateCount;
+
+	int m_bgHandle;
+	float m_textMagPower;
+	bool m_isDamaged;
+
 private:
 	int m_psHandle;
 	int m_vsHandle;

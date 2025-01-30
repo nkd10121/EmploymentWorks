@@ -60,12 +60,7 @@ namespace
 	constexpr int kRightUiY3 = 40;
 	constexpr float kRightUiScale1 = 0.9f;
 	constexpr float kRightUiScale2 = 0.75f;
-	constexpr float kRightUiScale3 = 0.65f;
 
-	// クリスタルHPの描画位置とフォントサイズ
-	constexpr int kCrystalHpX = 1180;
-	constexpr int kCrystalHpY = 36;
-	constexpr int kCrystalHpFontSize = 24;
 
 	// フェーズ番号の描画位置
 	constexpr int kPhaseNumX = 1160;
@@ -208,7 +203,6 @@ void GameManager::Init(int stageIdx)
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SLOTCROSSBOW"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SPIKE"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_SLOTARROWWALL"));
-	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_CRYSTALBG"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_IRONUI"));
 	m_slotIconHandle.push_back(ResourceManager::GetInstance().GetHandle("I_MINIMAPBG"));
 
@@ -460,9 +454,7 @@ void GameManager::Draw()
 
 	// クリスタルの描画
 	m_pCrystal->Draw();
-
-
-
+	
 	// プレイヤーの描画
 	m_pPlayer->Draw();
 
@@ -496,15 +488,10 @@ void GameManager::Draw()
 	DrawBox(kSlotBgX + m_pPlayer->GetNowSlotNumber() * kSlotBgOffset - kSlotBoxSize, kSlotBgY - kSlotBoxSize, kSlotBgX + m_pPlayer->GetNowSlotNumber() * kSlotBgOffset + kSlotBoxSize, kSlotBgY + kSlotBoxSize, 0xff0000, false);
 
 	// 右上のUI描画
-	DrawRotaGraph(kRightUiX, kRightUiY1, kRightUiScale1, 0.0f, m_slotIconHandle[5], true);
-	DrawRotaGraph(kRightUiX, kRightUiY2, kRightUiScale2, 0.0f, m_slotIconHandle[4], true);
-	DrawRotaGraph(kRightUiX, kRightUiY3, kRightUiScale3, 0.0f, m_slotIconHandle[3], true);
+	DrawRotaGraph(kRightUiX, kRightUiY1, kRightUiScale1, 0.0f, m_slotIconHandle[4], true);
+	DrawRotaGraph(kRightUiX, kRightUiY2, kRightUiScale2, 0.0f, m_slotIconHandle[3], true);
 
-	// クリスタルの残りHPの描画
-	DrawUI::GetInstance().RegisterDrawRequest([=]()
-	{
-		FontManager::GetInstance().DrawCenteredText(kCrystalHpX, kCrystalHpY, std::to_string(m_pCrystal->GetHp()), 0xffffff, kCrystalHpFontSize, 0x395f62);
-	}, 2);
+
 
 	if (Setting::GetInstance().GetIsDrawOperation())
 	{
