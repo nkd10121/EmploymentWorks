@@ -55,7 +55,7 @@ public:
 
 	void SeparateData(std::vector<std::string> data);
 
-	const Vec3 GetRayCastRetPos()const { return m_rayCastRetPos; }
+	const Vec3 GetRayCastRetPos()const { return m_rayCastRetPosOnLine; }
 
 	const void SetScoreData()const;
 
@@ -74,7 +74,8 @@ private:
 
 	std::list<WayPoint> m_wayPoints;
 
-	Vec3 m_rayCastRetPos;
+	Vec3 m_rayCastRetPosOnLine;
+	Vec3 m_rayHitEnemyPos;
 	bool m_isRayHit;
 	int m_rayHitEnemyNowHP;
 	int m_rayHitEnemyMaxHP;

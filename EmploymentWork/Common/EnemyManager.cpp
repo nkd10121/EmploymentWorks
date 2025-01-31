@@ -130,7 +130,7 @@ void EnemyManager::LoadCreateData(std::string stageName)
 bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 {
 	//初期化
-	m_rayCastRetPos = Vec3();
+	m_rayCastRetPosOnLine = Vec3();
 	m_isRayHit = false;
 
 
@@ -174,15 +174,15 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 
 			if (m_isRayHit)
 			{
-				if ((m_rayCastRetPos - cameraPos).Length() > (hitPos - cameraPos).Length())
+				if ((m_rayCastRetPosOnLine - cameraPos).Length() > (hitPos - cameraPos).Length())
 				{
-					m_rayCastRetPos = hitPos;
+					m_rayCastRetPosOnLine = hitPos;
 					retRayHitEnemy = enemy->GetRayHitEnemy();
 				}
 			}
 			else
 			{
-				m_rayCastRetPos = hitPos;
+				m_rayCastRetPosOnLine = hitPos;
 				retRayHitEnemy = enemy->GetRayHitEnemy();
 			}
 
@@ -205,6 +205,7 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 	{
 		m_rayHitEnemyNowHP = retRayHitEnemy.lock()->GetHp();
 		m_rayHitEnemyMaxHP = retRayHitEnemy.lock()->GetMaxHp();
+		m_rayHitEnemyPos = retRayHitEnemy.lock()->GetPos();
 	}
 
 	if (m_isDrawKillStreakPoint)
@@ -274,7 +275,7 @@ void EnemyManager::Draw()
 	{
 		if (m_isGame)
 		{
-			auto screenPos = ConvWorldPosToScreenPos(m_rayCastRetPos.ToVECTOR());
+			auto screenPos = ConvWorldPosToScreenPos(m_rayHitEnemyPos.ToVECTOR());
 			screenPos.y -= 60;
 
 			//HPの割合を計算する

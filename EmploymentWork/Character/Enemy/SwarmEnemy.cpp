@@ -115,18 +115,18 @@ void SwarmEnemy::Update(Vec3 start,Vec3 end)
 		{
 			if (m_isCameraRayHit)
 			{
-				auto l1 = (m_cameraRayHitPos - start).SqLength();
+				auto l1 = (m_cameraRayClosestOnLine - start).SqLength();
 				auto l2 = (closestOnLine - start).SqLength();
 
 				if (l1 > l2)
 				{
-					m_cameraRayHitPos = p;
+					m_cameraRayClosestOnLine = closestOnLine;
 					m_reyHitEnemy = enemy;
 				}
 			}
 			else
 			{
-				m_cameraRayHitPos = p;
+				m_cameraRayClosestOnLine = closestOnLine;
 				m_reyHitEnemy = enemy;
 			}
 
