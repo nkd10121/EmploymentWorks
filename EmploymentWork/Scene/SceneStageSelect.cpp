@@ -9,6 +9,7 @@
 #include "ResourceManager.h"
 #include "FontManager.h"
 #include "ScoreManager.h"
+#include "SoundManager.h"
 
 namespace
 {
@@ -75,6 +76,12 @@ void SceneStageSelect::Init()
 	// ステージ名のロード
 	m_stageNames = LoadCSV::GetInstance().GetAllStageName();
 
+	for (int i = 0; i < m_stageNames.size(); i++)
+	{
+		auto info = LoadCSV::GetInstance().LoadStageInfo(i);
+		m_stageMinimapHandle.push_back(ResourceManager::GetInstance().GetHandle(info[9]));
+	}
+
 	// マップマネージャーの初期化とロード
 	MapManager::GetInstance().Init();
 	MapManager::GetInstance().Load("StageSelect");
@@ -95,6 +102,8 @@ void SceneStageSelect::End()
 
 void SceneStageSelect::Update()
 {
+	SoundManager::GetInstance().PlayBGM("S_TITLEBGM", true);
+
 	// カメラのターゲットY座標の更新
 	if (IsLoaded() && m_cameraTarget.y < kMaxCameraTargetY)
 	{
@@ -105,6 +114,8 @@ void SceneStageSelect::Update()
 	// 次のシーンへの遷移処理
 	if (isNextScene)
 	{
+		SoundManager::GetInstance().FadeOutBGM("S_TITLEBGM", 30);
+
 		if (m_nowCursor >= 0)
 		{
 			auto vec = m_cameraTarget - m_cameraPos;
@@ -160,7 +171,7 @@ void SceneStageSelect::Draw()
 	auto addSize = sinf(m_angle) / 16;
 
 	DrawRotaGraph(1000 + m_cameraMoveDistance * 10, 386, 1.0f + m_cameraMoveDistance / kCameraMoveDistanceFactor, 0.0f, m_bigWindowHandle, true);
-	if (m_nowCursor >= 0)
+		if (m_nowCursor >= 0)
 	{
 		FontManager::GetInstance().DrawCenteredExtendText(1000 + m_cameraMoveDistance * 10, 540 + m_cameraMoveDistance * 2, "ハイスコア:" + std::to_string(ScoreManager::GetInstance().GetScore(m_stageNames[m_nowCursor])), 0xffffff, 48, 0x000000, 1.0f + m_cameraMoveDistance / kCameraMoveDistanceFactor);
 	}
@@ -175,6 +186,7 @@ void SceneStageSelect::Draw()
 			graphSize = 1.2f + addSize;
 			fontSize = 48;
 			fontExtendRate += addSize;
+			DrawRotaGraph(1000 + m_cameraMoveDistance * 10, 346, 1.2f + m_cameraMoveDistance / kCameraMoveDistanceFactor, 0.0f, m_stageMinimapHandle[m_nowCursor], true);
 		}
 		DrawRotaGraph(300 - m_cameraMoveDistance * 10, 220 + 165 * i + m_cameraMoveDistance * 2 * (i - 1), graphSize + m_cameraMoveDistance / kCameraMoveDistanceFactor, 0.0f, m_smallWindowHandle, true);
 		FontManager::GetInstance().DrawCenteredExtendText(300 - m_cameraMoveDistance * 10, 220 + 165 * i - 5 + m_cameraMoveDistance * 2 * (i - 1), m_stageNames[i], 0xffffff, fontSize, 0x000000, fontExtendRate + m_cameraMoveDistance / kCameraMoveDistanceFactor);

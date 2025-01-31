@@ -54,6 +54,8 @@ public:
 
 private:
 	std::vector<std::string> m_stageNames; // ステージ名のリスト
+	std::vector<int> m_stageMinimapHandle; // ステージ名のリスト
+
 
 	bool isNextScene;	// 次のシーンに遷移するかどうか
 	int m_nowCursor;	// 現在のカーソル位置

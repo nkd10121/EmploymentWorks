@@ -143,5 +143,7 @@ private:
 
 	float m_BGMvolume = 0.5f;	//bgmの音量　min:0.0f,max:1.0f
 	float m_SEvolume = 0.5f;	//seの音量　min:0.0f,max:1.0f
+
+	int m_fadeFrameCount = 0;
 };
 

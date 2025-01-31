@@ -134,6 +134,7 @@ GameManager::~GameManager()
 
 
 	TrapManager::GetInstance().Clear();
+
 }
 
 /// <summary>
@@ -219,6 +220,7 @@ void GameManager::Init(int stageIdx)
 	m_stageName = info[8];
 
 	m_operationHandle = ResourceManager::GetInstance().GetHandle("I_OPERATIONINGAME");
+
 }
 
 /// <summary>
@@ -226,12 +228,20 @@ void GameManager::Init(int stageIdx)
 /// </summary>
 void GameManager::Update()
 {
+	SoundManager::GetInstance().PlayBGM("S_INGAMEBGM", true);
+
 	// Yボタンを押した時かつ最初のフェーズの時
 	if (Input::GetInstance().IsTriggered("Y") /*&& m_phaseNum.front() == kInitialPhase*/)
 	{
 		// 次のフェーズに進む
 		m_phaseNum.pop_front();
 
+#ifdef _DEBUG
+		if (m_phaseNum.front() == 0)
+		{
+			SoundManager::GetInstance().PlaySE("S_CLEAR");
+		}
+#endif
 		//サウンドを流す
 		SoundManager::GetInstance().PlaySE("S_ENEMY_APPEAR");
 	}
@@ -349,6 +359,11 @@ void GameManager::Update()
 
 			// 次の準備フェーズに進む
 			m_phaseNum.pop_front();
+
+			if (m_phaseNum.front() == 0)
+			{
+				SoundManager::GetInstance().PlaySE("S_CLEAR");
+			}
 		}
 	}
 
@@ -420,6 +435,8 @@ void GameManager::Update()
 	if (m_phaseNum.front() == 0)
 	{
 		m_pPlayer->SetClearState();
+		SoundManager::GetInstance().FadeOutBGM("S_INGAMEBGM",30);
+
 
 		if (m_pPlayer->GetNowAnimEndFrame() - 1 == m_pPlayer->GetAnimNowFrame())
 		{

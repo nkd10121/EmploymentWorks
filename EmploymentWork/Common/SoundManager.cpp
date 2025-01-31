@@ -208,22 +208,43 @@ void SoundManager::PlaySE(std::string id)
 /// </summary>
 void SoundManager::FadeOutBGM(std::string id, int fadeFrame)
 {
-	float dif = m_BGMvolume * ((kFadeFrame - static_cast<float>(fadeFrame)) / kFadeFrame);
 	for (auto& bgm : m_BGM)
 	{
 		//指定したIDと一致するハンドルが存在していたら
 		if (bgm.id == id)
 		{
 			//BGMvolume = dif;
-			ChangeVolumeSoundMem(static_cast<int>(255 * dif), bgm.handle);
+			auto volume = GetVolumeSoundMem2(bgm.handle);
+
+			if (volume == 0)
+			{
+				m_fadeFrameCount = 0;
+				return;
+			}
+		}
+	}
+		
+	auto volume = static_cast<float>(255 * Setting::GetInstance().GetMasterVolume() * Setting::GetInstance().GetBGMVolume());
+	float dif = volume * ((fadeFrame - static_cast<float>(m_fadeFrameCount)) / fadeFrame);
+
+	for (auto& bgm : m_BGM)
+	{
+		//指定したIDと一致するハンドルが存在していたら
+		if (bgm.id == id)
+		{
+			//BGMvolume = dif;
+			ChangeVolumeSoundMem(static_cast<int>(dif), bgm.handle);
 
 			if (255 * dif <= 0.0f)
 			{
 				StopSoundMem(bgm.handle);
 			}
+
+			m_fadeFrameCount++;
 			return;
 		}
 	}
+
 	return;
 }
 

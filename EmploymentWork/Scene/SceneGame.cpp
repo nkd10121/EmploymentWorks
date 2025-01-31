@@ -195,6 +195,7 @@ void SceneGame::UpdateGame()
 		resultScene->SetIsClear(isClear);
 		resultScene->SetStageName(m_pGameManager->GetStageName());
 
+
 		return;
 	}
 

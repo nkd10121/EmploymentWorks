@@ -108,7 +108,6 @@ void SceneTitle::Init()
 
 	m_buttonHandle = ResourceManager::GetInstance().GetHandle("I_BUTTON");
 
-	SoundManager::GetInstance().PlayBGM("S_TITLEBGM",true);
 }
 
 /// <summary>
@@ -130,6 +129,10 @@ void SceneTitle::End()
 /// </summary>
 void SceneTitle::Update()
 {
+	if (!IsLoaded())	return;
+	SoundManager::GetInstance().PlayBGM("S_TITLEBGM", true);
+
+
 	m_pCrystal->Update();
 	m_pEnemyManager->Update(0, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 	m_pEnemyManager->CreateEnemy(0, m_enemyCreateFrame,false);
