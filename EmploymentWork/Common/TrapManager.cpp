@@ -28,7 +28,7 @@ namespace
 	constexpr int kTextShakeFrame = 30;
 
 	//罠ポイントの背景の描画座標
-	const Vec2 kTrapPointBgDrawPos = Vec2(80, 660);
+	const Vec2 kTrapPointBgDrawPos = Vec2(80, 685);
 	const int kTrapPointIconOffsetX = 46;
 	const Vec2 kTrapPointOffsetPos = Vec2(60, 13);
 
@@ -396,7 +396,7 @@ void TrapManager::Draw()
 	//	}
 	//#endif
 
-	if (debugTrap && m_slotIdx != 0)
+	if (debugTrap && m_slotIdx != 0 && m_isPrePhase)
 	{
 		if (debugTrap->isPlaced)
 		{
