@@ -20,12 +20,12 @@ namespace
 #endif
 
 	/*モデル関係*/
-	constexpr float kModelScale = 0.018f;		//モデルサイズ
+	constexpr float kModelScale = 0.0007f;		//モデルサイズ
 
 	/*当たり判定関係*/
 	constexpr float kSearchCollisionRadius = kCollisionCapsuleRadius * 10;
 
-	const char* kAttachFrameName = "Head";
+	const char* kAttachFrameName = "Bip001 Head";
 }
 
 /// <summary>
