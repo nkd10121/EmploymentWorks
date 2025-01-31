@@ -98,6 +98,8 @@ public:
 	/// <returns></returns>
 	const int GetScore(std::string stageName)const { return m_score.at(stageName); }
 
+	const int GetCalculationScore()const { return m_calculationScore; }
+
 	/// <summary>
 	/// スコアをファイルに保存する
 	/// </summary>
@@ -119,7 +121,7 @@ private:
 	int m_crystalHp;		//クリスタルの残りHP
 	int m_maxComboNum;		//最大コンボ数
 
-	//int m_score;			//スコア
+	int m_calculationScore;			//スコア
 
 	std::unordered_map<std::string,int> m_score;
 };

@@ -19,7 +19,8 @@ ScoreManager::ScoreManager():
 	m_playerKillNum(0),
 	m_trapKillNum(0),
 	m_crystalHp(0),
-	m_maxComboNum(0)
+	m_maxComboNum(0),
+	m_calculationScore(0)
 {
 }
 
@@ -34,29 +35,29 @@ void ScoreManager::Clear()
 	m_trapKillNum = 0;
 	m_crystalHp = 0;
 	m_maxComboNum = 0;
-	//m_score = 0;
+	m_calculationScore = 0;
 }
 
 const void ScoreManager::CalculationScore(std::string stageName)
 {
 	//タイムの計算
-	int score = 0;
-	score += (m_targetClearTime - m_clearTime) / 6;
-	score += m_playerKillNum * 50;
-	score += m_trapKillNum * 100;
-	score += m_crystalHp * 100;
-	score += m_maxComboNum * 100;
+	m_calculationScore = 0;
+	m_calculationScore += (m_targetClearTime - m_clearTime) / 6;
+	m_calculationScore += m_playerKillNum * 50;
+	m_calculationScore += m_trapKillNum * 100;
+	m_calculationScore += m_crystalHp * 100;
+	m_calculationScore += m_maxComboNum * 100;
 
 	auto it = m_score.find(stageName);
 	//もし、ステージ名のスコアが保存されていたら
 	if (it != m_score.end())
 	{
 		//もともとあったスコアと比較して大きかったら上書きする
-		m_score[stageName] = max(m_score[stageName], score);
+		m_score[stageName] = max(m_score[stageName], m_calculationScore);
 	}
 	else
 	{
-		m_score[stageName] = score;
+		m_score[stageName] = m_calculationScore;
 	}
 }
 

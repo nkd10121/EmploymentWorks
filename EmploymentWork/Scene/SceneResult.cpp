@@ -207,7 +207,7 @@ void SceneResult::Draw()
 
 const void SceneResult::SetStageName(std::string stageName)
 {
-	m_score = ScoreManager::GetInstance().GetScore(stageName);
+	m_score = ScoreManager::GetInstance().GetCalculationScore();
 }
 
 /// <summary>
