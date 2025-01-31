@@ -81,7 +81,8 @@ private:
 	int m_windowHandle;		//ウィンドウハンドル
 	Vec2 m_windowDrawPos;	//ウィンドウの描画座標
 
-	float m_angle;		//
+	float m_resultTextAngle;		//
 	int m_textAlpha;	//テキストのα値
+	float m_textAngle;	//テキストの拡大用
 };
 

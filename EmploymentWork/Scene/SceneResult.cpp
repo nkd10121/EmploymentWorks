@@ -18,6 +18,13 @@ namespace
 	constexpr int kTextY = 32;			//テキスト描画Y座標
 	constexpr int kTextYInterval = 16;	//テキスト描画Y座標の空白
 	//#endif
+
+	std::vector<std::string> kItemText =
+	{
+		"次のステージへ",
+		"スコア詳細へ",
+		"セレクトに戻る"
+	};
 }
 
 /// <summary>
@@ -31,8 +38,9 @@ SceneResult::SceneResult() :
 	m_count(0),
 	m_alpha(0),
 	m_windowDrawPos(Game::kWindowWidth / 2, -350),
-	m_angle(0.0f),
-	m_textAlpha(0)
+	m_resultTextAngle(0.0f),
+	m_textAlpha(0),
+	m_textAngle(0.0f)
 {
 }
 
@@ -117,7 +125,7 @@ void SceneResult::Update()
 	}
 	else if (m_count < 120)
 	{
-		m_angle = min(m_angle + 0.1f, 2.0f);
+		m_resultTextAngle = min(m_resultTextAngle + 0.1f, 2.0f);
 	}
 	else if (m_count < 200)
 	{
@@ -140,6 +148,7 @@ void SceneResult::Update()
 	}
 
 
+	m_textAngle += 0.05f;
 	m_count++;
 }
 
@@ -157,9 +166,7 @@ void SceneResult::Draw()
 
 	if (m_isClear)
 	{
-		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 6, "Clear!", 0xffff00, 80, 0xff0000, sin(m_angle));
-
-		//DrawString(240, 224, "クリア!", 0xffffff);
+		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 6, "Clear!", 0xffff00, 80, 0xff0000, sin(m_resultTextAngle));
 	}
 	else
 	{
@@ -168,22 +175,34 @@ void SceneResult::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textAlpha);
 	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 3, std::to_string(m_drawScore), 0xffffff, 80, 0xff0000);
 
-	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 4, "次のステージへ", 0xffffff, 48, 0x000000);
-	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 5, "スコア詳細へ", 0xffffff, 48, 0x000000);
-	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 6, "セレクトに戻る", 0xffffff, 48, 0x000000);
+	auto addSize = sinf(m_textAngle) / 16;
+	for (int i = 0;i < kItemText.size();i++)
+	{
+		float rate = 1.0f;
+		if (m_destinationScene - 1 == i)
+		{
+			rate += addSize;
+		}
+		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * (i + 4), kItemText[i], 0xffffff, 48, 0x000000, rate);
+	}
+
+	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 4, "次のステージへ", 0xffffff, 48, 0x000000,1.0f);
+	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 5, "スコア詳細へ", 0xffffff, 48, 0x000000, 1.0f);
+	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 6, "セレクトに戻る", 0xffffff, 48, 0x000000, 1.0f);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	DrawFormatString(240, 240, 0xffffff, "Score:%d", m_score);
 
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
-#endif
 
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
 
 	DrawString(kTextX, kTextY, "次のステージへ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval, "スコア詳細へ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval * 2, "ステージセレクトに戻る", 0xffffff);
+#endif
+
 }
 
 const void SceneResult::SetStageName(std::string stageName)
