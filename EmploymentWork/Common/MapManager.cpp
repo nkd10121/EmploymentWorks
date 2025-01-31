@@ -167,6 +167,16 @@ void MapManager::Draw()
 {
 	for (auto& loc : m_data)
 	{
+
+		if (loc.tag == "WarningAreaEffect")
+		{
+			if (m_count % 120 == 0)
+			{
+				//エフェクトの描画
+				EffectManager::GetInstance().CreateEffect("E_WARNINGAREA", loc.pos,loc.rot);
+			}
+		}
+
 		bool isDraw = false;
 
 		for (auto& name : kId)

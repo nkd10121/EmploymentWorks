@@ -31,6 +31,7 @@ SCENE_TITLE,S_CRYSTALHIT,data/sound/se/crystal_hit,.mp3,1,0
 SCENE_STAGESELECT,I_BIGWINDOW,data/img/ui_bigWindow,.png,0,
 SCENE_STAGESELECT,I_SMALLWINDOW,data/img/ui_smallWindow,.png,0,
 SCENE_STAGESELECT,I_OPERATION,data/img/OperationExplanation,.png,1,
+SCENE_TITLE,E_WARNINGAREA,data/effect/warningArea,.efk,1,
 ,,,,,
 SCENE_GAME,I_OPERATIONINGAME,data/img/operation_inGame,.png,0,
 SCENE_GAME,M_PORTION,data/model/object/portion/bottle_red,.mv1,0,

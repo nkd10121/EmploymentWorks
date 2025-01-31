@@ -22,6 +22,7 @@ TagManager:
   - banner
   - fence
   - wallColor
+  - WarningAreaEffect
   layers:
   - Default
   - TransparentFX
