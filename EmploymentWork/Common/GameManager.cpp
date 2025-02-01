@@ -528,7 +528,7 @@ void GameManager::Draw()
 		// 操作説明UIの描画
 		DrawUI::GetInstance().RegisterDrawRequest([=]()
 		{
-				DrawRotaGraph(Game::kWindowWidth - 130, Game::kWindowHeight - 130, 1.0f, 0.0f, m_operationHandle, true);
+				DrawRotaGraph(Game::kWindowWidth - 150, Game::kWindowHeight - 130, 1.0f, 0.0f, m_operationHandle, true);
 		}, 2);
 	}
 
