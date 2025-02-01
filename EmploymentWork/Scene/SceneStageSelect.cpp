@@ -124,7 +124,7 @@ void SceneStageSelect::Update()
 
 			m_cameraMoveDistance += vec.Length();
 
-			SoundManager::GetInstance().FadeOutBGM("S_TITLEBGM", 30);
+			SoundManager::GetInstance().FadeOutBGM("S_TITLEBGM", 10);
 		}
 		else
 		{

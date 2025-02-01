@@ -1,6 +1,7 @@
 ﻿#include "EnemyNormal.h"
 #include "EnemyStateWalk.h"
 #include "EnemyStateDeath.h"
+#include "EnemyStateDamaged.h"
 
 #include "Player.h"
 #include "Shot.h"
@@ -288,11 +289,14 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 	//当たったオブジェクトのタグを取得する
 	m_hitObjectTag = send->GetTag();
 
+	bool isDamaged = false;
+
 	if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Normal)
 	{
 		//当たったオブジェクトがプレイヤーが撃った弾なら
 		if (m_hitObjectTag == GameObjectTag::PlayerShot)
 		{
+			isDamaged = true;
 			//弾の攻撃力分自身のHPを減らす(防御力と調整しながら)
 			Shot* col = dynamic_cast<Shot*>(send.get());
 			auto damage = col->GetAtk() - m_status.def;
@@ -316,6 +320,7 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 		{
 			if (sendCol->collideTag == MyLib::ColliderBase::CollisionTag::Attack)
 			{
+				isDamaged = true;
 				//そのトラップの攻撃力分HPを減らす
 				TrapBase* col = dynamic_cast<TrapBase*>(send.get());
 				auto damage = col->GetAtk() - m_status.def;
@@ -349,6 +354,7 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 		if (m_hitObjectTag == GameObjectTag::PlayerShot)
 		{
 			{
+				isDamaged = true;
 				//弾の攻撃力分自身のHPを減らす(防御力と調整しながら)
 				Shot* col = dynamic_cast<Shot*>(send.get());
 				auto damage = col->GetAtk() - m_status.def;
@@ -371,6 +377,18 @@ void EnemyNormal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const s
 
 #endif
 			}
+		}
+	}
+
+	//ダメージを食らっていたら
+	if (isDamaged)
+	{
+		//30%の確率で被ダメージ状態にする
+		if (GetRand(99) + 1 <= 30)
+		{
+			m_pState = std::make_shared<EnemyStateDamaged>(std::dynamic_pointer_cast<EnemyBase>(shared_from_this()));
+			m_pState->SetNextKind(StateBase::StateKind::Damaged);
+			m_pState->Init("");
 		}
 	}
 }

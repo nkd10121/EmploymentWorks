@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\FontManager.cpp" />
+    <ClCompile Include="EnemyStateDamaged.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Object\Trap\FlameTrap.cpp" />
     <ClCompile Include="Util\Setting.cpp" />
@@ -87,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\FontManager.h" />
+    <ClInclude Include="EnemyStateDamaged.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="Object\Trap\FlameTrap.h" />
     <ClInclude Include="Util\Setting.h" />

@@ -11,6 +11,7 @@
 #include "EnemyStateIdle.h"
 #include "EnemyStateWalk.h"
 #include "EnemyStateAttack.h"
+#include "EnemyStateDamaged.h"
 
 #include "LoadCSV.h"
 #include "Input.h"
@@ -71,8 +72,8 @@ void StateBase::DebugDrawState(int x, int y)
 	case StateBase::StateKind::Attack:
 		state = "Attack";
 		break;
-	case StateBase::StateKind::OnHit:
-		state = "OnHit";
+	case StateBase::StateKind::Damaged:
+		state = "Damaged";
 		break;
 	case StateBase::StateKind::Death:
 		state = "Death";
@@ -153,6 +154,14 @@ void StateBase::ChangeState(StateKind kind)
 		else if (kind == StateKind::Attack)
 		{
 			auto pNext = std::make_shared<EnemyStateAttack>(m_pOwn.lock());
+			pNext->Init(m_stageColId);
+
+			m_pOwn.lock()->ChangeState(pNext);
+			return;
+		}
+		else if(kind == StateKind::Damaged)
+		{
+			auto pNext = std::make_shared<EnemyStateDamaged>(m_pOwn.lock());
 			pNext->Init(m_stageColId);
 
 			m_pOwn.lock()->ChangeState(pNext);
