@@ -215,6 +215,8 @@ const void SceneResult::SetStageName(std::string stageName)
 /// </summary>
 void SceneResult::SelectNextSceneUpdate()
 {
+	if (m_count < 200)	return;
+
 	//上を入力したら
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
