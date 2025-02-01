@@ -114,7 +114,6 @@ void SceneStageSelect::Update()
 	// 次のシーンへの遷移処理
 	if (isNextScene)
 	{
-		SoundManager::GetInstance().FadeOutBGM("S_TITLEBGM", 30);
 
 		if (m_nowCursor >= 0)
 		{
@@ -124,6 +123,8 @@ void SceneStageSelect::Update()
 			SetCameraPositionAndTarget_UpVecY(m_cameraPos.ToVECTOR(), m_cameraTarget.ToVECTOR());
 
 			m_cameraMoveDistance += vec.Length();
+
+			SoundManager::GetInstance().FadeOutBGM("S_TITLEBGM", 30);
 		}
 		else
 		{
