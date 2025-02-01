@@ -221,6 +221,8 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 
 					//弾の管理をゲームシーンに任せる
 					pGameManager->AddObject(shot);
+
+					EffectManager::GetInstance().CreateEffect("E_PLAYERSHOT", m_crossbowPos);
 				}
 			}
 			//押しているカウントを更新
