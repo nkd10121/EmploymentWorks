@@ -97,6 +97,12 @@ public:
 	/// <param name="colider">衝突したオブジェクト</param>
 	void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
+
+
+private:
+	void StartShotAnim();
+	void UpdateShotAnim();
+
 private:
 	int m_crossbowHandle;
 
@@ -123,5 +129,11 @@ private:
 	bool m_isDeath;
 
 	int m_slotNum;
+
+	float m_shotAnimBlendRate;
+	int m_shotAnimNo;
+	float m_shotAnimFrame;
+	bool m_isPlayShotAnim;
+	float m_animAngle;
 };
 

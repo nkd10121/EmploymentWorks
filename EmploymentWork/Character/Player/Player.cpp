@@ -49,6 +49,8 @@ namespace
 	constexpr int kAttackInetervalMax = 300;
 
 	constexpr int kSpreadAngleMax = 40;
+
+	constexpr int kAttachAnimFrame = 0;
 }
 
 /// <summary>
@@ -67,7 +69,9 @@ Player::Player() :
 	m_attackIntervalCount(0),
 	m_isStartDeathAnimation(false),
 	m_isDeath(false),
-	m_slotNum(0)
+	m_slotNum(0),
+	m_isPlayShotAnim(false),
+	m_animAngle(0.0f)
 {
 	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Cupsule, false);
@@ -117,10 +121,15 @@ void Player::Init(std::string stageId)
 	//スケールの変更
 	MV1SetScale(m_modelHandle, VGet(kModelScale, kModelScale, kModelScale));
 
+
 	//待機アニメーションを設定
 	m_currentAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "IDLE"));
 	m_preAnimIdx = 0;
 	m_nowAnimIdx = 0;
+
+	m_shotAnimNo = MV1AttachAnim(m_modelHandle, LoadCSV::GetInstance().GetAnimIdx(m_characterName, "ATTACK"));
+	m_shotAnimBlendRate = 0.0f;
+	MV1SetAttachAnimBlendRateToFrame(m_modelHandle, m_shotAnimNo, m_shotAnimBlendRate, kAttachAnimFrame);
 
 	//プレイヤーのステータス取得
 	m_status = LoadCSV::GetInstance().LoadStatus(m_characterName.c_str());
@@ -152,10 +161,12 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 	//ステートの更新
 	m_pState->Update();
 
+	UpdateShotAnim();
 	//アニメーションの更新
 	m_isAnimationFinish = UpdateAnim(m_currentAnimNo);
 	//アニメーションブレンド
 	AnimationBlend();
+
 
 	//死んでいなかったらカメラが向いている方向を正面とする
 	if (!m_isStartDeathAnimation && m_pState->GetKind() != StateBase::StateKind::Clear)
@@ -221,6 +232,8 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 
 					//弾の管理をゲームシーンに任せる
 					pGameManager->AddObject(shot);
+
+					StartShotAnim();
 
 					EffectManager::GetInstance().CreateEffect("E_PLAYERSHOT", m_crossbowPos);
 				}
@@ -470,4 +483,58 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::s
 			}
 		}
 	}
+}
+
+void Player::StartShotAnim()
+{
+
+	m_isPlayShotAnim = true;
+	m_shotAnimFrame = 0.0f;
+	m_animAngle = 0.0f;
+	MV1SetAttachAnimTime(m_modelHandle, m_shotAnimNo, m_shotAnimFrame);
+	//MV1SetAttachAnimBlendRateToFrame(m_modelHandle, m_shotAnimNo, m_shotAnimBlendRate, kAttachAnimFrame);
+}
+
+void Player::UpdateShotAnim()
+{
+
+	//アニメーションが設定されていなかったら早期リターン
+	if (m_shotAnimNo == -1)	return;
+	if (!m_isPlayShotAnim) return;
+
+	m_animAngle += 0.14f;
+
+	m_shotAnimBlendRate = min(max(sinf(m_animAngle),0.0f), 0.5f);
+	//アニメーションのブレンド率を設定する
+	MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, kAnimBlendRateMax - m_shotAnimBlendRate);
+	MV1SetAttachAnimBlendRate(m_modelHandle, m_shotAnimNo, m_shotAnimBlendRate);
+	//アニメーションを進行させる
+	m_shotAnimFrame = MV1GetAttachAnimTime(m_modelHandle, m_shotAnimNo);	//現在の再生カウントを取得
+	m_shotAnimFrame += 1.0f;
+
+	//現在再生中のアニメーションの総カウントを取得する
+	float totalAnimframe = MV1GetAttachAnimTotalTime(m_modelHandle, m_shotAnimNo);
+	bool isLoop = false;
+
+	//NOTE:もしかしたら総フレーム分引いても総フレームより大きいかもしれないからwhileで大きい間引き続ける
+	while (totalAnimframe <= m_shotAnimFrame)
+	{
+		//NOTE:nowFrameを0にリセットするとアニメーションフレームの飛びがでるから総フレーム分引く
+		m_shotAnimFrame -= totalAnimframe;
+		isLoop = true;
+
+		m_isPlayShotAnim = false;
+		m_shotAnimBlendRate = 0.0f;
+		m_animAngle = 0.0f;
+
+		//アニメーションのブレンド率を設定する
+		MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, kAnimBlendRateMax - m_shotAnimBlendRate);
+		MV1SetAttachAnimBlendRate(m_modelHandle, m_shotAnimNo, m_shotAnimBlendRate);
+	}
+
+	//進めた時間に設定
+	MV1SetAttachAnimTime(m_modelHandle, m_shotAnimNo, m_shotAnimFrame);
+	//MV1SetAttachAnimBlendRateToFrame(m_modelHandle, m_shotAnimNo, m_shotAnimBlendRate, kAttachAnimFrame);
+
+	return;
 }
