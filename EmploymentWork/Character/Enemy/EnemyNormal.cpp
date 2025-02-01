@@ -194,6 +194,8 @@ void EnemyNormal::Update()
 		{
 			//完全に死亡したものとする
 			m_isExist = false;
+
+			EffectManager::GetInstance().CreateEffect("E_ENEMYDEAD", rigidbody->GetPos());
 		}
 	}
 

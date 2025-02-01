@@ -45,6 +45,7 @@ SCENE_GAME,M_CROSSBOW,data/model/object/Crossbow,.mv1,0,
 SCENE_GAME,M_ARROWWALL,data/model/object/trap/arrowWall,.mv1,0,
 SCENE_GAME,E_ENEMYHIT,data/effect/enemy_hit,.efk,0,
 SCENE_GAME,E_ENEMYCRITICALHIT,data/effect/enemy_CriticalHit,.efk,0,
+SCENE_GAME,E_ENEMYDEAD,data/effect/enemy_dead,.efk,0,
 SCENE_GAME,S_ENEMYHIT,data/sound/se/enemyHit,.mp3,0,0
 SCENE_GAME,I_HPGAUGE,data/img/hp/hp_gauge,.png,0,
 SCENE_GAME,I_HPFRAME,data/img/hp/hp_frame,.png,0,
