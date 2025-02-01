@@ -130,8 +130,8 @@ void SceneTitle::End()
 void SceneTitle::Update()
 {
 	if (!IsLoaded())	return;
-	SoundManager::GetInstance().PlayBGM("S_TITLEBGM", true);
 
+	SoundManager::GetInstance().PlayBGM("S_TITLEBGM", true);
 
 	m_pCrystal->Update();
 	m_pEnemyManager->Update(0, Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));

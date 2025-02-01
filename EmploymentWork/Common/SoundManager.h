@@ -138,7 +138,7 @@ private:
 	bool CheckPlaying(int handle) { return CheckSoundMem(handle); }
 
 private:
-	std::list<Sound> m_BGM;	//BGM配列
+	Sound m_BGM;	//BGM配列
 	std::list<std::shared_ptr<Sound>> m_SE;		//SE配列
 
 	float m_BGMvolume = 0.5f;	//bgmの音量　min:0.0f,max:1.0f

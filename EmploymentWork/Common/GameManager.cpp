@@ -435,7 +435,7 @@ void GameManager::Update()
 	if (m_phaseNum.front() == 0)
 	{
 		m_pPlayer->SetClearState();
-		SoundManager::GetInstance().FadeOutBGM("S_INGAMEBGM",30);
+		SoundManager::GetInstance().StopBGM("S_INGAMEBGM");
 
 
 		if (m_pPlayer->GetNowAnimEndFrame() - 1 == m_pPlayer->GetAnimNowFrame())
