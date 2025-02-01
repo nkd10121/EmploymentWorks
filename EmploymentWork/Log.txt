@@ -1,335 +1,335 @@
 ﻿0:ChangeWindowMode実行 
-1:ウインドウモードフラグが立てられました
+0:ウインドウモードフラグが立てられました
 2:ＤＸライブラリの初期化処理開始
 3:	システムの情報を出力します
 3:		ＤＸライブラリ Ver3.24b
 4:		論理プロセッサの数 : 24
 4:		ＯＳ  Windows11 ( Build 22631  )
-105:		現時点のＣＰＵ動作速度：大体2.11GHz
-105:		ＭＭＸ命令を使用します
-105:		ＳＳＥ命令が使用可能です
-106:		ＳＳＥ２命令が使用可能です
-106:		ＣＰＵベンダ：GenuineIntel
+104:		現時点のＣＰＵ動作速度：大体2.10GHz
+104:		ＭＭＸ命令を使用します
+104:		ＳＳＥ命令が使用可能です
+105:		ＳＳＥ２命令が使用可能です
+105:		ＣＰＵベンダ：GenuineIntel
 107:		ＣＰＵ名：13th Gen Intel(R) Core(TM) i7-13700F
 107:	ＣＯＭの初期化... 成功
-111:	非同期読み込み処理の初期化...成功
+110:	非同期読み込み処理の初期化...成功
 111:	ファイルアクセス処理の初期化...成功
-112:	メモリ総量:32478.11MB  空きメモリ領域:13873.70MB 
+112:	メモリ総量:32478.11MB  空きメモリ領域:15674.27MB 
 112:	タイマーの精度を検査します
-112:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
-112:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
-113:	 
-113:	ソフトの二重起動検査... 二重起動はされていませんでした
-114:	ウインドウクラスを登録します... 登録に成功しました
-114:	ウインドウモード起動用のウインドウを作成します
-114:	ディスプレイ情報のセットアップ開始
-115:		モニターの数：2  ディスプレイデバイスの数：4
-115:		No.0  モニター名：\\.\DISPLAY1　2560x1440　32bit　144Hz  96x96dpi
-115:		No.1  モニター名：\\.\DISPLAY2　1920x1080　32bit　60Hz  96x96dpi
-143:	ディスプレイ情報のセットアップ完了
-143:	ウインドウ矩形 ( 624, 309 )-( 1920, 1068 )
-147:	ウインドウの作成に成功しました
-147:	ウインドウを表示します
-168:	ＩＭＥを無効にしました
-170:	ウインドウスタイルをウインドウモード用に変更します... 完了
-195:	XInput DLL の読み込み中... 成功
-198:	DirectInput関係初期化処理
-199:		DirectInput8 の取得を試みます...成功
-276:			引き続き初期化処理... 初期化成功
-279:		ジョイパッドの初期化... 
-279:			XInput 対応コントローラーのチェックを開始します
-279:				XInput 対応コントローラー No.0 をチェック
-282:				XInput 対応コントローラー No.0 の接続を確認しました
-282:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
-283:				XInput 対応コントローラー No.1 をチェック
-283:				XInput 対応コントローラー No.1 の接続は確認できませんでした
-284:				XInput 対応コントローラー No.2 をチェック
-284:				XInput 対応コントローラー No.2 の接続は確認できませんでした
-284:				XInput 対応コントローラー No.3 をチェック
-285:				XInput 対応コントローラー No.3 の接続は確認できませんでした
-285:			XInput 対応コントローラーのチェック完了
-285:			DirectInput 対応ジョイパッドの列挙を開始します
-295:				DirectInput 対応入力装置を検出しました
-296:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
-296:						Device Instance GUID : ce72bfc0,3b94,11ef,80,01,44,45,53,54,00,00
-296:					DirectInputDevice8 の作成... 成功
-297:					DirectInputDevice の情報を取得します... 成功
-298:						Device Product Name  : VSPO!-Keyboard
-298:						Device Instance Name : VSPO!-Keyboard
-299:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-299:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-300:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
-590:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
-591:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
-591:					DirectInputDevice から取得する X軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-592:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-592:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-593:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-594:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-594:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-595:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 0 個です
-595:					DirectInputDevice の X軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-596:					DirectInputDevice の Y軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-597:					DirectInputDevice の Z軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-597:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-598:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-598:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-599:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
-599:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
-599:					DirectInputDevice の通知処理用の Event を作成... 成功
-601:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
-601:					DirectInputDevice のアクセス権を取得... 成功
-607:					検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
-608:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
-608:				DirectInput 対応入力装置を検出しました
-609:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
-609:						Device Instance GUID : ce72e6d0,3b94,11ef,80,02,44,45,53,54,00,00
-609:					DirectInputDevice8 の作成... 成功
-610:					DirectInputDevice の情報を取得します... 成功
-611:						Device Product Name  : VSPO!-Keyboard
-611:						Device Instance Name : VSPO!-Keyboard
-611:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-612:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-612:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
-840:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
-840:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
-840:					DirectInputDevice から取得する X軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-841:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-841:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-842:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-842:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-843:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-844:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 0 個です
-845:					DirectInputDevice の X軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-845:					DirectInputDevice の Y軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-846:					DirectInputDevice の Z軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-846:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-847:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-847:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-848:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
-848:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
-849:					DirectInputDevice の通知処理用の Event を作成... 成功
-849:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
-850:					DirectInputDevice のアクセス権を取得... 成功
-851:					検出した DirectInput 対応入力装置を入力ナンバー 2 で登録します
-851:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
-852:				DirectInput 対応入力装置を検出しました
-852:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
-852:						Device Instance GUID : ce72e6d0,3b94,11ef,80,03,44,45,53,54,00,00
-852:					DirectInputDevice8 の作成... 成功
-853:					DirectInputDevice の情報を取得します... 成功
-854:						Device Product Name  : VSPO!-Keyboard
-854:						Device Instance Name : VSPO!-Keyboard
-854:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-855:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-856:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
-1048:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
-1048:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
-1049:					DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
-1049:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
-1049:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
-1051:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
-1051:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
-1052:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
-1053:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 12 個です
-1053:					DirectInputDevice の X軸 のデッドゾーンを設定... 成功
-1054:					DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
-1054:					DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
-1055:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
-1055:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
-1056:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
-1056:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
-1057:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
-1057:					DirectInputDevice の通知処理用の Event を作成... 成功
-1057:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
-1058:					DirectInputDevice のアクセス権を取得... 成功
-1058:					検出した DirectInput 対応入力装置を入力ナンバー 3 で登録します
-1059:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
-1065:				DirectInput 対応入力装置を検出しました
-1066:						Device Product GUID  : 02ff045e,0000,0000,00,00,50,49,44,56,49,44
-1066:						Device Instance GUID : 91821a30,4a17,11ee,80,02,44,45,53,54,00,00
-1066:					DirectInputDevice8 の作成... 成功
-1067:					DirectInputDevice の情報を取得します... 成功
-1068:						Device Product Name  : Controller (Xbox One For Windows)
-1068:						Device Instance Name : Controller (Xbox One For Windows)
-1068:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-1069:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 一致
-1070:				検出した DirectInput 対応入力装置の初期化を中断します
-1071:				DirectInput 対応入力装置を検出しました
-1072:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
-1072:						Device Instance GUID : ce72e6d0,3b94,11ef,80,04,44,45,53,54,00,00
-1072:					DirectInputDevice8 の作成... 成功
-1075:					DirectInputDevice の情報を取得します... 成功
-1075:						Device Product Name  : VSPO!-Keyboard
-1076:						Device Instance Name : VSPO!-Keyboard
-1076:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-1076:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-1077:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
-1273:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
-1274:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
-1274:					DirectInputDevice から取得する X軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1276:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1277:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1277:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1278:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1278:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1278:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 829 個です
-1279:					DirectInputDevice の X軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1279:					DirectInputDevice の Y軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1280:					DirectInputDevice の Z軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1281:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1281:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1281:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1282:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
-1282:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
-1283:					DirectInputDevice の通知処理用の Event を作成... 成功
-1284:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
-1284:					DirectInputDevice のアクセス権を取得... 成功
-1285:					検出した DirectInput 対応入力装置を入力ナンバー 4 で登録します
-1285:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
-1286:				DirectInput 対応入力装置を検出しました
-1286:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
-1286:						Device Instance GUID : ce7334f0,3b94,11ef,80,05,44,45,53,54,00,00
-1287:					DirectInputDevice8 の作成... 成功
-1287:					DirectInputDevice の情報を取得します... 成功
-1288:						Device Product Name  : VSPO!-Keyboard
-1288:						Device Instance Name : VSPO!-Keyboard
-1288:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
-1289:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
-1289:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
-1527:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
-1527:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
-1528:					DirectInputDevice から取得する X軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1529:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1529:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1529:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1530:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1530:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 失敗 Error Code :0x80070002
-1530:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 3 個です
-1531:					DirectInputDevice の X軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1532:					DirectInputDevice の Y軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1532:					DirectInputDevice の Z軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1532:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1533:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1534:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
-1534:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
-1535:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
-1535:					DirectInputDevice の通知処理用の Event を作成... 成功
-1536:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
-1536:					DirectInputDevice のアクセス権を取得... 成功
-1537:					検出した DirectInput 対応入力装置を入力ナンバー 5 で登録します
-1537:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
-1543:			DirectInput 対応ジョイパッドの列挙終了
-1543:		ジョイパッドの初期化は正常に終了しました
-1544:		マウスデバイスの初期化... 初期化成功
-1544:		キーボードデバイスの初期化... 初期化成功
-1545:	DirectInput 関連の初期化は正常に終了しました
-1547:	WASAPI の初期化を行います
-1551:		デバイス名 : スピーカー (Realtek(R) Audio)
-1555:		デフォルト遅延時間 : 10.000 ms
-1555:		最小遅延時間       : 3.000 ms
-1556:		遅延時間           : 10.000 ms
-1556:		チャンネル数  　   : 2 ch
-1556:		量子化ビット深度   : 32 bit
-1557:		有効ビット深度　   : 32 bit
-1557:		サンプリングレート : 48000 Hz
-1557:		データ形式         : 浮動小数点型
-1578:		動作モード         : 共有モード
-1579:	WASAPI の初期化は正常に終了しました
-1582:	d3d11.dll の読み込み.... 成功
-1584:	dxgi.dll の読み込み.... 成功
-1585:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
-1585:	IDXGIFactory2 を作成します.... 成功
-1589:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
-1589:	IDXGIAdapter を列挙
-1589:		Adapter No.0 Desc:NVIDIA GeForce RTX 4070  VRAM:12026MB
-1591:			Output Device No.0 Name:\\.\DISPLAY1 ( 0, 0 )-( 2560, 1440 )
-1591:			Output Device No.1 Name:\\.\DISPLAY2 ( -1920, 357 )-( 0, 1437 )
-1591:		Adapter No.1 Desc:Microsoft Basic Render Driver  VRAM:0MB
-1591:	API D3D11CreateDevice のアドレスを取得します.... 成功
-1592:	IDXGIAdapter を取得します.... 成功
-1592:	IDXGIAdapter1 を取得します.... 成功
-1593:	IDXGIAdapter2 を取得します.... 成功
-1593:	IDXGIAdapter3 を取得します.... 成功
-1594:	IDXGIAdapter4 を取得します.... 成功
-1594:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
-1594:	ID3D11Device オブジェクトを取得します.... 成功
-1677:	IDXGIDevice1 を取得します.... 成功
-1678:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
-1678:	[ウインドウモード 1280x720 ( 640, 347 )-( 1920, 1067 )]
-1679:	IDXGISwapChain2 を作成します.... 成功
-1687:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
-1687:	IDXGIOutput を取得します.... 成功
-1688:	Graphics Device:NVIDIA GeForce RTX 4070
-1688:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-1689:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
-1689:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
-1689:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
-1689:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-1689:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-1690:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
-1690:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-1690:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
-1690:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-1691:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
-1691:	ＤＸＴ２テクスチャフォーマットは使えません
-1691:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
-1691:	ＤＸＴ４テクスチャフォーマットは使えません
-1692:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
-1692:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
-1692:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
-1693:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-1693:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-1693:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-1693:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-1694:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-1694:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-1694:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-1694:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-1695:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-1695:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-1695:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-1695:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
-1696:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
-1696:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
-1696:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
-1696:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
-1696:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
-1697:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
-1697:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
-1697:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
-1698:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
-1698:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
-1698:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
-1699:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
-1699:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
-1699:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
-1699:	同時にレンダリングできるバッファの数:8
-1700:	最大テクスチャサイズ　幅:16384 高さ:16384
-1700:	標準描画用の頂点バッファの作成.... 成功
-1701:	シェーダーコード関係の初期化.... 成功
-1710:	各種シェーダー用定数バッファの作成.... 成功
-1710:	各種 ID3D11InputLayout の作成.... 成功
-1721:	画像の単純転送処理の初期化... 成功
-1722:	深度バッファを作成します.... 成功
-1724:	フォントの初期化を行います
-1726:	フォントの初期化は正常に終了しました
-1761:	文字コードバッファの初期化を行います... 完了しました
-1769:ＤＸライブラリの初期化処理終了
-17776:ウインドウを閉じようとしています
-17789:ウインドウが破棄されようとしています
-17790:ソフトを終了する準備が整いました
-17825:フォントの初期化を行います
-17826:フォントの初期化は正常に終了しました
-17906:d3d11.dll の解放 1
-17907:dxgi.dll の解放 1
-17908:Direct3D11 のオブジェクト数を出力
-17908:Direct3D11 のオブジェクト合計数 : 0
-17912:DirectInput 関連の終了処理... 完了
-17914:サウンド関連の終了処理... 完了
-17919:ウィンドウ関連の終了処理... 完了
-17987:ＣＯＭを終了... 完了
-17988:
-17988:Alloc memory dump
-17988:	Total size:0(0.000kb)  Alloc num:0
-17989:
+113:	精度結果 更新回数 マルチメディアタイマー：0  パフォーマンスカウンター：60
+113:	 パフォーマンスカウンターを使用します タイマー精度 : 10000.000000 KHz 
+114:	 
+114:	ソフトの二重起動検査... 二重起動はされていませんでした
+115:	ウインドウクラスを登録します... 登録に成功しました
+115:	ウインドウモード起動用のウインドウを作成します
+116:	ディスプレイ情報のセットアップ開始
+116:		モニターの数：2  ディスプレイデバイスの数：4
+117:		No.0  モニター名：\\.\DISPLAY1　2560x1440　32bit　144Hz  96x96dpi
+117:		No.1  モニター名：\\.\DISPLAY2　1920x1080　32bit　60Hz  96x96dpi
+154:	ディスプレイ情報のセットアップ完了
+154:	ウインドウ矩形 ( 624, 309 )-( 1920, 1068 )
+158:	ウインドウの作成に成功しました
+159:	ウインドウを表示します
+180:	ＩＭＥを無効にしました
+180:	ウインドウスタイルをウインドウモード用に変更します... 完了
+212:	XInput DLL の読み込み中... 成功
+215:	DirectInput関係初期化処理
+215:		DirectInput8 の取得を試みます...成功
+292:			引き続き初期化処理... 初期化成功
+293:		ジョイパッドの初期化... 
+294:			XInput 対応コントローラーのチェックを開始します
+294:				XInput 対応コントローラー No.0 をチェック
+296:				XInput 対応コントローラー No.0 の接続を確認しました
+296:				XInput 対応コントローラー No.0 を入力ナンバー 0 で登録します
+297:				XInput 対応コントローラー No.1 をチェック
+297:				XInput 対応コントローラー No.1 の接続は確認できませんでした
+297:				XInput 対応コントローラー No.2 をチェック
+298:				XInput 対応コントローラー No.2 の接続は確認できませんでした
+298:				XInput 対応コントローラー No.3 をチェック
+298:				XInput 対応コントローラー No.3 の接続は確認できませんでした
+298:			XInput 対応コントローラーのチェック完了
+299:			DirectInput 対応ジョイパッドの列挙を開始します
+308:				DirectInput 対応入力装置を検出しました
+309:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
+309:						Device Instance GUID : ce72bfc0,3b94,11ef,80,01,44,45,53,54,00,00
+309:					DirectInputDevice8 の作成... 成功
+311:					DirectInputDevice の情報を取得します... 成功
+311:						Device Product Name  : VSPO!-Keyboard
+311:						Device Instance Name : VSPO!-Keyboard
+312:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+312:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+313:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+562:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+563:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+563:					DirectInputDevice から取得する X軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+564:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+565:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+565:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+566:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+566:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+567:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 0 個です
+568:					DirectInputDevice の X軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+569:					DirectInputDevice の Y軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+569:					DirectInputDevice の Z軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+571:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+571:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+572:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+573:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+574:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+574:					DirectInputDevice の通知処理用の Event を作成... 成功
+575:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+575:					DirectInputDevice のアクセス権を取得... 成功
+579:					検出した DirectInput 対応入力装置を入力ナンバー 1 で登録します
+580:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
+580:				DirectInput 対応入力装置を検出しました
+581:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
+581:						Device Instance GUID : ce72e6d0,3b94,11ef,80,02,44,45,53,54,00,00
+581:					DirectInputDevice8 の作成... 成功
+582:					DirectInputDevice の情報を取得します... 成功
+582:						Device Product Name  : VSPO!-Keyboard
+583:						Device Instance Name : VSPO!-Keyboard
+583:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+583:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+584:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+833:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+834:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+835:					DirectInputDevice から取得する X軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+836:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+836:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+837:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+837:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+838:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+838:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 0 個です
+839:					DirectInputDevice の X軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+840:					DirectInputDevice の Y軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+840:					DirectInputDevice の Z軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+841:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+841:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+841:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+842:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+842:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+843:					DirectInputDevice の通知処理用の Event を作成... 成功
+843:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+844:					DirectInputDevice のアクセス権を取得... 成功
+845:					検出した DirectInput 対応入力装置を入力ナンバー 2 で登録します
+845:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
+846:				DirectInput 対応入力装置を検出しました
+846:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
+846:						Device Instance GUID : ce72e6d0,3b94,11ef,80,03,44,45,53,54,00,00
+846:					DirectInputDevice8 の作成... 成功
+847:					DirectInputDevice の情報を取得します... 成功
+848:						Device Product Name  : VSPO!-Keyboard
+848:						Device Instance Name : VSPO!-Keyboard
+848:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+849:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+849:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+1081:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+1082:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+1083:					DirectInputDevice から取得する X軸 の値の範囲を設定... 成功
+1083:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 成功
+1083:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 成功
+1084:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 成功
+1084:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 成功
+1085:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 成功
+1085:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 12 個です
+1086:					DirectInputDevice の X軸 のデッドゾーンを設定... 成功
+1086:					DirectInputDevice の Y軸 のデッドゾーンを設定... 成功
+1087:					DirectInputDevice の Z軸 のデッドゾーンを設定... 成功
+1088:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 成功
+1088:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 成功
+1089:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 成功
+1089:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+1089:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+1091:					DirectInputDevice の通知処理用の Event を作成... 成功
+1091:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+1092:					DirectInputDevice のアクセス権を取得... 成功
+1092:					検出した DirectInput 対応入力装置を入力ナンバー 3 で登録します
+1092:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
+1098:				DirectInput 対応入力装置を検出しました
+1099:						Device Product GUID  : 02ff045e,0000,0000,00,00,50,49,44,56,49,44
+1099:						Device Instance GUID : 91821a30,4a17,11ee,80,02,44,45,53,54,00,00
+1099:					DirectInputDevice8 の作成... 成功
+1100:					DirectInputDevice の情報を取得します... 成功
+1101:						Device Product Name  : Controller (Xbox One For Windows)
+1101:						Device Instance Name : Controller (Xbox One For Windows)
+1101:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+1101:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 一致
+1102:				検出した DirectInput 対応入力装置の初期化を中断します
+1104:				DirectInput 対応入力装置を検出しました
+1105:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
+1105:						Device Instance GUID : ce72e6d0,3b94,11ef,80,04,44,45,53,54,00,00
+1105:					DirectInputDevice8 の作成... 成功
+1108:					DirectInputDevice の情報を取得します... 成功
+1109:						Device Product Name  : VSPO!-Keyboard
+1109:						Device Instance Name : VSPO!-Keyboard
+1109:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+1110:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+1110:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+1323:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+1324:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+1324:					DirectInputDevice から取得する X軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1325:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1325:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1326:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1326:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1327:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1327:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 829 個です
+1327:					DirectInputDevice の X軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1328:					DirectInputDevice の Y軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1329:					DirectInputDevice の Z軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1329:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1329:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1331:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1331:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+1332:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+1332:					DirectInputDevice の通知処理用の Event を作成... 成功
+1333:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+1333:					DirectInputDevice のアクセス権を取得... 成功
+1334:					検出した DirectInput 対応入力装置を入力ナンバー 4 で登録します
+1334:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
+1334:				DirectInput 対応入力装置を検出しました
+1335:						Device Product GUID  : 40353151,0000,0000,00,00,50,49,44,56,49,44
+1335:						Device Instance GUID : ce7334f0,3b94,11ef,80,05,44,45,53,54,00,00
+1335:					DirectInputDevice8 の作成... 成功
+1336:					DirectInputDevice の情報を取得します... 成功
+1336:						Device Product Name  : VSPO!-Keyboard
+1337:						Device Instance Name : VSPO!-Keyboard
+1337:					検出した DirectInput 対応入力装置が Xbox360コントローラーか確認... 不一致
+1338:					検出した DirectInput 対応入力装置が XboxOneコントローラーか確認... 不一致
+1338:					検出した DirectInput 対応入力装置が XInput 対応コントローラーか確認... 不一致
+1507:					DirectInputDevice のデータ形式に JOYSTICK 形式を設定... 成功
+1507:					DirectInputDevice の協調レベルに DISCL_FOREGROUND | DISCL_EXCLUSIVE を設定... 成功
+1508:					DirectInputDevice から取得する X軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1509:					DirectInputDevice から取得する Y軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1509:					DirectInputDevice から取得する Z軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1509:					DirectInputDevice から取得する Rx軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1511:					DirectInputDevice から取得する Ry軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1511:					DirectInputDevice から取得する Rz軸 の値の範囲を設定... 失敗 Error Code :0x80070002
+1512:					DirectInputDevice のボタンの数を取得... 成功　ボタンの数は 3 個です
+1512:					DirectInputDevice の X軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1513:					DirectInputDevice の Y軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1513:					DirectInputDevice の Z軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1514:					DirectInputDevice の Rx軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1514:					DirectInputDevice の Ry軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1515:					DirectInputDevice の Rz軸 のデッドゾーンを設定... 失敗 Error Code :0x80070002
+1515:					DirectInputDevice の DirectInputEffect No.0 を作成... 失敗 Error Code :0x80004001
+1516:					DirectInputDevice の DirectInputEffect No.1 を作成... 失敗 Error Code :0x80004001
+1516:					DirectInputDevice の通知処理用の Event を作成... 成功
+1517:					DirectInputDevice の通知処理用の Event を DirectInputDevice に設定... 成功
+1518:					DirectInputDevice のアクセス権を取得... 成功
+1518:					検出した DirectInput 対応入力装置を入力ナンバー 5 で登録します
+1518:				検出した DirectInput 対応入力装置の初期化は正常に終了しました
+1524:			DirectInput 対応ジョイパッドの列挙終了
+1524:		ジョイパッドの初期化は正常に終了しました
+1525:		マウスデバイスの初期化... 初期化成功
+1525:		キーボードデバイスの初期化... 初期化成功
+1526:	DirectInput 関連の初期化は正常に終了しました
+1528:	WASAPI の初期化を行います
+1533:		デバイス名 : スピーカー (Realtek(R) Audio)
+1538:		デフォルト遅延時間 : 10.000 ms
+1538:		最小遅延時間       : 3.000 ms
+1538:		遅延時間           : 10.000 ms
+1539:		チャンネル数  　   : 2 ch
+1539:		量子化ビット深度   : 32 bit
+1539:		有効ビット深度　   : 32 bit
+1539:		サンプリングレート : 48000 Hz
+1540:		データ形式         : 浮動小数点型
+1560:		動作モード         : 共有モード
+1560:	WASAPI の初期化は正常に終了しました
+1564:	d3d11.dll の読み込み.... 成功
+1567:	dxgi.dll の読み込み.... 成功
+1567:	API CreateDXGIFactory2 のアドレスを取得します.... 成功
+1568:	IDXGIFactory2 を作成します.... 成功
+1571:	API CreateDXGIFactory6 のアドレスを取得します.... 成功
+1572:	IDXGIAdapter を列挙
+1572:		Adapter No.0 Desc:NVIDIA GeForce RTX 4070  VRAM:12026MB
+1572:			Output Device No.0 Name:\\.\DISPLAY1 ( 0, 0 )-( 2560, 1440 )
+1573:			Output Device No.1 Name:\\.\DISPLAY2 ( -1920, 357 )-( 0, 1437 )
+1573:		Adapter No.1 Desc:Microsoft Basic Render Driver  VRAM:0MB
+1573:	API D3D11CreateDevice のアドレスを取得します.... 成功
+1574:	IDXGIAdapter を取得します.... 成功
+1574:	IDXGIAdapter1 を取得します.... 成功
+1575:	IDXGIAdapter2 を取得します.... 成功
+1575:	IDXGIAdapter3 を取得します.... 成功
+1576:	IDXGIAdapter4 を取得します.... 成功
+1576:	Direct3D 11 FeatureLevel 11_0 以上を対象とします
+1576:	ID3D11Device オブジェクトを取得します.... 成功
+1656:	IDXGIDevice1 を取得します.... 成功
+1657:	IDXGIDevice1->SetMaximunFrameLatency( 1 ); を実行しました
+1657:	[ウインドウモード 1280x720 ( 640, 347 )-( 1920, 1067 )]
+1657:	IDXGISwapChain2 を作成します.... 成功
+1665:	IDXGIFactory2->CreateSwapChainForHwnd の戻り値：0x00000000
+1665:	IDXGIOutput を取得します.... 成功
+1666:	Graphics Device:NVIDIA GeForce RTX 4070
+1666:	画面のフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+1666:	16bit Zバッファフォーマットは DXGI_FORMAT_D16_UNORM です
+1666:	24bit Zバッファフォーマットは DXGI_FORMAT_D24_UNORM_S8_UINT です
+1667:	32bit Zバッファフォーマットは DXGI_FORMAT_D32_FLOAT です
+1667:	16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+1667:	32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+1667:	アルファ付き 16bit カラーフォーマットは DXGI_FORMAT_B4G4R4A4_UNORM です
+1668:	アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+1668:	アルファテスト用 16bit カラーフォーマットは DXGI_FORMAT_B5G5R5A1_UNORM です
+1668:	アルファテスト用 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+1668:	ＤＸＴ１テクスチャフォーマットは DXGI_FORMAT_BC1_UNORM です
+1669:	ＤＸＴ２テクスチャフォーマットは使えません
+1669:	ＤＸＴ３テクスチャフォーマットは DXGI_FORMAT_BC2_UNORM です
+1669:	ＤＸＴ４テクスチャフォーマットは使えません
+1669:	ＤＸＴ５テクスチャフォーマットは DXGI_FORMAT_BC3_UNORM です
+1669:	BC7_UNORM テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM です
+1669:	BC7_UNORM_SRGB テクスチャフォーマットは DXGI_FORMAT_BC7_UNORM_SRGB です
+1669:	ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+1671:	ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+1671:	ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+1671:	１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+1671:	１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+1672:	１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+1672:	１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+1672:	２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+1672:	２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+1673:	２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+1673:	２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+1673:	描画用 16bit カラーフォーマットは DXGI_FORMAT_B5G6R5_UNORM です
+1673:	描画用 32bit カラーフォーマットは DXGI_FORMAT_B8G8R8X8_UNORM です
+1674:	描画用アルファ付き 32bit カラーフォーマットは DXGI_FORMAT_R8G8B8A8_UNORM です
+1674:	描画用 ABGR 整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_UNORM です
+1674:	描画用 ABGR 浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16B16A16_FLOAT です
+1674:	描画用 ABGR 浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32B32A32_FLOAT です
+1675:	描画用１チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8_UNORM です
+1675:	描画用１チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_UNORM です
+1675:	描画用１チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16_FLOAT です
+1675:	描画用１チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32_FLOAT です
+1676:	描画用２チャンネル整数 8 ビット型カラーフォーマットは DXGI_FORMAT_R8G8_UNORM です
+1676:	描画用２チャンネル整数 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_UNORM です
+1676:	描画用２チャンネル浮動小数点 16 ビット型カラーフォーマットは DXGI_FORMAT_R16G16_FLOAT です
+1676:	描画用２チャンネル浮動小数点 32 ビット型カラーフォーマットは DXGI_FORMAT_R32G32_FLOAT です
+1677:	使用する機能レベル:D3D_FEATURE_LEVEL_11_1
+1677:	同時にレンダリングできるバッファの数:8
+1677:	最大テクスチャサイズ　幅:16384 高さ:16384
+1677:	標準描画用の頂点バッファの作成.... 成功
+1678:	シェーダーコード関係の初期化.... 成功
+1687:	各種シェーダー用定数バッファの作成.... 成功
+1688:	各種 ID3D11InputLayout の作成.... 成功
+1698:	画像の単純転送処理の初期化... 成功
+1699:	深度バッファを作成します.... 成功
+1701:	フォントの初期化を行います
+1703:	フォントの初期化は正常に終了しました
+1739:	文字コードバッファの初期化を行います... 完了しました
+1748:ＤＸライブラリの初期化処理終了
+2978:ウインドウを閉じようとしています
+2988:ウインドウが破棄されようとしています
+2988:ソフトを終了する準備が整いました
+3002:フォントの初期化を行います
+3002:フォントの初期化は正常に終了しました
+3033:d3d11.dll の解放 1
+3035:dxgi.dll の解放 1
+3035:Direct3D11 のオブジェクト数を出力
+3036:Direct3D11 のオブジェクト合計数 : 0
+3036:DirectInput 関連の終了処理... 完了
+3038:サウンド関連の終了処理... 完了
+3045:ウィンドウ関連の終了処理... 完了
+3112:ＣＯＭを終了... 完了
+3112:
+3113:Alloc memory dump
+3113:	Total size:0(0.000kb)  Alloc num:0
+3113:
