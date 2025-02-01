@@ -79,6 +79,8 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const bool GetIsDeath()const { return m_isDeath; }
+	const bool GetIsStartDeathAnim()const { return m_isStartDeathAnimation; }
+
 
 	/// <summary>
 	/// 現在選択しているスロット番号を取得

@@ -81,4 +81,7 @@ private:
 
 	int m_stageModel;	//モデルハンドル(仮)
 	int m_skyBoxHandle;
+
+	int m_alpha;
+	int m_playerDeathCount;
 };

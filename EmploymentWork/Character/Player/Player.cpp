@@ -497,7 +497,6 @@ void Player::StartShotAnim()
 
 void Player::UpdateShotAnim()
 {
-
 	//アニメーションが設定されていなかったら早期リターン
 	if (m_shotAnimNo == -1)	return;
 	if (!m_isPlayShotAnim) return;

@@ -98,7 +98,9 @@ GameManager::GameManager() :
 	m_isEnd(false),
 	m_isClear(false),
 	m_stageModel(-1),
-	m_skyBoxHandle(-1)
+	m_skyBoxHandle(-1),
+	m_alpha(0),
+	m_playerDeathCount(0)
 {
 
 }
@@ -344,6 +346,21 @@ void GameManager::Update()
 		}
 	}
 
+	if (m_pPlayer->GetIsStartDeathAnim())
+	{
+		if (m_playerDeathCount > 220)
+		{
+			m_alpha = min(m_alpha + 26, 255);
+		}
+
+		m_playerDeathCount++;
+	}
+	else
+	{
+		m_playerDeathCount = 0;
+		m_alpha = max(m_alpha - 26, 0);
+	}
+
 	// 敵が全滅した時、次のフェーズに進む
 	if (isNextPhase)
 	{
@@ -553,6 +570,11 @@ void GameManager::Draw()
 
 	// UIの描画
 	DrawUI::GetInstance().Draw();
+
+	//プレイヤー死亡時の暗転用
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
+	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 /// <summary>
