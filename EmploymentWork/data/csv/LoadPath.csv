@@ -39,6 +39,7 @@ SCENE_GAME,I_OPERATIONINGAME,data/img/operation_inGame,.png,0,
 SCENE_GAME,S_INGAMEBGM,data/sound/bgm/inGame,.mp3,0,1
 SCENE_GAME,M_PORTION,data/model/object/portion/bottle_red,.mv1,0,
 SCENE_GAME,M_ARROW,data/model/object/arrow,.mv1,0,
+SCENE_GAME,E_ARROW,data/effect/arrow,.efk,0,
 SCENE_GAME,M_PLAYER,data/model/character/player,.mv1,0,
 SCENE_GAME,M_CROSSBOW,data/model/object/Crossbow,.mv1,0,
 SCENE_GAME,M_ARROWWALL,data/model/object/trap/arrowWall,.mv1,0,

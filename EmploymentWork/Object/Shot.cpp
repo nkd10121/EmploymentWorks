@@ -2,6 +2,7 @@
 
 #include "ResourceManager.h"
 #include "MapManager.h"
+#include "EffectManager.h"
 
 namespace
 {
@@ -88,9 +89,6 @@ void Shot::Update()
 	//存在していない状態なら何もさせない
 	if (!m_isExist)return;
 
-	//フレームカウントを増やす
-	m_frameCount++;
-
 	//移動方向を計算して設定
 	auto dirNorm = m_moveDir.Normalize();
 	rigidbody->SetVelocity(dirNorm * 4.0f);
@@ -108,11 +106,20 @@ void Shot::Update()
 		m_isExist = false;
 	}
 
+	if (m_frameCount % 20 == 0)
+	{
+		EffectManager::GetInstance().CreateEffect("E_ARROW", rigidbody->GetPos());
+	}
+
 	//何も当たらずに飛んで行ったとき、20秒後に自身を削除する
 	if (m_frameCount > 60 * 10)
 	{
 		m_isExist = false;
 	}
+
+
+	//フレームカウントを増やす
+	m_frameCount++;
 }
 
 /// <summary>

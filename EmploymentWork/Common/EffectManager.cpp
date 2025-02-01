@@ -98,6 +98,12 @@ void EffectManager::Clear()
 /// </summary>
 void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 {
+	int effectFrame = 200;
+	if (name == "E_ARROW")
+	{
+		effectFrame = 40;
+	}
+
 	int handle = -1;
 	for (auto& effects : m_effect)
 	{
@@ -114,7 +120,7 @@ void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 			std::shared_ptr<EffectEmitter> add = std::make_shared<EffectEmitter>();
 			add->emitterHandle = handle;
 			assert(add->emitterHandle != -1 && "エフェクトロード失敗");
-			add->endFrame = 600;
+			add->endFrame = effectFrame;
 			add->isEternal = false;
 
 			m_effect[name] = add;
