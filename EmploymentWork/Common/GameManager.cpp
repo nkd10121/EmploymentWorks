@@ -67,7 +67,7 @@ namespace
 
 	// ゲーム開始メッセージの描画位置
 	constexpr int kStartMessageX = 580;
-	constexpr int kStartMessageY = 20;
+	constexpr int kStartMessageY = 40;
 
 	// フェーズメッセージの描画位置
 	constexpr int kPhaseMessageX = 580;
@@ -550,13 +550,14 @@ void GameManager::Draw()
 	// ゲーム開始メッセージの描画
 	if (m_phaseNum.front() == kInitialPhase)
 	{
-		DrawString(kStartMessageX, kStartMessageY, "Yボタンでゲーム開始", 0xffffff);
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "準備ができたら", 0xffff4d, 24, 0x000000);
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY + 36, "Yボタンで迎え撃とう!", 0xffff4d, 24, 0x000000);
 	}
 
 	// 準備フェーズなら次のフェーズまでの時間を描画
 	if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase)
 	{
-		DrawFormatString(kPhaseMessageX, kPhaseMessageY, 0xffffff, "次のフェーズまで %d", (660 - m_phaseCount) / 60);
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "次のフェーズまで " + std::to_string((660 - m_phaseCount) / 60), 0xffffff, 24, 0x000000);
 	}
 
 #ifdef _DEBUG	// デバッグ描画

@@ -7,6 +7,7 @@
 #include "TrapManager.h"
 
 #include "ResourceManager.h"
+#include "FontManager.h"
 
 #include "SceneDebug.h"
 
@@ -397,7 +398,7 @@ void SceneBase::DrawLoading()
 			//ロード中の経過フレームで高さを変える
 			float height = sinf(static_cast<float>(m_loadingFrame - num * 2) / 6);
 			//文字の描画
-			DrawFormatString(x + num * 8, y - static_cast<int>(height * 4), 0x000000, "%s", text.c_str());
+			FontManager::GetInstance().DrawCenteredText(x + num * 12, y - static_cast<int>(height * 4), text, 0xffffff,16, 0x000000);
 
 			//文字数を更新
 			num++;
