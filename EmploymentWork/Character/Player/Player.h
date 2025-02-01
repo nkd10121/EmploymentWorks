@@ -81,6 +81,7 @@ public:
 	const bool GetIsDeath()const { return m_isDeath; }
 	const bool GetIsStartDeathAnim()const { return m_isStartDeathAnimation; }
 
+	const int GetAttackIntervalCount()const {return m_attackIntervalCount;}
 
 	/// <summary>
 	/// 現在選択しているスロット番号を取得

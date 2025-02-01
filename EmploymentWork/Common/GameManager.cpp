@@ -542,10 +542,19 @@ void GameManager::Draw()
 	m_pHpUi->Draw();
 
 	// クロスヘアの描画
+#if false
 	auto centerX = Game::kWindowWidth / 2;
 	auto centerY = Game::kWindowHeight / 2;
 	DrawBox(centerX - kCrosshairWidth, centerY - kCrosshairHeight, centerX + kCrosshairWidth, centerY + kCrosshairHeight, 0xaaaaaa, true);
 	DrawBox(centerX - kCrosshairHeight, centerY - kCrosshairWidth, centerX + kCrosshairHeight, centerY + kCrosshairWidth, 0xaaaaaa, true);
+#endif
+
+	auto offset = m_pPlayer->GetAttackIntervalCount() / 10;
+	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_CROSSHAIR"), true);
+	DrawRotaGraph(Game::kWindowWidth / 2 + offset, Game::kWindowHeight / 2, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
+	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 + offset, 0.5f, DX_PI/2, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
+	DrawRotaGraph(Game::kWindowWidth / 2 - offset, Game::kWindowHeight / 2, 0.5f, DX_PI, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
+	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 - offset, 0.5f, DX_PI/2*3, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
 
 	// ゲーム開始メッセージの描画
 	if (m_phaseNum.front() == kInitialPhase)

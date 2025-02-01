@@ -108,7 +108,8 @@ void Shot::Update()
 
 	if (m_frameCount % 20 == 0)
 	{
-		EffectManager::GetInstance().CreateEffect("E_ARROW", rigidbody->GetPos());
+		auto angle = atan2(dirNorm.x, dirNorm.z);
+		EffectManager::GetInstance().CreateEffect("E_ARROW", rigidbody->GetPos(), Vec3(0.0f, angle,0.0f));
 	}
 
 	//何も当たらずに飛んで行ったとき、20秒後に自身を削除する

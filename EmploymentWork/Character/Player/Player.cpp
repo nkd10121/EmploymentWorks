@@ -235,7 +235,7 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 
 					StartShotAnim();
 
-					EffectManager::GetInstance().CreateEffect("E_PLAYERSHOT", m_crossbowPos);
+					EffectManager::GetInstance().CreateEffect("E_PLAYERSHOT", m_crossbowPos, m_rot);
 				}
 			}
 			//押しているカウントを更新
