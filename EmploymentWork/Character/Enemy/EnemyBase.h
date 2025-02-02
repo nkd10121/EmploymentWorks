@@ -78,6 +78,8 @@ public:
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
 	virtual void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
+	virtual void OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
+
 
 	/// <summary>
 	/// 3Dモデルの座標更新
@@ -195,6 +197,8 @@ public:
 
 	const bool GetIsOffensive()const { return m_isOffensive; }
 
+	const float GetMoveDebuff()const { return m_moveDebuff; }
+
 protected:
 	/// <summary>
 	/// 指定した当たり判定タグが存在するかチェック
@@ -217,6 +221,8 @@ protected:
 
 	std::vector<EnemyManager::WayPoint> m_route;	//移動ルート
 	int m_routeIdx;
+	
+	float m_moveDebuff;
 
 	float m_collisionRadius;	//当たり判定の半径
 	float m_collisionSize;		//当たり判定のサイズ

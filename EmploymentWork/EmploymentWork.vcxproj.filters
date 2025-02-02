@@ -260,6 +260,9 @@
     <ClCompile Include="CutterTrap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="IronSnareTrap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
@@ -463,9 +466,6 @@
     <ClInclude Include="Character\Enemy\EnemyBig.h">
       <Filter>ソース ファイル\Character\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Character\Enemy\EnemyFast.h">
-      <Filter>ソース ファイル\Character\Enemy\State</Filter>
-    </ClInclude>
     <ClInclude Include="Character\Enemy\State\EnemyStateDamaged.h">
       <Filter>ソース ファイル\Character\Enemy\State</Filter>
     </ClInclude>
@@ -473,6 +473,10 @@
       <Filter>ソース ファイル\Ui</Filter>
     </ClInclude>
     <ClInclude Include="CutterTrap.h" />
+    <ClInclude Include="IronSnareTrap.h" />
+    <ClInclude Include="Character\Enemy\EnemyFast.h">
+      <Filter>ソース ファイル\Character\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">

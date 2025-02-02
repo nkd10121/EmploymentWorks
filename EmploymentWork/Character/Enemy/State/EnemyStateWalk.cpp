@@ -93,8 +93,10 @@ void EnemyStateWalk::Update()
 	own->SetModelRotation(rotation);
 	own->SetHeadCollisionFrontVec(targetPos);
 
+	auto m = own->GetMoveDebuff();
+
 	//直前のY方向の移動速度と入力された移動速度を合わせて移動速度を決定する
 	Vec3 prevVelocity = own->GetRigidbody()->GetVelocity();
-	Vec3 newVelocity = Vec3(moveVec.x, prevVelocity.y, moveVec.z);
+	Vec3 newVelocity = Vec3(moveVec.x * m, prevVelocity.y, moveVec.z * m);
 	own->GetRigidbody()->SetVelocity(newVelocity);
 }

@@ -1,4 +1,6 @@
 ﻿#include "EnemyBase.h"
+#include "TrapBase.h"
+#include "Player.h"
 
 namespace
 {
@@ -28,7 +30,8 @@ EnemyBase::EnemyBase() :
 	m_hitObjectTag(),
 	m_isOffensive(true),
 	m_attackerNameClearCount(0),
-	m_attackerNameClearLimit(kAttackerNameClearLimit)
+	m_attackerNameClearLimit(kAttackerNameClearLimit),
+	m_moveDebuff(0.0f)
 {
 }
 
@@ -77,6 +80,46 @@ void EnemyBase::OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std
 void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 
+}
+
+void EnemyBase::OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
+{
+	//当たったオブジェクトのタグを取得する
+	m_hitObjectTag = send->GetTag();
+
+	if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Normal)
+	{
+		if (m_hitObjectTag == GameObjectTag::Trap)
+		{
+			auto trap = dynamic_cast<TrapBase*>(send.get());
+			if (trap->GetTrapName() == "IronSnare")
+			{
+				if (sendCol->collideTag == MyLib::ColliderBase::CollisionTag::Attack)
+				{
+					m_moveDebuff = 0.4f;
+				}
+			}
+
+			AddAttackerName(trap->GetTrapName());
+		}
+	}
+
+	//当たったオブジェクトのタグを取得する
+	m_hitObjectTag = send->GetTag();
+
+	//当たったオブジェクトがプレイヤーのとき
+	if (m_hitObjectTag == GameObjectTag::Player)
+	{
+		//当たったコリジョンが索敵の時
+		if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Search)
+		{
+			if (m_isSearchInPlayer)
+			{
+				Player* col = dynamic_cast<Player*>(send.get());
+				m_playerPos = col->GetRigidbody()->GetPos();
+			}
+		}
+	}
 }
 
 /// <summary>

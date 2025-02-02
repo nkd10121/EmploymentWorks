@@ -200,6 +200,9 @@ void EnemyFast::Update()
 		}
 	}
 
+	m_moveDebuff = 1.0f;
+
+
 #ifdef _DEBUG
 	//何の当たり判定を持っているかをデバッグ描画
 	for (auto& col : m_colliders)
@@ -392,29 +395,6 @@ void EnemyFast::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std
 			m_pState = std::make_shared<EnemyStateDamaged>(std::dynamic_pointer_cast<EnemyBase>(shared_from_this()));
 			m_pState->SetNextKind(StateBase::StateKind::Damaged);
 			m_pState->Init("");
-		}
-	}
-}
-
-/// <summary>
-/// 押し出し処理を行わないオブジェクトと衝突しているとき
-/// </summary>
-void EnemyFast::OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
-{
-	//当たったオブジェクトのタグを取得する
-	m_hitObjectTag = send->GetTag();
-
-	//当たったオブジェクトがプレイヤーのとき
-	if (m_hitObjectTag == GameObjectTag::Player)
-	{
-		//当たったコリジョンが索敵の時
-		if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Search)
-		{
-			if (m_isSearchInPlayer)
-			{
-				Player* col = dynamic_cast<Player*>(send.get());
-				m_playerPos = col->GetRigidbody()->GetPos();
-			}
 		}
 	}
 }

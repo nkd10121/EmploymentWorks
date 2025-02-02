@@ -204,6 +204,8 @@ void EnemyBig::Update()
 		}
 	}
 
+	m_moveDebuff = 1.0f;
+
 #ifdef _DEBUG
 	//何の当たり判定を持っているかをデバッグ描画
 	for (auto& col : m_colliders)
@@ -400,28 +402,6 @@ void EnemyBig::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std:
 	}
 }
 
-/// <summary>
-/// 押し出し処理を行わないオブジェクトと衝突しているとき
-/// </summary>
-void EnemyBig::OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
-{
-	//当たったオブジェクトのタグを取得する
-	m_hitObjectTag = send->GetTag();
-
-	//当たったオブジェクトがプレイヤーのとき
-	if (m_hitObjectTag == GameObjectTag::Player)
-	{
-		//当たったコリジョンが索敵の時
-		if (ownCol->collideTag == MyLib::ColliderBase::CollisionTag::Search)
-		{
-			if (m_isSearchInPlayer)
-			{
-				Player* col = dynamic_cast<Player*>(send.get());
-				m_playerPos = col->GetRigidbody()->GetPos();
-			}
-		}
-	}
-}
 
 /// <summary>
 /// 押し出し処理を行わないオブジェクトと衝突しなくなった時
