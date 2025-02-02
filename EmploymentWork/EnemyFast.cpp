@@ -21,7 +21,7 @@ namespace
 #endif
 
 	/*モデル関係*/
-	constexpr float kModelScale = 0.00045f;		//モデルサイズ
+	constexpr float kModelScale = 0.00055f;		//モデルサイズ
 
 	/*当たり判定関係*/
 	constexpr float kSearchCollisionRadius = kCollisionCapsuleRadius * 10;
@@ -37,6 +37,7 @@ EnemyFast::EnemyFast() :
 {
 	//キャラクター名を設定
 	m_characterName = "EnemyFast";
+	m_isOffensive = false;
 
 }
 

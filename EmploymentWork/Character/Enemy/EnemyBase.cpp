@@ -26,6 +26,7 @@ EnemyBase::EnemyBase() :
 	m_drawPos(),
 	m_isSearchInPlayer(false),
 	m_hitObjectTag(),
+	m_isOffensive(true),
 	m_attackerNameClearCount(0),
 	m_attackerNameClearLimit(kAttackerNameClearLimit)
 {

@@ -46,7 +46,7 @@ void EnemyStateWalk::Update()
 	Vec3 targetPos;
 
 	//索敵範囲内にプレイヤーがいたら
-	if (own->GetIsSearchInPlayer())
+	if (own->GetIsSearchInPlayer() && own->GetIsOffensive())
 	{
 		//自身からプレイヤーまでのベクトルを求める
 		targetPos = own->GetPlayerPos();

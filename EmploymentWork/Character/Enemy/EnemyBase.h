@@ -192,6 +192,9 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	const int GetAttackerNaneNum() { return static_cast<int>(m_attackerName.size()); }
+
+	const bool GetIsOffensive()const { return m_isOffensive; }
+
 protected:
 	/// <summary>
 	/// 指定した当たり判定タグが存在するかチェック
@@ -226,6 +229,7 @@ protected:
 	GameObjectTag m_hitObjectTag;	//当たったオブジェクトタグ
 	GameObjectTag m_lastAttackTag;	//最後に攻撃してきたオブジェクトタグ
 
+	bool m_isOffensive;	//攻撃的かどうか
 	bool m_isAttack;	//攻撃しているかどうか
 
 	std::list<std::string> m_attackerName;	//攻撃してきたオブジェクトの名前
