@@ -23,6 +23,7 @@
     <ClCompile Include="Character\Enemy\EnemyBig.cpp" />
     <ClCompile Include="Character\Enemy\EnemyFast.cpp" />
     <ClCompile Include="Character\Enemy\State\EnemyStateDamaged.cpp" />
+    <ClCompile Include="CutterTrap.cpp" />
     <ClCompile Include="Ui\MiniMap.cpp" />
     <ClCompile Include="Object\Trap\FlameTrap.cpp" />
     <ClCompile Include="Util\Setting.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Character\Enemy\EnemyBig.h" />
     <ClInclude Include="Character\Enemy\EnemyFast.h" />
     <ClInclude Include="Character\Enemy\State\EnemyStateDamaged.h" />
+    <ClInclude Include="CutterTrap.h" />
     <ClInclude Include="Ui\MiniMap.h" />
     <ClInclude Include="Object\Trap\FlameTrap.h" />
     <ClInclude Include="Util\Setting.h" />

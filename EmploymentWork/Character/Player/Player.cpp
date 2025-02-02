@@ -255,7 +255,7 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		{
 			m_slotNum++;
 			
-			m_slotNum = min(m_slotNum, 3);
+			m_slotNum = min(m_slotNum, 4);
 		}
 		if (Input::GetInstance().IsTriggered("LB"))
 		{

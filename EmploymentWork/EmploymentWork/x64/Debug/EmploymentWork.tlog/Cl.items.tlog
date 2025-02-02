@@ -1,8 +1,9 @@
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\FontManager.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\FontManager.obj
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EnemyBig.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyBig.obj
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EnemyFast.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyFast.obj
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EnemyStateDamaged.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyStateDamaged.obj
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\MiniMap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\MiniMap.obj
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Enemy\EnemyBig.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyBig.obj
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Enemy\EnemyFast.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyFast.obj
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Character\Enemy\State\EnemyStateDamaged.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\EnemyStateDamaged.obj
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\CutterTrap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\CutterTrap.obj
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Ui\MiniMap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\MiniMap.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Object\Trap\FlameTrap.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\FlameTrap.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Util\Setting.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\Setting.obj
 C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Ui\DrawUI.cpp;C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\EmploymentWork\x64\Debug\DrawUI.obj
