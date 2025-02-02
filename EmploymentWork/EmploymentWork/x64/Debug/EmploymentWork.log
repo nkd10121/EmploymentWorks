@@ -1,22 +1,5 @@
-﻿  SceneOption.cpp
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(174,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(175,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(179,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(180,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(208,24): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(222,24): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(246,24): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(260,24): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(288,24): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(301,24): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(328,24): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(341,24): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(399,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(407,30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(415,34): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(426,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(446,27): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(447,27): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(468,27): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneOption.cpp(469,27): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+﻿  SceneResult.cpp
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneResult.cpp(178,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneResult.cpp(178,31): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Scene\SceneResult.cpp(220,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   EmploymentWork.vcxproj -> C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

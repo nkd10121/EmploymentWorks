@@ -185,7 +185,8 @@ void GameManager::Init(int stageIdx)
 	MapManager::GetInstance().Load(stageName.c_str());
 
 	// クリスタルの生成
-	m_pCrystal = std::make_shared<Crystal>(std::stoi(info[5]));
+	//m_pCrystal = std::make_shared<Crystal>(std::stoi(info[5]));
+	m_pCrystal = std::make_shared<Crystal>(1);
 	m_pCrystal->Init();
 	m_pCrystal->Set(MapManager::GetInstance().GetCrystalPos());
 

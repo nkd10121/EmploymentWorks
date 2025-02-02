@@ -23,7 +23,8 @@ namespace
 	{
 		"次のステージへ",
 		"スコア詳細へ",
-		"セレクトに戻る"
+		"セレクトに戻る",
+		"もう一度",
 	};
 }
 
@@ -93,6 +94,11 @@ void SceneResult::Init()
 	m_destinationScene = static_cast<eDestination>(static_cast<int>(eDestination::Start) + 1);
 
 	m_windowHandle = ResourceManager::GetInstance().GetHandle("I_BIGWINDOW2");
+
+	if (!m_isClear)
+	{
+		m_resultTextAngle = -80;
+	}
 }
 
 /// <summary>
@@ -125,7 +131,14 @@ void SceneResult::Update()
 	}
 	else if (m_count < 120)
 	{
-		m_resultTextAngle = min(m_resultTextAngle + 0.1f, 2.0f);
+		if (m_isClear)
+		{
+			m_resultTextAngle = min(m_resultTextAngle + 0.1f, 2.0f);
+		}
+		else
+		{
+			m_resultTextAngle = min(m_resultTextAngle + 5.0f, Game::kWindowHeight / 4);
+		}
 	}
 	else if (m_count < 200)
 	{
@@ -164,39 +177,54 @@ void SceneResult::Draw()
 
 	DrawRotaGraph(m_windowDrawPos.x, m_windowDrawPos.y, 1.0f, 0.0f, m_windowHandle, true);
 
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textAlpha);
+
 	if (m_isClear)
 	{
-		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 6, "Clear!", 0xffff00, 80, 0xff0000, sin(m_resultTextAngle));
+		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 3, 1.35f, static_cast<float>(m_count) / 90.0f, ResourceManager::GetInstance().GetHandle("I_CLEAREFFECT"), true);
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 3, std::to_string(m_drawScore), 0xffffff, 80, 0xff0000);
 	}
-	else
-	{
-		DrawString(240, 224, "ゲームオーバー...", 0xffffff);
-	}
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textAlpha);
-	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 3, std::to_string(m_drawScore), 0xffffff, 80, 0xff0000);
 
 	auto addSize = sinf(m_textAngle) / 16;
-	for (int i = 0;i < kItemText.size();i++)
+	for (int i = 0;i < kItemText.size() - 1;i++)
 	{
 		float rate = 1.0f;
 		if (m_destinationScene - 1 == i)
 		{
 			rate += addSize;
 		}
-		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * (i + 4), kItemText[i], 0xffffff, 48, 0x000000, rate);
+
+		int idx = i;
+		if (i == 0 && !m_isClear)
+		{
+			idx = 3;
+		}
+
+		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * (i + 4), kItemText[idx], 0xffffff, 48, 0x000000, rate);
 	}
+
 
 	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 4, "次のステージへ", 0xffffff, 48, 0x000000,1.0f);
 	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 5, "スコア詳細へ", 0xffffff, 48, 0x000000, 1.0f);
 	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 6, "セレクトに戻る", 0xffffff, 48, 0x000000, 1.0f);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	DrawFormatString(240, 240, 0xffffff, "Score:%d", m_score);
+	if (m_isClear)
+	{
+		//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 6, "Clear!", 0xffff00, 80, 0xff0000, sin(m_resultTextAngle));
+		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 6, 2 * sin(m_resultTextAngle), 0.0f, ResourceManager::GetInstance().GetHandle("I_CLEARTEXT"), true);
+	}
+	else
+	{
+		DrawRotaGraph(Game::kWindowWidth / 2, m_resultTextAngle, 1.6f, 0.0f, ResourceManager::GetInstance().GetHandle("I_GAMEOVERTEXT"), true);
+	}
 
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
 
 	DrawString(kTextX - 24, kTextY + kTextYInterval * (m_destinationScene - 1), "→", 0xff0000);
+	DrawFormatString(240, 240, 0xffffff, "Score:%d", m_score);
 
 	DrawString(kTextX, kTextY, "次のステージへ", 0xffffff);
 	DrawString(kTextX, kTextY + kTextYInterval, "スコア詳細へ", 0xffffff);
