@@ -6,6 +6,7 @@
 #include "FlameTrap.h"
 #include "CutterTrap.h"
 #include "IronSnareTrap.h"
+#include "IronImpactTrap.h"
 
 #include "Input.h"
 #include "ResourceManager.h"
@@ -231,6 +232,7 @@ void TrapManager::Update()
 			else if (m_slotIdx == 3)	add = std::make_shared<FlameTrap>();
 			else if (m_slotIdx == 4)	add = std::make_shared<CutterTrap>();
 			else if (m_slotIdx == 5)	add = std::make_shared<IronSnareTrap>();
+			else if (m_slotIdx == 6)	add = std::make_shared<IronImpactTrap>();
 
 			//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
 			if (m_trapPoint < add->GetCost())
@@ -522,6 +524,8 @@ void TrapManager::SetUp(int point)
 	m_previewTraps.push_back(std::make_shared<CutterTrap>());
 	m_previewTraps.back()->SetIsPreview();
 	m_previewTraps.push_back(std::make_shared<IronSnareTrap>());
+	m_previewTraps.back()->SetIsPreview();
+	m_previewTraps.push_back(std::make_shared<IronImpactTrap>());
 	m_previewTraps.back()->SetIsPreview();
 
 	// 順序を保持するマップを作成

@@ -67,12 +67,12 @@ public:
 	/// <returns></returns>
 	const int GetCost()const { return m_status.cost; }
 
-	void SetPos(Vec3 pos);
+	virtual void SetPos(Vec3 pos);
 	/// <summary>
 	/// 地震の座標を取得
 	/// </summary>
 	/// <returns></returns>
-	const Vec3 GetPos()const { return rigidbody->GetPos(); }
+	virtual const Vec3 GetPos()const { return rigidbody->GetPos(); }
 
 	virtual void SetRot(Vec3 vec) {};
 
