@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\FontManager.cpp" />
+    <ClCompile Include="EnemyBig.cpp" />
     <ClCompile Include="EnemyFast.cpp" />
     <ClCompile Include="EnemyStateDamaged.cpp" />
     <ClCompile Include="MiniMap.cpp" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\FontManager.h" />
+    <ClInclude Include="EnemyBig.h" />
     <ClInclude Include="EnemyFast.h" />
     <ClInclude Include="EnemyStateDamaged.h" />
     <ClInclude Include="MiniMap.h" />

@@ -2,6 +2,7 @@
 
 #include "EnemyNormal.h"
 #include "EnemyFast.h"
+#include "EnemyBig.h"
 #include "SwarmEnemy.h"
 
 #include "TrapManager.h"
@@ -208,6 +209,7 @@ bool EnemyManager::Update(int phase, Vec3 cameraPos, Vec3 angle)
 		m_rayHitEnemyNowHP = retRayHitEnemy.lock()->GetHp();
 		m_rayHitEnemyMaxHP = retRayHitEnemy.lock()->GetMaxHp();
 		m_rayHitEnemyPos = retRayHitEnemy.lock()->GetPos();
+		m_rayHitEnemySize = retRayHitEnemy.lock()->GetCollisionSize();
 	}
 
 	if (m_isDrawKillStreakPoint)
@@ -278,7 +280,7 @@ void EnemyManager::Draw()
 		if (m_isGame)
 		{
 			auto screenPos = ConvWorldPosToScreenPos(m_rayHitEnemyPos.ToVECTOR());
-			screenPos.y -= 60;
+			screenPos.y -= m_rayHitEnemySize * 16;
 
 			//HPの割合を計算する
 			float per = static_cast<float>(m_rayHitEnemyNowHP) / static_cast<float>(m_rayHitEnemyMaxHP);
@@ -568,6 +570,49 @@ void EnemyManager::CreateEnemy(int phaseNum, int count, bool isInGame)
 					add.appearFrame = count / 60 + GetRand(2) + 12;
 					add.isCreated = false;
 					add.enemyName = "EnemyFast";
+					m_createEnemyInfo[0].push_back(add);
+				}
+			}
+			else if (data.enemyName == "EnemyBig" && !data.isCreated)
+			{
+				auto add = std::make_shared<EnemyBig>();
+				add->SetRoute(GetRoute());
+				add->Init();
+
+				bool isNewCreateSwarm = false;
+
+				//前に生成した群れクラスの最初に追加した生成フレームとの差が180以下ならその群れクラスに追加する
+				if (m_pEnemies.size() > 0)
+				{
+					if (abs(m_pEnemies.back()->GetFirstCreateFrame() - count) < 60 * 3)
+					{
+						m_pEnemies.back()->AddSwarm(add);
+					}
+					else
+					{
+						isNewCreateSwarm = true;
+					}
+				}
+				else
+				{
+					isNewCreateSwarm = true;
+				}
+
+				if (isNewCreateSwarm)
+				{
+					addSwarm->SetFirstCreateFrame(static_cast<int>(data.appearFrame * 60));
+					addSwarm->AddSwarm(add);
+
+					isAdd = true;
+				}
+				data.isCreated = true;
+
+				if (!isInGame)
+				{
+					EnemyCreateInfo add;
+					add.appearFrame = count / 60 + GetRand(2) + 12;
+					add.isCreated = false;
+					add.enemyName = "EnemyBig";
 					m_createEnemyInfo[0].push_back(add);
 				}
 			}

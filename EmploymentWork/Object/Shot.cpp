@@ -112,8 +112,8 @@ void Shot::Update()
 		EffectManager::GetInstance().CreateEffect("E_ARROW", rigidbody->GetPos(), Vec3(0.0f, angle,0.0f));
 	}
 
-	//何も当たらずに飛んで行ったとき、20秒後に自身を削除する
-	if (m_frameCount > 60 * 10)
+	//何も当たらずに飛んで行ったとき、8秒後に自身を削除する
+	if (m_frameCount > 60 * 8)
 	{
 		m_isExist = false;
 	}

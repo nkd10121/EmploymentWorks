@@ -254,6 +254,9 @@
     <ClCompile Include="EnemyFast.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyBig.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character\Enemy\State\EnemyStateAttack.h">
@@ -457,6 +460,7 @@
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="EnemyStateDamaged.h" />
     <ClInclude Include="EnemyFast.h" />
+    <ClInclude Include="EnemyBig.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">

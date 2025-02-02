@@ -79,6 +79,7 @@ private:
 	bool m_isRayHit;
 	int m_rayHitEnemyNowHP;
 	int m_rayHitEnemyMaxHP;
+	float m_rayHitEnemySize;
 
 	std::vector<int> m_enemyHpHandle;
 	int m_gaugeWidth;
