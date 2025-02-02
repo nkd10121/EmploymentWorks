@@ -20,10 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\FontManager.cpp" />
-    <ClCompile Include="EnemyBig.cpp" />
-    <ClCompile Include="EnemyFast.cpp" />
-    <ClCompile Include="EnemyStateDamaged.cpp" />
-    <ClCompile Include="MiniMap.cpp" />
+    <ClCompile Include="Character\Enemy\EnemyBig.cpp" />
+    <ClCompile Include="Character\Enemy\EnemyFast.cpp" />
+    <ClCompile Include="Character\Enemy\State\EnemyStateDamaged.cpp" />
+    <ClCompile Include="Ui\MiniMap.cpp" />
     <ClCompile Include="Object\Trap\FlameTrap.cpp" />
     <ClCompile Include="Util\Setting.cpp" />
     <ClCompile Include="Ui\DrawUI.cpp" />
@@ -90,10 +90,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\FontManager.h" />
-    <ClInclude Include="EnemyBig.h" />
-    <ClInclude Include="EnemyFast.h" />
-    <ClInclude Include="EnemyStateDamaged.h" />
-    <ClInclude Include="MiniMap.h" />
+    <ClInclude Include="Character\Enemy\EnemyBig.h" />
+    <ClInclude Include="Character\Enemy\EnemyFast.h" />
+    <ClInclude Include="Character\Enemy\State\EnemyStateDamaged.h" />
+    <ClInclude Include="Ui\MiniMap.h" />
     <ClInclude Include="Object\Trap\FlameTrap.h" />
     <ClInclude Include="Util\Setting.h" />
     <ClInclude Include="Ui\DrawUI.h" />
