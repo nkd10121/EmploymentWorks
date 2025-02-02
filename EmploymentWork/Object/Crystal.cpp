@@ -102,7 +102,7 @@ void Crystal::Update()
 		m_isBreak = true;
 	}
 
-	if (m_effectCreateCount % 500 == 0)
+	if (m_effectCreateCount % 250 == 0)
 	{
 		//エフェクトを出す
 		EffectManager::GetInstance().CreateEffect("E_CRYSTALDEFAULT", rigidbody->GetPos());

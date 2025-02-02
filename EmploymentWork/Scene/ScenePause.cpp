@@ -187,4 +187,15 @@ void ScenePause::SelectNextSceneUpdate()
 			return;
 		}
 	}
+
+	if (Input::GetInstance().IsTriggered("PAUSE"))
+	{
+		//タイトルシーンに遷移する
+		if (m_destinationScene == eDestination::InGame)
+		{
+			SceneManager::GetInstance().PopScene();
+			SkipFadeIn();
+			return;
+		}
+	}
 }

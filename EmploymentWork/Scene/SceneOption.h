@@ -6,6 +6,17 @@
 /// </summary>
 class SceneOption : public SceneBase
 {
+private:
+	enum Item
+	{
+		MasterVolume,
+		BGMVolume,
+		SEVolume,
+		Sensitivity,
+		FullScreen,
+		DrawOperation
+	};
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -52,20 +63,30 @@ private:
 	int m_pushCount;
 	int m_keyRepeatFrame;
 
+	Item m_nowItem;
+
+	int m_uiArrowHandle;
+	float m_angle;
+
+	bool m_isUpdateSound;
 private:
 	//更新メンバ関数ポインタ
 	void (SceneOption::* m_updateFunc)();
 	//更新(マスター音量設定)
-	void MasterUpdate();
+	void UpdateMasterVolume();
 	//更新(BGM音量設定)
-	void BgmUpdate();
+	void UpdateBGMVolume();
 	//更新(SE音量設定)
-	void SeUpdate();
+	void UpdateSEVolume();
 	//更新(感度設定)
-	void SensitivityUpdate();
+	void UpdateSensitivity();
 	//更新(フルスクリーン設定)
-	void FullScreenUpdate();
+	void UpdateFullScreen();
 	//更新(操作説明を描画するか設定)
-	void DrawOperationUpdate();
-};
+	void UpdateDrawOperation();
 
+	//更新メンバ関数ポインタ
+	void (SceneOption::* m_drawFunc)(std::vector<unsigned int> color);
+	void DrawSound(std::vector<unsigned int> color);
+	void DrawOther(std::vector<unsigned int> color);
+};

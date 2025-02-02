@@ -3,6 +3,7 @@
 #include "Setting.h"
 #include "SoundManager.h"
 #include "FontManager.h"
+#include "ResourceManager.h"
 #include "Game.h"
 
 #include <sstream>
@@ -10,7 +11,7 @@
 
 namespace
 {
-	constexpr int kKeyRepeatInitFrame = 30;
+	constexpr int kKeyRepeatInitFrame = 20;
 }
 
 /// <summary>
@@ -19,9 +20,14 @@ namespace
 SceneOption::SceneOption():
 	SceneBase("SCENE_OPTION"),
 	m_pushCount(0),
-	m_keyRepeatFrame(kKeyRepeatInitFrame)
+	m_keyRepeatFrame(kKeyRepeatInitFrame),
+	m_angle(0.0f)
 {
-	m_updateFunc = &SceneOption::MasterUpdate;
+	m_updateFunc = &SceneOption::UpdateMasterVolume;
+	m_drawFunc = &SceneOption::DrawSound;
+	m_nowItem = MasterVolume;
+
+	m_isUpdateSound = true;
 }
 
 /// <summary>
@@ -53,6 +59,8 @@ void SceneOption::Init()
 {
 	//フェードアウトをスキップする
 	SkipFadeOut();
+
+	m_uiArrowHandle = ResourceManager::GetInstance().GetHandle("I_UIARROW");
 }
 
 /// <summary>
@@ -73,6 +81,45 @@ void SceneOption::Update()
 		m_keyRepeatFrame = kKeyRepeatInitFrame;
 	}
 
+
+	if (Input::GetInstance().IsTriggered("RB"))
+	{
+		if (!m_isUpdateSound)
+		{
+			m_isUpdateSound = true;
+
+			m_updateFunc = &SceneOption::UpdateMasterVolume;
+			m_drawFunc = &SceneOption::DrawSound;
+		}
+		else
+		{
+			m_isUpdateSound = false;
+
+			m_updateFunc = &SceneOption::UpdateSensitivity;
+			m_drawFunc = &SceneOption::DrawOther;
+		}
+	}
+
+	if (Input::GetInstance().IsTriggered("LB"))
+	{
+		if (m_isUpdateSound)
+		{
+			m_isUpdateSound = false;
+
+			m_updateFunc = &SceneOption::UpdateSensitivity;
+			m_drawFunc = &SceneOption::DrawOther;
+		}
+		else
+		{
+			m_isUpdateSound = true;
+
+			m_updateFunc = &SceneOption::UpdateMasterVolume;
+			m_drawFunc = &SceneOption::DrawSound;
+		}
+	}
+
+	m_angle += 0.12f;
+
 	//状態の更新
 	(this->*m_updateFunc)();
 }
@@ -82,51 +129,62 @@ void SceneOption::Update()
 /// </summary>
 void SceneOption::Draw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 250);
 	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0xffffff, false);
 
 #ifdef _DEBUG	//デバッグ描画
 	DrawFormatString(0, 32, 0xffffff, "%f", GetNowSceneName());
 #endif
-	std::string text = "Master:";
-	text += std::to_string(static_cast<int>(Setting::GetInstance().GetMasterVolume() * 100));
-	FontManager::GetInstance().DrawLeftText(200, 100, text, 0xffffff, 32, 0x000000);
 
-	text = "BGM:";
-	text += std::to_string(static_cast<int>(Setting::GetInstance().GetBGMVolume() * 100));
-	FontManager::GetInstance().DrawLeftText(200, 100 + 100, text, 0xffffff, 32, 0x000000);
-
-	text = "SE:";
-	text += std::to_string(static_cast<int>(Setting::GetInstance().GetSEVolume() * 100));
-	FontManager::GetInstance().DrawLeftText(200, 100 + 100 * 2, text, 0xffffff, 32, 0x000000);
-
-	text = "Sensitivity:";
-	text += std::to_string(static_cast<int>(Setting::GetInstance().GetSensitivity() * 100));
-	FontManager::GetInstance().DrawLeftText(200, 100 + 100 * 3, text, 0xffffff, 32, 0x000000);
-
-	text = "FullScreen:";
-	if (Setting::GetInstance().GetIsFullScreen())
+	std::vector<unsigned int> textColor;
+	for (int i = 0; i <= Item::DrawOperation; i++)
 	{
-		text += "フルスクリーン";
+		if (m_nowItem == i)
+		{
+			textColor.push_back(0xffffff);
+		}
+		else
+		{
+			textColor.push_back(0x999999);
+		}
+	}
+
+
+
+	//状態の更新
+	(this->*m_drawFunc)(textColor);
+
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 120);
+	DrawBox(0, 50 - 24, Game::kWindowWidth, 50 + 36, 0xcccccc, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	auto tc = 0x999999;
+	if (m_nowItem < 3)	tc = 0xffffff;
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 3, 50, "サウンド設定", tc, 40, 0x000000);
+	tc = 0x999999;
+	if (m_nowItem >= 3)	tc = 0xffffff;
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 3 * 2, 50, "その他", tc, 40, 0x000000);
+
+
+	auto offset = sinf(m_angle) * 4;
+	if (m_nowItem < 3)
+	{
+		DrawRotaGraph(Game::kWindowWidth / 3 + 180 + offset, 58,1.0f,0.0f,m_uiArrowHandle,true);
+		DrawRotaGraph(Game::kWindowWidth / 3 + 180 + offset - 10, 58, 0.1f, 0.0f, ResourceManager::GetInstance().GetHandle("I_UIRB"), true);
+		DrawRotaGraph(Game::kWindowWidth / 3 - 180 - offset, 58,1.0f,0.0f,m_uiArrowHandle,true,true);
+		DrawRotaGraph(Game::kWindowWidth / 3 - 180 - offset + 10, 58, 0.1f, 0.0f, ResourceManager::GetInstance().GetHandle("I_UILB"), true);
+
+
 	}
 	else
 	{
-		text += "ウィンドウ";
+		DrawRotaGraph(Game::kWindowWidth / 3 * 2 + 120 + offset, 58, 1.0f, 0.0f, m_uiArrowHandle, true);
+		DrawRotaGraph(Game::kWindowWidth / 3 * 2 - 120 - offset, 58, 1.0f, 0.0f, m_uiArrowHandle, true,true);
+		DrawRotaGraph(Game::kWindowWidth / 3 * 2 + 120 + offset - 10, 58, 0.1f, 0.0f, ResourceManager::GetInstance().GetHandle("I_UIRB"), true);
+		DrawRotaGraph(Game::kWindowWidth / 3 * 2 - 120 - offset + 10, 58, 0.1f, 0.0f, ResourceManager::GetInstance().GetHandle("I_UILB"), true);
 	}
-	FontManager::GetInstance().DrawLeftText(200, 100 + 100 * 4, text, 0xffffff, 32, 0x000000);
-
-	text = "操作説明を描画:";
-	if (Setting::GetInstance().GetIsDrawOperation())
-	{
-		text += "描画する";
-	}
-	else
-	{
-		text += "描画しない";
-	}
-	FontManager::GetInstance().DrawLeftText(200, 100 + 100 * 5, text, 0xffffff, 32, 0x000000);
 }
 
 /// <summary>
@@ -143,8 +201,9 @@ void SceneOption::SelectNextSceneUpdate()
 	}
 }
 
-void SceneOption::MasterUpdate()
+void SceneOption::UpdateMasterVolume()
 {
+	m_nowItem = MasterVolume;
 	if (Input::GetInstance().IsPushed("RIGHT"))
 	{
 		if (m_pushCount == 0 || m_pushCount > m_keyRepeatFrame)
@@ -176,12 +235,13 @@ void SceneOption::MasterUpdate()
 
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
-		m_updateFunc = &SceneOption::BgmUpdate;
+		m_updateFunc = &SceneOption::UpdateBGMVolume;
 	}
 }
 
-void SceneOption::BgmUpdate()
+void SceneOption::UpdateBGMVolume()
 {
+	m_nowItem = BGMVolume;
 	if (Input::GetInstance().IsPushed("RIGHT"))
 	{
 		if (m_pushCount == 0 || m_pushCount > m_keyRepeatFrame)
@@ -213,16 +273,17 @@ void SceneOption::BgmUpdate()
 
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
-		m_updateFunc = &SceneOption::MasterUpdate;
+		m_updateFunc = &SceneOption::UpdateMasterVolume;
 	}
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
-		m_updateFunc = &SceneOption::SeUpdate;
+		m_updateFunc = &SceneOption::UpdateSEVolume;
 	}
 }
 
-void SceneOption::SeUpdate()
+void SceneOption::UpdateSEVolume()
 {
+	m_nowItem = SEVolume;
 	if (Input::GetInstance().IsPushed("RIGHT"))
 	{
 		if (m_pushCount == 0 || m_pushCount > m_keyRepeatFrame)
@@ -252,16 +313,17 @@ void SceneOption::SeUpdate()
 
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
-		m_updateFunc = &SceneOption::BgmUpdate;
+		m_updateFunc = &SceneOption::UpdateBGMVolume;
 	}
-	if (Input::GetInstance().IsTriggered("DOWN"))
-	{
-		m_updateFunc = &SceneOption::SensitivityUpdate;
-	}
+	//if (Input::GetInstance().IsTriggered("DOWN"))
+	//{
+	//	m_updateFunc = &SceneOption::SensitivityUpdate;
+	//}
 }
 
-void SceneOption::SensitivityUpdate()
+void SceneOption::UpdateSensitivity()
 {
+	m_nowItem = Sensitivity;
 	if (Input::GetInstance().IsPushed("RIGHT"))
 	{
 		if (m_pushCount == 0 || m_pushCount > m_keyRepeatFrame)
@@ -289,19 +351,25 @@ void SceneOption::SensitivityUpdate()
 		m_pushCount++;
 	}
 
-	if (Input::GetInstance().IsTriggered("UP"))
-	{
-		m_updateFunc = &SceneOption::SeUpdate;
-	}
+	//if (Input::GetInstance().IsTriggered("UP"))
+	//{
+	//	m_updateFunc = &SceneOption::SeUpdate;
+	//}
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
-		m_updateFunc = &SceneOption::FullScreenUpdate;
+		m_updateFunc = &SceneOption::UpdateFullScreen;
 	}
 }
 
-void SceneOption::FullScreenUpdate()
+void SceneOption::UpdateFullScreen()
 {
-	if (Input::GetInstance().IsTriggered("OK"))
+	m_nowItem = FullScreen;
+	if (Input::GetInstance().IsTriggered("RIGHT"))
+	{
+		Setting::GetInstance().SetIsFullScreen(!Setting::GetInstance().GetIsFullScreen());
+		ChangeWindowMode(!Setting::GetInstance().GetIsFullScreen());
+	}
+	else if(Input::GetInstance().IsTriggered("LEFT"))
 	{
 		Setting::GetInstance().SetIsFullScreen(!Setting::GetInstance().GetIsFullScreen());
 		ChangeWindowMode(!Setting::GetInstance().GetIsFullScreen());
@@ -309,23 +377,110 @@ void SceneOption::FullScreenUpdate()
 
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
-		m_updateFunc = &SceneOption::SensitivityUpdate;
+		m_updateFunc = &SceneOption::UpdateSensitivity;
 	}
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
-		m_updateFunc = &SceneOption::DrawOperationUpdate;
+		m_updateFunc = &SceneOption::UpdateDrawOperation;
 	}
 }
 
-void SceneOption::DrawOperationUpdate()
+void SceneOption::UpdateDrawOperation()
 {
-	if (Input::GetInstance().IsTriggered("OK"))
+	m_nowItem = DrawOperation;
+	if (Input::GetInstance().IsTriggered("RIGHT"))
+	{
+		Setting::GetInstance().SetIsDrawOperation(!Setting::GetInstance().GetIsDrawOperation());
+	}
+	else if (Input::GetInstance().IsTriggered("LEFT"))
 	{
 		Setting::GetInstance().SetIsDrawOperation(!Setting::GetInstance().GetIsDrawOperation());
 	}
 
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
-		m_updateFunc = &SceneOption::FullScreenUpdate;
+		m_updateFunc = &SceneOption::UpdateFullScreen;
+	}
+}
+
+void SceneOption::DrawSound(std::vector<unsigned int> color)
+{
+	std::string text = "マスターボリューム:";
+	FontManager::GetInstance().DrawLeftText(200, 150, text, color[0], 32, 0x000000);
+
+	FontManager::GetInstance().DrawCenteredText(240, 220, std::to_string(static_cast<int>(Setting::GetInstance().GetMasterVolume() * 100)), color[0], 48, 0x000000);
+	DrawBox(320, 220, 900, 240, color[0], false);
+	auto x = (900 - 320) * Setting::GetInstance().GetMasterVolume();
+	DrawBox(320, 220, 320 + x, 240, color[0], true);
+
+	text = "BGMボリューム:";
+	FontManager::GetInstance().DrawLeftText(200, 150 + 180, text, color[1], 32, 0x000000);
+
+	FontManager::GetInstance().DrawCenteredText(240, 220 + 180, std::to_string(static_cast<int>(Setting::GetInstance().GetBGMVolume() * 100)), color[1], 48, 0x000000);
+	DrawBox(320, 220 + 180, 900, 240 + 180, color[1], false);
+	x = (900 - 320) * Setting::GetInstance().GetBGMVolume();
+	DrawBox(320, 220 + 180, 320 + x, 240 + 180, color[1], true);
+
+	text = "SEボリューム:";
+	FontManager::GetInstance().DrawLeftText(200, 150 + 180 * 2, text, color[2], 32, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(240, 220 + 180 * 2, std::to_string(static_cast<int>(Setting::GetInstance().GetSEVolume() * 100)), color[2], 48, 0x000000);
+
+	DrawBox(320, 220 + 180 * 2, 900, 240 + 180 * 2, color[2], false);
+	x = (900 - 320) * Setting::GetInstance().GetSEVolume();
+	DrawBox(320, 220 + 180 * 2, 320 + x, 240 + 180 * 2, color[2], true);
+}
+
+void SceneOption::DrawOther(std::vector<unsigned int> color)
+{
+	std::string text = "カメラ感度:";
+	FontManager::GetInstance().DrawLeftText(200, 150, text, color[3], 32, 0x000000);
+
+	FontManager::GetInstance().DrawCenteredText(240, 220, std::to_string(static_cast<int>(Setting::GetInstance().GetSensitivity() * 100)), color[3], 48, 0x000000);
+	DrawBox(320, 220, 900, 240, color[3], false);
+	auto x = (900 - 320) * Setting::GetInstance().GetSensitivity();
+	DrawBox(320, 220, 320 + x, 240, color[3], true);
+
+	text = "ディスプレイモード:";
+	FontManager::GetInstance().DrawLeftText(200, 150 + 180, text, color[4], 32, 0x000000);
+
+	if (Setting::GetInstance().GetIsFullScreen())
+	{
+		text = "フルスクリーン";
+	}
+	else
+	{
+		text = "ウィンドウ";
+	}
+
+	FontManager::GetInstance().DrawCenteredText(600, 220 + 180, text, color[4], 32, 0x000000);
+
+	if (m_nowItem == Item::FullScreen)
+	{
+		auto offset = sinf(-m_angle) * 2;
+
+		DrawRotaGraph(600 + 180 + offset, 220 + 180 + 5, 1.0f, 0.0f, m_uiArrowHandle, true);
+		DrawRotaGraph(600 - 180 - offset, 220 + 180 + 5, 1.0f, 0.0f, m_uiArrowHandle, true, true);
+	}
+
+	text = "操作説明UIを描画:";
+	FontManager::GetInstance().DrawLeftText(200, 150 + 180 * 2, text, color[5], 32, 0x000000);
+
+
+	if (Setting::GetInstance().GetIsDrawOperation())
+	{
+		text = "する";
+	}
+	else
+	{
+		text = "しない";
+	}
+
+	FontManager::GetInstance().DrawCenteredText(600, 220 + 180 * 2, text, color[5], 32, 0x000000);
+	if (m_nowItem == Item::DrawOperation)
+	{
+		auto offset = sinf(-m_angle) * 2;
+
+		DrawRotaGraph(600 + 110 + offset, 220 + 180 * 2 + 5, 1.0f, 0.0f, m_uiArrowHandle, true);
+		DrawRotaGraph(600 - 110 - offset, 220 + 180 * 2 + 5, 1.0f, 0.0f, m_uiArrowHandle, true, true);
 	}
 }

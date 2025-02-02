@@ -194,7 +194,7 @@ void MapManager::Draw()
 
 		if (loc.tag == "torch")
 		{
-			if (m_count % 560 == 0)
+			if (m_count % 250 == 0)
 			{
 				auto pos = loc.pos;
 				pos.y += 2.0f;

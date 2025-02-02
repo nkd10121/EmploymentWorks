@@ -28,6 +28,9 @@ SCENE_TITLE,S_CURSORENTER,data/sound/se/enter,.mp3,0,0
 SCENE_TITLE,S_TITLEBGM,data/sound/bgm/title,.mp3,1,1
 SCENE_TITLE,S_CRYSTALHIT,data/sound/se/crystal_hit,.mp3,1,0
 SCENE_TITLE,E_WARNINGAREA,data/effect/warningArea,.efk,1,
+SCENE_TITLE,I_UIARROW,data/img/ui_arrow,.png,1,
+SCENE_TITLE,I_UIRB,data/img/ui_RB,.png,1,
+SCENE_TITLE,I_UILB,data/img/ui_LB,.png,1,
 ,,,,,
 SCENE_STAGESELECT,I_BIGWINDOW,data/img/ui_bigWindow,.png,0,
 SCENE_STAGESELECT,I_SMALLWINDOW,data/img/ui_smallWindow,.png,0,

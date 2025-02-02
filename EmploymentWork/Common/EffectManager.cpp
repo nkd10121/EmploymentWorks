@@ -98,7 +98,7 @@ void EffectManager::Clear()
 /// </summary>
 void EffectManager::CreateEffect(std::string name, Vec3 pos, Vec3 rot)
 {
-	int effectFrame = 200;
+	int effectFrame = 300;
 	if (name == "E_ARROW")
 	{
 		effectFrame = 40;
