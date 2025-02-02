@@ -1,6 +1,7 @@
 ﻿#include "EnemyManager.h"
 
 #include "EnemyNormal.h"
+#include "EnemyFast.h"
 #include "SwarmEnemy.h"
 
 #include "TrapManager.h"
@@ -95,7 +96,8 @@ EnemyManager::EnemyManager(bool isGame) :
 			EnemyCreateInfo add;
 			add.appearFrame = i;
 			add.isCreated = false;
-			add.enemyName = "EnemyNormal";
+			//add.enemyName = "EnemyNormal";
+			add.enemyName = "EnemyFast";
 			m_createEnemyInfo[0].push_back(add);
 		}
 	}
@@ -523,6 +525,49 @@ void EnemyManager::CreateEnemy(int phaseNum, int count, bool isInGame)
 					add.appearFrame = count / 60 + GetRand(2) + 12;
 					add.isCreated = false;
 					add.enemyName = "EnemyNormal";
+					m_createEnemyInfo[0].push_back(add);
+				}
+			}
+			else if (data.enemyName == "EnemyFast" && !data.isCreated)
+			{
+				auto add = std::make_shared<EnemyFast>();
+				add->SetRoute(GetRoute());
+				add->Init();
+
+				bool isNewCreateSwarm = false;
+
+				//前に生成した群れクラスの最初に追加した生成フレームとの差が180以下ならその群れクラスに追加する
+				if (m_pEnemies.size() > 0)
+				{
+					if (abs(m_pEnemies.back()->GetFirstCreateFrame() - count) < 60 * 3)
+					{
+						m_pEnemies.back()->AddSwarm(add);
+					}
+					else
+					{
+						isNewCreateSwarm = true;
+					}
+				}
+				else
+				{
+					isNewCreateSwarm = true;
+				}
+
+				if (isNewCreateSwarm)
+				{
+					addSwarm->SetFirstCreateFrame(static_cast<int>(data.appearFrame * 60));
+					addSwarm->AddSwarm(add);
+
+					isAdd = true;
+				}
+				data.isCreated = true;
+
+				if (!isInGame)
+				{
+					EnemyCreateInfo add;
+					add.appearFrame = count / 60 + GetRand(2) + 12;
+					add.isCreated = false;
+					add.enemyName = "EnemyFast";
 					m_createEnemyInfo[0].push_back(add);
 				}
 			}
