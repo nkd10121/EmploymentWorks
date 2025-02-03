@@ -95,7 +95,7 @@ EnemyManager::EnemyManager(bool isGame) :
 		auto enemyName = LoadCSV::GetInstance().GetAllEnemyName();
 
 		m_createEnemyInfo[0] = std::list<EnemyCreateInfo>();
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 14; i++)
 		{
 			EnemyCreateInfo add;
 			add.appearFrame = i;
