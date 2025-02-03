@@ -36,7 +36,8 @@ namespace
 			atk,	//攻撃力
 			def,	//防御力
 			speed,	//移動速度
-			point	//ドロップする罠ポイント
+			point,	//ドロップする罠ポイント
+			crystalDamage	//クリスタルに与えるダメージ
 		};
 	}
 
@@ -98,6 +99,7 @@ CharacterBase::Status LoadCSV::LoadStatus(const char* characterName)
 			retStatus.def = std::stoi(strConmaBuf[LoadData::eStatusOrder::def]);
 			retStatus.speed = std::stof(strConmaBuf[LoadData::eStatusOrder::speed]);
 			retStatus.point = std::stoi(strConmaBuf[LoadData::eStatusOrder::point]);
+			retStatus.crystalDamage = std::stoi(strConmaBuf[LoadData::eStatusOrder::crystalDamage]);
 		}
 
 		if (isGet)

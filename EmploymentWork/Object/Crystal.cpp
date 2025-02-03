@@ -213,7 +213,7 @@ void Crystal::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::
 			m_preHp = m_hp;
 			m_textMagPower = 4.0f;
 
-			m_hp--;
+			m_hp -= col->GetCrystalDamage();
 
 #ifdef _DEBUG	//デバッグ描画
 			printf("クリスタルにダメージが入りました。\n");

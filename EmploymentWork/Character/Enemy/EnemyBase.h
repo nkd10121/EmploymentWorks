@@ -129,6 +129,8 @@ public:
 	/// <returns></returns>
 	const int GetDropPoint()const;
 
+	const int GetCrystalDamage()const { return m_status.crystalDamage; }
+
 	/// <summary>
 	/// 索敵判定の半径を取得
 	/// </summary>

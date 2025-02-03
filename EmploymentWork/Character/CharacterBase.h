@@ -20,6 +20,7 @@ public:
 		int def;		//防御力
 		float speed;	//移動速度
 		int point;		//死亡時のポイント
+		int crystalDamage;
 	};
 
 public:
