@@ -101,6 +101,7 @@ public:
 
 	std::vector<std::string> LoadStageInfo(int stageIdx);
 	std::vector<std::string> GetAllStageName();
+	std::vector<std::string> GetAllEnemyName();
 
 	std::vector<std::vector<std::string>> LoadEnemyCreateData(std::string stageName);
 };

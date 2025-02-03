@@ -516,6 +516,45 @@ std::vector<std::string> LoadCSV::GetAllStageName()
 	return ret;
 }
 
+std::vector<std::string> LoadCSV::GetAllEnemyName()
+{
+	//返す情報
+	std::vector<std::string> ret;
+
+	// 一時保存用string
+	std::string strBuf;
+	// カンマ分け一時保存用string
+	std::vector<std::string> strConmaBuf;
+
+	// ファイル読み込み
+	std::ifstream ifs(kStatuCSVPath);
+	if (!ifs)
+	{
+		assert(0 && "ファイルにアクセスできませんでした。");
+		return ret;
+	}
+
+	//情報を取得できたかどうかのフラグ
+	bool isGet = false;
+
+	//最初は対応表情報が入っているだけなので無視する
+	std::getline(ifs, strBuf);
+
+	while (getline(ifs, strBuf))
+	{
+		//取得した文字列をカンマ区切りの配列(情報群)にする
+		strConmaBuf = Split(strBuf, ',');
+
+		if (stoi(strConmaBuf[5]) > 0)
+		{
+			ret.push_back(strConmaBuf[0]);
+		}
+
+	}
+
+	return ret;
+}
+
 std::vector<std::vector<std::string>> LoadCSV::LoadEnemyCreateData(std::string stageName)
 {
 	std::vector<std::vector<std::string>> ret;

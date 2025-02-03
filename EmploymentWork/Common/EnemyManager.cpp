@@ -56,6 +56,7 @@ namespace
 	constexpr int kDrawKillStreakUIY = 300;
 	constexpr int kDrawKillStreakUIIntervalY = 30;
 	constexpr int kDrawKillStreakUIBoxSize = 20;
+
 }
 
 EnemyManager::EnemyManager(bool isGame) :
@@ -91,14 +92,17 @@ EnemyManager::EnemyManager(bool isGame) :
 	}
 	else
 	{
+		auto enemyName = LoadCSV::GetInstance().GetAllEnemyName();
+
 		m_createEnemyInfo[0] = std::list<EnemyCreateInfo>();
 		for (int i = 0; i < 10; i++)
 		{
 			EnemyCreateInfo add;
 			add.appearFrame = i;
 			add.isCreated = false;
+
 			//add.enemyName = "EnemyNormal";
-			add.enemyName = "EnemyFast";
+			add.enemyName = enemyName[GetRand(enemyName.size() - 1)];
 			m_createEnemyInfo[0].push_back(add);
 		}
 	}
