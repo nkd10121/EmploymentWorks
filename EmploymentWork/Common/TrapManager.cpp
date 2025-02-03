@@ -203,6 +203,10 @@ void TrapManager::Update()
 
 	auto preDebugTrap = debugTrap;
 
+#ifdef _DEBUG
+	printf("レイキャストを行うポイント数:%d\n", static_cast<int>(hit.size()));
+#endif
+
 	//円と当たったトラップ座標分回す
 	for (auto& trapPos : hit)
 	{
