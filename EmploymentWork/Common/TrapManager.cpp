@@ -165,10 +165,8 @@ void TrapManager::Update()
 			}
 
 			//周囲に8個の候補地がなければ次へ
-			if (p->neighborTraps.size() != 8)
-			{
-				continue;
-			}
+			if (p->neighborTraps.size() != 8)	continue;
+
 
 			//ここまで来たならその座標と大きな円の判定をとる
 
@@ -211,7 +209,7 @@ void TrapManager::Update()
 	for (auto& trapPos : hit)
 	{
 		//トラップが置かれていないかつ、周囲に8個のトラップがおかれていない候補地があるとき
-		//if (!trapPos->isPlaced &&/* trapPos->neighborTraps.size() == 8 && */CheckNeighbor(trapPos->neighborTraps))
+		//if (!trapPos->isPlaced && trapPos->neighborTraps.size() == 8 /*&& CheckNeighbor(trapPos->neighborTraps)*/)
 		{
 			//線分と座標の距離を計算する
 			float length = Segment_Point_MinLength(start.ToVECTOR(), end.ToVECTOR(), trapPos->pos.ToVECTOR());
@@ -230,47 +228,51 @@ void TrapManager::Update()
 	{
 		if (!debugTrap->isPlaced)
 		{
-			auto add = std::make_shared<TrapBase>();
-			if (m_slotIdx == 1)			add = std::make_shared<SpikeTrap>();
-			else if (m_slotIdx == 2)	add = std::make_shared<ArrowWallTrap>();
-			else if (m_slotIdx == 3)	add = std::make_shared<FlameTrap>();
-			else if (m_slotIdx == 4)	add = std::make_shared<CutterTrap>();
-			else if (m_slotIdx == 5)	add = std::make_shared<IronSnareTrap>();
-			else if (m_slotIdx == 6)	add = std::make_shared<IronImpactTrap>();
-
-			//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
-			if (m_trapPoint < add->GetCost())
+			//周囲の8個全てが空いていなかったら次へ
+			if (CheckNeighbor(debugTrap->neighborTraps))
 			{
-				m_isTextShake = true;
-				m_textShakeFrame = kTextShakeFrame;
-				//何もしない
-				return;
-			}
+				auto add = std::make_shared<TrapBase>();
+				if (m_slotIdx == 1)			add = std::make_shared<SpikeTrap>();
+				else if (m_slotIdx == 2)	add = std::make_shared<ArrowWallTrap>();
+				else if (m_slotIdx == 3)	add = std::make_shared<FlameTrap>();
+				else if (m_slotIdx == 4)	add = std::make_shared<CutterTrap>();
+				else if (m_slotIdx == 5)	add = std::make_shared<IronSnareTrap>();
+				else if (m_slotIdx == 6)	add = std::make_shared<IronImpactTrap>();
 
-			//エフェクトの生成
-			EffectManager::GetInstance().CreateEffect("E_TRAPCREATE", debugTrap->pos);
-			SoundManager::GetInstance().PlaySE("S_TRAPCREATE");
+				//もし設置しようとしていたトラップのコストよりも現在持っているポイントが少なかったら設置できない
+				if (m_trapPoint < add->GetCost())
+				{
+					m_isTextShake = true;
+					m_textShakeFrame = kTextShakeFrame;
+					//何もしない
+					return;
+				}
 
-			//所持トラップポイントをコスト分減らす
-			AddTrapPoint(-add->GetCost());
+				//エフェクトの生成
+				EffectManager::GetInstance().CreateEffect("E_TRAPCREATE", debugTrap->pos);
+				SoundManager::GetInstance().PlaySE("S_TRAPCREATE");
 
-			auto vector = debugTrap->norm;
-			if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
-			{
-				vector = Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f);
-			}
+				//所持トラップポイントをコスト分減らす
+				AddTrapPoint(-add->GetCost());
 
-			//初期化
-			add->Init(debugTrap->pos, vector);
+				auto vector = debugTrap->norm;
+				if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
+				{
+					vector = Vec3(0.0f, m_trapRotationAngle * DX_PI_F / 180.0f, 0.0f);
+				}
 
-			//追加
-			m_traps.emplace_back(add);
+				//初期化
+				add->Init(debugTrap->pos, vector);
 
-			//トラップを設置済みにする
-			debugTrap->isPlaced = true;
-			for (auto& trap : debugTrap->neighborTraps)
-			{
-				trap.lock()->isPlaced = true;
+				//追加
+				m_traps.emplace_back(add);
+
+				//トラップを設置済みにする
+				debugTrap->isPlaced = true;
+				for (auto& trap : debugTrap->neighborTraps)
+				{
+					trap.lock()->isPlaced = true;
+				}
 			}
 		}
 	}

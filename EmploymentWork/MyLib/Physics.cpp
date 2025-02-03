@@ -300,7 +300,7 @@ std::vector<std::shared_ptr<MyLib::Collidable>> MyLib::Physics::GetCollisionList
 			auto& obj1 = m_collidables[i];
 			auto& obj2 = m_collidables[j];
 
-			//どちらかのオブジェクトが相手のオブジェクトタグを無視するようになっていたら追加せずに次へ
+			//どちらかのオブジェクトが相手のオブジェクトタグを無視するようになっていたら当たり判定の計算対象に追加せずに次へ
 			if (obj1->IsThroughTarget(obj2) || obj2->IsThroughTarget(obj1))
 			{
 				continue;

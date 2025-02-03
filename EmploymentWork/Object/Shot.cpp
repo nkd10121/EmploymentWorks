@@ -106,7 +106,7 @@ void Shot::Update()
 		m_isExist = false;
 	}
 
-	if (m_frameCount % 20 == 0)
+	if (m_frameCount % 40 == 0)
 	{
 		auto angle = atan2(dirNorm.x, dirNorm.z);
 		EffectManager::GetInstance().CreateEffect("E_ARROW", rigidbody->GetPos(), Vec3(0.0f, angle,0.0f));
