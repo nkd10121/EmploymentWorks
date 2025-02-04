@@ -45,6 +45,7 @@ void IronSnareTrap::Init(Vec3 pos, Vec3 norm)
 	rigidbody->SetPos(pos);
 	rigidbody->SetNextPos(pos);
 
+	pos.y -= 2.0f;
 	//モデルのハンドルを取得
 	MV1SetPosition(m_modelHandle, pos.ToVECTOR());
 
@@ -70,6 +71,14 @@ void IronSnareTrap::Draw()
 void IronSnareTrap::SetRot(Vec3 vec)
 {
 	MV1SetRotationXYZ(m_modelHandle, vec.ToVECTOR());
+}
+
+void IronSnareTrap::SetPos(Vec3 vec)
+{
+	vec.y -= 2.0f;
+
+	rigidbody->SetPos(vec);
+	MV1SetPosition(m_modelHandle, vec.ToVECTOR());
 }
 
 std::vector<Vec3> IronSnareTrap::GetAttackPos()

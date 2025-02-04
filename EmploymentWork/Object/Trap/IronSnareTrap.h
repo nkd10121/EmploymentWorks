@@ -26,6 +26,7 @@ public:
 	void Draw()override;
 
 	void SetRot(Vec3 vec)override;
+	void SetPos(Vec3 vec)override;
 
 	std::vector<Vec3> GetAttackPos()override;
 };
