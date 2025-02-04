@@ -132,6 +132,7 @@ private:
 	bool m_isDeath;
 
 	int m_slotNum;
+	int m_pushButton;
 
 	float m_shotAnimBlendRate;
 	int m_shotAnimNo;

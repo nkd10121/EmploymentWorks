@@ -70,6 +70,7 @@ Player::Player() :
 	m_isStartDeathAnimation(false),
 	m_isDeath(false),
 	m_slotNum(0),
+	m_pushButton(0),
 	m_isPlayShotAnim(false),
 	m_animAngle(0.0f)
 {
@@ -251,18 +252,39 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 	if (m_pState->GetKind() != StateBase::StateKind::Death || m_pState->GetKind() != StateBase::StateKind::Clear)
 	{
 		//スロットの選択
-		if (Input::GetInstance().IsTriggered("RB"))
+		if (Input::GetInstance().IsPushed("RB"))
 		{
-			m_slotNum++;
+			if (m_pushButton % 20 == 0)
+			{
+				m_slotNum++;
+			}
 			
-			m_slotNum = min(m_slotNum, 6);
+			if (m_slotNum > 6)
+			{
+				m_slotNum = 0;
+			}
+
+			//m_slotNum = min(m_slotNum, 6);
+			m_pushButton++;
 		}
-		if (Input::GetInstance().IsTriggered("LB"))
+		else if (Input::GetInstance().IsPushed("LB"))
 		{
-			m_slotNum--;
+			if (m_pushButton % 20 == 0)
+			{
+				m_slotNum--;
+			}
 
-			m_slotNum = max(m_slotNum, 0);
+			if (m_slotNum < 0)
+			{
+				m_slotNum = 6;
+			}
 
+			//m_slotNum = max(m_slotNum, 0);
+			m_pushButton++;
+		}
+		else
+		{
+			m_pushButton = 0;
 		}
 	}
 
