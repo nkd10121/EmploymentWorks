@@ -123,9 +123,15 @@ void TrapManager::Update()
 	{
 		auto attackPos = m_previewTraps[m_slotIdx - 1]->GetAttackPos();
 
-		for (auto& pos : attackPos)
+		for (int i = 0;i < 3;i++)
 		{
-			EffectManager::GetInstance().CreateEffect(m_createEffectName, pos);
+			auto idx = i;
+			if (idx > attackPos.size() - 1)
+			{
+				idx = attackPos.size() - 1;
+			}
+
+			EffectManager::GetInstance().CreateEffect(m_createEffectName, attackPos[idx]);
 		}
 	}
 
@@ -407,31 +413,31 @@ void TrapManager::Draw()
 		trap->Draw();
 	}
 
-	#ifdef _DEBUG	//デバッグ描画
-		for (auto& pos : m_trapPoss)
-		{
-			if (pos->isPlaced)
-			{
-				DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
-			}
-			else
-			{
-				DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
-			}
-		}
-	
-		if (debugTrap != nullptr)
-		{
-			if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
-			{
-				DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
-			}
-			else
-			{
-				DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
-			}
-		}
-	#endif
+	//#ifdef _DEBUG	//デバッグ描画
+	//	for (auto& pos : m_trapPoss)
+	//	{
+	//		if (pos->isPlaced)
+	//		{
+	//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
+	//		}
+	//		else
+	//		{
+	//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
+	//		}
+	//	}
+	//
+	//	if (debugTrap != nullptr)
+	//	{
+	//		if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
+	//		{
+	//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
+	//		}
+	//		else
+	//		{
+	//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
+	//		}
+	//	}
+	//#endif
 
 	if (debugTrap && m_slotIdx != 0 && m_isPrePhase)
 	{
