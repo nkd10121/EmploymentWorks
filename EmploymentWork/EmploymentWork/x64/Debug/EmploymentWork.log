@@ -1,7 +1,4 @@
 ﻿  TrapManager.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(299,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(368,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-  IronImpactTrap.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Object\Trap\IronImpactTrap.cpp(68,44): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-  コードを生成中...
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(322,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(391,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

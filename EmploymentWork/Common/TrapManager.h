@@ -129,6 +129,7 @@ private:
 	float m_trapRotationAngle;
 
 	int m_attackEffectCreateCount;
+	std::string m_createEffectName;
 
 	//デバッグ用
 	std::shared_ptr<Trap> debugTrap;

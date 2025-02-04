@@ -58,7 +58,8 @@ TrapManager::TrapManager() :
 	m_textShakeFrame(0),
 	m_isPrePhase(false),
 	m_trapRotationAngle(0.0f),
-	m_attackEffectCreateCount(0)
+	m_attackEffectCreateCount(0),
+	m_createEffectName("E_TRAPATTACKAREA")
 {
 }
 
@@ -124,7 +125,7 @@ void TrapManager::Update()
 
 		for (auto& pos : attackPos)
 		{
-			EffectManager::GetInstance().CreateEffect("E_TRAPATTACKAREA", pos);
+			EffectManager::GetInstance().CreateEffect(m_createEffectName, pos);
 		}
 	}
 
@@ -277,6 +278,28 @@ void TrapManager::Update()
 		}
 	}
 
+	//
+
+	if (!CheckNeighbor(debugTrap->neighborTraps))
+	{
+		if (m_createEffectName == "E_TRAPATTACKAREA")
+		{
+			m_attackEffectCreateCount = 0;
+			EffectManager::GetInstance().StopEffect(m_createEffectName);
+		}
+		m_createEffectName = "E_TRAPATTACKAREARED";
+	}
+	else
+	{
+		if (m_createEffectName == "E_TRAPATTACKAREARED")
+		{
+			m_attackEffectCreateCount = 0;
+			EffectManager::GetInstance().StopEffect(m_createEffectName);
+		}
+		m_createEffectName = "E_TRAPATTACKAREA";
+
+	}
+
 	if (Input::GetInstance().IsTriggered("X"))
 	{
 		m_trapRotationAngle += 90.0f;
@@ -288,7 +311,7 @@ void TrapManager::Update()
 		m_previewTraps[m_slotIdx - 1]->SetPos(debugTrap->pos.ToVECTOR());
 		m_previewTraps[m_slotIdx - 1]->SetRot(Vec3(0.0f, m_trapRotationAngle* DX_PI_F / 180.0f, 0.0f));
 
-		auto effectHandles = EffectManager::GetInstance().GetIdHandles("E_TRAPATTACKAREA");
+		auto effectHandles = EffectManager::GetInstance().GetIdHandles(m_createEffectName);
 		auto attackPos = m_previewTraps[m_slotIdx - 1]->GetAttackPos();
 		int i = 0;
 
@@ -357,7 +380,7 @@ void TrapManager::Update()
 			m_previewTraps[m_slotIdx - 1]->SetRot(debugTrap->norm.ToVECTOR());
 		}
 
-		auto effectHandles = EffectManager::GetInstance().GetIdHandles("E_TRAPATTACKAREA");
+		auto effectHandles = EffectManager::GetInstance().GetIdHandles(m_createEffectName);
 		auto attackPos = m_previewTraps[m_slotIdx - 1]->GetAttackPos();
 		int i = 0;
 
@@ -384,31 +407,31 @@ void TrapManager::Draw()
 		trap->Draw();
 	}
 
-	//#ifdef _DEBUG	//デバッグ描画
-	//	for (auto& pos : m_trapPoss)
-	//	{
-	//		if (pos->isPlaced)
-	//		{
-	//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
-	//		}
-	//		else
-	//		{
-	//			DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
-	//		}
-	//	}
-	//
-	//	if (debugTrap != nullptr)
-	//	{
-	//		if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
-	//		{
-	//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
-	//		}
-	//		else
-	//		{
-	//			DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
-	//		}
-	//	}
-	//#endif
+	#ifdef _DEBUG	//デバッグ描画
+		for (auto& pos : m_trapPoss)
+		{
+			if (pos->isPlaced)
+			{
+				DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffffff, 0xffffff, false);
+			}
+			else
+			{
+				DrawSphere3D(pos->pos.ToVECTOR(), 3, 4, 0xffff00, 0xffff00, false);
+			}
+		}
+	
+		if (debugTrap != nullptr)
+		{
+			if (!debugTrap->isPlaced && debugTrap->neighborTraps.size() == 8 && CheckNeighbor(debugTrap->neighborTraps))
+			{
+				DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0x00ff00, 0x00ff00, false);
+			}
+			else
+			{
+				DrawSphere3D(debugTrap->pos.ToVECTOR(), 4, 4, 0xff0000, 0xff0000, false);
+			}
+		}
+	#endif
 
 	if (debugTrap && m_slotIdx != 0 && m_isPrePhase)
 	{
