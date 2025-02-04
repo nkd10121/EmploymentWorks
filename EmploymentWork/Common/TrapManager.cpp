@@ -286,7 +286,7 @@ void TrapManager::Update()
 
 	//
 
-	if (!CheckNeighbor(debugTrap->neighborTraps))
+	if (!CheckNeighbor(debugTrap->neighborTraps) || m_previewTraps[m_slotIdx - 1]->GetCost() > m_trapPoint)
 	{
 		if (m_createEffectName == "E_TRAPATTACKAREA")
 		{

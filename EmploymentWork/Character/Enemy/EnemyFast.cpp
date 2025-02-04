@@ -338,6 +338,8 @@ void EnemyFast::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std
 				//攻撃してきたタグを保存
 				m_lastAttackTag = m_hitObjectTag;
 
+				EffectManager::GetInstance().CreateEffect("E_TRAPATTACK", rigidbody->GetPos());
+
 				AddAttackerName(col->GetTrapName());
 			}
 		}
