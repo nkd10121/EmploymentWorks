@@ -257,14 +257,14 @@
     <ClCompile Include="Ui\MiniMap.cpp">
       <Filter>ソース ファイル\Ui</Filter>
     </ClCompile>
-    <ClCompile Include="CutterTrap.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Trap\CutterTrap.cpp">
+      <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
-    <ClCompile Include="IronSnareTrap.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Trap\IronSnareTrap.cpp">
+      <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
-    <ClCompile Include="IronImpactTrap.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Object\Trap\IronImpactTrap.cpp">
+      <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,12 +475,18 @@
     <ClInclude Include="Ui\MiniMap.h">
       <Filter>ソース ファイル\Ui</Filter>
     </ClInclude>
-    <ClInclude Include="CutterTrap.h" />
-    <ClInclude Include="IronSnareTrap.h" />
     <ClInclude Include="Character\Enemy\EnemyFast.h">
       <Filter>ソース ファイル\Character\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="IronImpactTrap.h" />
+    <ClInclude Include="Object\Trap\IronSnareTrap.h">
+      <Filter>ソース ファイル\Object\Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Trap\IronImpactTrap.h">
+      <Filter>ソース ファイル\Object\Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Trap\CutterTrap.h">
+      <Filter>ソース ファイル\Object\Trap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\VertexShader.hlsl">
