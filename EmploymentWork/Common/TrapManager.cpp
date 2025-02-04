@@ -345,7 +345,7 @@ void TrapManager::Update()
 		m_traps.erase(it, m_traps.end());
 	}
 
-	if (preDebugTrap != debugTrap)
+	if (preDebugTrap != debugTrap || m_slotIdx != m_preSlotIdx)
 	{
 		m_previewTraps[m_slotIdx - 1]->SetPos(debugTrap->pos.ToVECTOR());
 		if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
@@ -373,6 +373,8 @@ void TrapManager::Update()
 			i++;
 		}
 	}
+
+	m_preSlotIdx = m_slotIdx;
 }
 
 void TrapManager::Draw()
@@ -586,4 +588,11 @@ const void TrapManager::SetCameraInfo(Vec3 cameraPos, Vec3 dirVec)
 {
 	m_cameraPos = cameraPos;
 	m_cameraDir = dirVec;
+}
+
+const void TrapManager::SetSlotIdx(int idx)
+{
+	m_slotIdx = idx;
+
+	return void();
 }

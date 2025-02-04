@@ -1,3 +1,29 @@
-﻿  Player.cpp
+﻿  SwarmEnemy.cpp
+  Player.cpp
 C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Character\Player\Player.cpp(133,64): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  EnemyManager.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(101,22): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(105,55): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(341,104): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(531,48): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(574,48): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\EnemyManager.cpp(617,48): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  GameManager.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9): warning C4477: 'printf' : 書式文字列 '%ld' には、型 'long' の引数が必要ですが、可変個引数 1 は型 'LONGLONG' です
+      C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
+      書式文字列に '%lld' を使用することをお勧めします
+      C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
+      書式文字列に '%Id' を使用することをお勧めします
+      C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
+      書式文字列に '%I64d' を使用することをお勧めします
+  
+  MapManager.cpp
+  TrapManager.cpp
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(299,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(368,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  MathHelp.cpp
+  Physics.cpp
+  SceneBase.cpp
+  SceneGame.cpp
+  コードを生成中...
   EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

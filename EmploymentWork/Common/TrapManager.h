@@ -92,7 +92,7 @@ public:
 
 
 	const void SetCameraInfo(Vec3 cameraPos, Vec3 dirVec);
-	const void SetSlotIdx(int idx) { m_slotIdx = idx; }
+	const void SetSlotIdx(int idx);
 	const void SetIsPrePhase(bool isPrePhase) { m_isPrePhase = isPrePhase; }
 private:
 	std::list<std::shared_ptr<Trap>> m_trapPoss;
@@ -109,6 +109,7 @@ private:
 	float m_transparency;
 
 	int m_slotIdx;		//プレイヤーのスロット番号
+	int m_preSlotIdx;	//プレイヤーのスロット番号
 	Vec3 m_cameraPos;	//カメラ座標
 	Vec3 m_cameraDir;	//カメラの向いている方向
 
