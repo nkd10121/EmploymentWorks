@@ -167,7 +167,7 @@ std::vector<Vec3> IronImpactTrap::GetAttackPos()
 	std::vector<Vec3> ret;
 
 	auto pos = rigidbody->GetPos() + m_norm * kSearchCollisionInterval;
-	pos.y -= 8.0f;
+	//pos.y -= 8.0f;
 	ret.push_back(pos);
 
 	return ret;
