@@ -6,6 +6,7 @@
 #include "SceneStageSelect.h"
 
 #include "FontManager.h"
+#include "SoundManager.h"
 
 #include <vector>
 
@@ -139,6 +140,11 @@ void ScenePause::SelectNextSceneUpdate()
 			//一個下にずらす
 			m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) + 1);
 		}
+		else
+		{
+			//SEを流す
+			SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
+		}
 	}
 
 	//下を入力したら
@@ -153,11 +159,19 @@ void ScenePause::SelectNextSceneUpdate()
 			//一個上にずらす
 			m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) - 1);
 		}
+		else
+		{
+			//SEを流す
+			SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
+		}
 	}
 
 	//決定ボタンを押したら現在選択しているシーンに遷移する
 	if (Input::GetInstance().IsTriggered("OK"))
 	{
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORENTER");
+
 		//タイトルシーンに遷移する
 		if (m_destinationScene == eDestination::InGame)
 		{

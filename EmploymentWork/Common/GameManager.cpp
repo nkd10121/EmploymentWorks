@@ -436,8 +436,12 @@ void GameManager::Update()
 
 	m_pMiniMap->Update(m_pPlayer->GetPos(),m_pEnemyManager->GetEnemyPos());
 
+	auto b = GetNowHiPerformanceCount();
 	// エフェクトの更新
 	EffectManager::GetInstance().Update();
+	auto a = GetNowHiPerformanceCount();
+
+	printf("%ld", a - b);
 
 	// スカイボックスの位置をプレイヤーの位置に合わせる
 	MV1SetPosition(m_skyBoxHandle, m_pPlayer->GetPos().ToVECTOR());

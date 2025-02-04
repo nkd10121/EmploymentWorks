@@ -200,17 +200,25 @@ void SceneStageSelect::SelectNextSceneUpdate()
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
 		m_nowCursor = max(0, m_nowCursor - 1);
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 
 	// 下キーが押された場合の処理
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
 		m_nowCursor = min(static_cast<int>(m_stageNames.size()) - 1, m_nowCursor + 1);
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
+
 	}
 
 	// OKキーが押された場合の処理
 	if (Input::GetInstance().IsTriggered("OK"))
 	{
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORENTER");
+
 		isNextScene = true;
 		m_transitionFrameCount = 0; // 遷移フレームカウントのリセット
 		SceneManager::GetInstance().SetStageIdx(m_nowCursor);

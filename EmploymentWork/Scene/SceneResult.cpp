@@ -8,6 +8,7 @@
 #include "ScoreManager.h"
 #include "ResourceManager.h"
 #include "FontManager.h"
+#include "SoundManager.h"
 
 #include "Game.h"
 namespace
@@ -257,6 +258,11 @@ void SceneResult::SelectNextSceneUpdate()
 			//一個下にずらす
 			m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) + 1);
 		}
+		else
+		{
+			//SEを流す
+			SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
+		}
 	}
 
 	//下を入力したら
@@ -270,6 +276,11 @@ void SceneResult::SelectNextSceneUpdate()
 		{
 			//一個上にずらす
 			m_destinationScene = static_cast<eDestination>(static_cast<int>(m_destinationScene) - 1);
+		}
+		else
+		{
+			//SEを流す
+			SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 		}
 	}
 

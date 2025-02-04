@@ -84,6 +84,9 @@ void SceneOption::Update()
 
 	if (Input::GetInstance().IsTriggered("RB"))
 	{
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
+
 		if (!m_isUpdateSound)
 		{
 			m_isUpdateSound = true;
@@ -102,6 +105,9 @@ void SceneOption::Update()
 
 	if (Input::GetInstance().IsTriggered("LB"))
 	{
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
+
 		if (m_isUpdateSound)
 		{
 			m_isUpdateSound = false;
@@ -236,6 +242,9 @@ void SceneOption::UpdateMasterVolume()
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
 		m_updateFunc = &SceneOption::UpdateBGMVolume;
+
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 }
 
@@ -274,10 +283,16 @@ void SceneOption::UpdateBGMVolume()
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
 		m_updateFunc = &SceneOption::UpdateMasterVolume;
+
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
 		m_updateFunc = &SceneOption::UpdateSEVolume;
+
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 }
 
@@ -314,6 +329,9 @@ void SceneOption::UpdateSEVolume()
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
 		m_updateFunc = &SceneOption::UpdateBGMVolume;
+
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 	//if (Input::GetInstance().IsTriggered("DOWN"))
 	//{
@@ -358,6 +376,9 @@ void SceneOption::UpdateSensitivity()
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
 		m_updateFunc = &SceneOption::UpdateFullScreen;
+
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 }
 
@@ -378,10 +399,16 @@ void SceneOption::UpdateFullScreen()
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
 		m_updateFunc = &SceneOption::UpdateSensitivity;
+
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 	if (Input::GetInstance().IsTriggered("DOWN"))
 	{
 		m_updateFunc = &SceneOption::UpdateDrawOperation;
+
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 }
 
@@ -400,6 +427,9 @@ void SceneOption::UpdateDrawOperation()
 	if (Input::GetInstance().IsTriggered("UP"))
 	{
 		m_updateFunc = &SceneOption::UpdateFullScreen;
+
+		//SEを流す
+		SoundManager::GetInstance().PlaySE("S_CURSORMOVE");
 	}
 }
 

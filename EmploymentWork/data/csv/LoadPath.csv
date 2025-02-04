@@ -25,8 +25,8 @@ SCENE_TITLE,I_BUTTON,data/img/ui_button,.png,0,
 SCENE_TITLE,M_BANNER,data/model/stage/banner,.mv1,1,
 SCENE_TITLE,M_TORCH,data/model/stage/torchWall,.mv1,1,
 SCENE_TITLE,E_TORCHFIRE,data/effect/torch_fire,.efk,0,
-SCENE_TITLE,S_CURSORMOVE,data/sound/se/select,.mp3,0,0
-SCENE_TITLE,S_CURSORENTER,data/sound/se/enter,.mp3,0,0
+SCENE_TITLE,S_CURSORMOVE,data/sound/se/select,.mp3,1,0
+SCENE_TITLE,S_CURSORENTER,data/sound/se/enter,.mp3,1,0
 SCENE_TITLE,S_TITLEBGM,data/sound/bgm/title,.mp3,1,1
 SCENE_TITLE,S_CRYSTALHIT,data/sound/se/crystal_hit,.mp3,1,0
 SCENE_TITLE,E_WARNINGAREA,data/effect/warningArea,.efk,1,
