@@ -20,12 +20,14 @@ namespace
 	{
 		Vec3(0.0f,0.0f,72.0f),
 		Vec3(0.0f,0.0f,84.0f),
+		Vec3(0.0f,0.0f,34.0f),
 	};
 
 	const float kScale[] =
 	{
 		0.42f,
 		0.25f,
+		0.28f,
 	};
 }
 
@@ -47,8 +49,8 @@ void MiniMap::Init(int mapHandle, Vec3 crystalPos)
 
 	auto mapOrigin = kMapOrigine[m_stageIdx];
 	// スケーリングを適用
-	float x = (crystalPos.x - mapOrigin.x) * kScale[1];
-	float y = (crystalPos.z - mapOrigin.z) * kScale[1];
+	float x = (crystalPos.x - mapOrigin.x) * kScale[m_stageIdx];
+	float y = (crystalPos.z - mapOrigin.z) * kScale[m_stageIdx];
 
 	// オフセットを適用
 	m_crystalPosOnMinimap = ConvertToMiniMapCoords(crystalPos, mapOrigin, kScale[m_stageIdx], Vec2(kRightUiX, kRightUiY1));
