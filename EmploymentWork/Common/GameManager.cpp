@@ -565,7 +565,8 @@ void GameManager::Draw()
 	if (m_phaseNum.front() == kInitialPhase)
 	{
 		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "準備ができたら", 0xffff4d, 24, 0x000000);
-		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY + 36, "Yボタンで迎え撃とう!", 0xffff4d, 24, 0x000000);
+		FontManager::GetInstance().DrawLeftText(Game::kWindowWidth / 2 - 50, kStartMessageY + 36, "で迎え撃とう!", 0xffff4d, 24, 0x000000);
+		DrawRotaGraph(Game::kWindowWidth / 2 - 80, kStartMessageY + 36, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_Y"), true);
 	}
 
 	// 準備フェーズなら次のフェーズまでの時間を描画

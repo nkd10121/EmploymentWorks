@@ -1,2 +1,5 @@
-﻿  SceneTitle.cpp
+﻿  TrapManager.cpp
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(131,28): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(328,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(397,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
   EmploymentWork.vcxproj -> C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

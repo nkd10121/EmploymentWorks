@@ -439,17 +439,46 @@ void TrapManager::Draw()
 	//	}
 	//#endif
 
-	if (debugTrap && m_slotIdx != 0 && m_isPrePhase)
+	if (debugTrap && m_slotIdx != 0)
 	{
-		if (debugTrap->isPlaced)
+		bool isDrawrRelease = false;
+
+		if (debugTrap->isPlaced && m_isPrePhase)
 		{
 			//罠ポイントの描画
 			DrawUI::GetInstance().RegisterDrawRequest([=]()
 			{
-					FontManager::GetInstance().DrawCenteredText(120, 300, "ZLボタンで罠を解除", 0x91cdd9, 24, 0x395f62);
+					FontManager::GetInstance().DrawCenteredText(1034, 440, "罠解除", 0x91cdd9, 24, 0x395f62);
+					DrawRotaGraph(1210,450,0.5f,0.0f,ResourceManager::GetInstance().GetHandle("I_LT"),true);
 			}, 2);
+
+			isDrawrRelease = true;
+		}
+
+		if (m_previewTraps[m_slotIdx - 1]->GetTrapKind() == 0)
+		{
+			if (isDrawrRelease)
+			{
+				//罠ポイントの描画
+				DrawUI::GetInstance().RegisterDrawRequest([=]()
+				{
+						FontManager::GetInstance().DrawCenteredText(1046, 400, "罠を回転", 0x91cdd9, 24, 0x395f62);
+						DrawRotaGraph(1210, 400, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_X"), true);
+				}, 2);
+			}
+			else
+			{
+				//罠ポイントの描画
+				DrawUI::GetInstance().RegisterDrawRequest([=]()
+				{
+					FontManager::GetInstance().DrawCenteredText(1046, 440, "罠を回転", 0x91cdd9, 24, 0x395f62);
+					DrawRotaGraph(1210, 440, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_X"), true);
+				}, 2);
+			}
+
 		}
 	}
+
 
 
 	// 装備スロットの描画
