@@ -1,5 +1,10 @@
-﻿  TrapManager.cpp
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(131,28): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(328,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\Common\TrapManager.cpp(397,24): warning C4267: '-=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-  EmploymentWork.vcxproj -> C:\Users\fko2347087\Desktop\Github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe
+﻿  GameManager.cpp
+C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9): warning C4477: 'printf' : 書式文字列 '%ld' には、型 'long' の引数が必要ですが、可変個引数 1 は型 'LONGLONG' です
+      C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
+      書式文字列に '%lld' を使用することをお勧めします
+      C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
+      書式文字列に '%Id' を使用することをお勧めします
+      C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
+      書式文字列に '%I64d' を使用することをお勧めします
+  
+  EmploymentWork.vcxproj -> C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe

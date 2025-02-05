@@ -15,6 +15,8 @@
 #include<ctime>
 #include<cassert>
 
+
+
 namespace
 {
 	// フェードにかかるフレームデフォルト

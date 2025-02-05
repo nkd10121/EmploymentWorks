@@ -130,7 +130,11 @@ public class LocationOutputter : MonoBehaviour
             return false;
         }
 
-        bw.Write(CalculateLeafCount(topObject));
+        var temp = CalculateLeafCount(topObject);
+        UnityEngine.Debug.Log(temp);
+
+
+        bw.Write(temp);
 
         //出力したいオブジェクトを出力する
         WriteRecursiveData(bw, topObject, new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(1.0f, 1.0f, 1.0f));
