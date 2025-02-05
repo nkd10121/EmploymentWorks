@@ -195,6 +195,8 @@ private:
 	std::string m_sceneName;	//今のシーン名
 	bool m_isDrawOperation;
 
+	float m_angle;
+
 #ifdef DISP_PROCESS
 	/*処理負荷計測*/
 	LONGLONG	m_updateTime;	// updateにかかった時間(ミリ秒)

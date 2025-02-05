@@ -58,7 +58,8 @@ SceneBase::SceneBase(std::string name) :
 	m_fadeSpeed(0),
 	m_fadeColor(0x000000),
 	m_sceneName(name),
-	m_isDrawOperation(false)
+	m_isDrawOperation(false),
+	m_angle(0.0f)
 #ifdef DISP_PROCESS
 	, m_updateTime(0),
 	m_drawTime(0)
@@ -265,9 +266,11 @@ void SceneBase::DrawAll()
 		//DrawGraph(0, 0, ResourceManager::GetInstance().GetHandle("I_OPERATION"), true);
 		DrawRotaGraph(Game::kWindowWidth/2, Game::kWindowHeight/2,1.0f,0.0f, ResourceManager::GetInstance().GetHandle("I_GAME01"), true);
 
+		m_angle += 0.125f;
+
 		if (IsLoaded())
 		{
-			FontManager::GetInstance().DrawCenteredText(640,660,"Aボタンでスタート",0xffffff,32,0x000000);
+			FontManager::GetInstance().DrawCenteredExtendText(640,660,"Aボタンでスタート",0xffffff,32,0x000000,1.0f + sinf(m_angle) / 100);
 
 			//DrawString(580, 660, "Aボタンでスタート", 0x000000);
 		}
