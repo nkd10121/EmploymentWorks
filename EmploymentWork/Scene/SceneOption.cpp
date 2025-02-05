@@ -143,6 +143,9 @@ void SceneOption::Draw()
 	DrawFormatString(0, 32, 0xffffff, "%f", GetNowSceneName());
 #endif
 
+	DrawRotaGraph(36, Game::kWindowHeight - 36, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_B"), true);
+	FontManager::GetInstance().DrawLeftText(36 + 24, Game::kWindowHeight - 36 - 6, ":戻る", 0xffffff, 32, 0xffffff);
+
 	std::vector<unsigned int> textColor;
 	for (int i = 0; i <= Item::DrawOperation; i++)
 	{

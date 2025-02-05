@@ -10,6 +10,7 @@
 #include "FontManager.h"
 #include "ScoreManager.h"
 #include "SoundManager.h"
+#include "Game.h"
 
 namespace
 {
@@ -192,6 +193,9 @@ void SceneStageSelect::Draw()
 		DrawRotaGraph(300 - m_cameraMoveDistance * 10, 220 + 165 * i + m_cameraMoveDistance * 2 * (i - 1), graphSize + m_cameraMoveDistance / kCameraMoveDistanceFactor, 0.0f, m_smallWindowHandle, true);
 		FontManager::GetInstance().DrawCenteredExtendText(300 - m_cameraMoveDistance * 10, 220 + 165 * i - 5 + m_cameraMoveDistance * 2 * (i - 1), m_stageNames[i], 0xffffff, fontSize, 0x000000, fontExtendRate + m_cameraMoveDistance / kCameraMoveDistanceFactor);
 	}
+
+	DrawRotaGraph(36, Game::kWindowHeight - 36, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_B"), true);
+	FontManager::GetInstance().DrawLeftText(36 + 24, Game::kWindowHeight - 36 - 6, ":戻る", 0xffffff, 32, 0xffffff);
 }
 
 void SceneStageSelect::SelectNextSceneUpdate()
