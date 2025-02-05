@@ -263,7 +263,8 @@ void SceneBase::DrawAll()
 
 	if (m_isDrawOperation)
 	{
-		DrawGraph(0, 0, ResourceManager::GetInstance().GetHandle("I_OPERATION"), true);
+		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_BIGWINDOW3"), true);
+		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_OPERATION"), true);
 		//DrawRotaGraph(Game::kWindowWidth/2, Game::kWindowHeight/2,1.0f,0.0f, ResourceManager::GetInstance().GetHandle("I_GAME01"), true);
 
 		m_angle += 0.125f;

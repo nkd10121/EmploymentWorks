@@ -1,10 +1,2 @@
-﻿  GameManager.cpp
-C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9): warning C4477: 'printf' : 書式文字列 '%ld' には、型 'long' の引数が必要ですが、可変個引数 1 は型 'LONGLONG' です
-      C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
-      書式文字列に '%lld' を使用することをお勧めします
-      C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
-      書式文字列に '%Id' を使用することをお勧めします
-      C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\Common\GameManager.cpp(444,9):
-      書式文字列に '%I64d' を使用することをお勧めします
-  
-  EmploymentWork.vcxproj -> C:\Users\nakad\OneDrive\デスクトップ\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe
+﻿  SceneBase.cpp
+  EmploymentWork.vcxproj -> C:\Users\PC_User\Desktop\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe
