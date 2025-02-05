@@ -267,7 +267,9 @@ void SceneBase::DrawAll()
 
 		if (IsLoaded())
 		{
-			DrawString(580, 660, "Aボタンでスタート", 0x000000);
+			FontManager::GetInstance().DrawCenteredText(640,660,"Aボタンでスタート",0xffffff,32,0x000000);
+
+			//DrawString(580, 660, "Aボタンでスタート", 0x000000);
 		}
 	}
 
