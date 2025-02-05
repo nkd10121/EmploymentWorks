@@ -66,6 +66,9 @@ public:
 	/// <param name="time">クリアタイム</param>
 	/// <returns></returns>
 	const void SetClearTime(int time) { m_clearTime = time; }
+
+	int GetTimeScore();
+
 	/// <summary>
 	/// 敵が何によって倒されたかの値データを設定する
 	/// </summary>
@@ -73,18 +76,26 @@ public:
 	/// <param name="trap">トラップによって倒された数</param>
 	/// <returns></returns>
 	const void SetKillData(int player, int trap) { m_playerKillNum = player; m_trapKillNum = trap; }
+
+	int GetPlayerKillScore();
+	int GetTrapKillScore();
 	/// <summary>
 	/// クリスタルの残りHPを設定する
 	/// </summary>
 	/// <param name="hp">残りHP</param>
 	/// <returns></returns>
 	const void SetCrystalHp(int hp) { m_crystalHp = hp; }
+
+	int GetCrystalScore();
+
 	/// <summary>
 	/// 最大コンボ数を設定する
 	/// </summary>
 	/// <param name="num">最大コンボ数</param>
 	/// <returns></returns>
 	const void SetMaxComboNum(int num) { m_maxComboNum = num; }
+
+	int GetComboScore();
 
 	/// <summary>
 	/// スコアを計算する

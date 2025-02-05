@@ -44,6 +44,8 @@ SceneResult::SceneResult() :
 	m_textAlpha(0),
 	m_textAngle(0.0f)
 {
+	m_updateFunc = &SceneResult::UpdateNormal;
+	m_drawFunc = &SceneResult::DrawNormal;
 }
 
 /// <summary>
@@ -122,48 +124,10 @@ void SceneResult::Update()
 	//スコアを加算して数字をアニメーションをさせながら
 	//遷移先の項目をフェードインさせる
 
-	if (m_count < 30)
-	{
-		m_alpha = min(m_alpha+8,200);
-	}
-	else if (m_count < 70)
-	{
-		m_windowDrawPos.y = min(m_windowDrawPos.y + 40, Game::kWindowHeight / 2);
-	}
-	else if (m_count < 120)
-	{
-		if (m_isClear)
-		{
-			m_resultTextAngle = min(m_resultTextAngle + 0.1f, 2.0f);
-		}
-		else
-		{
-			m_resultTextAngle = min(m_resultTextAngle + 5.0f, Game::kWindowHeight / 4);
-		}
-	}
-	else if (m_count < 200)
-	{
-		// 現在値を更新
-		if (m_drawScore != m_score)
-		{
-			//差が50以上あったら
-			if (abs(m_drawScore - m_score) > 50)
-			{
-				//差に応じて増減アニメーションを早める
-				auto difference = abs(m_score - m_drawScore);
-				difference = difference / 5;
+	//状態の更新
+	(this->*m_updateFunc)();
 
-				m_drawScore += (m_score > m_drawScore) ? difference : -difference; // 1フレームごとに追従
-			}
-			m_drawScore += (m_score > m_drawScore) ? 1 : -1; // 1フレームごとに追従
-		}
-
-		m_textAlpha = min(m_textAlpha + 4, 255);
-	}
-
-
-	m_textAngle += 0.05f;
-	m_count++;
+	
 }
 
 /// <summary>
@@ -174,52 +138,11 @@ void SceneResult::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
 	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	//DrawBox(0 + 20, 0 + 20, Game::kWindowWidth - 20, Game::kWindowHeight - 20, 0xffffff, false);
 
 	DrawRotaGraph(m_windowDrawPos.x, m_windowDrawPos.y, 1.0f, 0.0f, m_windowHandle, true);
 
-
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textAlpha);
-
-	if (m_isClear)
-	{
-		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 3, 1.35f, static_cast<float>(m_count) / 90.0f, ResourceManager::GetInstance().GetHandle("I_CLEAREFFECT"), true);
-		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 3, std::to_string(m_drawScore), 0xffffff, 80, 0xff0000);
-	}
-
-	auto addSize = sinf(m_textAngle) / 16;
-	for (int i = 0;i < kItemText.size() - 1;i++)
-	{
-		float rate = 1.0f;
-		if (m_destinationScene - 1 == i)
-		{
-			rate += addSize;
-		}
-
-		int idx = i;
-		if (i == 0 && !m_isClear)
-		{
-			idx = 3;
-		}
-
-		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * (i + 4), kItemText[idx], 0xffffff, 48, 0x000000, rate);
-	}
-
-
-	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 4, "次のステージへ", 0xffffff, 48, 0x000000,1.0f);
-	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 5, "スコア詳細へ", 0xffffff, 48, 0x000000, 1.0f);
-	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 6, "セレクトに戻る", 0xffffff, 48, 0x000000, 1.0f);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	if (m_isClear)
-	{
-		//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 6, "Clear!", 0xffff00, 80, 0xff0000, sin(m_resultTextAngle));
-		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 6, 2 * sin(m_resultTextAngle), 0.0f, ResourceManager::GetInstance().GetHandle("I_CLEARTEXT"), true);
-	}
-	else
-	{
-		DrawRotaGraph(Game::kWindowWidth / 2, m_resultTextAngle, 1.6f, 0.0f, ResourceManager::GetInstance().GetHandle("I_GAMEOVERTEXT"), true);
-	}
+	//状態の更新
+	(this->*m_drawFunc)();
 
 #ifdef _DEBUG	//デバッグ描画	
 	DrawFormatString(0, 0, 0xffffff, "%s", GetNowSceneName());
@@ -298,7 +221,10 @@ void SceneResult::SelectNextSceneUpdate()
 		//スコア詳細が出てくる
 		else if (m_destinationScene == eDestination::ScoreDetail)
 		{
+			m_updateFunc = &SceneResult::UpdateScoreDetail;
+			m_drawFunc = &SceneResult::DrawScoreDetail;
 
+			return;
 		}
 		////強化シーンに遷移する
 		//else if (m_destinationScene == eDestination::Strengthen)
@@ -322,4 +248,118 @@ void SceneResult::SelectNextSceneUpdate()
 			return;
 		}
 	}
+}
+
+void SceneResult::UpdateNormal()
+{
+	if (m_count < 30)
+	{
+		m_alpha = min(m_alpha + 8, 200);
+	}
+	else if (m_count < 70)
+	{
+		m_windowDrawPos.y = min(m_windowDrawPos.y + 40, Game::kWindowHeight / 2);
+	}
+	else if (m_count < 120)
+	{
+		if (m_isClear)
+		{
+			m_resultTextAngle = min(m_resultTextAngle + 0.1f, 2.0f);
+		}
+		else
+		{
+			m_resultTextAngle = min(m_resultTextAngle + 5.0f, Game::kWindowHeight / 4);
+		}
+	}
+	else if (m_count < 200)
+	{
+		// 現在値を更新
+		if (m_drawScore != m_score)
+		{
+			//差が50以上あったら
+			if (abs(m_drawScore - m_score) > 50)
+			{
+				//差に応じて増減アニメーションを早める
+				auto difference = abs(m_score - m_drawScore);
+				difference = difference / 5;
+
+				m_drawScore += (m_score > m_drawScore) ? difference : -difference; // 1フレームごとに追従
+			}
+			m_drawScore += (m_score > m_drawScore) ? 1 : -1; // 1フレームごとに追従
+		}
+
+		m_textAlpha = min(m_textAlpha + 4, 255);
+	}
+
+
+	m_textAngle += 0.05f;
+	m_count++;
+}
+
+void SceneResult::UpdateScoreDetail()
+{
+	if (Input::GetInstance().IsTriggered("CANCEL"))
+	{
+		m_updateFunc = &SceneResult::UpdateNormal;
+		m_drawFunc = &SceneResult::DrawNormal;
+	}
+}
+
+void SceneResult::DrawNormal()
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textAlpha);
+
+	if (m_isClear)
+	{
+		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 3, 1.35f, static_cast<float>(m_count) / 90.0f, ResourceManager::GetInstance().GetHandle("I_CLEAREFFECT"), true);
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 3, std::to_string(m_drawScore), 0xffffff, 80, 0xff0000);
+	}
+
+	auto addSize = sinf(m_textAngle) / 16;
+	for (int i = 0; i < kItemText.size() - 1; i++)
+	{
+		float rate = 1.0f;
+		if (m_destinationScene - 1 == i)
+		{
+			rate += addSize;
+		}
+
+		int idx = i;
+		if (i == 0 && !m_isClear)
+		{
+			idx = 3;
+		}
+
+		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * (i + 4), kItemText[idx], 0xffffff, 48, 0x000000, rate);
+	}
+
+
+	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 4, "次のステージへ", 0xffffff, 48, 0x000000,1.0f);
+	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 5, "スコア詳細へ", 0xffffff, 48, 0x000000, 1.0f);
+	//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 7 * 6, "セレクトに戻る", 0xffffff, 48, 0x000000, 1.0f);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	if (m_isClear)
+	{
+		//FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 2, Game::kWindowHeight / 6, "Clear!", 0xffff00, 80, 0xff0000, sin(m_resultTextAngle));
+		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 6, 2 * sin(m_resultTextAngle), 0.0f, ResourceManager::GetInstance().GetHandle("I_CLEARTEXT"), true);
+	}
+	else
+	{
+		DrawRotaGraph(Game::kWindowWidth / 2, m_resultTextAngle, 1.6f, 0.0f, ResourceManager::GetInstance().GetHandle("I_GAMEOVERTEXT"), true);
+	}
+}
+
+void SceneResult::DrawScoreDetail()
+{
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 9, "スコア:" + std::to_string(ScoreManager::GetInstance().GetCalculationScore()), 0xffffff, 40, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 9 * 3, "タイム:" + std::to_string(ScoreManager::GetInstance().GetTimeScore()), 0xffffff, 40, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 9 * 4, "プレイヤーキル:" + std::to_string(ScoreManager::GetInstance().GetPlayerKillScore()), 0xffffff, 40, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 9 * 5, "トラップキル:" + std::to_string(ScoreManager::GetInstance().GetTrapKillScore()), 0xffffff, 40, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 9 * 6, "クリスタル:" + std::to_string(ScoreManager::GetInstance().GetCrystalScore()), 0xffffff, 40, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, Game::kWindowHeight / 9 * 7, "連続キル:" + std::to_string(ScoreManager::GetInstance().GetComboScore()), 0xffffff, 40, 0x000000);
+
+	DrawRotaGraph(36, Game::kWindowHeight - 36, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_B"), true);
+	FontManager::GetInstance().DrawLeftText(36 + 24, Game::kWindowHeight - 36 - 6, ":戻る", 0xffffff, 32, 0xffffff);
+
 }

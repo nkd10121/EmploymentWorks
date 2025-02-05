@@ -38,6 +38,31 @@ void ScoreManager::Clear()
 	m_calculationScore = 0;
 }
 
+int ScoreManager::GetTimeScore()
+{
+	return (m_targetClearTime - m_clearTime) / 6;
+}
+
+int ScoreManager::GetPlayerKillScore()
+{
+	return m_playerKillNum * 50;
+}
+
+int ScoreManager::GetTrapKillScore()
+{
+	return  m_trapKillNum * 100;
+}
+
+int ScoreManager::GetCrystalScore()
+{
+	return m_crystalHp * 100;
+}
+
+int ScoreManager::GetComboScore()
+{
+	return m_maxComboNum * 100;
+}
+
 const void ScoreManager::CalculationScore(std::string stageName)
 {
 	//タイムの計算
