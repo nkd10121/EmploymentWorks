@@ -200,6 +200,8 @@ void SceneTitle::Draw()
 		FontManager::GetInstance().DrawCenteredExtendText(Game::kWindowWidth / 5 + 378 * i, Game::kWindowHeight / 2 + 260 -5, kItemName[i], 0xffffff, fontSize, 0x000000, fontExtendRate);
 	}
 
+	//DrawRotaGraph(Game::kWindowWidth / 5 + 378 * (m_destinationScene - 1), Game::kWindowHeight / 2 + 260 + 40, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_UIA"), true);
+
 	//ロゴの描画
 	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 4, kRogoSize, 0.0f, m_rogoHandle, true);
 }
