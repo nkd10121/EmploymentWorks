@@ -234,7 +234,7 @@ void GameManager::Update()
 	SoundManager::GetInstance().PlayBGM("S_INGAMEBGM", true);
 
 	// Yボタンを押した時かつ最初のフェーズの時
-	if (Input::GetInstance().IsTriggered("Y") /*&& m_phaseNum.front() == kInitialPhase*/)
+	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front() == kInitialPhase)
 	{
 		// 次のフェーズに進む
 		m_phaseNum.pop_front();

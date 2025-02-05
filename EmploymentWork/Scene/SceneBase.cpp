@@ -43,6 +43,15 @@ namespace
 		".",
 		".",
 	};
+
+	const std::string kLoadingImage[] =
+	{
+		"I_01",
+		"I_02",
+		"I_03",
+		"I_04",
+		"I_05",
+	};
 }
 
 /// <summary>
@@ -59,7 +68,8 @@ SceneBase::SceneBase(std::string name) :
 	m_fadeColor(0x000000),
 	m_sceneName(name),
 	m_isDrawOperation(false),
-	m_angle(0.0f)
+	m_angle(0.0f),
+	m_loadingIdx(0)
 #ifdef DISP_PROCESS
 	, m_updateTime(0),
 	m_drawTime(0)
@@ -263,15 +273,35 @@ void SceneBase::DrawAll()
 
 	if (m_isDrawOperation)
 	{
-		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_BIGWINDOW3"), true);
-		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_OPERATION"), true);
+		if (Input::GetInstance().IsTriggered("RIGHT"))
+		{
+			m_loadingIdx = min(m_loadingIdx++, 4);
+		}
+		if (Input::GetInstance().IsTriggered("LEFT"))
+		{
+			m_loadingIdx = max(m_loadingIdx--, 0);
+		}
+		DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle(kLoadingImage[m_loadingIdx]), true);
+		//DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_BIGWINDOW3"), true);
+		//DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_OPERATION"), true);
 		//DrawRotaGraph(Game::kWindowWidth/2, Game::kWindowHeight/2,1.0f,0.0f, ResourceManager::GetInstance().GetHandle("I_GAME01"), true);
+
+		for (int i = 0; i < 5; i++)
+		{
+			bool isFill = false;
+			if (m_loadingIdx == i)
+			{
+				isFill = true;
+			}
+			DrawCircle(Game::kWindowWidth / 2 - 160 + 80 * i, 680, 4, 0xffffff, isFill);
+		}
 
 		m_angle += 0.125f;
 
 		if (IsLoaded())
 		{
-			FontManager::GetInstance().DrawCenteredExtendText(640,660,"Aボタンでスタート",0xffffff,32,0x000000,1.0f + sinf(m_angle) / 100);
+			DrawRotaGraph(990, 685, 0.5f + sinf(m_angle) / 100, 0.0f, ResourceManager::GetInstance().GetHandle("I_A"), true);
+			FontManager::GetInstance().DrawCenteredExtendText(1100,680,"でスタート",0xffffff,32,0x000000,1.0f + sinf(m_angle) / 100);
 
 			//DrawString(580, 660, "Aボタンでスタート", 0x000000);
 		}

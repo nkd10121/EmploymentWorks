@@ -196,6 +196,7 @@ private:
 	bool m_isDrawOperation;
 
 	float m_angle;
+	int m_loadingIdx;
 
 #ifdef DISP_PROCESS
 	/*処理負荷計測*/
