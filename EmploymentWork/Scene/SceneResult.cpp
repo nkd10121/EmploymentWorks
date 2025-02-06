@@ -42,7 +42,8 @@ SceneResult::SceneResult() :
 	m_windowDrawPos(Game::kWindowWidth / 2, -350),
 	m_resultTextAngle(0.0f),
 	m_textAlpha(0),
-	m_textAngle(0.0f)
+	m_textAngle(0.0f),
+	m_isChangeNextScene(false)
 {
 	m_updateFunc = &SceneResult::UpdateNormal;
 	m_drawFunc = &SceneResult::DrawNormal;
@@ -210,42 +211,47 @@ void SceneResult::SelectNextSceneUpdate()
 	//決定ボタンを押したら現在選択しているシーンに遷移する
 	if (Input::GetInstance().IsTriggered("OK"))
 	{
-		//ゲームシーンに遷移する
-		if (m_destinationScene == eDestination::InGame)
+		if (!m_isChangeNextScene)
 		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
-			SceneManager::GetInstance().SetStageIdx(min(SceneManager::GetInstance().GetStageIdx()+1,LoadCSV::GetInstance().GetAllStageName().size()-1));
-			EndThisScene();
-			return;
-		}
-		//スコア詳細が出てくる
-		else if (m_destinationScene == eDestination::ScoreDetail)
-		{
-			m_updateFunc = &SceneResult::UpdateScoreDetail;
-			m_drawFunc = &SceneResult::DrawScoreDetail;
+			m_isChangeNextScene = true;
 
-			return;
-		}
-		////強化シーンに遷移する
-		//else if (m_destinationScene == eDestination::Strengthen)
-		//{
-		//	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStrengthen>());
-		//	EndThisScene(true);
-		//	return;
-		//}
-		////ランキングシーンに遷移する
-		//else if (m_destinationScene == eDestination::Ranking)
-		//{
-		//	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneRanking>());
-		//	EndThisScene(true);
-		//	return;
-		//}
-		//セレクトシーンに遷移する
-		else if (m_destinationScene == eDestination::Select)
-		{
-			SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
-			EndThisScene();
-			return;
+			//ゲームシーンに遷移する
+			if (m_destinationScene == eDestination::InGame)
+			{
+				SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
+				SceneManager::GetInstance().SetStageIdx(min(SceneManager::GetInstance().GetStageIdx() + 1, LoadCSV::GetInstance().GetAllStageName().size() - 1));
+				EndThisScene();
+				return;
+			}
+			//スコア詳細が出てくる
+			else if (m_destinationScene == eDestination::ScoreDetail)
+			{
+				m_updateFunc = &SceneResult::UpdateScoreDetail;
+				m_drawFunc = &SceneResult::DrawScoreDetail;
+
+				return;
+			}
+			////強化シーンに遷移する
+			//else if (m_destinationScene == eDestination::Strengthen)
+			//{
+			//	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStrengthen>());
+			//	EndThisScene(true);
+			//	return;
+			//}
+			////ランキングシーンに遷移する
+			//else if (m_destinationScene == eDestination::Ranking)
+			//{
+			//	SceneManager::GetInstance().SetNextScene(std::make_shared<SceneRanking>());
+			//	EndThisScene(true);
+			//	return;
+			//}
+			//セレクトシーンに遷移する
+			else if (m_destinationScene == eDestination::Select)
+			{
+				SceneManager::GetInstance().SetNextScene(std::make_shared<SceneStageSelect>());
+				EndThisScene();
+				return;
+			}
 		}
 	}
 }

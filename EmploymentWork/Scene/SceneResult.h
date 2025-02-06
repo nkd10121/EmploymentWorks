@@ -85,6 +85,7 @@ private:
 	int m_textAlpha;	//テキストのα値
 	float m_textAngle;	//テキストの拡大用
 
+	bool m_isChangeNextScene;
 private:
 	//更新メンバ関数ポインタ
 	void (SceneResult::* m_updateFunc)();
