@@ -218,10 +218,20 @@ void SceneResult::SelectNextSceneUpdate()
 			//ゲームシーンに遷移する
 			if (m_destinationScene == eDestination::InGame)
 			{
-				SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
-				SceneManager::GetInstance().SetStageIdx(min(SceneManager::GetInstance().GetStageIdx() + 1, LoadCSV::GetInstance().GetAllStageName().size() - 1));
-				EndThisScene();
-				return;
+				if (m_isClear)
+				{
+					SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
+					SceneManager::GetInstance().SetStageIdx(min(SceneManager::GetInstance().GetStageIdx() + 1, LoadCSV::GetInstance().GetAllStageName().size() - 1));
+					EndThisScene();
+					return;
+				}
+				else
+				{
+					SceneManager::GetInstance().SetNextScene(std::make_shared<SceneGame>());
+					SceneManager::GetInstance().SetStageIdx(SceneManager::GetInstance().GetStageIdx());
+					EndThisScene();
+					return;
+				}
 			}
 			//スコア詳細が出てくる
 			else if (m_destinationScene == eDestination::ScoreDetail)
