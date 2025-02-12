@@ -326,7 +326,7 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 	}
 
 	//バグなどで地面をすり抜けて落下時の対策
-	if (m_pos.y <= -100.0f)
+	if (m_pos.y <= -50.0f)
 	{
 		Collidable::OnExistPhysics();
 		m_isDeath = true;
