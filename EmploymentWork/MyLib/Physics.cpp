@@ -538,8 +538,6 @@ void MyLib::Physics::CheckColide()
 	int		checkCount = 0;	// チェック回数
 	while (true)
 	{
-
-
 		bool isNoHit = true;
 
 		for (int i = 0; i < colNum; ++i)
