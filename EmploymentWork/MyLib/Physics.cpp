@@ -353,6 +353,7 @@ std::vector<std::shared_ptr<MyLib::Collidable>> MyLib::Physics::GetCollisionList
 						break;
 					}
 
+					//もし2つのオブジェクトの距離が規定距離より短ければ当たり判定の計算を行う
 					if ((pos1 - pos2).SqLength() < maxDistance)
 					{
 						// 判定リストに追加
