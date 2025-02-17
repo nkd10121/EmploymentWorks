@@ -58,6 +58,7 @@ public:
 	/// <returns></returns>
 	const void PlayerDead();
 
+	void CheckCameraRayHit(const Vec3 cameraPos,const Vec3 targetPos);
 private:
 	Vec3 m_pos;	//座標
 
@@ -85,7 +86,8 @@ private:
 	struct UserData
 	{
 		float time;       // アニメーション用の時間
-		float dummy[3];   // 16バイトに合わせるためのダミー
+		bool isNormalDraw;	//半透明にするかどうか
+		float dummy[2];   // 16バイトに合わせるためのダミー
 	};
 	// 自分でシェーダーに渡したい情報をセットできる（コンスタントバッファの設定）
 	int cBufferHandle;

@@ -34,6 +34,7 @@ public:
 	const Vec3 GetDirection()const;
 
 	const Vec3 GetCameraPos()const { return m_cameraPos; }
+	const Vec3 GetTargetPos()const { return m_aimPos; }
 
 	/// <summary>
 	/// プレイヤーの座標を設定する

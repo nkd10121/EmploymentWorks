@@ -5,6 +5,7 @@
 #include "SoundManager.h"
 #include "DrawUI.h"
 #include "FontManager.h"
+#include "MathHelp.h"
 
 #include "EnemyBase.h"
 
@@ -86,6 +87,10 @@ void Crystal::Init()
 	cBufferHandle = CreateShaderConstantBuffer(sizeof(UserData));
 	pUserData = static_cast<UserData*>(GetBufferShaderConstantBuffer(cBufferHandle));
 	pUserData->time = 0.0f;
+	pUserData->isNormalDraw = true;
+
+	// Zバッファに書き込まないようにする
+	//MV1SetWriteZBuffer(m_modelHandle, false);
 
 	m_preHp = m_hp;
 }
@@ -132,6 +137,9 @@ void Crystal::Update()
 /// </summary>
 void Crystal::Draw()
 {
+	MV1DrawModel(m_crystalStandHandle);
+
+
 	MV1SetUseOrigShader(true);
 
 	// シェーダーをセット
@@ -154,7 +162,6 @@ void Crystal::Draw()
 	SetUseTextureToShader(1, -1);
 	MV1SetUseOrigShader(false);
 
-	MV1DrawModel(m_crystalStandHandle);
 }
 
 void Crystal::DrawHP()
@@ -228,4 +235,23 @@ const void Crystal::PlayerDead()
 	m_textMagPower = 4.0f;
 
 	m_hp -= 5;
+}
+
+/// <summary>
+/// カメラから注視点までのレイとクリスタルが当たっているかを確認
+/// </summary>
+void Crystal::CheckCameraRayHit(const Vec3 cameraPos, const Vec3 targetPos)
+{
+
+	auto center = Vec3(rigidbody->GetPos().x, (kCollisionSize / 2 + kCollisionRadius)/2,rigidbody->GetPos().z);
+	auto nearPos = GetNearestPtOnLine(cameraPos, targetPos, center);
+
+	if ((center - nearPos).Length() <= (kCollisionSize / 2 + kCollisionRadius)/2)
+	{
+		pUserData->isNormalDraw = false;
+	}
+	else
+	{
+		pUserData->isNormalDraw = true;
+	}
 }

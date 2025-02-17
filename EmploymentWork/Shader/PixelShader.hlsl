@@ -21,7 +21,8 @@ struct PS_INPUT
 cbuffer UserData : register(b4)
 {
     float time; // アニメーション用の時間
-    float dummy[3];
+	bool isNormalDraw;	//半透明にするかどうか
+    float dummy[2];
 };
 
 float4 main(PS_INPUT input) : SV_Target0
@@ -34,6 +35,6 @@ float4 main(PS_INPUT input) : SV_Target0
     float3 color = tex.Sample(smp, input.TexCoords0).bgr * noizeValue;
     float4 ret;
     ret.rgb = color.rgb;
-    ret.a = tex.Sample(smp, input.TexCoords0).a;
+    ret.a = tex.Sample(smp, input.TexCoords0).a * (isNormalDraw * 0.5f + 0.5f);
     return ret;
 }

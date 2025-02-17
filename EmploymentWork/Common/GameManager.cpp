@@ -251,6 +251,7 @@ void GameManager::Update()
 
 	// クリスタルの更新
 	m_pCrystal->Update();
+	m_pCrystal->CheckCameraRayHit(m_pCamera->GetCameraPos(),m_pCamera->GetTargetPos());
 
 	// カメラの更新
 	m_pCamera->SetPlayerPos(m_pPlayer->GetPos());
@@ -436,12 +437,8 @@ void GameManager::Update()
 
 	m_pMiniMap->Update(m_pPlayer->GetPos(),m_pEnemyManager->GetEnemyPos());
 
-	auto b = GetNowHiPerformanceCount();
 	// エフェクトの更新
 	EffectManager::GetInstance().Update();
-	auto a = GetNowHiPerformanceCount();
-
-	printf("%ld", a - b);
 
 	// スカイボックスの位置をプレイヤーの位置に合わせる
 	MV1SetPosition(m_skyBoxHandle, m_pPlayer->GetPos().ToVECTOR());
@@ -492,9 +489,6 @@ void GameManager::Draw()
 	MyLib::DebugDraw::Draw3D();
 #endif
 
-	// クリスタルの描画
-	m_pCrystal->Draw();
-	m_pCrystal->DrawHP();
 
 	// プレイヤーの描画
 	m_pPlayer->Draw();
@@ -511,6 +505,11 @@ void GameManager::Draw()
 	// トラップの描画
 	TrapManager::GetInstance().Draw();
 	TrapManager::GetInstance().PreviewDraw();
+
+
+	// クリスタルの描画
+	m_pCrystal->Draw();
+	m_pCrystal->DrawHP();
 
 	// エフェクトの描画
 	EffectManager::GetInstance().Draw();
