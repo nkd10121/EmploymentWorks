@@ -7,22 +7,6 @@
 
 namespace
 {
-	/// <summary>
-	/// 攻撃アニメーションが1回終わったかどうか
-	/// </summary>
-	/// <param name="num">アニメーションの再生フレーム</param>
-	/// <returns></returns>
-	const bool IsAttackAnimEnd(float num)
-	{
-		while (true)
-		{
-			if (num < 40.0f) break;
-			num -= 40.0f;
-		}
-
-		return num == 0.0f;
-	}
-
 	//攻撃の当たり判定を生成するフレーム
 	constexpr int kCreateAttackCollisionFrame = 20;
 	//攻撃の当たり判定を削除するフレーム
@@ -36,7 +20,7 @@ namespace
 /// </summary>
 EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
 	StateBase(own),
-	m_waitCount(0),
+	m_attackCollisionCount(0),
 	m_attackVec()
 {
 	//現在のステートを歩き状態にする
@@ -46,13 +30,6 @@ EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
 	auto enemy = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
 	auto playerPos = enemy->GetPlayerPos();
 	m_attackVec = playerPos - own->GetRigidbody()->GetPos();
-}
-
-/// <summary>
-/// 初期化
-/// </summary>
-void EnemyStateAttack::Init(std::string id)
-{
 }
 
 /// <summary>
@@ -66,20 +43,18 @@ void EnemyStateAttack::Update()
 	auto prevVel = own->GetRigidbody()->GetVelocity();
 	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 
-	if (m_waitCount == kCreateAttackCollisionFrame)
+	if (m_attackCollisionCount == kCreateAttackCollisionFrame)
 	{
 		own->CreateAttackCollision(m_attackVec);
 	}
-	else if (m_waitCount == kDeleteAttackCollisionFrame)
+	else if (m_attackCollisionCount == kDeleteAttackCollisionFrame)
 	{
 		own->DeleteAttackCollision();
 	}
-	m_waitCount++;
-
-	auto frame = m_pOwn.lock()->GetAnimNowFrame();
+	m_attackCollisionCount++;
 
 	//アニメーション上で攻撃が一回終了した時
-	if (IsAttackAnimEnd(frame) && frame > 0)
+	if (m_pOwn.lock()->GetAnimEnd())
 	{
 		//索敵範囲内にプレイヤーがいて
 		if (own->GetIsSearchInPlayer())
@@ -97,7 +72,7 @@ void EnemyStateAttack::Update()
 				own->SetModelRotation(rotation);
 				own->SetHeadCollisionFrontVec(playerPos);
 
-				m_waitCount = 0;
+				m_attackCollisionCount = 0;
 				ChangeState(StateBase::StateKind::Attack);
 				return;
 			}
