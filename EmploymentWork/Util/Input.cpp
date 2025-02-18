@@ -35,7 +35,9 @@ namespace
 /// </summary>
 Input::Input():
 	m_padState(),
-	XInputState(new XINPUT_STATE)
+	XInputState(new XINPUT_STATE),
+	m_rightTriggerPushFrameCount(0),
+	m_leftTriggerPushFrameCount(0)
 {
 	//ここでコマンドテーブルにコマンドを追加する
 
