@@ -181,3 +181,21 @@ bool Input::GetIsTriggeredTriggerButton(bool isRight) const
 		return m_leftTriggerPushFrameCount == 1;
 	}
 }
+
+bool Input::IsStickNeutral(bool isRight) const
+{
+	if (isRight)
+	{
+		//スティックの入力値がXYそれぞれ規定値以下かどうか
+		if (abs(m_padState.Rx) < 60 && abs(m_padState.Ry) < 60)	return true;
+
+		return false;
+	}
+	else
+	{
+		//スティックの入力値がXYそれぞれ規定値以下かどうか
+		if (abs(m_padState.X) < 60 && abs(m_padState.Y) < 60)	return true;
+
+		return false;
+	}
+}

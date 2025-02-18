@@ -24,13 +24,6 @@ EnemyStateDeath::EnemyStateDeath(std::shared_ptr<CharacterBase> own):
 }
 
 /// <summary>
-/// 初期化
-/// </summary>
-void EnemyStateDeath::Init(std::string id)
-{
-}
-
-/// <summary>
 /// 更新
 /// </summary>
 void EnemyStateDeath::Update()
@@ -40,7 +33,9 @@ void EnemyStateDeath::Update()
 
 	auto own = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
 
+	//座標を取得
 	auto pos = own->GetPos();
+	//画面
 	auto drawPos = ConvWorldPosToScreenPos(pos.ToVECTOR());
 
 	auto point = own->GetDropPoint();

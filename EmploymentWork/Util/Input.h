@@ -95,6 +95,8 @@ public:
 
 	bool GetIsTriggeredTriggerButton(bool isRight)const;
 
+	bool IsStickNeutral(bool isRight)const;
+
 private:
 	InputTable_t m_commandTable;	//コマンド配列
 
