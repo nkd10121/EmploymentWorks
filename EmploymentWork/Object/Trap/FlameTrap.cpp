@@ -10,7 +10,7 @@ FlameTrap::FlameTrap() :
 	m_waitCount(0),
 	m_attackCount(0)
 {
-	m_trapName = "Frame";
+	m_trapName = "Flame";
 	//罠のステータスを取得
 	m_status = LoadCSV::GetInstance().LoadTrapStatus(m_trapName.c_str());
 	//モデルのハンドルを取得
@@ -103,7 +103,6 @@ void FlameTrap::Update()
 			m_attackCount++;
 			if (m_attackCount % 20 == 0 && m_attackCount <= m_animEndFrame / 5 * 2)
 			{
-
 				//攻撃判定を生成する前にすべての攻撃判定を一回削除
 				while (1)
 				{
@@ -165,8 +164,6 @@ void FlameTrap::Update()
 			m_isAttack = false;
 			m_waitCount = 0;
 			m_attackCount = 0;
-
-
 		}
 		else
 		{

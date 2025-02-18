@@ -32,13 +32,8 @@ void IronSnareTrap::Init(Vec3 pos, Vec3 norm)
 	rigidbody->Init();
 
 	//当たり判定の生成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
+	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-	sphereCol->m_radius = kCollisionRadius;
-
-	//当たり判定の生成
-	collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
-	sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
 	sphereCol->m_radius = kCollisionRadius + 2.0;
 
 	//座標の更新

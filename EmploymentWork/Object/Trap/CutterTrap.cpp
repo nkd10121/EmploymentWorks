@@ -36,11 +36,6 @@ void CutterTrap::Init(Vec3 pos, Vec3 norm)
 	//物理挙動の初期化
 	rigidbody->Init();
 
-	//当たり判定の生成
-	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
-	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-	sphereCol->m_radius = kCollisionRadius;
-
 	//座標の更新
 	rigidbody->SetPos(pos);
 	rigidbody->SetNextPos(pos);
@@ -80,7 +75,7 @@ void CutterTrap::Update()
 		//当たり判定の生成
 		auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
 		auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-		sphereCol->m_radius = kCollisionRadius + 2.0f;
+		sphereCol->m_radius = m_status.atkRange;
 	}
 
 	// Y軸回転行列を取得

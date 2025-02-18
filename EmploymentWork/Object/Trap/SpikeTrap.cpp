@@ -79,7 +79,7 @@ void SpikeTrap::Init(Vec3 pos, Vec3 norm)
 	//当たり判定の生成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-	sphereCol->m_radius = kCollisionRadius;
+	sphereCol->m_radius = m_status.searchRange;
 
 	//座標の更新
 	rigidbody->SetPos(pos);
@@ -139,7 +139,7 @@ void SpikeTrap::Update()
 				//当たり判定の生成
 				auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
 				auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-				sphereCol->m_radius = kCollisionRadius;
+				sphereCol->m_radius = m_status.atkRange;
 			}
 		}
 

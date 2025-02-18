@@ -51,7 +51,7 @@ void IronImpactTrap::Init(Vec3 pos, Vec3 norm)
 
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-	sphereCol->m_radius = kCollisionRadius;
+	sphereCol->m_radius = m_status.searchRange;
 
 	auto searchPos = norm * kSearchCollisionInterval;
 	searchPos.y += 8.0f;
@@ -92,7 +92,7 @@ void IronImpactTrap::Update()
 			{
 				auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Attack);
 				auto attackCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-				attackCol->m_radius = kCollisionRadius + 2.0f;
+				attackCol->m_radius = m_status.atkRange;
 
 				auto attackPos = m_norm * kSearchCollisionInterval;
 				attackPos.y += 8.0f;

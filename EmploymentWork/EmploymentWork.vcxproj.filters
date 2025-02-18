@@ -221,9 +221,6 @@
     <ClCompile Include="Common\ResourceManager.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Trap\HammerTrap.cpp">
-      <Filter>ソース ファイル\Object\Trap</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Trap\ArrowWallTrap.cpp">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClCompile>
@@ -443,9 +440,6 @@
       <Filter>ソース ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="Object\Trap\ArrowWallTrap.h">
-      <Filter>ソース ファイル\Object\Trap</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Trap\HammerTrap.h">
       <Filter>ソース ファイル\Object\Trap</Filter>
     </ClInclude>
     <ClInclude Include="Common\ScoreManager.h">
