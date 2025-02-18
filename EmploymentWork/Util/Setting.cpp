@@ -64,7 +64,7 @@ void Setting::ClearData()
 	m_data.bgmVolume = 0.5f;
 	m_data.seVolume = 0.5f;
 	m_data.sensitivity = 0.5f;
-	m_data.isFullScreen = false;
+	m_data.isFullScreen = true;
 	m_data.isDrawOperation = true;
 }
 
