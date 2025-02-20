@@ -22,7 +22,7 @@ public:
 	virtual void Update() override;
 
 private:
-	int m_frame;
-	int m_trapPointGraphHandle;
+	int m_deathFrame;				//死んでからのカウント数
+	int m_trapPointGraphHandle;		//トラップアイコンのハンドル
 };
 

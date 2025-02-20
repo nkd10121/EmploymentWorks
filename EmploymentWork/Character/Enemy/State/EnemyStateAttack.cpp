@@ -37,32 +37,37 @@ EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
 /// </summary>
 void EnemyStateAttack::Update()
 {
+	// EnemyBaseへのポインタを取得
 	auto own = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
 
 	//プレイヤーの速度を0にする(重力の影響を受けながら)
 	auto prevVel = own->GetRigidbody()->GetVelocity();
 	own->GetRigidbody()->SetVelocity(Vec3(0.0f, prevVel.y, 0.0f));
 
+	// 攻撃の当たり判定を生成するフレームになったら判定を生成する
 	if (m_attackCollisionCount == kCreateAttackCollisionFrame)
 	{
 		own->CreateAttackCollision(m_attackVec);
 	}
+	// 攻撃の当たり判定を削除するフレームになったら判定を削除する
 	else if (m_attackCollisionCount == kDeleteAttackCollisionFrame)
 	{
 		own->DeleteAttackCollision();
 	}
+	//カウントを更新する
 	m_attackCollisionCount++;
 
-	//アニメーション上で攻撃が一回終了した時
+	//アニメーションが一回終了した時
 	if (m_pOwn.lock()->GetAnimEnd())
 	{
 		//索敵範囲内にプレイヤーがいて
 		if (own->GetIsSearchInPlayer())
 		{
+			//プレイヤーと敵との距離を計算
 			auto playerPos = own->GetPlayerPos();
 			auto moveVec = playerPos - own->GetRigidbody()->GetPos();
 
-			//プレイヤーとの距離が一定距離以下の時は攻撃
+			//プレイヤーとの距離が一定距離以下の時は攻撃状態に入りなおす
 			if (moveVec.Length() <= kStartAttackLength)
 			{
 				//atan2を使用して向いている角度を取得
@@ -76,14 +81,14 @@ void EnemyStateAttack::Update()
 				ChangeState(StateBase::StateKind::Attack);
 				return;
 			}
-			//離れていたら歩きに遷移する
+			//離れていたら歩き状態に遷移する
 			else
 			{
 				ChangeState(StateKind::Walk);
 				return;
 			}
 		}
-		//索敵範囲内にプレイヤーがいなかったら待機にする
+		//索敵範囲内にプレイヤーがいなかったら歩き状態に遷移する
 		else
 		{
 			ChangeState(StateKind::Walk);
