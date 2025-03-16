@@ -1,5 +1,4 @@
 ﻿#include "Setting.h"
-#include "DxLib.h"
 #include <cassert>
 #include <fstream>
 #include <string>
