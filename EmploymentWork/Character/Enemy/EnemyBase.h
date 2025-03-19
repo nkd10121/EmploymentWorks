@@ -74,11 +74,10 @@ public:
 	/// <param name="colider">当たったオブジェクト</param>
 	virtual void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 	/// <summary>
-	/// ほかのオブジェクトと衝突したときに呼ばれる
+	/// ほかのオブジェクトと衝突しているときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
 	virtual void OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
-
 	/// <summary>
 	/// ほかのオブジェクトと衝突しなくなったときに呼ばれる
 	/// </summary>
@@ -145,7 +144,11 @@ public:
 	/// </summary>
 	/// <param name="rot">向きベクトル</param>
 	const void SetModelRotation(Vec3 rot)const;
-
+	/// <summary>
+	/// ヘッドショット判定の向きを設定
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <returns></returns>
 	const void SetHeadCollisionFrontVec(Vec3 vec)const;
 
 	/// <summary>

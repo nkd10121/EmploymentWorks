@@ -251,6 +251,9 @@ void EnemyBase::Draw()
 	MV1DrawModel(m_modelHandle);
 }
 
+/// <summary>
+/// 移動ルートを設定する
+/// </summary>
 void EnemyBase::SetRoute(const std::vector<EnemyManager::WayPoint> wayPoints)
 {
 	for (auto& wp : wayPoints)
@@ -384,6 +387,9 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std
 	}
 }
 
+/// <summary>
+/// ほかのオブジェクトと衝突しているときに呼ばれる
+/// </summary>
 void EnemyBase::OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
 	//当たったオブジェクトのタグを取得する
@@ -425,7 +431,7 @@ void EnemyBase::OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std:
 }
 
 /// <summary>
-/// 押し出し処理を行わないオブジェクトと衝突しなくなった時
+/// ほかのオブジェクトと衝突しなくなったときに呼ばれる
 /// </summary>
 void EnemyBase::OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
 {
@@ -447,6 +453,9 @@ void EnemyBase::OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std:
 	}
 }
 
+/// <summary>
+/// 3Dモデルの座標更新
+/// </summary>
 void EnemyBase::UpdateModelPos()
 {
 	rigidbody->SetPos(rigidbody->GetNextPos());
@@ -497,6 +506,9 @@ const void EnemyBase::SetModelRotation(Vec3 rot) const
 
 }
 
+/// <summary>
+/// ヘッドショット判定の向きを設定
+/// </summary>
 const void EnemyBase::SetHeadCollisionFrontVec(Vec3 vec) const
 {
 	auto col = GetCollider(MyLib::ColliderBase::CollisionTag::Head);
