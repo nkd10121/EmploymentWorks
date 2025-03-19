@@ -61,7 +61,7 @@ void EnemyStateDeath::Update()
 	//スクリーン上の2次元座標に変換
 	auto drawPos = ConvWorldPosToScreenPos(pos.ToVECTOR());
 	//描画座標を計算
-	int x = static_cast<int>(drawPos.x) - kDrawXOffset;
+	int x = static_cast<int>(drawPos.x);
 	int y = static_cast<int>(drawPos.y) - kDrawYOffset - m_deathFrame / kFrameDivisor;
 
 	//ドロップする罠ポイントを取得
@@ -73,9 +73,9 @@ void EnemyStateDeath::Update()
 		//α値の設定
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, kAlphaMax - kAlphaMag * m_deathFrame);
 		//罠ポイントアイコンを描画
-		DrawRotaGraph(x, y, kIconScale, 0.0f, m_trapPointGraphHandle, true);
+		DrawRotaGraph(x - kDrawXOffset/2, y, kIconScale, 0.0f, m_trapPointGraphHandle, true);
 		//罠ポイントを描画
-		FontManager::GetInstance().DrawCenteredText(x, y, std::to_string(point), kFontColor, kFontSize, kFontShadowColor);
+		FontManager::GetInstance().DrawCenteredText(x + kDrawXOffset/2, y, std::to_string(point), kFontColor, kFontSize, kFontShadowColor);
 		//α値の設定を解除
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}, kDrawPriority);

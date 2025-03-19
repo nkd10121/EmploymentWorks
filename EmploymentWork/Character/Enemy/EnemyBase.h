@@ -30,20 +30,20 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="physics">物理クラスポインタ</param>
-	virtual void Init() {};
+	virtual void Init();
 	/// <summary>
 	/// 終了
 	/// </summary>
 	/// <param name="physics">物理クラスポインタ</param>
-	virtual void Finalize() {};
+	virtual void Finalize();
 	/// <summary>
 	/// 更新
 	/// </summary>
-	virtual void Update() {};
+	virtual void Update();
 	/// <summary>
 	/// 描画
 	/// </summary>
-	virtual void Draw() {};
+	virtual void Draw();
 
 	/// <summary>
 	/// 移動ルートを設定する
@@ -72,19 +72,23 @@ public:
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
-	virtual void OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
+	virtual void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 	/// <summary>
 	/// ほかのオブジェクトと衝突したときに呼ばれる
 	/// </summary>
 	/// <param name="colider">当たったオブジェクト</param>
-	virtual void OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 	virtual void OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
+	/// <summary>
+	/// ほかのオブジェクトと衝突しなくなったときに呼ばれる
+	/// </summary>
+	/// <param name="colider">当たったオブジェクト</param>
+	virtual void OnTriggerExit(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
 
 	/// <summary>
 	/// 3Dモデルの座標更新
 	/// </summary>
-	virtual void UpdateModelPos() {};
+	virtual void UpdateModelPos();
 
 	/// <summary>
 	/// 当たり判定のサイズを取得
@@ -135,7 +139,7 @@ public:
 	/// 索敵判定の半径を取得
 	/// </summary>
 	/// <returns>索敵判定の半径</returns>
-	virtual const float GetSearchCollisionRadius()const = 0;
+	virtual const float GetSearchCollisionRadius()const;
 	/// <summary>
 	/// モデルの向きを設定
 	/// </summary>
@@ -147,11 +151,11 @@ public:
 	/// <summary>
 	/// 索敵判定の作成
 	/// </summary>
-	virtual void CreateSearchCollision() {};
+	virtual void CreateSearchCollision();
 	/// <summary>
 	/// 索敵判定の削除
 	/// </summary>
-	virtual void DeleteSearchCollision() {};
+	virtual void DeleteSearchCollision();
 	/// <summary>
 	/// 攻撃判定を作成
 	/// </summary>
