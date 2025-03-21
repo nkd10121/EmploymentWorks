@@ -27,6 +27,7 @@ EnemyStateAttack::EnemyStateAttack(std::shared_ptr<CharacterBase> own):
 	m_nowState = StateKind::Attack;
 	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "ATTACK"));
 
+	//攻撃方向を計算
 	auto enemy = std::dynamic_pointer_cast<EnemyBase>(m_pOwn.lock());
 	auto playerPos = enemy->GetPlayerPos();
 	m_attackVec = playerPos - own->GetRigidbody()->GetPos();
