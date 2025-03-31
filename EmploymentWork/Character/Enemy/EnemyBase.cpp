@@ -274,7 +274,7 @@ void EnemyBase::SetRoute(const std::vector<EnemyManager::WayPoint> wayPoints)
 	for (auto& wp : wayPoints)
 	{
 		auto add = wp;
-		add.pos += Vec3(GetRand(kWayPointOffsetMax) - kWayPointOffsetMax / 2, kWayPointOffsetY, GetRand(kWayPointOffsetMax) - kWayPointOffsetMax / 2);
+		add.pos += Vec3(static_cast<float>(GetRand(kWayPointOffsetMax) - kWayPointOffsetMax) / 2.0f, kWayPointOffsetY, static_cast<float>(GetRand(kWayPointOffsetMax) - kWayPointOffsetMax) / 2.0f);
 		m_route.push_back(add);
 	}
 }

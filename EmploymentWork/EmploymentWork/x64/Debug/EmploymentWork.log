@@ -1,4 +1,6 @@
-﻿  FontManager.cpp
+﻿  compilation object save succeeded; see C:\Users\仲田伊織\Desktop\github\EmploymentWorks\EmploymentWork\data\shader\PixelShader.pso
+  compilation object save succeeded; see C:\Users\仲田伊織\Desktop\github\EmploymentWorks\EmploymentWork\data\shader\VertexShader.vso
+  FontManager.cpp
   EnemyBig.cpp
   EnemyFast.cpp
   EnemyStateDamaged.cpp
@@ -28,8 +30,6 @@
   Crystal.cpp
   EnemyBase.cpp
   EnemyNormal.cpp
-C:\Users\仲田伊織\Desktop\github\EmploymentWorks\EmploymentWork\Character\Enemy\EnemyBase.cpp(277,119): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\仲田伊織\Desktop\github\EmploymentWorks\EmploymentWork\Character\Enemy\EnemyBase.cpp(277,47): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   MathHelp.cpp
   CharacterBase.cpp
   Collidable.cpp
@@ -74,5 +74,4 @@ C:\Users\仲田伊織\Desktop\github\EmploymentWorks\EmploymentWork\Character\En
   Vec3.cpp
   Vec2.cpp
   コードを生成中...
-  LINK : 前回のインクリメンタル リンクで C:\Users\仲田伊織\Desktop\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   EmploymentWork.vcxproj -> C:\Users\仲田伊織\Desktop\github\EmploymentWorks\EmploymentWork\x64\Debug\EmploymentWork.exe
