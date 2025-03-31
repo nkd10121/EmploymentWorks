@@ -311,7 +311,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap;$(ProjectDir)Ui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap;$(ProjectDir)Ui</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>4099</DisableSpecificWarnings>
@@ -322,7 +322,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap;$(ProjectDir)Ui</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>プロジェクトに追加すべきファイル_VC用;$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Util;$(ProjectDir)Common;$(ProjectDir)MyLib;$(ProjectDir)Object;$(ProjectDir)Character;$(ProjectDir)Character\Player;$(ProjectDir)Character\Player\State;$(ProjectDir)Geometry;$(ProjectDir)Character\Enemy;$(ProjectDir)Character\Enemy\State;$(ProjectDir)Object\Trap;$(ProjectDir)Ui</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>
