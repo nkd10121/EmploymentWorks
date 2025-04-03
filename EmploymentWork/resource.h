@@ -2,7 +2,7 @@
 // Microsoft Visual C++ で生成されたインクルード ファイル。
 // icon.rc で使用
 //
-#define IDI_MYICON                        101
+#define IDI_MYICON                      101
 
 // Next default values for new objects
 // 
