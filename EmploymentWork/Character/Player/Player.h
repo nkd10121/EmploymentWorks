@@ -55,6 +55,10 @@ public:
 	/// <param name="m_dir">カメラの方向ベクトル</param>
 	void SetCameraAngle(Vec3 m_dir) { m_cameraDirection = m_dir; }
 
+	/// <summary>
+	/// クリア状態に変更する
+	/// </summary>
+	/// <returns></returns>
 	const void SetClearState();
 
 	/// <summary>
@@ -90,11 +94,6 @@ public:
 	const int GetNowSlotNumber()const { return m_slotNum; }
 
 	/// <summary>
-	/// 押し出し処理を行うオブジェクトと衝突したとき
-	/// </summary>
-	/// <param name="colider">衝突したオブジェクト</param>
-	void OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)override;
-	/// <summary>
 	/// 押し出し処理を行わないオブジェクトと衝突したとき
 	/// </summary>
 	/// <param name="colider">衝突したオブジェクト</param>
@@ -103,7 +102,13 @@ public:
 
 
 private:
+	/// <summary>
+	/// 攻撃アニメーションを開始
+	/// </summary>
 	void StartShotAnim();
+	/// <summary>
+	/// 攻撃アニメーションを更新
+	/// </summary>
 	void UpdateShotAnim();
 
 private:

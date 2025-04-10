@@ -362,6 +362,9 @@ void Player::Draw()
 #endif
 }
 
+/// <summary>
+/// モデル座標の更新
+/// </summary>
 void Player::UpdateModelPos()
 {
 	//キャラクターモデル描画座標の更新
@@ -419,6 +422,9 @@ void Player::UpdateModelPos()
 
 }
 
+/// <summary>
+/// カメラの方向ベクトルを設定する
+/// </summary>
 const void Player::SetClearState()
 {
 	if (m_pState->GetKind() == StateBase::StateKind::Clear)return;
@@ -426,34 +432,6 @@ const void Player::SetClearState()
 	//現在のステートを強制的に死亡にする
 	m_pState = std::make_shared<PlayerStateClear>(std::dynamic_pointer_cast<Player>(shared_from_this()));
 	m_pState->Init(m_stageId);
-}
-
-/// <summary>
-/// 押し出し処理を行うオブジェクトと衝突したとき
-/// </summary>
-void Player::OnCollideEnter(const std::shared_ptr<Collide>& ownCol, const std::shared_ptr<Collidable>& send, const std::shared_ptr<Collide>& sendCol)
-{
-	//#ifdef _DEBUG	//デバッグ描画
-	//	std::string message = "プレイヤーが";
-	//#endif
-	//	auto tag = colider->GetTag();
-	//	switch (tag)
-	//	{
-	//	case GameObjectTag::Enemy:
-	//#ifdef _DEBUG	//デバッグ描画
-	//		message += "敵";
-	//#endif
-	//		break;
-	//	case GameObjectTag::Portion:
-	//#ifdef _DEBUG	//デバッグ描画
-	//		message += "ポーション";
-	//#endif
-	//		break;
-	//	}
-	//#ifdef _DEBUG	//デバッグ描画
-	//	message += "と当たった！\n";
-	//	printf(message.c_str());
-	//#endif
 }
 
 /// <summary>
@@ -507,16 +485,21 @@ void Player::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std::s
 	}
 }
 
+
+/// <summary>
+/// 攻撃アニメーションを開始
+/// </summary>
 void Player::StartShotAnim()
 {
-
 	m_isPlayShotAnim = true;
 	m_shotAnimFrame = 0.0f;
 	m_animAngle = 0.0f;
 	MV1SetAttachAnimTime(m_modelHandle, m_shotAnimNo, m_shotAnimFrame);
-	//MV1SetAttachAnimBlendRateToFrame(m_modelHandle, m_shotAnimNo, m_shotAnimBlendRate, kAttachAnimFrame);
 }
 
+/// <summary>
+/// 攻撃アニメーションを更新
+/// </summary>
 void Player::UpdateShotAnim()
 {
 	//アニメーションが設定されていなかったら早期リターン
