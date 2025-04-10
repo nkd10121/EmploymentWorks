@@ -99,8 +99,6 @@ public:
 	/// <param name="animIndex">変更後のアニメーション番号</param>
 	void ChangeAnim(int animIndex, float animSpeed = 0.5f);
 
-	bool IsInAir();
-
 	/// <summary>
 	/// ステートを変更する
 	/// 自身のステートクラスから呼ぶ専用

@@ -120,19 +120,10 @@ void CharacterBase::ChangeAnim(int animIndex, float animSpeed)
 	MV1SetAttachAnimBlendRate(m_modelHandle, m_currentAnimNo, m_animBlendRate);
 }
 
-bool CharacterBase::IsInAir()
-{
-	auto prePos = rigidbody->GetPos();
-	auto newPos = rigidbody->GetNextPos();
-
-	if (abs(prePos.y - newPos.y) > 0.5f)
-	{
-		return false;
-	}
-
-	return true;
-}
-
+/// <summary>
+/// ステートを変更する
+/// 自身のステートクラスから呼ぶ専用
+/// </summary>
 void CharacterBase::ChangeState(std::shared_ptr<StateBase> nextState)
 {
 	m_pState = nextState;
