@@ -6,15 +6,29 @@
 #include "ResourceManager.h"
 #include "LoadCSV.h"
 
-//TODO:ジャンプ中の状態遷移はStateとして作るべき？？？？
+//MEMO:ジャンプ中の状態遷移はStateで作るように変更する可能性あり
 
 namespace
 {
 	//ジャンプ力
 	constexpr float kJumpPower = 1.0f;
-
 	//ジャンプフレーム数
 	constexpr int kJumpFrame = 10;
+
+	//上昇アニメーションの速度
+	constexpr float kJumpUpAnimSpeed = 0.75f;	
+	//下降アニメーションの速度
+	constexpr float kJumpDownAnimSpeed = 0.7f;
+
+	//上昇アニメーションの終了フレームのスケール
+	constexpr float kJumpUpEndFrameScale = 0.98f;
+	//下降アニメーションの終了フレームのスケール
+	constexpr float kJumpDownEndFrameScale = 0.6f;	
+
+	// 移動速度の調整係数
+	constexpr float kVelocityOffset = 0.4f;
+	// マップとの当たり判定のサイズ調整係数
+	constexpr float kHitMapCollisionSizeScale = 2.0f;
 }
 
 /// <summary>
@@ -27,16 +41,18 @@ PlayerStateJump::PlayerStateJump(std::shared_ptr<CharacterBase> own) :
 	//現在のステートをダッシュ状態にする
 	m_nowState = StateKind::Jump;
 
-	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "JUMP_UP"), 0.75f);
+	own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx(own->GetCharacterName(), "JUMP_UP"), kJumpUpAnimSpeed);
 
 	//このステートに入った瞬間にジャンプ力を足す
 	auto vel = own->GetRigidbody()->GetVelocity();
 	vel.y += kJumpPower;
 	own->GetRigidbody()->SetVelocity(vel);
 
+	//上昇状態にする
+	m_updateFunc = &PlayerStateJump::UpUpdate;
+
 	//ジャンプ音を流す
 	SoundManager::GetInstance().PlaySE("S_PLAYERWALK");
-
 }
 
 /// <summary>
@@ -51,9 +67,6 @@ PlayerStateJump::~PlayerStateJump()
 /// </summary>
 void PlayerStateJump::Init(std::string id)
 {
-	//上昇状態にする
-	m_updateFunc = &PlayerStateJump::UpUpdate;
-
 	m_stageColId = id;
 }
 
@@ -74,8 +87,8 @@ void PlayerStateJump::Update()
 /// </summary>
 void PlayerStateJump::UpUpdate()
 {
-	//ジャンプフレームが上昇アニメーションの終了フレーム以上ならジャンプ中状態にする
-	if (m_jumpFrame >= m_pOwn.lock()->GetNowAnimEndFrame() * 0.98f)
+	//ジャンプフレームが上昇アニメーションの終了フレームに近づいたらジャンプ中状態にする
+	if (m_jumpFrame >= m_pOwn.lock()->GetNowAnimEndFrame() * kJumpUpEndFrameScale)
 	{
 		//アニメーションを変える
 		m_pOwn.lock()->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_AIR"));
@@ -109,7 +122,9 @@ void PlayerStateJump::LoopUpdate()
 		auto modelBottomPos = pos;
 		modelBottomPos.y -= own->GetCollisionSize();
 		auto underPos = modelBottomPos;
-		underPos.y -= (own->GetCollisionRadius() + own->GetCollisionSize()) * 2.0f * (0.4f - vel.y);
+		//カプセルの下側のY座標を移動速度に応じて下げる
+		auto underPosYOffset = own->GetCollisionSize() * (kVelocityOffset - vel.y) * kHitMapCollisionSizeScale;
+		underPos.y -= own->GetCollisionRadius() + underPosYOffset;
 
 		//作ったカプセルとステージモデルで当たり判定をとる
 		auto hit = MV1CollCheck_Line(stageModel, -1, modelBottomPos.ToVECTOR(), underPos.ToVECTOR());
@@ -118,7 +133,7 @@ void PlayerStateJump::LoopUpdate()
 		if (hit.HitFlag)
 		{
 			//アニメーションを変える
-			own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_DOWN"), 0.7f);
+			own->ChangeAnim(LoadCSV::GetInstance().GetAnimIdx("Player", "JUMP_DOWN"), kJumpDownAnimSpeed);
 			//ジャンプフレームを初期化する
 			m_jumpFrame = 0;
 			//ジャンプ下降状態にする
@@ -147,7 +162,7 @@ void PlayerStateJump::DownUpdate()
 	auto own = std::dynamic_pointer_cast<Player>(m_pOwn.lock());
 
 	//ジャンプフレームが上昇アニメーションの終了フレーム以上なら入力に応じてステートを変更する
-	if (m_jumpFrame >= m_pOwn.lock()->GetNowAnimEndFrame() * 0.6f)
+	if (m_jumpFrame >= m_pOwn.lock()->GetNowAnimEndFrame() * kJumpDownEndFrameScale)
 	{
 		//ジャンプ音を流す
 		SoundManager::GetInstance().PlaySE("S_PLAYERWALK");

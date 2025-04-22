@@ -13,6 +13,11 @@ namespace
 	constexpr float kAnalogRangeMin = 0.1f;		//アナログスティックの入力判定最小範囲
 	constexpr float kAnalogRangeMax = 0.8f;		//アナログスティックの入力判定最大範囲
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
+
+	//ダッシュSEの再生間隔
+	constexpr int kPlayDashSEInterval = 20;	
+	//ダッシュの移動速度
+	constexpr float kDashSpeedScale = 2.0f;	
 }
 
 /// <summary>
@@ -51,7 +56,7 @@ void PlayerStateDash::Update()
 	if (!CheckPlayer())	return;
 
 	//移動SEを流す
-	if (m_dashCount % 20 == 0)
+	if (m_dashCount % kPlayDashSEInterval == 0)
 	{
 		SoundManager::GetInstance().PlaySE("S_PLAYERWALK");
 	}
@@ -102,7 +107,7 @@ void PlayerStateDash::Update()
 
 	//速度が決定できるので移動ベクトルに反映する
 	moveDir = moveDir.Normalize();
-	float speed = own->GetMoveSpeed() * 2.0f * rate;
+	float speed = own->GetMoveSpeed() * kDashSpeedScale * rate;
 
 	//方向ベクトルと移動力をかけて移動ベクトルを生成する
 	auto moveVec = moveDir * speed;

@@ -13,7 +13,14 @@ namespace
 	constexpr float kAnalogRangeMax = 0.8f;		//アナログスティックの入力判定最大範囲
 	constexpr float kAnalogInputMax = 1000.0f;	//アナログスティックから入力されるベクトルの最大
 
+	//歩きアニメーションの速度
 	constexpr float kWalkAnimSpeed = 0.35f;
+
+	//歩きSEの再生間隔
+	constexpr int kPlayWalkSEInterval = 28;
+
+	// スティックがニュートラル状態になってからIdleに遷移するまでのフレーム数
+	constexpr int kChangeIdleStateWaitFrame = 2;
 }
 
 /// <summary>
@@ -22,7 +29,7 @@ namespace
 PlayerStateWalk::PlayerStateWalk(std::shared_ptr<CharacterBase> own) :
 	StateBase(own),
 	m_dir(),
-	m_noInputFrame(0),
+	m_nowInputFrame(0),
 	m_walkCount(0)
 {
 	//現在のステートを歩き状態にする
@@ -59,7 +66,7 @@ void PlayerStateWalk::Update()
 	if (!CheckPlayer())	return;
 
 	//移動SEを流す
-	if (m_walkCount % 28 == 0)
+	if (m_walkCount % kPlayWalkSEInterval == 0)
 	{
 		SoundManager::GetInstance().PlaySE("S_PLAYERWALK");
 	}
@@ -74,17 +81,17 @@ void PlayerStateWalk::Update()
 	//左スティックが入力されていなかったらStateをIdleにする
 	if (Input::GetInstance().IsStickNeutral(false))
 	{
-		if (m_noInputFrame == 2)
+		if (m_nowInputFrame == kChangeIdleStateWaitFrame)
 		{
 			ChangeState(StateKind::Idle);
 			return;
 		}
 
-		m_noInputFrame++;
+		m_nowInputFrame++;
 	}
 	else
 	{
-		m_noInputFrame = 0;
+		m_nowInputFrame = 0;
 	}
 
 	//ジャンプボタンが押されていたらstateをJumpにする

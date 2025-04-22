@@ -38,6 +38,6 @@ public:
 private:
 	eDir m_dir;
 
-	int m_noInputFrame;
+	int m_nowInputFrame;
 	int m_walkCount;
 };
