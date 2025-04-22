@@ -3,8 +3,12 @@
 
 namespace
 {
-	constexpr float kCollisionCapsuleSize = 5.0f;	//カプセルの大きさ
-	constexpr float kCollisionCapsuleRadius = 3.0f;	//カプセルの半径
+	//カプセルの大きさ
+	constexpr float kCollisionCapsuleSize = 5.0f;
+	//カプセルの半径
+	constexpr float kCollisionCapsuleRadius = 3.0f;
+	//カプセルのY座標のオフセット
+	constexpr float kPosOffsetY = 2.0f;	
 }
 
 /// <summary>
@@ -25,7 +29,7 @@ void EnemyBig::Init()
 	//モデルが大きめのため、ルートを少し上にずらす
 	for (auto& p : m_route)
 	{
-		p.pos.y += 2.0f;
+		p.pos.y += kPosOffsetY;
 	}
 
 	//モデルハンドルを取得

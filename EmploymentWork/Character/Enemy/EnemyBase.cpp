@@ -39,6 +39,21 @@ namespace
 	constexpr float kHeadCollisionRadius = 2.0f;
 	//頭の判定の高さを調整するための値
 	constexpr float kHeadCollisionOffsetY = 0.55f;
+	
+	//移動デバフのデフォルト値
+	constexpr float kMoveDebuffDefault = 1.0f;
+	//移動デバフの倍率
+	constexpr float kMoveDebuffScale = 0.4f;
+
+	//ヘッドショットダメージの倍率
+	constexpr int kHeadDamagedScale = 3;
+	//ダメージを受けた時に状態を変化させる確率
+	constexpr int kChangeDamagedStatePercent = 30;
+
+	//トラップのボーナスポイント
+	constexpr float kTrapPointBonus = 0.3f;
+	//索敵判定の大きさ
+	constexpr int kSearchCollisionRadiusScale = 10;	
 }
 
 /// <summary>
@@ -223,7 +238,7 @@ void EnemyBase::Update()
 	}
 
 	//移動のデバフをいったんリセット(1.0fが基準)する
-	m_moveDebuff = 1.0f;
+	m_moveDebuff = kMoveDebuffDefault;
 
 #ifdef _DEBUG
 	//何の当たり判定を持っているかをデバッグ描画
@@ -367,7 +382,7 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std
 			if (damage > 0)
 			{
 				//通常の3倍のダメージを与える
-				m_status.hp -= damage * 3;
+				m_status.hp -= damage * kHeadDamagedScale;
 			}
 			//当たった弾の終了処理を呼ぶ
 			col->End();
@@ -388,7 +403,7 @@ void EnemyBase::OnTriggerEnter(const std::shared_ptr<Collide>& ownCol, const std
 	if (isDamaged)
 	{
 		//30%の確率で被ダメージ状態にする
-		if (GetRand(99) + 1 <= 30)
+		if (GetRand(99) + 1 <= kChangeDamagedStatePercent)
 		{
 			m_pState = std::make_shared<EnemyStateDamaged>(std::dynamic_pointer_cast<EnemyBase>(shared_from_this()));
 			m_pState->SetNextKind(StateBase::StateKind::Damaged);
@@ -416,7 +431,7 @@ void EnemyBase::OnTriggerStay(const std::shared_ptr<Collide>& ownCol, const std:
 			if (trap->GetTrapName() == "IronSnare")
 			{
 				//移動デバフをかける
-				m_moveDebuff = 0.4f;
+				m_moveDebuff = kMoveDebuffScale;
 			}
 
 			//攻撃してきたオブジェクト名を保存しておく
@@ -486,7 +501,7 @@ const int EnemyBase::GetDropPoint() const
 	//サイズが2以上だったらボーナスポイントを足して返す
 	else
 	{
-		float thirtyPer = static_cast<float>(m_status.point) * 0.3f;
+		float thirtyPer = static_cast<float>(m_status.point) * kTrapPointBonus;
 		return m_status.point + static_cast<int>(thirtyPer) * static_cast<int>(m_attackerName.size());
 	}
 }
@@ -496,7 +511,7 @@ const int EnemyBase::GetDropPoint() const
 /// </summary>
 const float EnemyBase::GetSearchCollisionRadius() const
 {
-	return  m_collisionRadius * 10;
+	return  m_collisionRadius;
 }
 
 /// <summary>
@@ -528,7 +543,7 @@ void EnemyBase::CreateSearchCollision()
 	//当たり判定の作成
 	auto collider = Collidable::AddCollider(MyLib::ColliderBase::Kind::Sphere, true, MyLib::ColliderBase::CollisionTag::Search);
 	auto sphereCol = dynamic_cast<MyLib::ColliderSphere*>(collider.get());
-	sphereCol->m_radius = m_collisionRadius * 10;
+	sphereCol->m_radius = m_collisionRadius * kSearchCollisionRadiusScale;
 }
 
 /// <summary>

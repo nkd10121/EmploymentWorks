@@ -239,9 +239,9 @@ void SwarmEnemy::SetUp()
 	{
 		addPos += enemy->GetRigidbody()->GetPos();
 
-		if (m_maxSearchCollisionRadius < enemy->GetSearchCollisionRadius())
+		if (m_maxSearchCollisionRadius < enemy->GetSearchCollisionRadius() * 10)
 		{
-			m_maxSearchCollisionRadius = enemy->GetSearchCollisionRadius();
+			m_maxSearchCollisionRadius = enemy->GetSearchCollisionRadius() * 10;
 		}
 	}
 	//中心座標の決定
