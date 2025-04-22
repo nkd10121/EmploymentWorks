@@ -33,7 +33,6 @@ namespace
 	/*モデル関係*/
 	//キャラクターモデル
 	constexpr float kModelScale = 0.065f;		//モデルのサイズ
-	//constexpr float kModelScale = 0.05f;		//モデルのサイズ
 
 	//武器モデル
 	constexpr float kCrossbowModelScale = 0.64f;	//モデルのサイズ
@@ -51,6 +50,14 @@ namespace
 	constexpr int kSpreadAngleMax = 40;
 
 	constexpr int kAttachAnimFrame = 0;
+
+	//弾の散らばり具合(大きくすると拡散が小さく、小さくすると拡散が大きくなる)
+	constexpr int kShotSpread = 20;	
+
+	//スロットの移動間隔
+	constexpr int kSlotMoveInterval = 20;
+	//スロットの最大数
+	constexpr int kSlotMaxNum = 6;
 }
 
 /// <summary>
@@ -161,9 +168,9 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 {
 	//ステートの更新
 	m_pState->Update();
-
+	//射撃アニメーションの更新
 	UpdateShotAnim();
-	//アニメーションの更新
+	//通常アニメーションの更新
 	m_isAnimationFinish = UpdateAnim(m_currentAnimNo);
 	//アニメーションブレンド
 	AnimationBlend();
@@ -180,27 +187,16 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		MV1SetRotationXYZ(m_modelHandle, m_rot.ToVECTOR());
 	}
 
-
-	//足元座標を計算
-	auto bottomPos = m_pos;
-	bottomPos.y -= kCollisionCapsuleSize + kCollisionCapsuleRadius;
-	if (m_cameraDirection.y < 0.0f)
-	{
-		bottomPos.y += 1.0f;
-	}
-	else if (m_cameraDirection.y > 0.0f)
-	{
-		bottomPos.y -= 1.0f;
-	}
-
+	//矢の拡散率を時間経過によって小さくする
 	if (m_attackIntervalCount > 0)
 	{
 		m_attackIntervalCount--;
 	}
 
+	//現在のステートが待機、歩行、ジャンプのいずれかであれば攻撃する
 	if (m_pState->GetKind() == StateBase::StateKind::Idle || m_pState->GetKind() == StateBase::StateKind::Walk || m_pState->GetKind() == StateBase::StateKind::Jump)
 	{
-		//ZLボタンを押している
+		//ZLボタンを押しているとき
 		if (Input::GetInstance().GetIsPushedTriggerButton(true))
 		{
 			if (m_slotNum == 0)
@@ -208,13 +204,16 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 				//一定間隔で向いている方向に弾を撃つ
 				if (m_attackButtonPushCount % 20 == 0)
 				{
+					//射撃SEを鳴らす
 					SoundManager::GetInstance().PlaySE("S_PLAYERSHOT");
 
+					//クロスボウから目的座標への方向ベクトルを計算
 					auto shotVec = (cameraRayCastRet - m_crossbowPos).Normalize();
+					//攻撃カウントが0より大きいときは拡散させる
 					if (m_attackIntervalCount > 0)
 					{
 						auto offset = Vec3(static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax/2), static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax / 2), static_cast<float>(GetRand(kSpreadAngleMax) - kSpreadAngleMax / 2));
-						offset = offset.Normalize() * static_cast<float>(m_attackIntervalCount) / static_cast<float>(kAttackInetervalMax * 20);
+						offset = offset.Normalize() * static_cast<float>(m_attackIntervalCount) / static_cast<float>(kAttackInetervalMax * kShotSpread);
 						shotVec += offset;
 #ifdef _DEBUG
 						printf("攻撃オフセット:{%f,%f,%f}\n", offset.x, offset.y, offset.z);
@@ -254,12 +253,13 @@ void Player::Update(GameManager* pGameManager,Vec3 cameraRayCastRet)
 		//スロットの選択
 		if (Input::GetInstance().IsPushed("RB"))
 		{
-			if (m_pushButton % 20 == 0)
+			if (m_pushButton % kSlotMoveInterval == 0)
 			{
 				m_slotNum++;
 			}
 			
-			if (m_slotNum > 6)
+			//スロットの数を超えたら0に戻す
+			if (m_slotNum > kSlotMaxNum)
 			{
 				m_slotNum = 0;
 			}
