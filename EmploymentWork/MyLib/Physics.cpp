@@ -640,7 +640,7 @@ void MyLib::Physics::FixNextPosition(std::shared_ptr<Rigidbody> primaryRigid, st
 		//正規化して方向ベクトルにする
 		nearPosToNearPos = nearPosToNearPos.Normalize();
 		//離す距離を計算(カプセルと級の半径を足した距離+余分)
-		auto awayDist = colA->m_radius + colB->m_radius + 0.2f;
+		auto awayDist = colA->m_radius + colB->m_radius * 1.2f;
 		//最近接点の修正座標を計算
 		auto fixedNearPos = nearPosOnALine + nearPosToNearPos * awayDist;
 
