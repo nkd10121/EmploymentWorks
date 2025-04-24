@@ -422,6 +422,11 @@ std::vector<EnemyManager::WayPoint> EnemyManager::GetRoute()
 		}
 	}
 
+	for (auto& sWp : startWp)
+	{
+		sWp.pos.y += 2.5f;
+	}
+
 	//念のためstartが見つからなかったらエラーが出るようにしておく
 #ifdef _DEBUG
 	assert(startWp.size() != 0 && "スタートウェイポイントが見つかっていません");
