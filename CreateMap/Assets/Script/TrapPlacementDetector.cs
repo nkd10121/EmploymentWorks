@@ -20,6 +20,11 @@ public class TrapPlacementDetector : MonoBehaviour
     // 設置可能座標のリスト
     private List<Vector3> trapPositions = new List<Vector3>();
 
+    //レイを描画するか
+    public bool isDrawRayX = false;
+    public bool isDrawRayY = false;
+    public bool isDrawRayZ = false;
+
     void Start()
     {
         DetectTrapPlacementAreas();
@@ -103,6 +108,45 @@ public class TrapPlacementDetector : MonoBehaviour
                 Gizmos.DrawCube(pos, Vector3.one * 0.5f);
             }
             i++;
+        }
+
+        //X
+        if (isDrawRayX)
+        {
+            for (float z = minPos.transform.position.z - gridSize / 2; z < maxPos.transform.position.z - gridSize / 2; z += gridSize)
+            {
+                for (float y = minPos.transform.position.y - gridSize / 2; y < maxPos.transform.position.y - gridSize / 2; y += gridSize)
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawLine(new Vector3(minPos.transform.position.x, y, z), new Vector3(maxPos.transform.position.x, y, z));
+                }
+            }
+        }
+
+        //Y
+        if(isDrawRayY)
+        {
+            for (float x = minPos.transform.position.x - gridSize / 2; x < maxPos.transform.position.x - gridSize / 2; x += gridSize)
+            {
+                for (float z = minPos.transform.position.z - gridSize / 2; z < maxPos.transform.position.z - gridSize / 2; z += gridSize)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(new Vector3(x, minPos.transform.position.y, z), new Vector3(x, maxPos.transform.position.y, z));
+                }
+            }
+        }
+
+        //Z
+        if (isDrawRayZ)
+        {
+            for (float x = minPos.transform.position.x - gridSize / 2; x < maxPos.transform.position.x - gridSize / 2; x += gridSize)
+            {
+                for (float y = minPos.transform.position.y - gridSize / 2; y < maxPos.transform.position.y - gridSize / 2; y += gridSize)
+                {
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawLine(new Vector3(x, y, minPos.transform.position.z), new Vector3(x, y, maxPos.transform.position.z));
+                }
+            }
         }
     }
 
