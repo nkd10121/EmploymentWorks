@@ -44595,6 +44595,9 @@ MonoBehaviour:
     m_Bits: 1
   minPos: {fileID: 861328218}
   maxPos: {fileID: 1467455788}
+  isDrawRayX: 0
+  isDrawRayY: 0
+  isDrawRayZ: 0
 --- !u!4 &1485592856
 Transform:
   m_ObjectHideFlags: 0

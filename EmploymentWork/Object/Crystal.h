@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "ObjectBase.h"
+
 class Crystal : public ObjectBase
 {
 public:
