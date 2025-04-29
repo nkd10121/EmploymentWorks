@@ -415,19 +415,19 @@ void TrapManager::Draw()
 	}
 
 	//#ifdef _DEBUG	//デバッグ描画
-		for (auto& pos : m_trapPoss)
-		{
-			if (pos->isPlaced)
-			{
-				DrawSphere3D(pos->pos.ToVECTOR(), 1, 4, 0xffffff, 0xffffff, false);
-			}
-			else
-			{
-				DrawSphere3D(pos->pos.ToVECTOR(), 1, 4, 0x0000ff, 0x0000ff, false);
-			}
+		//for (auto& pos : m_trapPoss)
+		//{
+		//	if (pos->isPlaced)
+		//	{
+		//		DrawSphere3D(pos->pos.ToVECTOR(), 1, 4, 0xffffff, 0xffffff, false);
+		//	}
+		//	else
+		//	{
+		//		DrawSphere3D(pos->pos.ToVECTOR(), 1, 4, 0x0000ff, 0x0000ff, false);
+		//	}
 
-			DrawLine3D(pos->pos.ToVECTOR(), (pos->pos + pos->norm * 3.0f).ToVECTOR(), 0xff0000);
-		}
+		//	DrawLine3D(pos->pos.ToVECTOR(), (pos->pos + pos->norm * 3.0f).ToVECTOR(), 0xff0000);
+		//}
 	
 		//if (debugTrap != nullptr)
 		//{

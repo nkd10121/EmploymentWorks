@@ -509,7 +509,7 @@ void GameManager::Draw()
 
 	// クリスタルの描画
 	m_pCrystal->Draw();
-	//m_pCrystal->DrawHP();
+	m_pCrystal->DrawHP();
 
 	// エフェクトの描画
 	EffectManager::GetInstance().Draw();
@@ -523,73 +523,73 @@ void GameManager::Draw()
 		DrawRotaGraph(x, y, kSlotBgScale, 0.0f, m_slotBgHandle, true);
 		DrawRotaGraph(x, y, kSlotIconScale, 0.0f, m_slotIconHandle[i], true);
 	}
-//
-//	m_pMiniMap->Draw();
-//
-//
-//	if (Setting::GetInstance().GetIsDrawOperation())
-//	{
-//		// 操作説明UIの描画
-//		DrawUI::GetInstance().RegisterDrawRequest([=]()
-//		{
-//				DrawRotaGraph(Game::kWindowWidth - 150, Game::kWindowHeight - 130, 1.0f, 0.0f, m_operationHandle, true);
-//		}, 2);
-//	}
-//
-//
-//	// フェーズ番号の描画
-//	FontManager::GetInstance().DrawCenteredText(kPhaseNumX, kPhaseNumY - 12, "ウェーブ", 0xffffff, 24, 0x000000);
-//	FontManager::GetInstance().DrawCenteredText(kPhaseNumX, kPhaseNumY + 12, std::to_string(abs(m_phaseNum.front())) + "/" + std::to_string(m_allPhaseNum), 0xffffff, 24, 0x000000);
-//
-//
-//	// HPバーの描画
-//	m_pHpUi->Draw();
-//
-//	// クロスヘアの描画
-//#if false
-//	auto centerX = Game::kWindowWidth / 2;
-//	auto centerY = Game::kWindowHeight / 2;
-//	DrawBox(centerX - kCrosshairWidth, centerY - kCrosshairHeight, centerX + kCrosshairWidth, centerY + kCrosshairHeight, 0xaaaaaa, true);
-//	DrawBox(centerX - kCrosshairHeight, centerY - kCrosshairWidth, centerX + kCrosshairHeight, centerY + kCrosshairWidth, 0xaaaaaa, true);
-//#endif
-//
-//	auto offset = m_pPlayer->GetAttackIntervalCount() / 10;
-//	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_CROSSHAIR"), true);
-//	DrawRotaGraph(Game::kWindowWidth / 2 + offset, Game::kWindowHeight / 2, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
-//	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 + offset, 0.5f, DX_PI/2, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
-//	DrawRotaGraph(Game::kWindowWidth / 2 - offset, Game::kWindowHeight / 2, 0.5f, DX_PI, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
-//	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 - offset, 0.5f, DX_PI/2*3, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
-//
-//	// ゲーム開始メッセージの描画
-//	if (m_phaseNum.front() == kInitialPhase)
-//	{
-//		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "準備ができたら", 0xffff4d, 24, 0x000000);
-//		FontManager::GetInstance().DrawLeftText(Game::kWindowWidth / 2 - 50, kStartMessageY + 36, "で迎え撃とう!", 0xffff4d, 24, 0x000000);
-//		DrawRotaGraph(Game::kWindowWidth / 2 - 80, kStartMessageY + 36, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_Y"), true);
-//	}
-//
-//	// 準備フェーズなら次のフェーズまでの時間を描画
-//	if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase)
-//	{
-//		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "次のフェーズまで " + std::to_string((660 - m_phaseCount) / 60), 0xffffff, 24, 0x000000);
-//	}
-//
-//#ifdef _DEBUG	// デバッグ描画
-//	// フェーズ番号のデバッグ描画
-//	DrawFormatString(kDebugPhaseNumX, kDebugPhaseNumY, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
-//	// 現在のフェーズの経過フレームのデバッグ描画
-//	DrawFormatString(kDebugPhaseCountX, kDebugPhaseCountY, 0xffffff, "現在のフェーズの経過フレーム:%d", m_phaseCount);
-//	// すべてのフェーズの経過フレームのデバッグ描画
-//	DrawFormatString(kDebugAllPhaseCountX, kDebugAllPhaseCountY, 0xffffff, "すべてのフェーズの経過フレーム:%d", m_allPhaseCount);
-//#endif
-//
+
+	m_pMiniMap->Draw();
+
+
+	if (Setting::GetInstance().GetIsDrawOperation())
+	{
+		// 操作説明UIの描画
+		DrawUI::GetInstance().RegisterDrawRequest([=]()
+		{
+				DrawRotaGraph(Game::kWindowWidth - 150, Game::kWindowHeight - 130, 1.0f, 0.0f, m_operationHandle, true);
+		}, 2);
+	}
+
+
+	// フェーズ番号の描画
+	FontManager::GetInstance().DrawCenteredText(kPhaseNumX, kPhaseNumY - 12, "ウェーブ", 0xffffff, 24, 0x000000);
+	FontManager::GetInstance().DrawCenteredText(kPhaseNumX, kPhaseNumY + 12, std::to_string(abs(m_phaseNum.front())) + "/" + std::to_string(m_allPhaseNum), 0xffffff, 24, 0x000000);
+
+
+	// HPバーの描画
+	m_pHpUi->Draw();
+
+	// クロスヘアの描画
+#if false
+	auto centerX = Game::kWindowWidth / 2;
+	auto centerY = Game::kWindowHeight / 2;
+	DrawBox(centerX - kCrosshairWidth, centerY - kCrosshairHeight, centerX + kCrosshairWidth, centerY + kCrosshairHeight, 0xaaaaaa, true);
+	DrawBox(centerX - kCrosshairHeight, centerY - kCrosshairWidth, centerX + kCrosshairHeight, centerY + kCrosshairWidth, 0xaaaaaa, true);
+#endif
+
+	auto offset = m_pPlayer->GetAttackIntervalCount() / 10;
+	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_CROSSHAIR"), true);
+	DrawRotaGraph(Game::kWindowWidth / 2 + offset, Game::kWindowHeight / 2, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
+	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 + offset, 0.5f, DX_PI/2, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
+	DrawRotaGraph(Game::kWindowWidth / 2 - offset, Game::kWindowHeight / 2, 0.5f, DX_PI, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
+	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 - offset, 0.5f, DX_PI/2*3, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
+
+	// ゲーム開始メッセージの描画
+	if (m_phaseNum.front() == kInitialPhase)
+	{
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "準備ができたら", 0xffff4d, 24, 0x000000);
+		FontManager::GetInstance().DrawLeftText(Game::kWindowWidth / 2 - 50, kStartMessageY + 36, "で迎え撃とう!", 0xffff4d, 24, 0x000000);
+		DrawRotaGraph(Game::kWindowWidth / 2 - 80, kStartMessageY + 36, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_Y"), true);
+	}
+
+	// 準備フェーズなら次のフェーズまでの時間を描画
+	if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase)
+	{
+		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "次のフェーズまで " + std::to_string((660 - m_phaseCount) / 60), 0xffffff, 24, 0x000000);
+	}
+
+#ifdef _DEBUG	// デバッグ描画
+	// フェーズ番号のデバッグ描画
+	DrawFormatString(kDebugPhaseNumX, kDebugPhaseNumY, 0xffffff, "フェーズ番号:%d", m_phaseNum.front());
+	// 現在のフェーズの経過フレームのデバッグ描画
+	DrawFormatString(kDebugPhaseCountX, kDebugPhaseCountY, 0xffffff, "現在のフェーズの経過フレーム:%d", m_phaseCount);
+	// すべてのフェーズの経過フレームのデバッグ描画
+	DrawFormatString(kDebugAllPhaseCountX, kDebugAllPhaseCountY, 0xffffff, "すべてのフェーズの経過フレーム:%d", m_allPhaseCount);
+#endif
+
 	// UIの描画
 	DrawUI::GetInstance().Draw();
-//
-//	//プレイヤー死亡時の暗転用
-//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
-//	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0x000000, true);
-//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	//プレイヤー死亡時の暗転用
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
+	DrawBox(0, 0, Game::kWindowWidth, Game::kWindowHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 /// <summary>
