@@ -50,6 +50,7 @@ namespace
 		"I_02",
 		"I_03",
 		"I_04",
+		"I_06",
 		"I_05",
 	};
 }
@@ -275,7 +276,7 @@ void SceneBase::DrawAll()
 	{
 		if (Input::GetInstance().IsTriggered("RIGHT"))
 		{
-			m_loadingIdx = min(m_loadingIdx++, 4);
+			m_loadingIdx = min(m_loadingIdx++, 5);
 		}
 		if (Input::GetInstance().IsTriggered("LEFT"))
 		{
@@ -286,14 +287,14 @@ void SceneBase::DrawAll()
 		//DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2, 1.0f, 0.0f, ResourceManager::GetInstance().GetHandle("I_OPERATION"), true);
 		//DrawRotaGraph(Game::kWindowWidth/2, Game::kWindowHeight/2,1.0f,0.0f, ResourceManager::GetInstance().GetHandle("I_GAME01"), true);
 
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			bool isFill = false;
 			if (m_loadingIdx == i)
 			{
 				isFill = true;
 			}
-			DrawCircle(Game::kWindowWidth / 2 - 160 + 80 * i, 680, 4, 0xffffff, isFill);
+			DrawCircle(Game::kWindowWidth / 2 - 200 + 80 * i, 680, 4, 0xffffff, isFill);
 		}
 
 		m_angle += 0.125f;
