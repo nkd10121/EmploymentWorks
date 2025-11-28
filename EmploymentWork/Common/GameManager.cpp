@@ -233,21 +233,21 @@ void GameManager::Update()
 {
 	SoundManager::GetInstance().PlayBGM("S_INGAMEBGM", true);
 
-	// Yボタンを押した時かつ最初のフェーズの時
-	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front() == kInitialPhase)
-	{
-		// 次のフェーズに進む
-		m_phaseNum.pop_front();
-
-#ifdef _DEBUG
-		if (m_phaseNum.front() == 0)
-		{
-			SoundManager::GetInstance().PlaySE("S_CLEAR");
-		}
-#endif
-		//サウンドを流す
-		SoundManager::GetInstance().PlaySE("S_ENEMY_APPEAR");
-	}
+//	// Yボタンを押した時かつ最初のフェーズの時
+//	if (Input::GetInstance().IsTriggered("Y") && m_phaseNum.front())
+//	{
+//		// 次のフェーズに進む
+//		m_phaseNum.pop_front();
+//
+//#ifdef _DEBUG
+//		if (m_phaseNum.front() == 0)
+//		{
+//			SoundManager::GetInstance().PlaySE("S_CLEAR");
+//		}
+//#endif
+//		//サウンドを流す
+//		SoundManager::GetInstance().PlaySE("S_ENEMY_APPEAR");
+//	}
 
 	// クリスタルの更新
 	m_pCrystal->Update();
@@ -393,7 +393,7 @@ void GameManager::Update()
 	}
 
 	// 10秒経ったら次のフェーズに進める
-	if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase && m_phaseCount >= kPhaseTransitionTime)
+	if (m_phaseNum.front() < 0 && Input::GetInstance().IsTriggered("Y"))
 	{
 		m_phaseNum.pop_front();
 		// フェーズカウントをリセット
@@ -561,18 +561,18 @@ void GameManager::Draw()
 	DrawRotaGraph(Game::kWindowWidth / 2, Game::kWindowHeight / 2 - offset, 0.5f, DX_PI/2*3, ResourceManager::GetInstance().GetHandle("I_CROSSHAIRPARTS"), true);
 
 	// ゲーム開始メッセージの描画
-	if (m_phaseNum.front() == kInitialPhase)
+	if (m_phaseNum.front() < 0)
 	{
 		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "準備ができたら", 0xffff4d, 24, 0x000000);
 		FontManager::GetInstance().DrawLeftText(Game::kWindowWidth / 2 - 50, kStartMessageY + 36, "で迎え撃とう!", 0xffff4d, 24, 0x000000);
 		DrawRotaGraph(Game::kWindowWidth / 2 - 80, kStartMessageY + 36, 0.5f, 0.0f, ResourceManager::GetInstance().GetHandle("I_Y"), true);
 	}
 
-	// 準備フェーズなら次のフェーズまでの時間を描画
-	if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase)
-	{
-		FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "次のフェーズまで " + std::to_string((660 - m_phaseCount) / 60), 0xffffff, 24, 0x000000);
-	}
+	//// 準備フェーズなら次のフェーズまでの時間を描画
+	//if (m_phaseNum.front() < 0 && m_phaseNum.front() != kInitialPhase)
+	//{
+	//	FontManager::GetInstance().DrawCenteredText(Game::kWindowWidth / 2, kStartMessageY, "次のフェーズまで " + std::to_string((660 - m_phaseCount) / 60), 0xffffff, 24, 0x000000);
+	//}
 
 #ifdef _DEBUG	// デバッグ描画
 	// フェーズ番号のデバッグ描画
